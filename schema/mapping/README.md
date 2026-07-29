@@ -1,18 +1,18 @@
 # CDK → SAP field map — enterprise architect reference
 
-Generated 2026-07-29T06:42:20Z by [`schema/bin/gen_mapping.py`](../bin/gen_mapping.py) from a Lane F fixture (schema/bin/fixture_fields.py), not the real field dictionary, contract `EgD-CDK-FIELDS-v2`. Regenerate, do not hand-edit.
+Generated 2026-07-29T07:01:53Z by [`schema/bin/gen_mapping.py`](../bin/gen_mapping.py) from [`docs/model/fields.json`](../../docs/model/fields.json), contract `EgD-CDK-FIELDS-v2`. Regenerate, do not hand-edit.
 
 This is the artefact for the operator's enterprise architects: one row per CDK field, its legacy DMS name, its data type, the column it lands in on load, the SAP field it maps to in the operator's native vocabulary, and the confidence behind that mapping.
 
-**Total fields mapped: 85 across 21 entities.**
+**Total fields mapped: 443 across 21 entities.**
 
 ## Confidence mix (per field, never per object)
 
 | Confidence | Meaning | Count |
 |---|---|---|
-| DOCUMENTED | A field-level CDK/Fortellis source states this field exists with this shape | 43 |
-| INFERRED | The object is documented but this field's type/length is reasoned from ERP/dealer-accounting convention | 21 |
-| UNVERIFIED | Expected but not yet confirmed — to be validated on the CDK admin login | 21 |
+| DOCUMENTED | A field-level CDK/Fortellis source states this field exists with this shape | 320 |
+| INFERRED | The object is documented but this field's type/length is reasoned from ERP/dealer-accounting convention | 86 |
+| UNVERIFIED | Expected but not yet confirmed — to be validated on the CDK admin login | 37 |
 
 ## Reading `cdk_to_sap_field_map.csv`
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-29T06:58:35Z",
+  "generated": "2026-07-29T07:01:53+00:00",
   "contract": "EgD-CDK-FIELDS-v2",
   "entities": [
     {
@@ -41,11 +41,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "control",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 / Get Repair Order v3 \u2014 HTTP header",
+          "source": "Get Customer v3 / Get Repair Order v3 — HTTP header",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "Client (Mandant) MANDT",
           "load_column": "subscription_id",
@@ -63,11 +63,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "control",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 / Get Repair Order v3 \u2014 HTTP header",
+          "source": "Get Customer v3 / Get Repair Order v3 — HTTP header",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "Cost center (analogue)",
           "load_column": "department_id",
@@ -89,7 +89,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 / Get Repair Order v3 \u2014 HTTP header",
+          "source": "Get Customer v3 / Get Repair Order v3 — HTTP header",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "request_id",
@@ -133,7 +133,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Dealer accounting convention \u2014 top-level dealer ID anchor",
+          "source": "Dealer accounting convention — top-level dealer ID anchor",
           "source_url": null,
           "sap_field": "Client (Mandant) MANDT",
           "load_column": "cmf_client_number",
@@ -176,7 +176,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 / Get Repair Order v3 \u2014 Department-Id header note",
+          "source": "Get Customer v3 / Get Repair Order v3 — Department-Id header note",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "Module/component (analogue)",
           "load_column": "dms_type",
@@ -200,7 +200,7 @@
           "unit": null,
           "source": "Dealer accounting convention",
           "source_url": null,
-          "sap_field": "General text \u2014 dealer master (analogue)",
+          "sap_field": "General text — dealer master (analogue)",
           "load_column": "rooftop_name",
           "confidence": "INFERRED",
           "notes": "Every partitioning scheme needs a display name; not confirmed as a discrete API field."
@@ -269,7 +269,7 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "business",
+          "key": "PK",
           "fk_target": null,
           "enum_values": [
             {
@@ -306,7 +306,7 @@
             }
           ],
           "unit": null,
-          "source": "GM Dealer Standard Accounting Manual \u2014 department suffix convention",
+          "source": "GM Dealer Standard Accounting Manual — department suffix convention",
           "source_url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf",
           "sap_field": "Cost center / profit center (KOSTL)",
           "load_column": "department_code",
@@ -328,12 +328,12 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 HTTP header",
+          "source": "Get Repair Order v3 — HTTP header",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "Cost center (KOSTL analogue)",
           "load_column": "department_id",
           "confidence": "DOCUMENTED",
-          "notes": "The Fortellis-side identifier; distinct from the legacy 2-digit department_code above \u2014 CDK has not published a mapping between the two, treat as related-but-unverified-equivalence."
+          "notes": "The Fortellis-side identifier; distinct from the legacy 2-digit department_code above — CDK has not published a mapping between the two, treat as related-but-unverified-equivalence."
         },
         {
           "seq": 3,
@@ -371,7 +371,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 / Get Repair Order v3 \u2014 Department-Id header note",
+          "source": "Get Customer v3 / Get Repair Order v3 — Department-Id header note",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "dms_type",
@@ -455,7 +455,7 @@
           "seq": 6,
           "path": "absorptionRateFlag",
           "legacy_name": null,
-          "label": "Absorption Rate \u2014 Reporting Only",
+          "label": "Absorption Rate — Reporting Only",
           "dealer_label": null,
           "datatype": "boolean",
           "length": null,
@@ -471,7 +471,7 @@
           "sap_field": null,
           "load_column": "absorption_rate_is_report_only",
           "confidence": "INFERRED",
-          "notes": "Per the shared extract brief: dealership absorption rate is explicitly a report-only KPI (fixed-department gross \u00f7 total dealership overhead) and is never itself a stored field in any CDK object \u2014 included here as a documentation flag, not a data column to load. Marked INFERRED rather than DOCUMENTED because the source is an internal project brief, not a fetchable external API document; no source_url is fabricated."
+          "notes": "Per the shared extract brief: dealership absorption rate is explicitly a report-only KPI (fixed-department gross ÷ total dealership overhead) and is never itself a stored field in any CDK object — included here as a documentation flag, not a data column to load. Marked INFERRED rather than DOCUMENTED because the source is an internal project brief, not a fetchable external API document; no source_url is fabricated."
         },
         {
           "seq": 7,
@@ -521,7 +521,7 @@
           "GET /cdk/drive/customer/v3/delta",
           "GET /cdk/drive/customer/v3/long-operations/{operationId}/status",
           "GET /cdk/drive/customer/v3/long-operations/{operationId}/result",
-          "CDK Drive Customers API v1 \u2014 cdkdrive/crm/v1/customers (search/create/update)"
+          "CDK Drive Customers API v1 — cdkdrive/crm/v1/customers (search/create/update)"
         ],
         "note": "Fully documented, field-level REST schema across two APIs: Get Customer v3 (Accounting-department scoped, the deep attribute set) and Customers API v1 (CRM-scoped, search/create/update). This is one of only four FULL-reach entities."
       },
@@ -552,7 +552,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 customer record attributes",
+          "source": "Get Customer v3 — customer record attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-KUNNR",
           "load_column": "customer_id",
@@ -596,7 +596,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 CustomerName object",
+          "source": "Get Customer v3 — CustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-NAME2",
           "load_column": "first_name",
@@ -618,7 +618,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 CustomerName object",
+          "source": "Get Customer v3 — CustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "middle_name",
@@ -640,7 +640,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 CustomerName object",
+          "source": "Get Customer v3 — CustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-NAME1",
           "load_column": "last_name",
@@ -662,7 +662,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 CustomerName object",
+          "source": "Get Customer v3 — CustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "full_name",
@@ -684,7 +684,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 CustomerName object",
+          "source": "Get Customer v3 — CustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-NAME1 (org)",
           "load_column": "company_name",
@@ -750,7 +750,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SecondaryCustomerName object",
+          "source": "Get Customer v3 — SecondaryCustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "secondary_first_name",
@@ -772,7 +772,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SecondaryCustomerName object",
+          "source": "Get Customer v3 — SecondaryCustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "secondary_last_name",
@@ -794,7 +794,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SecondaryCustomerName object",
+          "source": "Get Customer v3 — SecondaryCustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "secondary_full_name",
@@ -816,7 +816,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SecondaryCustomerName object",
+          "source": "Get Customer v3 — SecondaryCustomerName object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "secondary_company_name",
@@ -838,7 +838,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 BirthDate object",
+          "source": "Get Customer v3 — BirthDate object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-GBDAT (part)",
           "load_column": "birth_day",
@@ -860,7 +860,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 BirthDate object",
+          "source": "Get Customer v3 — BirthDate object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "birth_month",
@@ -882,7 +882,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 BirthDate object",
+          "source": "Get Customer v3 — BirthDate object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "birth_year",
@@ -904,7 +904,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-STRAS",
           "load_column": "address_line1",
@@ -926,7 +926,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "address_line2",
@@ -948,7 +948,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-ORT01",
           "load_column": "city",
@@ -970,7 +970,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "county",
@@ -992,7 +992,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-REGIO",
           "load_column": "state",
@@ -1014,7 +1014,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-PSTLZ",
           "load_column": "postal_code",
@@ -1036,7 +1036,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 PostalAddress object",
+          "source": "Get Customer v3 — PostalAddress object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-LAND1",
           "load_column": "country",
@@ -1058,7 +1058,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-TELF1",
           "load_column": "primary_phone",
@@ -1080,7 +1080,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "home_phone",
@@ -1102,7 +1102,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "secondary_home_phone",
@@ -1124,7 +1124,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "KNA1-TELF2",
           "load_column": "mobile_phone",
@@ -1146,7 +1146,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "business_phone",
@@ -1168,7 +1168,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "business_phone_ext",
@@ -1190,7 +1190,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "home_fax",
@@ -1212,7 +1212,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "work_fax",
@@ -1234,7 +1234,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "pager_number",
@@ -1256,7 +1256,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "text_message_phone",
@@ -1278,7 +1278,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "text_message_carrier",
@@ -1300,7 +1300,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "ADR6-SMTP_ADDR",
           "load_column": "email_address",
@@ -1355,7 +1355,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "email_type",
@@ -1410,7 +1410,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "preferred_contact_method",
@@ -1465,7 +1465,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 customer record attributes",
+          "source": "Get Customer v3 — customer record attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "preferred_contact",
@@ -1516,7 +1516,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "preferred_day",
@@ -1547,7 +1547,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "preferred_time",
@@ -1569,7 +1569,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "block_email_flag",
@@ -1591,7 +1591,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "block_mail_flag",
@@ -1613,7 +1613,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 ContactMethods object",
+          "source": "Get Customer v3 — ContactMethods object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "block_phone_flag",
@@ -2151,7 +2151,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Customer v3 \u2014 OverDues object",
+          "source": "Get Customer v3 — OverDues object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": "Aging bucket 1 (analogue)",
           "load_column": "overdue_30_days",
@@ -2173,7 +2173,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Customer v3 \u2014 OverDues object",
+          "source": "Get Customer v3 — OverDues object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "overdue_60_days",
@@ -2195,7 +2195,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Customer v3 \u2014 OverDues object",
+          "source": "Get Customer v3 — OverDues object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "overdue_90_days",
@@ -2217,7 +2217,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Customer v3 \u2014 OverDues object",
+          "source": "Get Customer v3 — OverDues object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "overdue_120_days",
@@ -2305,7 +2305,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 Insurance object",
+          "source": "Get Customer v3 — Insurance object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "insurance_policy_number",
@@ -2327,7 +2327,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 Insurance object",
+          "source": "Get Customer v3 — Insurance object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "insurance_policy_expiration",
@@ -2349,7 +2349,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 Insurance object",
+          "source": "Get Customer v3 — Insurance object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "insurance_company_name",
@@ -2371,7 +2371,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 Insurance object",
+          "source": "Get Customer v3 — Insurance object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "insurance_agent_name",
@@ -2393,7 +2393,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SpecialInstructions object",
+          "source": "Get Customer v3 — SpecialInstructions object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "special_instructions_line1",
@@ -2415,7 +2415,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SpecialInstructions object",
+          "source": "Get Customer v3 — SpecialInstructions object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "special_instructions_line2",
@@ -2437,7 +2437,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SpecialInstructions object",
+          "source": "Get Customer v3 — SpecialInstructions object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "special_instructions_line3",
@@ -2459,7 +2459,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SpecialInstructions object",
+          "source": "Get Customer v3 — SpecialInstructions object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "special_instructions_line4",
@@ -2481,7 +2481,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Customer v3 \u2014 SpecialInstructions object",
+          "source": "Get Customer v3 — SpecialInstructions object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "special_instructions_line5",
@@ -2500,7 +2500,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
           "source": "CDK Drive Customers API v1",
@@ -2517,7 +2517,7 @@
       "entity_name": "Vehicle Master",
       "dealer_name": "Vehicle",
       "group": "master",
-      "sap_analogue": "EQUI (Equipment Master) \u2014 closest SAP analogue for a serialized asset record",
+      "sap_analogue": "EQUI (Equipment Master) — closest SAP analogue for a serialized asset record",
       "table_name": "cdk_vehicle_master",
       "grain": "one row per vehicle (VIN) per rooftop",
       "api": {
@@ -2904,7 +2904,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
           "source": "Service Vehicles API",
@@ -2912,7 +2912,7 @@
           "sap_field": null,
           "load_column": "owner_href",
           "confidence": "DOCUMENTED",
-          "notes": "Owner is a hyperlink reference to the customer record, not an embedded object \u2014 confirms vehicle and customer are managed as separate resources joined by reference."
+          "notes": "Owner is a hyperlink reference to the customer record, not an embedded object — confirms vehicle and customer are managed as separate resources joined by reference."
         },
         {
           "seq": 17,
@@ -2926,7 +2926,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
           "source": "Service Vehicles API",
@@ -2973,7 +2973,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "lot_location",
@@ -2992,10 +2992,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vehicle-master.vehicleId",
+          "fk_target": "vehicle-master.vehicle_id",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_embedded_veh_id",
@@ -3017,7 +3017,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_embedded_delivery_date",
@@ -3039,7 +3039,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_embedded_vehicle_color",
@@ -3061,7 +3061,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_embedded_make_desc",
@@ -3083,7 +3083,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_embedded_model_desc",
@@ -3105,7 +3105,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 repair order attributes",
+          "source": "Get Repair Order v3 — repair order attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "is_sold_by_dealer",
@@ -3119,15 +3119,15 @@
       "entity_name": "Employee Master",
       "dealer_name": "Employee",
       "group": "master",
-      "sap_analogue": "PA0001 / PA0002 (HR master infotypes) \u2014 closest SAP analogue",
+      "sap_analogue": "PA0001 / PA0002 (HR master infotypes) — closest SAP analogue",
       "table_name": "cdk_employee_master",
       "grain": "one row per employee per rooftop",
       "api": {
         "reachable": "partial",
         "endpoints": [
           "No dedicated employee-master GET API found",
-          "CDKDrive Repair Orders v1 \u2014 Query technicians (lookup)",
-          "CDKDrive Repair Orders v1 \u2014 Query service advisors (lookup)",
+          "CDKDrive Repair Orders v1 — Query technicians (lookup)",
+          "CDKDrive Repair Orders v1 — Query service advisors (lookup)",
           "Employee/technician IDs surface embedded throughout Get Repair Order v3"
         ],
         "note": "There is no public 'Get Employee' master API with a published field schema. Employee/technician/advisor identifiers surface only as ID references embedded in the Repair Order object (serviceAdvisor, cashier, bookerNo, technicianIds, employeeId, etc.), plus two named-but-schema-thin lookup endpoints. Name, department, and HR attributes are UNVERIFIED."
@@ -3138,10 +3138,32 @@
           "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
         }
       ],
-      "field_count": 19,
+      "field_count": 20,
       "fields": [
         {
           "seq": 1,
+          "path": "employeeKey",
+          "legacy_name": null,
+          "label": "Employee Key (surrogate)",
+          "dealer_label": "the one person behind all these different ID columns",
+          "datatype": "string",
+          "length": 24,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "To be confirmed against CDK Get Employee on first access",
+          "source_url": null,
+          "sap_field": null,
+          "load_column": "employee_key",
+          "confidence": "UNVERIFIED",
+          "notes": "CDK Get Employee is announced by name with no public field-level schema, so no natural employee key is documented. This entity is currently a projection of the role-specific identifier columns found inside the RO v3 payload. The surrogate holds the load together until the real employee master key is confirmed on the admin login."
+        },
+        {
+          "seq": 2,
           "path": "data[].serviceAdvisor",
           "legacy_name": null,
           "label": "Service Advisor Number",
@@ -3155,7 +3177,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 repair order attributes",
+          "source": "Get Repair Order v3 — repair order attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "PERNR (personnel number analogue)",
           "load_column": "service_advisor_number",
@@ -3163,7 +3185,7 @@
           "notes": "Surfaces only as an RO header field; no standalone employee-master GET API found."
         },
         {
-          "seq": 2,
+          "seq": 3,
           "path": "data[].cashier",
           "legacy_name": null,
           "label": "Cashier ID",
@@ -3177,7 +3199,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 repair order attributes",
+          "source": "Get Repair Order v3 — repair order attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "cashier_id",
@@ -3185,7 +3207,7 @@
           "notes": "The DMS employee ID of the cashier who closed the repair order."
         },
         {
-          "seq": 3,
+          "seq": 4,
           "path": "data[].bookerNo",
           "legacy_name": null,
           "label": "Booker Number",
@@ -3199,7 +3221,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 repair order attributes",
+          "source": "Get Repair Order v3 — repair order attributes",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "booker_number",
@@ -3207,7 +3229,7 @@
           "notes": "Number of the booker who finished posting all labor to the RO."
         },
         {
-          "seq": 4,
+          "seq": 5,
           "path": "line.storyEmployeeNo",
           "legacy_name": null,
           "label": "Story Employee Number",
@@ -3221,7 +3243,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 operations Array (line object)",
+          "source": "Get Repair Order v3 — operations Array (line object)",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "story_employee_number",
@@ -3229,7 +3251,7 @@
           "notes": "The number of the employee who last updated the technician's story/narrative for the repair line."
         },
         {
-          "seq": 5,
+          "seq": 6,
           "path": "line.laborOperations[].technicianIds[]",
           "legacy_name": null,
           "label": "Technician ID(s)",
@@ -3243,7 +3265,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "technician_ids",
@@ -3251,7 +3273,7 @@
           "notes": "A string list of technician IDs assigned to the labor operation; returns 'MULT' if multiple technicians were assigned (loses individual IDs in that case)."
         },
         {
-          "seq": 6,
+          "seq": 7,
           "path": "line.laborOperations[].comebackSA",
           "legacy_name": null,
           "label": "Comeback Service Advisor",
@@ -3265,7 +3287,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "comeback_service_advisor",
@@ -3273,7 +3295,7 @@
           "notes": "The service advisor number from the original RO on which the labor operation was previously performed."
         },
         {
-          "seq": 7,
+          "seq": 8,
           "path": "line.laborOperations[].comebackTech",
           "legacy_name": null,
           "label": "Comeback Technician",
@@ -3287,7 +3309,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "comeback_technician",
@@ -3295,7 +3317,7 @@
           "notes": "The number of the technician who performed the labor operation on the original RO."
         },
         {
-          "seq": 8,
+          "seq": 9,
           "path": "line.laborOperations[].hours[].technicianId",
           "legacy_name": null,
           "label": "Hours-Detail Technician ID",
@@ -3309,7 +3331,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 hours Array",
+          "source": "Get Repair Order v3 — hours Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "hours_technician_id",
@@ -3317,7 +3339,7 @@
           "notes": "Individual technician ID at the per-hour-type level, distinct from the labor-operation-level technicianIds[] which can collapse to MULT."
         },
         {
-          "seq": 9,
+          "seq": 10,
           "path": "line.laborOperations[].parts[].employeeId",
           "legacy_name": null,
           "label": "Parts Counter Employee ID",
@@ -3331,7 +3353,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "parts_counter_employee_id",
@@ -3339,7 +3361,7 @@
           "notes": "The employee number of the counter person who sold the part."
         },
         {
-          "seq": 10,
+          "seq": 11,
           "path": "line.laborOperations[].parts[].outsideSalesmanId",
           "legacy_name": null,
           "label": "Outside Salesman ID",
@@ -3353,7 +3375,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "outside_salesman_id",
@@ -3361,7 +3383,7 @@
           "notes": "The outside salesperson's number assigned to the customer."
         },
         {
-          "seq": 11,
+          "seq": 12,
           "path": "technicianPunchTimes[].technicianId",
           "legacy_name": null,
           "label": "Punch Clock Technician ID",
@@ -3375,7 +3397,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "punch_technician_id",
@@ -3383,7 +3405,7 @@
           "notes": "The employee number of the technician for a physical clock punch; see technician-time-punch entity for the full punch record."
         },
         {
-          "seq": 12,
+          "seq": 13,
           "path": "discounts[].userID",
           "legacy_name": null,
           "label": "Discount User ID",
@@ -3397,7 +3419,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 discounts Array",
+          "source": "Get Repair Order v3 — discounts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "discount_user_id",
@@ -3405,7 +3427,7 @@
           "notes": "The user who applied the discount."
         },
         {
-          "seq": 13,
+          "seq": 14,
           "path": "discounts[].appliedBy",
           "legacy_name": null,
           "label": "Discount Applied By",
@@ -3419,7 +3441,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 discounts Array",
+          "source": "Get Repair Order v3 — discounts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "discount_applied_by",
@@ -3427,7 +3449,7 @@
           "notes": "The person who applied the discount."
         },
         {
-          "seq": 14,
+          "seq": 15,
           "path": "discounts[].managerOverride",
           "legacy_name": null,
           "label": "Manager Override ID",
@@ -3441,7 +3463,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 discounts Array",
+          "source": "Get Repair Order v3 — discounts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "manager_override_id",
@@ -3449,7 +3471,7 @@
           "notes": "The discount that was overridden by the manager (manager identifier)."
         },
         {
-          "seq": 15,
+          "seq": 16,
           "path": "lookup.technicianId",
           "legacy_name": null,
           "label": "Technician Lookup ID",
@@ -3463,7 +3485,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "CDKDrive Repair Orders v1 \u2014 Query technicians lookup endpoint",
+          "source": "CDKDrive Repair Orders v1 — Query technicians lookup endpoint",
           "source_url": null,
           "sap_field": null,
           "load_column": "lookup_technician_id",
@@ -3471,7 +3493,7 @@
           "notes": "A dedicated lookup endpoint ('Query technicians') is documented to exist by name in CDK Drive Repair Orders v1, returning technicianId values, but its full response field schema was not published in the sources reviewed. No source_url captured for the endpoint page itself, so marked INFERRED rather than DOCUMENTED."
         },
         {
-          "seq": 16,
+          "seq": 17,
           "path": "lookup.serviceAdvisorId",
           "legacy_name": null,
           "label": "Service Advisor Lookup ID",
@@ -3485,7 +3507,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "CDKDrive Repair Orders v1 \u2014 Query service advisors lookup endpoint",
+          "source": "CDKDrive Repair Orders v1 — Query service advisors lookup endpoint",
           "source_url": null,
           "sap_field": null,
           "load_column": "lookup_service_advisor_id",
@@ -3493,7 +3515,7 @@
           "notes": "Companion lookup endpoint to Query technicians; same caveats apply."
         },
         {
-          "seq": 17,
+          "seq": 18,
           "path": "employeeName",
           "legacy_name": null,
           "label": "Employee Name",
@@ -3515,7 +3537,7 @@
           "notes": "No public field-level employee master schema exists in any source reviewed; only bare numeric/ID references surface via the RO API. Name, department, hire date, termination date, pay-plan type are all standard dealer-accounting employee-master fields but are UNVERIFIED for CDK specifically."
         },
         {
-          "seq": 18,
+          "seq": 19,
           "path": "employeeDepartment",
           "legacy_name": null,
           "label": "Employee Department",
@@ -3537,7 +3559,7 @@
           "notes": "Presumed FK to cost-centre-department.department_code; unverified for CDK."
         },
         {
-          "seq": 19,
+          "seq": 20,
           "path": "employeeStatus",
           "legacy_name": null,
           "label": "Employee Active/Terminated Status",
@@ -3793,12 +3815,12 @@
             }
           ],
           "unit": null,
-          "source": "Dealer accounting convention \u2014 no CDK field confirmation",
+          "source": "Dealer accounting convention — no CDK field confirmation",
           "source_url": null,
           "sap_field": null,
           "load_column": "vendor_class",
           "confidence": "UNVERIFIED",
-          "notes": "Flag concept referenced only indirectly (sublet cost/sale fields exist on the RO \u2014 see mls Object); no confirmed discrete vendor-classification field."
+          "notes": "Flag concept referenced only indirectly (sublet cost/sale fields exist on the RO — see mls Object); no confirmed discrete vendor-classification field."
         },
         {
           "seq": 10,
@@ -3834,7 +3856,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "GM Dealer Standard Accounting Manual (Account 300 AP-Trade Creditors)",
@@ -3872,7 +3894,7 @@
             }
           ],
           "unit": null,
-          "source": "Dealer accounting convention \u2014 no CDK field confirmation",
+          "source": "Dealer accounting convention — no CDK field confirmation",
           "source_url": null,
           "sap_field": null,
           "load_column": "vendor_status",
@@ -3892,7 +3914,7 @@
       "api": {
         "reachable": "none",
         "endpoints": [],
-        "note": "No public CDK chart-of-accounts API was found. Field set and the numbering convention are built directly from the GM Dealer Standard Accounting Manual, which is the closest documented, citable pattern for how CDK-hosted GM rooftops structure their chart of accounts (3-digit base + 2-digit department + optional letter). Treated as an industry-standard convention CDK is presumed to follow, not a CDK-published schema \u2014 hence NONE API reach despite several DOCUMENTED fields."
+        "note": "No public CDK chart-of-accounts API was found. Field set and the numbering convention are built directly from the GM Dealer Standard Accounting Manual, which is the closest documented, citable pattern for how CDK-hosted GM rooftops structure their chart of accounts (3-digit base + 2-digit department + optional letter). Treated as an industry-standard convention CDK is presumed to follow, not a CDK-published schema — hence NONE API reach despite several DOCUMENTED fields."
       },
       "sources": [
         {
@@ -3900,7 +3922,7 @@
           "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
         },
         {
-          "label": "Digital Dealer \u2014 Your DMS and Schedules",
+          "label": "Digital Dealer — Your DMS and Schedules",
           "url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/"
         }
       ],
@@ -3921,7 +3943,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "GM Dealer Standard Accounting Manual \u2014 chart of accounts",
+          "source": "GM Dealer Standard Accounting Manual — chart of accounts",
           "source_url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf",
           "sap_field": "SKA1-SAKNR",
           "load_column": "gl_account_number",
@@ -3940,7 +3962,7 @@
           "scale": null,
           "nullable": true,
           "key": "key",
-          "fk_target": "cost-centre-department.departmentCode",
+          "fk_target": "cost-centre-department.department_code",
           "enum_values": null,
           "unit": null,
           "source": "GM Dealer Standard Accounting Manual",
@@ -4087,12 +4109,12 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules",
+          "source": "Digital Dealer — Your DMS and Schedules",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": "SKB1-XMITKZ (recon account indicator)",
           "load_column": "is_control_account",
           "confidence": "DOCUMENTED",
-          "notes": "True for the small set of GL accounts (e.g. 261 Factory Receivables, 263 Warranty Claims, 231/310 floor plan, 205 Contracts in Transit, 247 WIP) that are 'controlled' by an open-item schedule rather than posted to directly \u2014 see accounting-schedule entity."
+          "notes": "True for the small set of GL accounts (e.g. 261 Factory Receivables, 263 Warranty Claims, 231/310 floor plan, 205 Contracts in Transit, 247 WIP) that are 'controlled' by an open-item schedule rather than posted to directly — see accounting-schedule entity."
         },
         {
           "seq": 8,
@@ -4131,7 +4153,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Dealer accounting convention \u2014 no CDK field confirmation",
+          "source": "Dealer accounting convention — no CDK field confirmation",
           "source_url": null,
           "sap_field": null,
           "load_column": "is_active",
@@ -4151,11 +4173,11 @@
       "api": {
         "reachable": "none",
         "endpoints": [],
-        "note": "No public CDK 'get schedule' API was found \u2014 schedules are a documented DMS concept (an open-item subledger reconciled to one GL control-account balance) rather than a queryable REST resource. Fields are built around the control-key concept the task brief specifically requires, generalizing CDK's own confirmed customer-level 30/60/90/120+ aging convention."
+        "note": "No public CDK 'get schedule' API was found — schedules are a documented DMS concept (an open-item subledger reconciled to one GL control-account balance) rather than a queryable REST resource. Fields are built around the control-key concept the task brief specifically requires, generalizing CDK's own confirmed customer-level 30/60/90/120+ aging convention."
       },
       "sources": [
         {
-          "label": "Digital Dealer \u2014 Your DMS and Schedules",
+          "label": "Digital Dealer — Your DMS and Schedules",
           "url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/"
         },
         {
@@ -4184,7 +4206,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules (schedule concept)",
+          "source": "Digital Dealer — Your DMS and Schedules (schedule concept)",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": null,
           "load_column": "schedule_id",
@@ -4203,10 +4225,10 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules",
+          "source": "Digital Dealer — Your DMS and Schedules",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": "SKB1-SAKNR (recon account)",
           "load_column": "gl_account_number",
@@ -4257,7 +4279,7 @@
             }
           ],
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules; GM Dealer Standard Accounting Manual",
+          "source": "Digital Dealer — Your DMS and Schedules; GM Dealer Standard Accounting Manual",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": null,
           "load_column": "control_key_type",
@@ -4279,7 +4301,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules",
+          "source": "Digital Dealer — Your DMS and Schedules",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": null,
           "load_column": "control_key_value",
@@ -4301,7 +4323,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Digital Dealer \u2014 Your DMS and Schedules",
+          "source": "Digital Dealer — Your DMS and Schedules",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": "BSEG amount (analogue)",
           "load_column": "open_item_amount",
@@ -4344,7 +4366,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Customer v3 \u2014 OverDues object aging pattern, generalized to schedules per GM manual",
+          "source": "Get Customer v3 — OverDues object aging pattern, generalized to schedules per GM manual",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
           "sap_field": null,
           "load_column": "aging_bucket",
@@ -4366,7 +4388,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Digital Dealer \u2014 Your DMS and Schedules",
+          "source": "Digital Dealer — Your DMS and Schedules",
           "source_url": "https://digitaldealer.com/news/your-dms-and-schedules/65829/",
           "sap_field": "BSEG-BUDAT",
           "load_column": "posting_date",
@@ -4509,7 +4531,7 @@
       },
       "sources": [
         {
-          "label": "Fortellis Community \u2014 API Integration Response Errors",
+          "label": "Fortellis Community — API Integration Response Errors",
           "url": "https://community.fortellis.io/community/forum/qa/api-integration-response-errors"
         },
         {
@@ -4643,7 +4665,7 @@
             }
           ],
           "unit": null,
-          "source": "GM Dealer Standard Accounting Manual \u2014 journal listing",
+          "source": "GM Dealer Standard Accounting Manual — journal listing",
           "source_url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf",
           "sap_field": "BKPF-BLART (document type analogue)",
           "load_column": "journal_type",
@@ -4662,7 +4684,7 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "Dealer accounting convention",
@@ -4684,7 +4706,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "accounting-schedule.controlKeyValue",
+          "fk_target": "accounting-schedule.control_key_value",
           "enum_values": null,
           "unit": null,
           "source": "Autosoft-parallel journal entry fields (cross-DMS analogue)",
@@ -4706,7 +4728,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "Autosoft-parallel journal entry fields (cross-DMS analogue)",
@@ -4798,15 +4820,15 @@
           "enum_values": [
             {
               "code": "GL_WIP_POST",
-              "meaning": "cdk/drive/glwippost/startWIP \u2014 CDK Drive Post Accounts GL WIP"
+              "meaning": "cdk/drive/glwippost/startWIP — CDK Drive Post Accounts GL WIP"
             },
             {
               "code": "GL_POST",
-              "meaning": "cdk/drive/glpost/startWIP \u2014 CDK Drive Post Accounting GL"
+              "meaning": "cdk/drive/glpost/startWIP — CDK Drive Post Accounting GL"
             }
           ],
           "unit": null,
-          "source": "Fortellis Community \u2014 API Integration Response Errors thread",
+          "source": "Fortellis Community — API Integration Response Errors thread",
           "source_url": "https://community.fortellis.io/community/forum/qa/api-integration-response-errors",
           "sap_field": null,
           "load_column": "wip_endpoint_used",
@@ -4867,7 +4889,7 @@
       "entity_name": "Repair Order",
       "dealer_name": "Repair Order (RO)",
       "group": "transaction",
-      "sap_analogue": "AUFK (Order Master) / CO Internal Order \u2014 closest SAP analogue for a service work order",
+      "sap_analogue": "AUFK (Order Master) / CO Internal Order — closest SAP analogue for a service work order",
       "table_name": "cdk_repair_order",
       "grain": "one row per repair order per rooftop",
       "api": {
@@ -4889,7 +4911,7 @@
           "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
         },
         {
-          "label": "Leonard Bus Sales \u2014 CDK Service Type Reference",
+          "label": "Leonard Bus Sales — CDK Service Type Reference",
           "url": "https://www.leonardbus.com/wp-content/uploads/2022/03/SERVICE-TYPE-REFERENCE-v3-3-2022.pdf"
         }
       ],
@@ -4959,7 +4981,7 @@
           "sap_field": null,
           "load_column": "status_code",
           "confidence": "DOCUMENTED",
-          "notes": "A code indicating the primary state of the RO; no explicit value list published in the spec \u2014 see statusDesc for the paired text description and the getOpen/getWIP/getClosed method names for the practical lifecycle states."
+          "notes": "A code indicating the primary state of the RO; no explicit value list published in the spec — see statusDesc for the paired text description and the getOpen/getWIP/getClosed method names for the practical lifecycle states."
         },
         {
           "seq": 4,
@@ -4999,15 +5021,15 @@
           "enum_values": [
             {
               "code": "OPEN",
-              "meaning": "Open (getOpenRepairOrdersBulk / /open \u2014 last 31 days)"
+              "meaning": "Open (getOpenRepairOrdersBulk / /open — last 31 days)"
             },
             {
               "code": "WIP",
-              "meaning": "Work-in-process (getWIPRepairOrders / /wip \u2014 opened, voided, or closed in the past 48 hours)"
+              "meaning": "Work-in-process (getWIPRepairOrders / /wip — opened, voided, or closed in the past 48 hours)"
             },
             {
               "code": "CLOSED",
-              "meaning": "Closed (getClosedRepairOrdersBulk / /closed \u2014 last 31 days)"
+              "meaning": "Closed (getClosedRepairOrdersBulk / /closed — last 31 days)"
             },
             {
               "code": "VOIDED",
@@ -5015,7 +5037,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 method/path names",
+          "source": "Get Repair Order v3 — method/path names",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_lifecycle_state",
@@ -5100,7 +5122,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.data[].serviceAdvisor",
+          "fk_target": "employee-master.service_advisor_number",
           "enum_values": null,
           "unit": null,
           "source": "Get Repair Order v3",
@@ -5122,7 +5144,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.data[].cashier",
+          "fk_target": "employee-master.cashier_id",
           "enum_values": null,
           "unit": null,
           "source": "Get Repair Order v3",
@@ -5144,7 +5166,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.data[].bookerNo",
+          "fk_target": "employee-master.booker_number",
           "enum_values": null,
           "unit": null,
           "source": "Get Repair Order v3",
@@ -5166,10 +5188,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 customer Object",
+          "source": "Get Repair Order v3 — customer Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "customer_id",
@@ -5191,7 +5213,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 customer Object",
+          "source": "Get Repair Order v3 — customer Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "customer_name1",
@@ -5213,7 +5235,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 customer Object",
+          "source": "Get Repair Order v3 — customer Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "customer_address_line1",
@@ -5268,12 +5290,12 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 customer Object",
+          "source": "Get Repair Order v3 — customer Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "customer_phone_type",
           "confidence": "DOCUMENTED",
-          "notes": "Spec literally spells this enum value 'CELLULULAR' \u2014 preserved verbatim as a known upstream typo, not corrected."
+          "notes": "Spec literally spells this enum value 'CELLULULAR' — preserved verbatim as a known upstream typo, not corrected."
         },
         {
           "seq": 16,
@@ -5287,10 +5309,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vehicle-master.identification.vin",
+          "fk_target": "vehicle-master.vin",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "vehicle_vin",
@@ -5309,10 +5331,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vehicle-master.vehicleId",
+          "fk_target": "vehicle-master.vehicle_id",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 vehicle Object",
+          "source": "Get Repair Order v3 — vehicle Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "vehicle_id",
@@ -5493,7 +5515,7 @@
           "sap_field": null,
           "load_column": "posted_date",
           "confidence": "DOCUMENTED",
-          "notes": "The date the RO was posted to accounting \u2014 the join point to gl-journal-posting."
+          "notes": "The date the RO was posted to accounting — the join point to gl-journal-posting."
         },
         {
           "seq": 26,
@@ -6192,7 +6214,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 payments Array",
+          "source": "Get Repair Order v3 — payments Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "payment_type_code",
@@ -6214,7 +6236,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 payments Array",
+          "source": "Get Repair Order v3 — payments Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "payment_by_insurance_flag",
@@ -6236,7 +6258,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 payments Array",
+          "source": "Get Repair Order v3 — payments Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "payment_amount",
@@ -6267,11 +6289,11 @@
             },
             {
               "code": "WCM",
-              "meaning": "Warranty \u2014 Cummins"
+              "meaning": "Warranty — Cummins"
             },
             {
               "code": "WNA",
-              "meaning": "Warranty \u2014 Navistar"
+              "meaning": "Warranty — Navistar"
             },
             {
               "code": "I*/SI*",
@@ -6279,32 +6301,32 @@
             },
             {
               "code": "ICV",
-              "meaning": "Internal \u2014 company vehicle"
+              "meaning": "Internal — company vehicle"
             },
             {
               "code": "IDU",
-              "meaning": "Internal \u2014 demo unit"
+              "meaning": "Internal — demo unit"
             },
             {
               "code": "IGP",
-              "meaning": "Internal \u2014 goodwill policy"
+              "meaning": "Internal — goodwill policy"
             },
             {
               "code": "IPW",
-              "meaning": "Internal \u2014 parts warranty/shop supplies"
+              "meaning": "Internal — parts warranty/shop supplies"
             },
             {
               "code": "IUB",
-              "meaning": "Internal \u2014 trade bus/used-unit work"
+              "meaning": "Internal — trade bus/used-unit work"
             }
           ],
           "unit": null,
-          "source": "Leonard Bus Sales \u2014 CDK Service Type Reference (40+ codes)",
+          "source": "Leonard Bus Sales — CDK Service Type Reference (40+ codes)",
           "source_url": "https://www.leonardbus.com/wp-content/uploads/2022/03/SERVICE-TYPE-REFERENCE-v3-3-2022.pdf",
           "sap_field": "AUFK-AUART (order type analogue)",
           "load_column": "pay_type_code",
           "confidence": "DOCUMENTED",
-          "notes": "Single-character-first payType is also the first character of laborType per the RO spec; this enum is the priority enum-code payload requested by the task brief. Not exhaustive of all 40+ documented codes \u2014 condensed to the representative set."
+          "notes": "Single-character-first payType is also the first character of laborType per the RO spec; this enum is the priority enum-code payload requested by the task brief. Not exhaustive of all 40+ documented codes — condensed to the representative set."
         },
         {
           "seq": 61,
@@ -6321,7 +6343,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_total_sale",
@@ -6343,7 +6365,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_total_cost",
@@ -6365,7 +6387,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_total_tax",
@@ -6387,7 +6409,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_sale_post_deductible",
@@ -6409,7 +6431,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "total_labor_sale",
@@ -6431,7 +6453,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "total_parts_sale",
@@ -6453,7 +6475,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 totals Array",
+          "source": "Get Repair Order v3 — totals Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "total_sublet_sale",
@@ -6500,12 +6522,12 @@
             }
           ],
           "unit": null,
-          "source": "Leonard Bus Sales \u2014 CDK Service Type Reference",
+          "source": "Leonard Bus Sales — CDK Service Type Reference",
           "source_url": "https://www.leonardbus.com/wp-content/uploads/2022/03/SERVICE-TYPE-REFERENCE-v3-3-2022.pdf",
           "sap_field": null,
           "load_column": "receivable_routing_target",
           "confidence": "DOCUMENTED",
-          "notes": "Not a literal stored column \u2014 derived receivable-account routing logic keyed by pay_type_code, documented in the same reference as the pay-type codes."
+          "notes": "Not a literal stored column — derived receivable-account routing logic keyed by pay_type_code, documented in the same reference as the pay-type codes."
         },
         {
           "seq": 69,
@@ -6522,7 +6544,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 deductibles Array",
+          "source": "Get Repair Order v3 — deductibles Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "deductible_actual_amount",
@@ -6544,7 +6566,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 deductibles Array",
+          "source": "Get Repair Order v3 — deductibles Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "deductible_maximum_amount",
@@ -6566,7 +6588,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 mls Object",
+          "source": "Get Repair Order v3 — mls Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "mls_sublet_cost",
@@ -6588,7 +6610,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 mls Object",
+          "source": "Get Repair Order v3 — mls Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "mls_sublet_price",
@@ -6610,7 +6632,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 mls Object",
+          "source": "Get Repair Order v3 — mls Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "mls_lube_cost",
@@ -6632,7 +6654,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 mls Object",
+          "source": "Get Repair Order v3 — mls Object",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "mls_op_code",
@@ -6652,7 +6674,7 @@
       "api": {
         "reachable": "full",
         "endpoints": [
-          "Embedded within Get Repair Order v3 \u2014 data[].operations[].line.laborOperations[]"
+          "Embedded within Get Repair Order v3 — data[].operations[].line.laborOperations[]"
         ],
         "note": "Fully documented as part of the exhaustive Get Repair Order v3 schema (one of only four FULL-reach entities); no standalone labor-line API exists, but the RO response embeds the complete laborOperations array with hours/fees/warranty sub-arrays."
       },
@@ -6662,10 +6684,32 @@
           "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
         }
       ],
-      "field_count": 40,
+      "field_count": 41,
       "fields": [
         {
           "seq": 1,
+          "path": "data[].roNumber",
+          "legacy_name": null,
+          "label": "Repair Order Number",
+          "dealer_label": "the RO number this job belongs to",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": "repair-order.ro_number",
+          "enum_values": [],
+          "unit": null,
+          "source": "Get Repair Order v3 -> data[].roNumber",
+          "source_url": "https://apidocs.fortellis.io/",
+          "sap_field": "AUFK-AUFNR",
+          "load_column": "ro_number",
+          "confidence": "DOCUMENTED",
+          "notes": "Present on the RO v3 header that contains this labour array; must be carried onto the line row so the line stands alone in a relational load."
+        },
+        {
+          "seq": 2,
           "path": "data[].operations[].line.lineCode",
           "legacy_name": null,
           "label": "Repair Line Code",
@@ -6675,11 +6719,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "key",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 operations Array (line object)",
+          "source": "Get Repair Order v3 — operations Array (line object)",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "line_code",
@@ -6687,7 +6731,7 @@
           "notes": "If applied at the RO level rather than a specific line, the letters RO are returned (per mls Object description)."
         },
         {
-          "seq": 2,
+          "seq": 3,
           "path": "data[].operations[].line.statusCode",
           "legacy_name": null,
           "label": "Line Status Code",
@@ -6709,7 +6753,7 @@
           "notes": null
         },
         {
-          "seq": 3,
+          "seq": 4,
           "path": "data[].operations[].line.statusDesc",
           "legacy_name": null,
           "label": "Line Status Description",
@@ -6731,7 +6775,7 @@
           "notes": null
         },
         {
-          "seq": 4,
+          "seq": 5,
           "path": "data[].operations[].line.complaintCode",
           "legacy_name": null,
           "label": "Complaint Code",
@@ -6753,7 +6797,7 @@
           "notes": null
         },
         {
-          "seq": 5,
+          "seq": 6,
           "path": "data[].operations[].line.cause",
           "legacy_name": null,
           "label": "Cause",
@@ -6775,7 +6819,7 @@
           "notes": null
         },
         {
-          "seq": 6,
+          "seq": 7,
           "path": "data[].operations[].line.serviceRequest",
           "legacy_name": null,
           "label": "Service Request Text",
@@ -6797,7 +6841,7 @@
           "notes": null
         },
         {
-          "seq": 7,
+          "seq": 8,
           "path": "data[].operations[].line.dispatchCode",
           "legacy_name": null,
           "label": "Dispatch Code",
@@ -6819,7 +6863,7 @@
           "notes": null
         },
         {
-          "seq": 8,
+          "seq": 9,
           "path": "data[].operations[].line.campaignCode",
           "legacy_name": null,
           "label": "Campaign Code",
@@ -6841,7 +6885,7 @@
           "notes": "Links to a factory recall/service campaign; see also warranty-claim.campaignNumber."
         },
         {
-          "seq": 9,
+          "seq": 10,
           "path": "data[].operations[].line.comebackFlag",
           "legacy_name": null,
           "label": "Line Comeback Flag",
@@ -6863,7 +6907,7 @@
           "notes": null
         },
         {
-          "seq": 10,
+          "seq": 11,
           "path": "data[].operations[].line.addOnFlag",
           "legacy_name": null,
           "label": "Line Add-On Flag",
@@ -6885,7 +6929,7 @@
           "notes": null
         },
         {
-          "seq": 11,
+          "seq": 12,
           "path": "data[].operations[].line.actualWork",
           "legacy_name": null,
           "label": "Actual Work Hours",
@@ -6907,7 +6951,7 @@
           "notes": null
         },
         {
-          "seq": 12,
+          "seq": 13,
           "path": "data[].operations[].line.estimatedDuration",
           "legacy_name": null,
           "label": "Estimated Duration",
@@ -6929,7 +6973,7 @@
           "notes": null
         },
         {
-          "seq": 13,
+          "seq": 14,
           "path": "data[].operations[].line.storyText",
           "legacy_name": null,
           "label": "Technician Story Text",
@@ -6951,7 +6995,7 @@
           "notes": null
         },
         {
-          "seq": 14,
+          "seq": 15,
           "path": "data[].operations[].line.storySequenceNo",
           "legacy_name": null,
           "label": "Story Sequence Number",
@@ -6973,7 +7017,7 @@
           "notes": null
         },
         {
-          "seq": 15,
+          "seq": 16,
           "path": "data[].operations[].line.laborOperations[].sequenceNo",
           "legacy_name": null,
           "label": "Labor Operation Sequence Number",
@@ -6983,11 +7027,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "key",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_op_sequence_number",
@@ -6995,7 +7039,7 @@
           "notes": null
         },
         {
-          "seq": 16,
+          "seq": 17,
           "path": "data[].operations[].line.laborOperations[].opCode",
           "legacy_name": null,
           "label": "Labor Operation Code",
@@ -7009,7 +7053,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "AFVC-STEUS (operation control key, analogue)",
           "load_column": "labor_op_code",
@@ -7017,7 +7061,7 @@
           "notes": null
         },
         {
-          "seq": 17,
+          "seq": 18,
           "path": "data[].operations[].line.laborOperations[].opCodeDesc",
           "legacy_name": null,
           "label": "Labor Operation Description",
@@ -7031,7 +7075,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_op_desc",
@@ -7039,7 +7083,7 @@
           "notes": null
         },
         {
-          "seq": 18,
+          "seq": 19,
           "path": "data[].operations[].line.laborOperations[].type",
           "legacy_name": null,
           "label": "Labor Type Code",
@@ -7053,7 +7097,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_type_code",
@@ -7061,7 +7105,7 @@
           "notes": "No explicit laborType value list is published; corresponds in first character to the payType codes documented via the Leonard Bus service-type reference on the repair-order entity."
         },
         {
-          "seq": 19,
+          "seq": 20,
           "path": "data[].operations[].line.laborOperations[].technicianIds[]",
           "legacy_name": null,
           "label": "Technician ID(s)",
@@ -7072,10 +7116,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.line.laborOperations[].technicianIds[]",
+          "fk_target": "employee-master.technician_ids",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "technician_ids",
@@ -7083,7 +7127,7 @@
           "notes": "Returns 'MULT' if multiple technicians assigned."
         },
         {
-          "seq": 20,
+          "seq": 21,
           "path": "data[].operations[].line.laborOperations[].soldHours",
           "legacy_name": null,
           "label": "Sold Hours",
@@ -7097,7 +7141,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "sold_hours",
@@ -7105,7 +7149,7 @@
           "notes": "Flat-rate/billed hours; distinct from actualHours/timeCardHours (clock hours). Effective Labor Rate = laborSale / soldHours (derived KPI, not a stored field)."
         },
         {
-          "seq": 21,
+          "seq": 22,
           "path": "data[].operations[].line.laborOperations[].actualHours",
           "legacy_name": null,
           "label": "Actual Hours",
@@ -7119,7 +7163,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "actual_hours",
@@ -7127,7 +7171,7 @@
           "notes": null
         },
         {
-          "seq": 22,
+          "seq": 23,
           "path": "data[].operations[].line.laborOperations[].flagHours",
           "legacy_name": null,
           "label": "Flagged Hours",
@@ -7141,7 +7185,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "flag_hours",
@@ -7149,7 +7193,7 @@
           "notes": "Flat-rate hours per the OEM time guide; Technician efficiency = flagHours / actualHours, Technician proficiency = flagHours / scheduled hours (both derived KPIs, not stored)."
         },
         {
-          "seq": 23,
+          "seq": 24,
           "path": "data[].operations[].line.laborOperations[].timeCardHours",
           "legacy_name": null,
           "label": "Time Card Hours",
@@ -7163,7 +7207,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "time_card_hours",
@@ -7171,7 +7215,7 @@
           "notes": null
         },
         {
-          "seq": 24,
+          "seq": 25,
           "path": "data[].operations[].line.laborOperations[].otherHours",
           "legacy_name": null,
           "label": "Other Hours",
@@ -7185,7 +7229,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "other_hours",
@@ -7193,7 +7237,7 @@
           "notes": null
         },
         {
-          "seq": 25,
+          "seq": 26,
           "path": "data[].operations[].line.laborOperations[].sale",
           "legacy_name": null,
           "label": "Labor Sale Amount",
@@ -7207,7 +7251,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_sale_amount",
@@ -7215,7 +7259,7 @@
           "notes": null
         },
         {
-          "seq": 26,
+          "seq": 27,
           "path": "data[].operations[].line.laborOperations[].cost",
           "legacy_name": null,
           "label": "Labor Cost Amount",
@@ -7229,7 +7273,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_cost_amount",
@@ -7237,7 +7281,7 @@
           "notes": null
         },
         {
-          "seq": 27,
+          "seq": 28,
           "path": "data[].operations[].line.laborOperations[].forcedShopCharge",
           "legacy_name": null,
           "label": "Forced Shop Charge",
@@ -7251,7 +7295,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "forced_shop_charge",
@@ -7259,7 +7303,7 @@
           "notes": null
         },
         {
-          "seq": 28,
+          "seq": 29,
           "path": "data[].operations[].line.laborOperations[].mcdPercentage",
           "legacy_name": null,
           "label": "Split-Op MCD Percentage",
@@ -7273,7 +7317,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "percent",
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "mcd_percentage",
@@ -7281,7 +7325,7 @@
           "notes": "MCD = Multiple Charge Distribution; percentage applied when one labor operation is split across pay types."
         },
         {
-          "seq": 29,
+          "seq": 30,
           "path": "data[].operations[].line.laborOperations[].comebackFlag",
           "legacy_name": null,
           "label": "Labor Op Comeback Flag",
@@ -7295,7 +7339,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_op_comeback_flag",
@@ -7303,7 +7347,7 @@
           "notes": null
         },
         {
-          "seq": 30,
+          "seq": 31,
           "path": "data[].operations[].line.laborOperations[].comebackRO",
           "legacy_name": null,
           "label": "Comeback Original RO Number",
@@ -7314,10 +7358,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "repair-order.data[].roNumber",
+          "fk_target": "repair-order.ro_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "comeback_original_ro_number",
@@ -7325,7 +7369,7 @@
           "notes": null
         },
         {
-          "seq": 31,
+          "seq": 32,
           "path": "data[].operations[].line.laborOperations[].bookedDate",
           "legacy_name": null,
           "label": "Labor Op Booked Date",
@@ -7339,7 +7383,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 laborOperations Array",
+          "source": "Get Repair Order v3 — laborOperations Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "labor_op_booked_date",
@@ -7347,7 +7391,7 @@
           "notes": null
         },
         {
-          "seq": 32,
+          "seq": 33,
           "path": "data[].operations[].line.laborOperations[].hours[].hourType",
           "legacy_name": null,
           "label": "Hour Type Code",
@@ -7361,7 +7405,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 hours Array",
+          "source": "Get Repair Order v3 — hours Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "hour_type_code",
@@ -7369,7 +7413,7 @@
           "notes": "Code indicating the type of work for this hours-detail row."
         },
         {
-          "seq": 33,
+          "seq": 34,
           "path": "data[].operations[].line.laborOperations[].hours[].laborType",
           "legacy_name": null,
           "label": "Hours-Detail Labor Type",
@@ -7383,7 +7427,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 hours Array",
+          "source": "Get Repair Order v3 — hours Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "hours_labor_type",
@@ -7391,7 +7435,7 @@
           "notes": null
         },
         {
-          "seq": 34,
+          "seq": 35,
           "path": "data[].operations[].line.laborOperations[].hours[].percentage",
           "legacy_name": null,
           "label": "Technician Actual-Hours Percentage",
@@ -7405,7 +7449,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "percent",
-          "source": "Get Repair Order v3 \u2014 hours Array",
+          "source": "Get Repair Order v3 — hours Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "hours_percentage",
@@ -7413,7 +7457,7 @@
           "notes": "Percentage of a technician's actual hours attributable to this hour type, for multi-technician splits."
         },
         {
-          "seq": 35,
+          "seq": 36,
           "path": "data[].operations[].line.laborOperations[].fees[].type",
           "legacy_name": null,
           "label": "Fee Type Code",
@@ -7440,7 +7484,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 fees Array",
+          "source": "Get Repair Order v3 — fees Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "fee_type_code",
@@ -7448,7 +7492,7 @@
           "notes": null
         },
         {
-          "seq": 36,
+          "seq": 37,
           "path": "data[].operations[].line.laborOperations[].fees[].sale",
           "legacy_name": null,
           "label": "Fee Sale Amount",
@@ -7462,7 +7506,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 fees Array",
+          "source": "Get Repair Order v3 — fees Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "fee_sale_amount",
@@ -7470,7 +7514,7 @@
           "notes": null
         },
         {
-          "seq": 37,
+          "seq": 38,
           "path": "data[].operations[].line.warranty[].claimType",
           "legacy_name": null,
           "label": "Warranty Claim Type (line-level)",
@@ -7481,10 +7525,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "warranty-claim.claimType",
+          "fk_target": "warranty-claim.claim_type",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 line.warranty Array",
+          "source": "Get Repair Order v3 — line.warranty Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "line_warranty_claim_type",
@@ -7492,7 +7536,7 @@
           "notes": null
         },
         {
-          "seq": 38,
+          "seq": 39,
           "path": "data[].operations[].line.warranty[].authorizationCode",
           "legacy_name": null,
           "label": "Warranty Authorization Code (line-level)",
@@ -7506,7 +7550,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 line.warranty Array",
+          "source": "Get Repair Order v3 — line.warranty Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "line_warranty_auth_code",
@@ -7514,7 +7558,7 @@
           "notes": null
         },
         {
-          "seq": 39,
+          "seq": 40,
           "path": "data[].operations[].line.warranty[].failedPartNo",
           "legacy_name": null,
           "label": "Failed Part Number (line-level)",
@@ -7525,10 +7569,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 line.warranty Array",
+          "source": "Get Repair Order v3 — line.warranty Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "line_warranty_failed_part_no",
@@ -7536,7 +7580,7 @@
           "notes": null
         },
         {
-          "seq": 40,
+          "seq": 41,
           "path": "effectiveLaborRate",
           "legacy_name": null,
           "label": "Effective Labor Rate (derived KPI)",
@@ -7570,7 +7614,7 @@
       "api": {
         "reachable": "full",
         "endpoints": [
-          "Embedded within Get Repair Order v3 \u2014 data[].operations[].line.laborOperations[].parts[]"
+          "Embedded within Get Repair Order v3 — data[].operations[].line.laborOperations[].parts[]"
         ],
         "note": "Fully documented as part of the exhaustive Get Repair Order v3 schema (one of only four FULL-reach entities); parts array is nested under laborOperations, confirming CDK models a part as always tied to a specific labor operation rather than free-floating on the RO."
       },
@@ -7580,14 +7624,36 @@
           "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
         },
         {
-          "label": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+          "label": "Total Dealer Solutions — CDK Transaction Codes",
           "url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
         }
       ],
-      "field_count": 33,
+      "field_count": 34,
       "fields": [
         {
           "seq": 1,
+          "path": "data[].roNumber",
+          "legacy_name": null,
+          "label": "Repair Order Number",
+          "dealer_label": "the RO number this part was sold on",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": "repair-order.ro_number",
+          "enum_values": [],
+          "unit": null,
+          "source": "Get Repair Order v3 -> data[].roNumber",
+          "source_url": "https://apidocs.fortellis.io/",
+          "sap_field": "AUFK-AUFNR",
+          "load_column": "ro_number",
+          "confidence": "DOCUMENTED",
+          "notes": "Denormalised from the RO v3 header so the part line is loadable on its own."
+        },
+        {
+          "seq": 2,
           "path": "...parts[].sequenceNo",
           "legacy_name": null,
           "label": "Part Sequence Number",
@@ -7597,11 +7663,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "key",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_sequence_number",
@@ -7609,7 +7675,7 @@
           "notes": null
         },
         {
-          "seq": 2,
+          "seq": 3,
           "path": "...parts[].number",
           "legacy_name": null,
           "label": "Part Number",
@@ -7620,10 +7686,10 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "MARA-MATNR",
           "load_column": "part_number",
@@ -7631,7 +7697,7 @@
           "notes": null
         },
         {
-          "seq": 3,
+          "seq": 4,
           "path": "...parts[].desc",
           "legacy_name": null,
           "label": "Part Description",
@@ -7645,7 +7711,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "MAKT-MAKTX",
           "load_column": "part_description",
@@ -7653,7 +7719,7 @@
           "notes": null
         },
         {
-          "seq": 4,
+          "seq": 5,
           "path": "...parts[].bin1",
           "legacy_name": null,
           "label": "Main Bin Location",
@@ -7667,7 +7733,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "MARD-LGPBE (storage bin)",
           "load_column": "bin1_location",
@@ -7675,7 +7741,7 @@
           "notes": null
         },
         {
-          "seq": 5,
+          "seq": 6,
           "path": "...parts[].source",
           "legacy_name": null,
           "label": "Part Source Number",
@@ -7689,7 +7755,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_source_number",
@@ -7697,7 +7763,7 @@
           "notes": "The source/manufacturer code of the part."
         },
         {
-          "seq": 6,
+          "seq": 7,
           "path": "...parts[].partClass",
           "legacy_name": null,
           "label": "Parts Class Code",
@@ -7711,7 +7777,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "MARA-MTPOS_MARA (analogue)",
           "load_column": "parts_class_code",
@@ -7719,7 +7785,7 @@
           "notes": null
         },
         {
-          "seq": 7,
+          "seq": 8,
           "path": "...parts[].laborSequenceNo",
           "legacy_name": null,
           "label": "Associated Labor Sequence Number",
@@ -7730,10 +7796,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "ro-labour-line.data[].operations[].line.laborOperations[].sequenceNo",
+          "fk_target": "ro-labour-line.labor_op_sequence_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "associated_labor_sequence_number",
@@ -7741,7 +7807,7 @@
           "notes": null
         },
         {
-          "seq": 8,
+          "seq": 9,
           "path": "...parts[].laborType",
           "legacy_name": null,
           "label": "Part Labor Type",
@@ -7755,7 +7821,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_labor_type",
@@ -7763,7 +7829,7 @@
           "notes": null
         },
         {
-          "seq": 9,
+          "seq": 10,
           "path": "...parts[].lineCode",
           "legacy_name": null,
           "label": "Part Repair Line Code",
@@ -7772,12 +7838,12 @@
           "length": 6,
           "precision": null,
           "scale": null,
-          "nullable": true,
-          "key": "FK",
-          "fk_target": "ro-labour-line.data[].operations[].line.lineCode",
+          "nullable": false,
+          "key": "PK",
+          "fk_target": "ro-labour-line.line_code",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_line_code",
@@ -7785,7 +7851,7 @@
           "notes": null
         },
         {
-          "seq": 10,
+          "seq": 11,
           "path": "...parts[].cost",
           "legacy_name": null,
           "label": "Escalated Unit Cost",
@@ -7799,7 +7865,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "MBEW-VERPR (moving average price analogue)",
           "load_column": "escalated_unit_cost",
@@ -7807,7 +7873,7 @@
           "notes": null
         },
         {
-          "seq": 11,
+          "seq": 12,
           "path": "...parts[].list",
           "legacy_name": null,
           "label": "Escalated Unit List Price",
@@ -7821,7 +7887,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "escalated_unit_list_price",
@@ -7829,7 +7895,7 @@
           "notes": null
         },
         {
-          "seq": 12,
+          "seq": 13,
           "path": "...parts[].sale",
           "legacy_name": null,
           "label": "Escalated Unit Sale Price",
@@ -7843,7 +7909,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "escalated_unit_sale_price",
@@ -7851,7 +7917,7 @@
           "notes": "Excludes core price and unit service charge on return parts."
         },
         {
-          "seq": 13,
+          "seq": 14,
           "path": "...parts[].extendedCost",
           "legacy_name": null,
           "label": "Extended Cost",
@@ -7865,7 +7931,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "extended_cost",
@@ -7873,7 +7939,7 @@
           "notes": null
         },
         {
-          "seq": 14,
+          "seq": 15,
           "path": "...parts[].extendedSale",
           "legacy_name": null,
           "label": "Extended Sale",
@@ -7887,7 +7953,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "extended_sale",
@@ -7895,7 +7961,7 @@
           "notes": null
         },
         {
-          "seq": 15,
+          "seq": 16,
           "path": "...parts[].coreCost",
           "legacy_name": null,
           "label": "Core Cost",
@@ -7909,7 +7975,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "core_cost",
@@ -7917,7 +7983,7 @@
           "notes": null
         },
         {
-          "seq": 16,
+          "seq": 17,
           "path": "...parts[].coreSale",
           "legacy_name": null,
           "label": "Core Sale (Core Charge)",
@@ -7931,7 +7997,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "core_sale",
@@ -7939,7 +8005,7 @@
           "notes": null
         },
         {
-          "seq": 17,
+          "seq": 18,
           "path": "...parts[].unitServiceCharge",
           "legacy_name": null,
           "label": "Unit Service Charge (returns)",
@@ -7953,7 +8019,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "unit_service_charge",
@@ -7961,7 +8027,7 @@
           "notes": "Service amount charged per unit for returned parts."
         },
         {
-          "seq": 18,
+          "seq": 19,
           "path": "...parts[].mcdPercentage",
           "legacy_name": null,
           "label": "Split-Part MCD Percentage",
@@ -7975,7 +8041,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "percent",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_mcd_percentage",
@@ -7983,7 +8049,7 @@
           "notes": null
         },
         {
-          "seq": 19,
+          "seq": 20,
           "path": "...parts[].comp",
           "legacy_name": null,
           "label": "Unit Comp Price",
@@ -7997,7 +8063,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "currency",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "unit_comp_price",
@@ -8005,7 +8071,7 @@
           "notes": null
         },
         {
-          "seq": 20,
+          "seq": 21,
           "path": "...parts[].compLineCode",
           "legacy_name": null,
           "label": "Comp Repair Line Code",
@@ -8019,7 +8085,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "comp_line_code",
@@ -8027,7 +8093,7 @@
           "notes": null
         },
         {
-          "seq": 21,
+          "seq": 22,
           "path": "...parts[].qtySold",
           "legacy_name": null,
           "label": "Quantity Sold",
@@ -8041,7 +8107,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "quantity_sold",
@@ -8049,7 +8115,7 @@
           "notes": null
         },
         {
-          "seq": 22,
+          "seq": 23,
           "path": "...parts[].qtyOrdered",
           "legacy_name": null,
           "label": "Quantity Ordered",
@@ -8063,7 +8129,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "quantity_ordered",
@@ -8071,7 +8137,7 @@
           "notes": null
         },
         {
-          "seq": 23,
+          "seq": 24,
           "path": "...parts[].qtyFilled",
           "legacy_name": null,
           "label": "Quantity Filled",
@@ -8085,7 +8151,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "quantity_filled",
@@ -8093,7 +8159,7 @@
           "notes": null
         },
         {
-          "seq": 24,
+          "seq": 25,
           "path": "...parts[].qtyBackordered",
           "legacy_name": null,
           "label": "Quantity Backordered",
@@ -8107,7 +8173,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "quantity_backordered",
@@ -8115,7 +8181,7 @@
           "notes": null
         },
         {
-          "seq": 25,
+          "seq": 26,
           "path": "...parts[].qtyOnHand",
           "legacy_name": null,
           "label": "Quantity On Hand (at time of sale)",
@@ -8129,7 +8195,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "quantity_on_hand_at_sale",
@@ -8137,7 +8203,7 @@
           "notes": null
         },
         {
-          "seq": 26,
+          "seq": 27,
           "path": "...parts[].specialStatus",
           "legacy_name": null,
           "label": "Part Special Status",
@@ -8151,7 +8217,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_special_status",
@@ -8159,7 +8225,7 @@
           "notes": null
         },
         {
-          "seq": 27,
+          "seq": 28,
           "path": "...parts[].employeeId",
           "legacy_name": null,
           "label": "Counter Person Employee ID",
@@ -8170,10 +8236,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.line.laborOperations[].parts[].employeeId",
+          "fk_target": "employee-master.parts_counter_employee_id",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "counter_person_employee_id",
@@ -8181,7 +8247,7 @@
           "notes": null
         },
         {
-          "seq": 28,
+          "seq": 29,
           "path": "...parts[].outsideSalesmanId",
           "legacy_name": null,
           "label": "Outside Salesman ID",
@@ -8192,10 +8258,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.line.laborOperations[].parts[].outsideSalesmanId",
+          "fk_target": "employee-master.outside_salesman_id",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts Array",
+          "source": "Get Repair Order v3 — parts Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "outside_salesman_id",
@@ -8203,7 +8269,7 @@
           "notes": null
         },
         {
-          "seq": 29,
+          "seq": 30,
           "path": "...parts[].fees[].type",
           "legacy_name": null,
           "label": "Part Fee Type Code",
@@ -8230,7 +8296,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts[].fees Array",
+          "source": "Get Repair Order v3 — parts[].fees Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "part_fee_type_code",
@@ -8238,7 +8304,7 @@
           "notes": null
         },
         {
-          "seq": 30,
+          "seq": 31,
           "path": "...parts[].fees[].lopOrPartFlag",
           "legacy_name": null,
           "label": "Fee Applies To Labor Or Part Flag",
@@ -8261,7 +8327,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 parts[].fees Array",
+          "source": "Get Repair Order v3 — parts[].fees Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "fee_lop_or_part_flag",
@@ -8269,7 +8335,7 @@
           "notes": null
         },
         {
-          "seq": 31,
+          "seq": 32,
           "path": "transactionCode",
           "legacy_name": null,
           "label": "CDK Parts Transaction Code",
@@ -8324,7 +8390,7 @@
             }
           ],
           "unit": null,
-          "source": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+          "source": "Total Dealer Solutions — CDK Transaction Codes",
           "source_url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes",
           "sap_field": "BWART (movement type analogue)",
           "load_column": "transaction_code",
@@ -8332,7 +8398,7 @@
           "notes": "Priority enum-code payload per the task brief: this is the parts source/price-class and core/return code list, sourced from a third-party CDK reference guide rather than the RO API spec itself."
         },
         {
-          "seq": 32,
+          "seq": 33,
           "path": "starPartTypeCode",
           "legacy_name": null,
           "label": "STAR PartTypeCode (cross-vendor)",
@@ -8363,7 +8429,7 @@
           "notes": "From the cross-vendor STAR PartsProductItem schema; included as a documented industry-standard analogue for CDK's own less-published part typing. No single fetchable canonical URL captured for STAR standards text itself in this research pass; treat as DOCUMENTED against the concept, sourced via prior research file citation."
         },
         {
-          "seq": 33,
+          "seq": 34,
           "path": "hazmatIndicator",
           "legacy_name": null,
           "label": "Hazmat Indicator (STAR analogue)",
@@ -8403,7 +8469,7 @@
       },
       "sources": [
         {
-          "label": "Fortellis Community \u2014 CDK Drive Async Parts Inventory",
+          "label": "Fortellis Community — CDK Drive Async Parts Inventory",
           "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
         }
       ],
@@ -8743,7 +8809,7 @@
           "seq": 16,
           "path": "supersessionChainPartNumber",
           "legacy_name": null,
-          "label": "Supersession Chain \u2014 Successor Part Number",
+          "label": "Supersession Chain — Successor Part Number",
           "dealer_label": null,
           "datatype": "string",
           "length": 20,
@@ -8751,7 +8817,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "CDK function PN (supersession chain)",
@@ -8838,7 +8904,7 @@
       },
       "sources": [
         {
-          "label": "Karmak \u2014 PACCAR Integration",
+          "label": "Karmak — PACCAR Integration",
           "url": "https://www.karmak.com/integrations/paccar"
         }
       ],
@@ -8876,12 +8942,12 @@
             }
           ],
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration",
+          "source": "Karmak — PACCAR Integration",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "order_type",
           "confidence": "DOCUMENTED",
-          "notes": "PACCAR MDI order types documented via Karmak's DMS-to-PACCAR integration page; PACCAR's own ordering platform is the Online Parts Counter (OPC) at eportal.paccar.com \u2014 the name 'PartsPRO' does not exist and must not be used."
+          "notes": "PACCAR MDI order types documented via Karmak's DMS-to-PACCAR integration page; PACCAR's own ordering platform is the Online Parts Counter (OPC) at eportal.paccar.com — the name 'PartsPRO' does not exist and must not be used."
         },
         {
           "seq": 2,
@@ -8898,7 +8964,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration",
+          "source": "Karmak — PACCAR Integration",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "ordering_platform",
@@ -8978,7 +9044,7 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-ordering convention",
@@ -9000,7 +9066,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "CDK supersession chain concept (function PN)",
@@ -9108,7 +9174,7 @@
       },
       "sources": [
         {
-          "label": "Fortellis Community \u2014 CDK Drive Search Parts Pick Ticket / Async Parts Inventory Q&A",
+          "label": "Fortellis Community — CDK Drive Search Parts Pick Ticket / Async Parts Inventory Q&A",
           "url": "https://community.fortellis.io/fr/taxonomy/term/16"
         }
       ],
@@ -9148,7 +9214,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "repair-order.data[].roNumber",
+          "fk_target": "repair-order.ro_number",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-pick-ticket convention",
@@ -9170,7 +9236,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "counter-parts-sale.counterSaleId",
+          "fk_target": "counter-parts-sale.counter_sale_id",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-pick-ticket convention",
@@ -9192,7 +9258,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-pick-ticket convention",
@@ -9236,7 +9302,7 @@
           "scale": null,
           "nullable": true,
           "key": "business",
-          "fk_target": "parts-master-inventory.BinLocation",
+          "fk_target": "parts-master-inventory.bin_location",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-pick-ticket convention",
@@ -9258,7 +9324,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "employee-master.data[].serviceAdvisor",
+          "fk_target": "employee-master.service_advisor_number",
           "enum_values": null,
           "unit": null,
           "source": "Dealer parts-pick-ticket convention",
@@ -9347,11 +9413,11 @@
       },
       "sources": [
         {
-          "label": "CDK Global \u2014 API Solutions for Parts",
+          "label": "CDK Global — API Solutions for Parts",
           "url": "https://www2.cdkglobal.com/api-solutions-parts"
         },
         {
-          "label": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+          "label": "Total Dealer Solutions — CDK Transaction Codes",
           "url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
         }
       ],
@@ -9372,7 +9438,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "CDK Global \u2014 API Solutions for Parts (Get Parts Sales / History Setup / Async Open / Async Closed)",
+          "source": "CDK Global — API Solutions for Parts (Get Parts Sales / History Setup / Async Open / Async Closed)",
           "source_url": "https://www2.cdkglobal.com/api-solutions-parts",
           "sap_field": null,
           "load_column": "counter_sale_id",
@@ -9403,7 +9469,7 @@
             }
           ],
           "unit": null,
-          "source": "CDK Global \u2014 API Solutions for Parts",
+          "source": "CDK Global — API Solutions for Parts",
           "source_url": "https://www2.cdkglobal.com/api-solutions-parts",
           "sap_field": null,
           "load_column": "sale_status",
@@ -9422,7 +9488,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for counter sale header",
@@ -9444,7 +9510,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for counter sale line",
@@ -9560,7 +9626,7 @@
             }
           ],
           "unit": null,
-          "source": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+          "source": "Total Dealer Solutions — CDK Transaction Codes",
           "source_url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes",
           "sap_field": null,
           "load_column": "transaction_code",
@@ -9596,7 +9662,7 @@
       "entity_name": "Deal Jacket / Vehicle Sale",
       "dealer_name": "Deal Jacket",
       "group": "transaction",
-      "sap_analogue": "VBAK/VBAP (Sales Order) + posted Billing Document \u2014 closest SAP analogue for a vehicle sale + F&I bundle",
+      "sap_analogue": "VBAK/VBAP (Sales Order) + posted Billing Document — closest SAP analogue for a vehicle sale + F&I bundle",
       "table_name": "cdk_deal_jacket_vehicle_sale",
       "grain": "one row per deal per rooftop",
       "api": {
@@ -9610,7 +9676,7 @@
       },
       "sources": [
         {
-          "label": "BettrData \u2014 CDK FI Sales integration reference",
+          "label": "BettrData — CDK FI Sales integration reference",
           "url": "https://www.bettrdata.io/"
         }
       ],
@@ -9678,12 +9744,12 @@
             }
           ],
           "unit": null,
-          "source": "F&I Sales History Setup/Bulk/Delta \u2014 status codes named but not defined in source reviewed",
+          "source": "F&I Sales History Setup/Bulk/Delta — status codes named but not defined in source reviewed",
           "source_url": null,
           "sap_field": null,
           "load_column": "deal_status",
           "confidence": "UNVERIFIED",
-          "notes": "Codes C, B, P, F, I, U are confirmed to exist as the status enum by name; their plain-English meanings are an educated guess only and must be confirmed at login. Flagged UNVERIFIED per contract rules \u2014 do not treat the 'Likely:' meanings as fact."
+          "notes": "Codes C, B, P, F, I, U are confirmed to exist as the status enum by name; their plain-English meanings are an educated guess only and must be confirmed at login. Flagged UNVERIFIED per contract rules — do not treat the 'Likely:' meanings as fact."
         },
         {
           "seq": 3,
@@ -9725,7 +9791,7 @@
             }
           ],
           "unit": null,
-          "source": "CDK partner-era named extracts: Pending Deals, Finalized Deals, We Owes \u2014 Update Only, Sales Customers, Sales Vehicles",
+          "source": "CDK partner-era named extracts: Pending Deals, Finalized Deals, We Owes — Update Only, Sales Customers, Sales Vehicles",
           "source_url": null,
           "sap_field": null,
           "load_column": "deal_lifecycle_stage",
@@ -9744,7 +9810,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "customer-master.data[].customerId",
+          "fk_target": "customer-master.customer_id",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for deal jacket header",
@@ -9766,7 +9832,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vehicle-master.vehicleId",
+          "fk_target": "vehicle-master.vehicle_id",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for deal jacket header",
@@ -9810,7 +9876,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vehicle-master.vehicleId",
+          "fk_target": "vehicle-master.vehicle_id",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for deal jacket header",
@@ -9832,7 +9898,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vendor-master.vendorId",
+          "fk_target": "vendor-master.vendor_id",
           "enum_values": null,
           "unit": null,
           "source": "No published field-level schema for deal jacket header",
@@ -9857,7 +9923,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "CDK partner-era named extract: 'We Owes \u2014 Update Only'",
+          "source": "CDK partner-era named extract: 'We Owes — Update Only'",
           "source_url": null,
           "sap_field": null,
           "load_column": "we_owe_description",
@@ -9919,7 +9985,7 @@
           "sap_field": null,
           "load_column": "fi_products_sold",
           "confidence": "UNVERIFIED",
-          "notes": "Extended warranty, GAP, credit life, etc. \u2014 standard F&I upsell products; not confirmed as discrete CDK fields."
+          "notes": "Extended warranty, GAP, credit life, etc. — standard F&I upsell products; not confirmed as discrete CDK fields."
         }
       ]
     },
@@ -9934,7 +10000,7 @@
       "api": {
         "reachable": "partial",
         "endpoints": [
-          "Embedded within Get Repair Order v3 \u2014 data[].technicianPunchTimes[]"
+          "Embedded within Get Repair Order v3 — data[].technicianPunchTimes[]"
         ],
         "note": "RO-linked technician punch times are fully documented as an embedded array within the Get Repair Order v3 response (richer than a typical PARTIAL entity, since this array is transcribed field-for-field from the same FULL-reach API as repair-order). Indirect/non-RO time punches (training, cleanup, PTO) are a standard dealer time-clock concept but have no confirmed CDK field source in this research pass, hence overall PARTIAL classification is retained per the task brief's given tier."
       },
@@ -9957,11 +10023,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "FK",
-          "fk_target": "employee-master.data[].serviceAdvisor",
+          "key": "PK",
+          "fk_target": "employee-master.service_advisor_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "CATSDB-PERNR",
           "load_column": "technician_id",
@@ -9978,12 +10044,12 @@
           "length": 6,
           "precision": null,
           "scale": null,
-          "nullable": true,
-          "key": "FK",
-          "fk_target": "ro-labour-line.data[].operations[].line.lineCode",
+          "nullable": false,
+          "key": "PK",
+          "fk_target": "ro-labour-line.line_code",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "line_code",
@@ -10001,11 +10067,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "business",
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "CATSDB-WORKDATE",
           "load_column": "work_date",
@@ -10022,12 +10088,12 @@
           "length": null,
           "precision": null,
           "scale": null,
-          "nullable": true,
-          "key": "business",
+          "nullable": false,
+          "key": "PK",
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "time_on",
@@ -10049,7 +10115,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "time_off",
@@ -10071,7 +10137,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "hours",
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": "CATSDB-STDAZ",
           "load_column": "duration_hours",
@@ -10093,7 +10159,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "work_type_code",
@@ -10115,7 +10181,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 technicianPunchTimes Array",
+          "source": "Get Repair Order v3 — technicianPunchTimes Array",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "altered_flag",
@@ -10132,9 +10198,9 @@
           "length": 20,
           "precision": null,
           "scale": null,
-          "nullable": true,
-          "key": "FK",
-          "fk_target": "repair-order.data[].roNumber",
+          "nullable": false,
+          "key": "PK",
+          "fk_target": "repair-order.ro_number",
           "enum_values": null,
           "unit": null,
           "source": "Get Repair Order v3 (parent object)",
@@ -10201,7 +10267,7 @@
       "api": {
         "reachable": "partial",
         "endpoints": [
-          "Get Repair Order v3 \u2014 getWIPRepairOrders (GET /wip)",
+          "Get Repair Order v3 — getWIPRepairOrders (GET /wip)",
           "getOpenRepairOrdersBulk",
           "getClosedRepairOrdersBulk/Delta"
         ],
@@ -10213,10 +10279,32 @@
           "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
         }
       ],
-      "field_count": 9,
+      "field_count": 10,
       "fields": [
         {
           "seq": 1,
+          "path": "wipSnapshotDate",
+          "legacy_name": null,
+          "label": "WIP Snapshot Date",
+          "dealer_label": "the date this work-in-process balance was captured",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "Stamped by extract run (30_extract_transactions / 40_ingest_exports)",
+          "source_url": null,
+          "sap_field": null,
+          "load_column": "wip_snapshot_date",
+          "confidence": "INFERRED",
+          "notes": "The stated grain is one row per RO per snapshot date, so the snapshot date is part of the key. CDK exposes RO status, not a dated WIP object — the snapshot date is stamped by our own extract run, not read from CDK."
+        },
+        {
+          "seq": 2,
           "path": "roNumber",
           "legacy_name": null,
           "label": "Associated RO Number",
@@ -10226,11 +10314,11 @@
           "precision": null,
           "scale": null,
           "nullable": false,
-          "key": "FK",
-          "fk_target": "repair-order.data[].roNumber",
+          "key": "PK",
+          "fk_target": "repair-order.ro_number",
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 getWIPRepairOrders method",
+          "source": "Get Repair Order v3 — getWIPRepairOrders method",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "ro_number",
@@ -10238,7 +10326,7 @@
           "notes": null
         },
         {
-          "seq": 2,
+          "seq": 3,
           "path": "wipStatus",
           "legacy_name": null,
           "label": "WIP Status",
@@ -10265,7 +10353,7 @@
             }
           ],
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 getWIPRepairOrders (GET /wip) method description",
+          "source": "Get Repair Order v3 — getWIPRepairOrders (GET /wip) method description",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "wip_status",
@@ -10273,7 +10361,7 @@
           "notes": "getWIPRepairOrders returns the day's WIP records: ROs opened, voided, or closed within the past 48 hours."
         },
         {
-          "seq": 3,
+          "seq": 4,
           "path": "wipLaborAmount",
           "legacy_name": null,
           "label": "WIP Labor Amount (suspense)",
@@ -10295,7 +10383,7 @@
           "notes": "Parts/labor posted to a suspense/WIP account when billed to an open RO, before the RO closes; nets to zero and reclassifies to revenue/COGS at close. GM Account 247 = WIP-Labor per the GM dealer standard accounting manual, already used as the gl-account-master worked example."
         },
         {
-          "seq": 4,
+          "seq": 5,
           "path": "wipPartsAmount",
           "legacy_name": null,
           "label": "WIP Parts Amount (suspense)",
@@ -10317,7 +10405,7 @@
           "notes": null
         },
         {
-          "seq": 5,
+          "seq": 6,
           "path": "wipOpenedDate",
           "legacy_name": null,
           "label": "WIP Opened Date",
@@ -10331,7 +10419,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 openDate (RO header field reused for WIP tracking)",
+          "source": "Get Repair Order v3 — openDate (RO header field reused for WIP tracking)",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "wip_opened_date",
@@ -10339,7 +10427,7 @@
           "notes": null
         },
         {
-          "seq": 6,
+          "seq": 7,
           "path": "wipAgeDays",
           "legacy_name": null,
           "label": "WIP Age in Days",
@@ -10361,7 +10449,7 @@
           "notes": null
         },
         {
-          "seq": 7,
+          "seq": 8,
           "path": "wipClosedDate",
           "legacy_name": null,
           "label": "WIP Closed Date",
@@ -10375,7 +10463,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Get Repair Order v3 \u2014 closedDate (RO header field reused for WIP tracking)",
+          "source": "Get Repair Order v3 — closedDate (RO header field reused for WIP tracking)",
           "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf",
           "sap_field": null,
           "load_column": "wip_closed_date",
@@ -10383,7 +10471,7 @@
           "notes": null
         },
         {
-          "seq": 8,
+          "seq": 9,
           "path": "wipGlAccount",
           "legacy_name": null,
           "label": "WIP GL Suspense Account",
@@ -10394,7 +10482,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "GM dealer standard accounting manual (Account 247 WIP-Labor pattern)",
@@ -10405,7 +10493,7 @@
           "notes": null
         },
         {
-          "seq": 9,
+          "seq": 10,
           "path": "wipDepartmentSuffix",
           "legacy_name": null,
           "label": "WIP Department/Cost-Centre Suffix",
@@ -10416,7 +10504,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "cost-centre-department.departmentSuffix",
+          "fk_target": "cost-centre-department.department_code",
           "enum_values": null,
           "unit": null,
           "source": "Dealer accounting convention (department suffix on WIP suspense postings)",
@@ -10447,7 +10535,7 @@
           "url": "https://www.nhtsa.gov/recalls"
         },
         {
-          "label": "JW Speaker \u2014 PACCAR warranty claim submission guidance",
+          "label": "JW Speaker — PACCAR warranty claim submission guidance",
           "url": "https://www.jwspeaker.com/"
         }
       ],
@@ -10487,7 +10575,7 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "repair-order.data[].roNumber",
+          "fk_target": "repair-order.ro_number",
           "enum_values": null,
           "unit": null,
           "source": "PACCAR PRWS draft-from-RO workflow (NHTSA bulletins + PACCAR/JW Speaker portal instructions)",
@@ -10531,7 +10619,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
           "source": "NHTSA bulletins + PACCAR/JW Speaker portal instructions",
@@ -10821,7 +10909,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "GM dealer standard accounting manual (Account 263 Warranty Claims) / Ford dealer accounting (Account 1140 Warranty Claims Receivable)",
@@ -10905,11 +10993,11 @@
       "api": {
         "reachable": "none",
         "endpoints": [],
-        "note": "No public PO or goods-receipt CRUD API was located for CDK Drive. Karmak's documented PACCAR dealer-DMS integration confirms that OEM parts invoices are imported electronically (via ASN/packing slip), compared to purchase orders and receipts, and auto-posted to accounts payable \u2014 this establishes that a three-way-match concept exists in the PACCAR/CDK dealer ecosystem, even though CDK's own native field schema for POs and receipts was not found. All fields are built from standard ERP three-way-match convention per the task brief's instruction for NONE-reach objects, with the Karmak citation used wherever it plausibly corroborates a field's existence."
+        "note": "No public PO or goods-receipt CRUD API was located for CDK Drive. Karmak's documented PACCAR dealer-DMS integration confirms that OEM parts invoices are imported electronically (via ASN/packing slip), compared to purchase orders and receipts, and auto-posted to accounts payable — this establishes that a three-way-match concept exists in the PACCAR/CDK dealer ecosystem, even though CDK's own native field schema for POs and receipts was not found. All fields are built from standard ERP three-way-match convention per the task brief's instruction for NONE-reach objects, with the Karmak citation used wherever it plausibly corroborates a field's existence."
       },
       "sources": [
         {
-          "label": "Karmak \u2014 PACCAR Integration",
+          "label": "Karmak — PACCAR Integration",
           "url": "https://www.karmak.com/integrations/paccar"
         }
       ],
@@ -10949,7 +11037,7 @@
           "scale": null,
           "nullable": false,
           "key": "FK",
-          "fk_target": "vendor-master.vendorId",
+          "fk_target": "vendor-master.vendor_id",
           "enum_values": null,
           "unit": null,
           "source": "Standard ERP three-way-match convention (PO/receipt/invoice), corroborated by Karmak's PACCAR OEM-parts-invoice integration",
@@ -11015,10 +11103,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "parts-master-inventory.PartNumber",
+          "fk_target": "parts-master-inventory.part_number",
           "enum_values": null,
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration (OEM parts invoice import, compared to POs/receipts)",
+          "source": "Karmak — PACCAR Integration (OEM parts invoice import, compared to POs/receipts)",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "part_number",
@@ -11062,7 +11150,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": "quantity",
-          "source": "Karmak \u2014 PACCAR Integration (electronic ASN/packing slip used to receive parts)",
+          "source": "Karmak — PACCAR Integration (electronic ASN/packing slip used to receive parts)",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "quantity_received",
@@ -11106,7 +11194,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration (ASN-based electronic receiving)",
+          "source": "Karmak — PACCAR Integration (ASN-based electronic receiving)",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "receipt_date",
@@ -11128,7 +11216,7 @@
           "fk_target": null,
           "enum_values": null,
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration (electronic ASN/packing slips used to receive parts)",
+          "source": "Karmak — PACCAR Integration (electronic ASN/packing slips used to receive parts)",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "asn_number",
@@ -11147,10 +11235,10 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "vendor-master.vendorId",
+          "fk_target": "vendor-master.vendor_id",
           "enum_values": null,
           "unit": null,
-          "source": "Karmak \u2014 PACCAR Integration (OEM parts invoices imported, compared to POs/receipts, auto-posted to AP)",
+          "source": "Karmak — PACCAR Integration (OEM parts invoices imported, compared to POs/receipts, auto-posted to AP)",
           "source_url": "https://www.karmak.com/integrations/paccar",
           "sap_field": null,
           "load_column": "invoice_number",
@@ -11230,7 +11318,7 @@
           "scale": null,
           "nullable": true,
           "key": "FK",
-          "fk_target": "gl-account-master.accountNumber",
+          "fk_target": "gl-account-master.gl_account_number",
           "enum_values": null,
           "unit": null,
           "source": "Standard ERP convention (auto-post to AP after three-way match)",
