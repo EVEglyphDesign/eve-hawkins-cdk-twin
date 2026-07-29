@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEglyphDesign — CDK Twin — Conceptual Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdfaf4;
+    --cream-2: #f7f2e7;
+    --ink: #1a1a1a;
+    --line: #e7e1d3;
+    --mute: #6b665c;
+    --accent: #e87722;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 119, 34, 0.35);
+    text-underline-offset: 2px;
+  }
+
+  a:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero {
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0 48px;
+    background: var(--cream);
+  }
+
+  .kicker {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  header.hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    max-width: 820px;
+  }
+
+  header.hero p.lede {
+    margin-top: 20px;
+    max-width: 640px;
+    font-size: 18px;
+    color: var(--mute);
+  }
+
+  .status-pill {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--cream-2);
+    color: var(--mute);
+  }
+
+  section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  section h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  section > p.section-intro {
+    color: var(--mute);
+    max-width: 680px;
+    margin-bottom: 36px;
+  }
+
+  /* Layered diagram */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .layer {
+    position: relative;
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .layer .num {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .layer .body h3 {
+    font-size: 19px;
+    margin-bottom: 4px;
+  }
+
+  .layer .body p {
+    color: var(--mute);
+    font-size: 15px;
+    max-width: 560px;
+  }
+
+  .layer .status {
+    font-size: 12px;
+    color: var(--mute);
+    text-align: right;
+    white-space: nowrap;
+    border-left: 1px solid var(--line);
+    padding-left: 16px;
+  }
+
+  .layer::before {
+    content: "";
+    position: absolute;
+    left: 32px;
+    bottom: -14px;
+    width: 1px;
+    height: 14px;
+    background: var(--line);
+  }
+
+  .layer:last-child::before { display: none; }
+
+  .layer a.mod-link {
+    font-weight: 500;
+  }
+
+  /* Adapters / schema strip */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 720px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .layer { grid-template-columns: 36px 1fr; }
+    .layer .status { grid-column: 1 / -1; text-align: left; border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 10px; margin-top: 8px; }
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    background: var(--cream);
+  }
+
+  .card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    color: var(--mute);
+    font-size: 14.5px;
+    margin-bottom: 10px;
+  }
+
+  .repo-list {
+    list-style: none;
+  }
+
+  .repo-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: baseline;
+  }
+
+  .repo-list li:last-child { border-bottom: none; }
+
+  .repo-list .repo-desc {
+    color: var(--mute);
+    font-size: 14px;
+    text-align: right;
+    flex-shrink: 0;
+    max-width: 380px;
+  }
+
+  footer {
+    padding: 40px 0 64px;
+  }
+
+  footer .foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 13px;
+    color: var(--mute);
+  }
+
+  footer .mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 15px;
+  }
+
+  .principle-list {
+    display: grid;
+    gap: 16px;
+  }
+
+  .principle-list .p-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 18px;
+  }
+
+  .principle-list .p-item strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .principle-list .p-item span {
+    color: var(--mute);
+    font-size: 14.5px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">EVEglyphDesign · Sovereign Digital Twin</div>
+    <h1>A conceptual map of the CDK Drive twin for Peterbilt Atlantic</h1>
+    <p class="lede">
+      Six modules trace the dealer group's data from organization down through document
+      flow, rebuilt in an SAP-shape schema so the group owns its own operating record
+      independent of any single DMS vendor.
+    </p>
+    <span class="status-pill">Status: wireframe — every module below is placeholder-but-real, pending reconciliation against a live tenant</span>
+  </div>
+</header>
+
+<section id="modules">
+  <div class="wrap">
+    <h2>The six modules, as a layered diagram</h2>
+    <p class="section-intro">
+      Each layer builds on the one above it: organization defines who is posting, ledger and
+      cost objects define where value lands, materials and master data define what is being
+      tracked, and document flow ties every transaction back through the stack.
+    </p>
+
+    <div class="stack">
+      <div class="layer">
+        <div class="num">01</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/01-organization.md">Organization</a></h3>
+          <p>Client → Company Number → Subscription-Id → Department-Id → site hierarchy, and the Fortellis header contract every other module depends on.</p>
+        </div>
+        <div class="status">wireframe · lane 1</div>
+      </div>
+
+      <div class="layer">
+        <div class="num">02</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/02-ledger.md">Ledger</a></h3>
+          <p>Chart of accounts, accounting schedules, journal types, GL posting APIs, and month-end close sequence.</p>
+        </div>
+        <div class="status">wireframe · lane 2</div>
+      </div>
+
+      <div class="layer">
+        <div class="num">03</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/03-cost-objects.md">Cost objects</a></h3>
+          <p>Departments as profit/cost centres, the repair order as an internal-order analogue, and technician flat-rate time.</p>
+        </div>
+        <div class="status">wireframe · lane 3</div>
+      </div>
+
+      <div class="layer">
+        <div class="num">04</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/04-materials.md">Materials</a></h3>
+          <p>Parts master, supersession chains, valuation, movement types, and the real PACCAR ordering system, Online Parts Counter.</p>
+        </div>
+        <div class="status">wireframe · lane 4</div>
+      </div>
+
+      <div class="layer">
+        <div class="num">05</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/05-master-data.md">Master data</a></h3>
+          <p>Customer, vehicle, employee, and vendor records — including the CASL consent-log gap this twin closes.</p>
+        </div>
+        <div class="status">wireframe · lane 5</div>
+      </div>
+
+      <div class="layer">
+        <div class="num">06</div>
+        <div class="body">
+          <h3><a class="mod-link" href="../modules/06-document-flow.md">Document flow</a></h3>
+          <p>Deal desk, service RO, parts counter, PACCAR warranty (PRWS), AR/cashiering, and the payroll gap that has no CDK-native API.</p>
+        </div>
+        <div class="status">wireframe · lane 6</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <h2>Design principles</h2>
+    <p class="section-intro">
+      Carried forward from <a href="https://github.com/EVEglyphDesign/eve-dealer-parts-twin">the parts twin</a>,
+      the sibling repo this schema extends.
+    </p>
+    <div class="principle-list">
+      <div class="p-item">
+        <strong>SAP-shape schema</strong>
+        <span>Column names mirror MARA / MARC / MARD / MBEW / MATDOC / MVKE. When PACCAR sends an SAP payload, it maps 1:1. When the dealer group leaves a vendor, the field names still make sense.</span>
+      </div>
+      <div class="p-item">
+        <strong>One adapter per external system, not per site</strong>
+        <span>CDK Drive (Fortellis), PACCAR's dealer-facing systems, and a file-export fallback path — three adapters cover all nine Peterbilt Atlantic sites.</span>
+      </div>
+      <div class="p-item">
+        <strong>Never invent a field or endpoint</strong>
+        <span>Every name in this repository traces to a public source. Where no public source exists, the file says so explicitly rather than filling the gap with a plausible guess.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <h2>What's in the repository</h2>
+    <p class="section-intro">Schema and adapter surfaces referenced by the modules above.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3><a href="../schema/README.md">Schema</a></h3>
+        <p>Proposed SAP-shape tables for organization, ledger, cost objects, master data, and document flow, extending the parts twin's existing materials tables.</p>
+      </div>
+      <div class="card">
+        <h3><a href="../adapters/cdk-fortellis/README.md">CDK Fortellis adapter</a></h3>
+        <p>OAuth2 + three-header contract, async start/poll/pull pattern, and every confirmed Fortellis API this twin ingests.</p>
+      </div>
+      <div class="card">
+        <h3><a href="../adapters/paccar/README.md">PACCAR adapter</a></h3>
+        <p>Online Parts Counter, PRWS, MDI, and the sovereign-data boundary around PACCAR-retained telematics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="related">
+  <div class="wrap">
+    <h2>Related repositories</h2>
+    <ul class="repo-list">
+      <li>
+        <a href="https://github.com/EVEglyphDesign/eve-dealer-parts-twin">eve-dealer-parts-twin</a>
+        <span class="repo-desc">SAP-shape materials schema and CDK/PACCAR adapter conventions this repo extends.</span>
+      </li>
+      <li>
+        <a href="https://github.com/EVEglyphDesign/eve-hawkins-telus-twin">eve-hawkins-telus-twin</a>
+        <span class="repo-desc">Sibling sovereign-twin repository, source of the wireframe and closing-mark conventions used here.</span>
+      </li>
+      <li>
+        <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin">eve-hawkins-cdk-twin</a>
+        <span class="repo-desc">This repository's own source, for the full module and open-questions detail behind this map.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span>© 2026 EVEglyphDesign. All rights reserved. Controlled copy.</span>
+      <span class="mark">Pour le bien-être du peuple.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
