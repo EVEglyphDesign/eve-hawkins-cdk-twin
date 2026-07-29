@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day-1 Extract Readiness Board — EVEglyphDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line);background:var(--cream2)}
+header .wrap{padding-top:26px;padding-bottom:26px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:10px}
+h1{font-size:clamp(26px,3.6vw,40px);line-height:1.15;margin-bottom:8px}
+header p{margin:0;color:var(--mute);max-width:68ch}
+.crumbs{margin-top:14px;font-size:13px}
+.crumbs a{margin-right:16px;text-decoration:none;border-bottom:1px solid rgba(232,119,34,.35)}
+
+/* sequence strip */
+.seq-wrap{padding:30px 0 6px}
+.seq-wrap h2{font-size:20px;margin-bottom:4px}
+.seq-wrap .sub{color:var(--mute);font-size:13.5px;margin:0 0 18px}
+.seq{display:flex;flex-wrap:wrap;gap:10px}
+.seq-step{flex:1 1 150px;min-width:140px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;position:relative}
+.seq-step .s-n{font-family:'Fraunces',serif;color:var(--accent);font-weight:600;font-size:15px;margin-bottom:4px}
+.seq-step .s-t{font-size:13.5px;font-weight:600;line-height:1.3;margin-bottom:5px}
+.seq-step .s-e{font-size:12px;color:var(--mute)}
+.seq-step .s-e .cf-tag{margin-left:4px}
+.seq-arrow{align-self:center;color:var(--line);font-size:18px;line-height:1;padding:0 2px}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin:30px 0 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{background:none;border:0;font:inherit;font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--mute);padding:12px 6px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .tcount{font-family:'Inter',sans-serif;font-weight:600;font-size:11px;color:var(--mute);background:var(--cream2);border:1px solid var(--line);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+
+.phase-panel{display:none;padding:26px 0 10px}
+.phase-panel.on{display:block}
+.phase-intro{color:var(--mute);max-width:78ch;margin:0 0 20px;font-size:14.5px}
+.phase-link-out{background:var(--cream2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:13px 16px;font-size:14px;margin-bottom:22px}
+
+/* target cards */
+.cards{display:grid;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.card-title h3{font-size:17px;line-height:1.3;margin-bottom:2px}
+.card-title .sysname{font-size:12.5px;color:var(--mute);font-family:'Inter',sans-serif}
+.card-check{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--mute);white-space:nowrap;cursor:pointer;user-select:none}
+.card-check input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+.card.done{opacity:.55}
+.card.done .card-title h3{text-decoration:line-through}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 12px}
+.pill{font-size:11px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--mute);background:var(--cream2);white-space:nowrap}
+.pill.full{border-color:#bcd8bc;background:#eef6ee;color:#3d6b3d}
+.pill.partial{border-color:#f0d3ac;background:#fdf3e5;color:#9a6017}
+.pill.none{border-color:#e3c7c7;background:#faeded;color:#8f4141}
+.cf{font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;padding:2px 8px;border-radius:20px;border:1px solid var(--line)}
+.cf.documented{color:#3d6b3d;border-color:#bcd8bc;background:#eef6ee}
+.cf.inferred{color:#9a6017;border-color:#f0d3ac;background:#fdf3e5}
+.cf.unverified{color:#8f4141;border-color:#e3c7c7;background:#faeded}
+
+.field-grid{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:13.5px}
+.field-grid dt{color:var(--mute);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding-top:2px}
+.field-grid dd{margin:0 0 2px}
+.field-grid code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--cream2);padding:1px 6px;border-radius:4px}
+.deps{display:flex;flex-wrap:wrap;gap:6px}
+.dep-tag{font-size:11.5px;background:var(--cream2);border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--ink)}
+.dep-tag.none{color:var(--mute);font-style:italic;background:none;border-style:dashed}
+
+/* blockers */
+.blockers{display:grid;gap:14px}
+.blocker{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px}
+.blocker h3{font-size:16px;margin-bottom:6px}
+.blocker p{margin:0 0 10px;font-size:14px;color:var(--ink)}
+.blocker .ask{background:var(--cream2);border-radius:6px;padding:10px 14px;font-size:13.5px}
+.blocker .ask strong{color:var(--accent)}
+
+/* integrity */
+.integrity-grid{display:grid;gap:12px}
+.integrity-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+.integrity-item h3{font-size:15.5px;margin-bottom:6px}
+.integrity-item .ctrl{font-size:14px;margin-bottom:6px}
+.integrity-item .proves{font-size:13px;color:var(--mute)}
+
+/* section blocks used inside phase panels */
+.subsection{margin:26px 0 6px}
+.subsection h2{font-size:19px;margin-bottom:4px}
+.subsection .sub{color:var(--mute);font-size:13.5px;margin:0 0 16px}
+
+footer{border-top:1px solid var(--line);background:var(--cream2);font-size:12.5px;color:var(--mute)}
+footer .wrap{padding:22px 24px}
+
+@media(max-width:720px){.field-grid{grid-template-columns:1fr}.field-grid dt{padding-top:8px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="eyebrow">EVEglyph Design · Hawkins CDK Twin</div>
+  <h1>Day-1 Extract Readiness Board</h1>
+  <p>The checklist to run the moment the CDK Drive admin login lands. Metadata first, then three months of transactions, then tie-out on the middle month. Every card below drives a real screen or a real endpoint — tick it off live as you go, it persists in this browser.</p>
+  <div class="crumbs">
+    <a href="../">Twin overview</a>
+    <a href="../model/">Data model explorer</a>
+    <a href="../tieout/">Phase 3 tie-out board →</a>
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin">Repository</a>
+  </div>
+</div></header>
+
+<div class="wrap seq-wrap">
+  <h2>Run order for day one</h2>
+  <p class="sub">Hour by hour, left to right. Elapsed times are honest estimates, not commitments — every one is <span class="cf inferred">INFERRED</span>.</p>
+  <div class="seq" id="seq"></div>
+</div>
+
+<div class="wrap">
+  <div class="tabs" id="tabs"></div>
+
+  <div class="phase-panel" id="phase-1">
+    <p class="phase-intro">Pull every schema/definition/setup table reachable before touching a single transaction: chart of accounts, account-schedule definitions, department suffix conventions, pay-type/labour-op codes, parts source/price codes, document types, and the user/permission inventory itself. Metadata before transactions, always.</p>
+    <div class="cards" id="cards-1"></div>
+  </div>
+
+  <div class="phase-panel" id="phase-2">
+    <p class="phase-intro">Every transaction class for the 3-month window (May, June, July 2026 by default — confirm exact months on the day): repair orders (header/labour/parts/punches), counter parts sales, deal jackets, parts orders &amp; receipts, warranty claims, and the GL journal/schedule exports that make the ledger visible at all.</p>
+    <div class="cards" id="cards-2"></div>
+  </div>
+
+  <div class="phase-panel" id="phase-3">
+    <p class="phase-intro">Tie-out happens on the middle month of the window (June 2026 by default). This board does not rebuild the financials — that lives on Lane C's tie-out board, linked below. What this phase needs from the extract is the control totals captured in the counts &amp; integrity panel further down this page.</p>
+    <div class="phase-link-out">
+      <strong>Tie-out board:</strong> rebuild of the income statement by department, balance sheet, schedule balances, and absorption rate from the captured data, reconciled against what CDK/PACCAR actually reported for June 2026 — variance thresholds, break register, sign-off.
+      <br><a href="../tieout/">Open the Phase 3 tie-out board →</a>
+      <span style="display:inline-block;margin-left:8px" class="cf unverified">UNVERIFIED — board not yet published by Lane C</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h2>Blockers panel</h2>
+    <p class="sub">The things that will stop the run cold, and the pre-emptive ask to send to CDK or Luke today, before the session starts.</p>
+    <div class="blockers" id="blockers"></div>
+  </div>
+
+  <div class="subsection">
+    <h2>Counts &amp; integrity panel</h2>
+    <p class="sub">The control total that proves each extract is actually complete. This is what makes Phase 3 tie-out possible at all.</p>
+    <div class="integrity-grid" id="integrity"></div>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  © 2026 EVEglyphDesign. All rights reserved. Controlled copy · built against the 21-entity CDK data model held in
+  <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin">the repository</a>. Confidence is stated per item:
+  documented means a vendor or regulator published it, inferred means it follows from published behaviour and reasonable
+  dealer-scale assumptions, unverified means we still have to ask on the day. Checkbox state is stored only in this browser
+  (localStorage) — nothing is transmitted anywhere.
+  <br><em>Pour le bien-être du peuple.</em>
+</div></footer>
+
+<script>
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LS_KEY='cdk-extract-checklist-v1';
+function loadChecked(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch(e){return{}}}
+function saveChecked(o){try{localStorage.setItem(LS_KEY,JSON.stringify(o))}catch(e){}}
+let CHECKED=loadChecked();
+
+let PLAN=null;
+fetch('extract-plan.json').then(r=>r.json()).then(d=>{PLAN=d;render();})
+ .catch(e=>{document.getElementById('cards-1').innerHTML='<p>The extract plan could not be loaded. Open it directly: <a href="extract-plan.json">extract-plan.json</a></p>';});
+
+function reachLabel(r){return {full:'Fortellis REST — full reach',partial:'Fortellis REST — partial reach',none:'No API — export only'}[r]||'Reach unknown';}
+
+function cfBadge(c){
+  if(!c) return '';
+  const cls=String(c).toLowerCase();
+  return '<span class="cf '+esc(cls)+'">'+esc(c)+'</span>';
+}
+
+function render(){
+  renderSeq();
+  renderTabs();
+  renderCards(1);
+  renderCards(2);
+  renderBlockers();
+  renderIntegrity();
+}
+
+function renderSeq(){
+  const seq=document.getElementById('seq');
+  seq.innerHTML='';
+  PLAN.sequence.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='seq-step';
+    d.innerHTML='<div class="s-n">'+String(s.order).padStart(2,'0')+'</div>'+
+      '<div class="s-t">'+esc(s.block)+'</div>'+
+      '<div class="s-e">'+esc(s.elapsed)+' '+cfBadge(s.confidence)+'</div>';
+    d.title=s.detail;
+    seq.appendChild(d);
+    if(i<PLAN.sequence.length-1){
+      const a=document.createElement('div');a.className='seq-arrow';a.textContent='→';seq.appendChild(a);
+    }
+  });
+}
+
+function renderTabs(){
+  const t=document.getElementById('tabs');
+  const p1=PLAN.targets.filter(x=>x.phase===1).length;
+  const p2=PLAN.targets.filter(x=>x.phase===2).length;
+  t.innerHTML=
+    '<button class="tab on" data-p="1">Phase 1 · Metadata <span class="tcount">'+p1+'</span></button>'+
+    '<button class="tab" data-p="2">Phase 2 · Transactions (3 mo) <span class="tcount">'+p2+'</span></button>'+
+    '<button class="tab" data-p="3">Phase 3 · Tie-Out (middle month)</button>';
+  t.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.p)));
+}
+
+function switchTab(p){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+  document.querySelectorAll('.phase-panel').forEach(el=>el.classList.toggle('on',el.id==='phase-'+p));
+  history.replaceState(null,'','#phase-'+p);
+}
+
+function renderCards(phase){
+  const el=document.getElementById('cards-'+phase);
+  el.innerHTML='';
+  const items=PLAN.targets.filter(x=>x.phase===phase);
+  items.forEach(t=>{
+    const checked=!!CHECKED[t.id];
+    const card=document.createElement('div');
+    card.className='card'+(checked?' done':'');
+    card.id='card-'+t.id;
+
+    const deps=(t.depends_on||[]).length
+      ? t.depends_on.map(dId=>{const dt=PLAN.targets.find(x=>x.id===dId);return '<span class="dep-tag">'+esc(dt?dt.luke_name:dId)+'</span>';}).join('')
+      : '<span class="dep-tag none">no dependency — can start immediately</span>';
+
+    card.innerHTML=
+      '<div class="card-head">'+
+        '<div class="card-title"><h3>'+esc(t.luke_name)+'</h3><div class="sysname">'+esc(t.system_name)+'</div></div>'+
+        '<label class="card-check"><input type="checkbox" data-id="'+esc(t.id)+'" '+(checked?'checked':'')+'> extracted</label>'+
+      '</div>'+
+      '<div class="pill-row">'+
+        '<span class="pill '+esc(t.reach)+'">'+esc(reachLabel(t.reach))+'</span>'+
+        cfBadge(t.confidence)+
+      '</div>'+
+      '<dl class="field-grid">'+
+        '<dt>Source route</dt><dd>'+esc(t.source_route)+'</dd>'+
+        '<dt>Endpoint / screen</dt><dd><code>'+esc(t.endpoint_or_screen)+'</code></dd>'+
+        '<dt>Expected volume</dt><dd>'+esc(t.volume)+' '+cfBadge(t.volume_confidence)+'</dd>'+
+        '<dt>Output file</dt><dd><code>'+esc(t.output_file)+'</code></dd>'+
+        '<dt>Control key</dt><dd><code>'+esc(t.control_key)+'</code></dd>'+
+        '<dt>Depends on</dt><dd><div class="deps">'+deps+'</div></dd>'+
+      '</dl>';
+    el.appendChild(card);
+  });
+  el.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change',e=>{
+      const id=e.target.dataset.id;
+      CHECKED[id]=e.target.checked;
+      saveChecked(CHECKED);
+      e.target.closest('.card').classList.toggle('done',e.target.checked);
+    });
+  });
+}
+
+function renderBlockers(){
+  const el=document.getElementById('blockers');
+  el.innerHTML='';
+  PLAN.blockers.forEach(b=>{
+    const d=document.createElement('div');d.className='blocker';
+    d.innerHTML='<h3>'+esc(b.title)+' '+cfBadge(b.confidence)+'</h3>'+
+      '<p>'+esc(b.detail)+'</p>'+
+      '<div class="ask"><strong>Pre-emptive ask:</strong> '+esc(b.ask)+'</div>';
+    el.appendChild(d);
+  });
+}
+
+function renderIntegrity(){
+  const el=document.getElementById('integrity');
+  el.innerHTML='';
+  PLAN.integrity.forEach(i=>{
+    const d=document.createElement('div');d.className='integrity-item';
+    d.innerHTML='<h3>'+esc(i.class)+' '+cfBadge(i.confidence)+'</h3>'+
+      '<div class="ctrl"><strong>Control total:</strong> '+esc(i.control)+'</div>'+
+      '<div class="proves"><strong>Proves:</strong> '+esc(i.proves)+'</div>';
+    el.appendChild(d);
+  });
+}
+
+// restore tab from hash on load
+window.addEventListener('DOMContentLoaded',()=>{
+  const h=location.hash.replace('#phase-','');
+  if(['1','2','3'].includes(h)) switchTab(h);
+});
+</script>
+</body>
+</html>
