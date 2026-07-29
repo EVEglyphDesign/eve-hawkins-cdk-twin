@@ -183,8 +183,21 @@ and it is materially more concrete than PACCAR's own.
 "Connected Truck APIs" at `developers.paccar.cloud`, granting a limited, revocable,
 non-transferable token-based licence restricted to internal business purposes, fee-bearing under a
 subscription order form, revocable at any time
-([PACCAR Digital Services Terms](https://staging-paccar.anthology-digital.com/digital-services-terms/)).
-Same shape as the CDK API terms. The catalogue itself would not load.
+— language recovered from a pre-production copy of PACCAR's digital services terms, since the
+canonical page at `paccar.com/digital-services-terms/` now returns 404 and no replacement appears
+in PACCAR's footer, [sitemap](https://www.paccar.com/sitemap/) or site search. Treat the licence
+wording as indicative until PACCAR restores a public copy.
+
+The catalogue itself is real and public: the [PACCAR API Catalog](https://developers.paccar.cloud/)
+loads without a login, branded "Fueling innovation and connectivity," offering Get Started, APIs
+and Token Generation. But the public
+[API list](https://developers.paccar.cloud/apis) contains exactly **one** entry — OAuth. Get Started
+is sign-in gated: "Either sign-in is required to view this content or no content exists at this
+URL." The portal's own [Terms and Conditions](https://developers.paccar.cloud/terms) are generic
+Washington-law website terms from 2021, not an API licence.
+
+So the door exists, it is named, and nothing is behind it that an unauthenticated visitor can see.
+What gets you in is a dealer or fleet relationship, not a developer signup.
 
 **SmartLINQ and TruckTech+ do not give the dealer raw data.** Peterbilt's own operators manual
 describes the chain: the truck transmits to PACCAR's back office, which "translates the data into
