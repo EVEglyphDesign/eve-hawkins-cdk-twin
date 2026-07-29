@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Export Route — EVEglyphDesign — CDK Twin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdfaf4;
+    --cream-2: #f7f2e7;
+    --ink: #1a1a1a;
+    --line: #e7e1d3;
+    --mute: #6b665c;
+    --accent: #e87722;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 119, 34, 0.35);
+    text-underline-offset: 2px;
+    overflow-wrap: break-word;
+  }
+
+  a:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero {
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0 48px;
+    background: var(--cream);
+  }
+
+  .kicker {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  header.hero h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    line-height: 1.15;
+    max-width: 760px;
+  }
+
+  header.hero p.lede {
+    margin-top: 20px;
+    max-width: 640px;
+    font-size: 18px;
+    color: var(--mute);
+  }
+
+  .status-pill {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--cream-2);
+    color: var(--mute);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  main {
+    padding: 48px 0 24px;
+  }
+
+  article {
+    font-size: 16.5px;
+  }
+
+  article h1 {
+    font-size: clamp(26px, 4.5vw, 38px);
+    line-height: 1.2;
+    margin: 0 0 20px;
+  }
+
+  article h2 {
+    font-size: 26px;
+    margin: 48px 0 16px;
+    padding-top: 4px;
+  }
+
+  article h3 {
+    font-size: 19px;
+    margin: 32px 0 12px;
+  }
+
+  article p {
+    margin: 0 0 18px;
+    max-width: 720px;
+  }
+
+  article p strong {
+    font-weight: 600;
+  }
+
+  article ul, article ol {
+    margin: 0 0 20px;
+    padding-left: 26px;
+    max-width: 720px;
+  }
+
+  article li {
+    margin-bottom: 10px;
+  }
+
+  article li > ul, article li > ol {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  article hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 40px 0;
+  }
+
+  article code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.88em;
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 6px;
+    word-break: break-word;
+  }
+
+  /* Blockquotes: distinct, accent left rule, cream-2 background */
+  blockquote {
+    background: var(--cream-2);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 0 0 24px;
+  }
+
+  blockquote p {
+    color: var(--ink);
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+
+  blockquote p:last-child {
+    margin-bottom: 0;
+    color: var(--mute);
+    font-size: 14.5px;
+  }
+
+  /* Tables: readable on phone via horizontal scroll */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 0 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+    font-size: 14.5px;
+  }
+
+  thead th {
+    text-align: left;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--cream-2);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    vertical-align: top;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(247, 242, 231, 0.5);
+  }
+
+  footer {
+    padding: 40px 0 64px;
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+  }
+
+  footer .foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 13px;
+    color: var(--mute);
+  }
+
+  footer .mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    header.hero { padding: 44px 0 32px; }
+    main { padding: 32px 0 16px; }
+    article h2 { margin: 36px 0 14px; }
+    blockquote { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back-link" href="../">&larr; Back to the CDK Twin overview</a>
+    <div class="kicker">EVEglyphDesign · CDK Twin · Operational Analysis</div>
+    <h1>The export route — dealer-initiated SFTP extraction from CDK Drive</h1>
+    <p class="lede">
+      How Peterbilt Atlantic can take a complete, scheduled, encrypted copy of its own DMS
+      record out of CDK Drive, without a Fortellis API licence and without a licence fee,
+      on CDK's own published terms.
+    </p>
+    <span class="status-pill">Operating runbook · every factual claim sourced to CDK's own published material · last revised 2026-07-29</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article>
+<p>This document sets out the route by which Peterbilt Atlantic can take a complete, scheduled,
+encrypted copy of its own DMS record out of CDK Drive, without a Fortellis API licence, without
+a third-party integrator being named on a CDK Order, and — on CDK's own published terms —
+without a licence fee.</p>
+<p>It is written as an operating runbook, not a recommendation paper. Every factual claim about
+CDK's tooling is sourced to CDK's own published material.</p>
+<hr />
+<h2>1. Why this route and not the API</h2>
+<p>There are two doors out of CDK Drive and they are governed by different instruments.</p>
+<p><strong>The Fortellis door.</strong> CDK's API Licensing Terms bind a "Developer" named in an Order. The
+licence is revocable, non-sublicensable and non-transferable, and is granted "solely for the
+purposes of providing the applicable Developer App(s) as set forth in the Order." CDK asserts
+that nothing in the agreement gives the Developer any right "to any data residing on any CDK
+Systems." A catch-all bars the Developer from causing "any Third Party" to do anything the
+Developer may not do. On termination the Developer must "immediately stop using the API(s),
+Data… for any purpose whatsoever" and return or certify destruction of all materials. Access is
+gated behind certification, and certification requirements are defined by reference to an
+external web page rather than by contract text.</p>
+<p><strong>The export door.</strong> CDK's Data Export Tool is licensed to <em>the dealer</em>, not to a developer. It
+is contracted through eStore as an addendum to the dealership's existing Master Service
+Agreement. It delivers CSV to an SFTP folder. It is encrypted with a key pair the dealer
+generates, and CDK states plainly that it cannot read the result.</p>
+<p>The difference is not one of convenience. Under the API door the dealership's data is
+reconstructed by a licensee at CDK's sufferance. Under the export door the dealership takes
+delivery of its own records, encrypted to its own key, into infrastructure it owns. Only the
+second produces an asset.</p>
+<hr />
+<h2>2. What CDK publishes about the tool</h2>
+<p>All quotations in this section are from CDK's own documents.</p>
+<blockquote>
+<p>"Beginning March 2023, CDK is offering a suite of enhanced and secure Data Export and Import
+Tools as a free software license to CDK Dealers. Dealers can now easily export and import
+information from their CDK Systems to their in-house data systems and share it with their
+desired third-party vendors, with no fees from CDK."
+— <a href="https://cms.cdkglobal.com/sites/default/files/2024-01/Data%20Export%20and%20Import%20Tools%20Dealer%20FAQ_FinalV3-1.pdf">CDK Data Export and Import Tools Dealer FAQ</a>, p.2</p>
+<p>"No Fees From CDK — CDK is eliminating our license fees to dealers to use these tools, and your
+ISVs pay no CDK fees when you share your data with them directly."
+— <a href="https://www2.cdkglobal.com/data-your-way">CDK, Data – Your Way</a></p>
+<p>"The Data Export Tool is an evolution of DABE… The Data Export Tool provides Dealers with the
+robust ability to extract large amounts of data from CDK products to an SFTP folder for their
+in-house data systems. Through a common UI and PGP encryption, Dealers can securely export data
+across all their CDK Dealerships."
+— <a href="https://cms.cdkglobal.com/sites/default/files/2024-01/Data%20Export%20and%20Import%20Tools%20Dealer%20FAQ_FinalV3-1.pdf">Dealer FAQ</a>, p.2</p>
+</blockquote>
+<h3>The operating parameters, as published</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Published value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Licence fee</td>
+<td>None. "Free software license" to CDK dealers</td>
+<td>Dealer FAQ p.2</td>
+</tr>
+<tr>
+<td>Fee to third parties receiving the data</td>
+<td>None. "your ISVs pay no CDK fees"</td>
+<td>Data – Your Way</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>"a comprehensive DMS data set including service, sales, parts and accounting data across multiple store locations"</td>
+<td>Dealer FAQ p.3</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>SFTP folder managed by CDK</td>
+<td>Dealer FAQ p.3–4</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>CSV</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>Dealer adds its own public key to the Data Export instance; "Only the Dealer (not even CDK) can access the data by using the dealer-generated private decryption key"</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Recommended refresh</td>
+<td>24 hours</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Maximum refresh</td>
+<td>15 minutes — "96 files (24 hours x 4 files/hour)"; hourly yields 24 files/day</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>On-demand jobs</td>
+<td>Separate SFTP section, so they do not corrupt scheduled jobs</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Retention in the SFTP folder</td>
+<td><strong>7 days, then purged</strong></td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Authentication to the UI</td>
+<td>Simple ID, or multifactor authentication through CDK Connect</td>
+<td>Dealer FAQ p.3</td>
+</tr>
+<tr>
+<td>Storage responsibility</td>
+<td>The dealer's. "CDK Dealers will need to build or leverage a Data system/data warehouse to store all the exported DMS Data"</td>
+<td>Dealer FAQ p.3</td>
+</tr>
+<tr>
+<td>Skills required</td>
+<td>"an understanding of the CDK file structure and dealership operations without the need for SQL query skills"</td>
+<td>Dealer FAQ p.3</td>
+</tr>
+<tr>
+<td>Enrolment channel</td>
+<td>eStore, self-service, with "the addendum to Master Service Agreement needed to implement the offering"</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+<tr>
+<td>Group contracting</td>
+<td>"Dealers can contract for the entire Dealer Group within a single document by selecting all applicable Dealership CMFs"</td>
+<td>Dealer FAQ p.4</td>
+</tr>
+</tbody>
+</table></div>
+<p>The seven-day purge is the single most important line in that table. CDK holds the extract for a
+week and then destroys it. Whoever is pulling it every day is the only party with a durable
+record. That is precisely the position the twin is built to occupy.</p>
+<p>The line about needing "an understanding of the CDK file structure" is the second most important.
+That understanding is exactly what the <a href="../model/">model explorer</a> already documents — 33 records
+and 1,023 fields with per-field provenance. The prerequisite CDK names as a barrier is work this
+project has already done.</p>
+<hr />
+<h2>3. What the tool is not</h2>
+<ul>
+<li><strong>It is not writeback.</strong> Export only. Pushing data back into Drive is the separate Data
+  Export/Import Tool, which uses the legacy SOAP PIP packages, requires routing across the
+  dealer's private network and OAuth 2.0, and is contracted separately. Nothing in the twin's
+  current scope needs writeback.</li>
+<li><strong>It is not real time.</strong> Recommended cadence is daily; the floor is fifteen minutes. It is a
+  file drop, not an event stream.</li>
+<li><strong>It is not a schema contract.</strong> CDK publishes no field dictionary for the export. The column
+  set has to be discovered from the first extract and reconciled against the model.</li>
+<li><strong>It is not the Fortellis Data Extract API Bundle</strong>, which is a separate, marketed CDK product
+  on the Dealership Xperience platform and is governed by the API terms discussed above.</li>
+</ul>
+<hr />
+<h2>4. The enrolment path, step by step</h2>
+<p>CDK's Dealer FAQ states that enrolment is self-service through eStore, using ConnectCDK
+credentials, and results in an addendum to the dealership's Master Service Agreement covering
+whichever CMFs are selected.</p>
+<p>The published eStore flow, documented for the adjacent Partner Program authorization process,
+runs as follows and is the same storefront:</p>
+<ol>
+<li>Log completely out of DealerSuite and close all browser windows.</li>
+<li>Navigate to the eStore product at <code>portal.dealersuite.com/eStore</code>.</li>
+<li>Log in with an existing <strong>DealerSuite ID</strong> and password.</li>
+<li>Click through to view available CMFs.</li>
+<li>Begin enrolling.</li>
+<li>Select the product.</li>
+<li>Open and review the <strong>Addendum PDF</strong> before proceeding.</li>
+<li>Add to cart.</li>
+<li>Check out — "There is no charge for this authorization process and your purchase will display
+   a price of $0.00."</li>
+<li>Select the CMFs to enrol. If a CMF cannot be selected, "open a case in Service Connect and
+    select DealerSuite as the 'area of impact' to have the CMF number added to your login."</li>
+<li>Place the order. A pending-order confirmation is emailed.</li>
+<li>Confirm account access and authorise each location's DMS accounts.</li>
+<li>Save and confirm — after which no further edits are possible.</li>
+</ol>
+<blockquote>
+<p>"By completing these steps, an addendum will be added to your existing Master Service Agreement
+to be reviewed and finalized by CDK contracting."
+— <a href="https://go.oeconnection.com/hubfs/LinkIQ/CDK%20Partner%20Program%20eStore%20Authorization%20Process.pdf">CDK Global Partner Program Partner Access Authorization Process</a></p>
+</blockquote>
+<h3>The signature gate</h3>
+<p>The same published process states who may do this:</p>
+<blockquote>
+<p>"To provide access to a partner, a Corporate Officer from your dealership, with the
+authorization to sign the CDK Master Service Agreement, must complete the authorization
+process… you must have a title in the list of Authorized Signers."</p>
+</blockquote>
+<p>That requirement is stated for partner authorisation. Because Data Export enrolment likewise
+produces an addendum to the Master Service Agreement, the same signer constraint should be
+assumed to apply until CDK confirms otherwise. <strong>This, not the technology, is the critical path.</strong>
+The order must be placed by someone whose title appears on CDK's Authorized Signers list, from a
+DealerSuite login that already has every relevant CMF attached to it. Neither condition is
+currently confirmed for anyone at Peterbilt Atlantic.</p>
+<hr />
+<h2>5. What has to exist on our side before the first file lands</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Owner</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>PGP key pair</td>
+<td>Peterbilt Atlantic</td>
+<td>Generated in the dealership's custody. The public key is loaded into the Data Export instance; the private key never leaves dealership control. This is the mechanism by which CDK is locked out of the dealership's own extract, and it only works if the dealership, not a contractor, holds the private half.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Landing zone</td>
+<td>Peterbilt Atlantic tenancy</td>
+<td>Storage the dealership owns, under its own subscription, receiving the pull. Same principle already applied to the TELUS service identity: company custody, attributable audit trail.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pull agent</td>
+<td>EVEglyph Design</td>
+<td>Scheduled SFTP client. Must run at least daily, and must alert on failure, because the source purges after seven days.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Decrypt and land raw</td>
+<td>EVEglyph Design</td>
+<td>Ciphertext retained alongside plaintext. The encrypted original is the evidentiary copy.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Manifest and hash ledger</td>
+<td>EVEglyph Design</td>
+<td>Every file recorded with size, row count, SHA-256 and retrieval timestamp before parsing. Provenance is the product.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Schema discovery</td>
+<td>EVEglyph Design</td>
+<td>First extract profiled column by column and reconciled against the 1,023-field model; every unmatched column logged rather than dropped.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Load to the warehouse</td>
+<td>EVEglyph Design</td>
+<td>The Postgres and Snowflake DDL for 21 entities already exists in <code>schema/ddl/</code>.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Tie-out</td>
+<td>Joint</td>
+<td>Financial reconciliation against a closed month. Row counts and dollar totals must agree with the dealership's own reporting before anything downstream is trusted.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>6. Sequence and honest timing</h2>
+<p>The technical work is small. The dependencies are administrative, and they are the timeline.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>What it needs</th>
+<th>Realistic duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. Identify the authorised signer and confirm the DealerSuite login carries all CMFs</td>
+<td>Internal to Peterbilt Atlantic</td>
+<td>1–5 business days, unknown until asked</td>
+</tr>
+<tr>
+<td>B. Obtain and read the eStore Addendum PDF and product guide before signing</td>
+<td>Requires eStore login; the addendum is visible at step 7 without ordering</td>
+<td>Same day once inside</td>
+</tr>
+<tr>
+<td>C. Confirm the offer applies to this platform and this country — CDK Drive for Heavy Truck, billed by CDK Global Canada</td>
+<td>CDK account representative</td>
+<td>1–5 business days</td>
+</tr>
+<tr>
+<td>D. Place the eStore order across all CMFs</td>
+<td>Authorised signer</td>
+<td>Under an hour</td>
+</tr>
+<tr>
+<td>E. CDK contracting finalises the addendum</td>
+<td>CDK, not us</td>
+<td><strong>Unpublished. No SLA is stated anywhere.</strong></td>
+</tr>
+<tr>
+<td>F. Provision the export instance, load the public key, define jobs</td>
+<td>Dealership admin with our support</td>
+<td>1–2 days</td>
+</tr>
+<tr>
+<td>G. First scheduled extract and profiling</td>
+<td>EVEglyph Design</td>
+<td>1 day</td>
+</tr>
+<tr>
+<td>H. Tie-out against a closed month</td>
+<td>Joint</td>
+<td>3–5 days</td>
+</tr>
+</tbody>
+</table></div>
+<p>Gate E is the only genuinely open variable, and CDK publishes no commitment against it. Everything
+either side of it is measured in days. Any estimate of the whole path that ignores gate E is a
+guess dressed up as a plan.</p>
+<hr />
+<h2>7. Risks, stated plainly</h2>
+<ol>
+<li><strong>The Master Service Agreement is unseen.</strong> Peterbilt Atlantic's own CDK contract has been
+   requested and has not arrived. The export addendum attaches to it. Until it is read, no one can
+   say what it already permits or already forbids.</li>
+<li><strong>The addendum itself is unseen.</strong> It is behind the eStore login. It is the governing text for
+   this entire route and it must be read before it is signed, not after.</li>
+<li><strong>The account is in arrears.</strong> The March 2026 invoice carries $22,227.77 past due. A dealer
+   storefront that requires contracting approval is a poor place to arrive with an aged balance.
+   Clear it, or know why it stands, before placing the order.</li>
+<li><strong>Platform coverage is unconfirmed.</strong> CDK's material describes Drive. The group runs the heavy
+   truck configuration, billed through CDK Global Canada. Coverage should be confirmed by the
+   account representative rather than assumed from marketing copy.</li>
+<li><strong>Seven-day purge means silent failure is data loss.</strong> A pull agent that fails quietly for eight
+   days loses a day permanently. Alerting is not optional.</li>
+<li><strong>No published field dictionary for the export.</strong> The column set is discovered, not documented.
+   Budget for reconciliation, and treat the first month as calibration.</li>
+<li><strong>The signer may not be available.</strong> If the only authorised titles sit with people who are away
+   or unaware of the project, the timeline is theirs, not ours.</li>
+</ol>
+<hr />
+<h2>8. What this route delivers when it works</h2>
+<p>A daily, encrypted, dealer-owned copy of the service, sales, parts and accounting record for every
+enrolled rooftop, landing in infrastructure the dealership owns, decryptable only with a key the
+dealership holds, retained for as long as the dealership chooses rather than for seven days, with
+a hash ledger proving what arrived and when.</p>
+<p>That is the substrate the manufacturer reporting obligations require, the substrate a call-
+verification question can be answered against, and the substrate that does not disappear when a
+vendor relationship ends. It costs nothing in licence fees, by CDK's own published commitment.</p>
+<hr />
+<h2>Sources</h2>
+<ul>
+<li><a href="https://cms.cdkglobal.com/sites/default/files/2024-01/Data%20Export%20and%20Import%20Tools%20Dealer%20FAQ_FinalV3-1.pdf">CDK Data Export and Import Tools — Dealer FAQ</a></li>
+<li><a href="https://www2.cdkglobal.com/data-your-way">CDK — Data – Your Way</a></li>
+<li><a href="https://www.cdkglobal.com/dealership-operations/data-management/cdk-data-export-import-tools">CDK — Data Export and Import Tools product page</a></li>
+<li><a href="https://www.cdkglobal.com/sites/cdk4/files/2023-03/23-2459%20Data%20Import_Exporttoolssolutionoverview.pdf">CDK — Manage Dealership Data With Ease, solution overview</a></li>
+<li><a href="https://go.oeconnection.com/hubfs/LinkIQ/CDK%20Partner%20Program%20eStore%20Authorization%20Process.pdf">CDK Global Partner Program — Partner Access Authorization Process</a></li>
+<li><a href="https://www.cdkglobal.com/media-center/cdk-connect-2022">CDK CONNECT 2022 — "Data – Your Way" announcement</a></li>
+<li>CDK API Licensing Terms, as supplied by Luke Weatherbie on 2026-07-29 — held privately in <code>hawkins-twin-compliance-vault</code></li>
+</ul>
+<hr />
+<p>© 2026 EVEglyphDesign. All rights reserved. Controlled copy · Key ID <code>EgD-KEY-2026-07</code>
+<em>Pour le bien-être du peuple.</em></p>
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span>© 2026 EVEglyphDesign. All rights reserved. Controlled copy.</span>
+      <span class="mark">Pour le bien-être du peuple.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
