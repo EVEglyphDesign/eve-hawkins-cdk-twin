@@ -1,0 +1,2828 @@
+{
+ "generated": "2026-07-29T06:05:00Z",
+ "entities": [
+  {
+   "id": "dealer-rooftop-partition",
+   "name": "Dealer / Rooftop Partition",
+   "luke_name": "Which of our 9 stores this record belongs to",
+   "group": "org",
+   "one_liner": "The layer that tells CDK which Peterbilt Atlantic rooftop and which department (parts, service, accounting...) a piece of data lives in.",
+   "sap_analogue": "Company Code (T001) / Plant (WERKS) plus a module-scoping flag",
+   "why_it_matters": "Every API call and, by convention, every GL posting carries a store and department tag. If it's wrong, a Halifax repair order can look like it belongs to Moncton, or an accounting pull returns zero rows because the Department-Id doesn't match the DMS type asked for. Across 9 rooftops this is also why one real customer or part can end up with 9 different ID numbers.",
+   "api": {
+    "reachable": "partial",
+    "note": "Subscription-Id and Department-Id are required headers on every Fortellis CDK Drive call, but there is no public REST field named 'Company Number' — that concept is legacy/EDI-layer only.",
+    "endpoints": [
+     "CDK Drive Get Customer v3",
+     "Fortellis Subscriptions API"
+    ]
+   },
+   "fields": [
+    {
+     "name": "Subscription-Id",
+     "label": "Which store's app connection this is",
+     "type": "string",
+     "key": true,
+     "plain": "Fortellis-issued ID that says which store/app pairing is making this call",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3, Fortellis API doc",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "Department-Id",
+     "label": "Which module you're asking about",
+     "type": "string",
+     "key": true,
+     "plain": "Says which DMS department (Accounting, Finance, Inventory, Parts, or Service) the request is scoped to; response data is filtered by it",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3, Fortellis API doc",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "DMS type (Accounting/Finance/Inventory/Parts/Service)",
+     "label": "Which subsystem a department is locked to",
+     "type": "enum",
+     "key": false,
+     "plain": "Each Department-Id is permanently bound to exactly one of these five subsystems",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive parts API specification (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "CMF / Client # (Dealer ID)",
+     "label": "Your whole dealer group's top-level CDK account",
+     "type": "string",
+     "key": true,
+     "plain": "The top-level CDK client ID tied to the dealership's DealerSuite/eStore account — the anchor everything else hangs off",
+     "confidence": "documented",
+     "source": {
+      "title": "DealerTrack 3PA authorization guide",
+      "url": "https://us.dealertrack.com/wp-content/uploads/sites/2/2020/08/Dealertrack%20CDK%20Authorization%20Process.pdf"
+     }
+    },
+    {
+     "name": "Company Number / Company ID (\"Co ID\")",
+     "label": "Which store, at the accounting level",
+     "type": "string",
+     "key": true,
+     "plain": "Store-level accounting entity inside your CMF; third-party shop tools require a 'Default Company ID (store number)' per store",
+     "confidence": "documented",
+     "source": {
+      "title": "Mitchell RepairCenter CDK setup guide",
+      "url": "https://www.mymitchell.com/tchs/helpfiles/RepairCenter/1033/Content/18181.htm"
+     }
+    },
+    {
+     "name": "orgName / apiDmsInfo (Subscription Report)",
+     "label": "Which store a given API subscription belongs to",
+     "type": "string",
+     "key": false,
+     "plain": "Field in the Fortellis subscription report that lists the store associated with each API for a subscription",
+     "confidence": "documented",
+     "source": {
+      "title": "Fortellis Community \u2014 Marketplace Subscriptions",
+      "url": "https://community.fortellis.io/community/forum/install-app-subscriptions-and-support/cdk-fortellis-marketplace-subscriptions-and-support"
+     }
+    },
+    {
+     "name": "Authorization (Bearer token)",
+     "label": "Proof the calling app is allowed in",
+     "type": "string",
+     "key": false,
+     "plain": "OAuth2 bearer token from Fortellis's identity server, required on every call",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 developer guide",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "gl-account-master",
+     "label": "scopes postings for",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "repair-order",
+     "label": "tags store/department on",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "Do our 9 rooftops actually run as 9 separate Company Numbers under one CMF, or has someone consolidated some of them?",
+    "Does the same real customer or part end up with a different ID at each of our 9 stores today?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive parts API specification (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    {
+     "title": "Fortellis Community \u2014 Marketplace Subscriptions",
+     "url": "https://community.fortellis.io/community/forum/install-app-subscriptions-and-support/cdk-fortellis-marketplace-subscriptions-and-support"
+    }
+   ]
+  },
+  {
+   "id": "customer-master",
+   "name": "Customer Master",
+   "luke_name": "The customer record — fleet account, walk-in owner, or company",
+   "group": "master",
+   "one_liner": "One record per person or company who's bought a truck, bought parts, or had service done with us.",
+   "sap_analogue": "KNA1 (general customer master), with per-store scoping like KNVV",
+   "why_it_matters": "This is the record every RO, parts sale, and deal hangs off. Bad news: CDK doesn't publish an automated fuzzy-match dedup tool, so across 9 rooftops the same fleet customer can end up as 9 different customerId numbers, each with its own AR balance and history — which is a worse version of the standard duplicate-customer headache and a real risk for consolidated fleet billing.",
+   "api": {
+    "reachable": "full",
+    "note": "Get Customer v3 (read, bulk/delta) and the older Customers API v1 (search/create/update) are both documented and reachable.",
+    "endpoints": [
+     "CDK Drive Get Customer v3",
+     "CDK Drive Customers API (v1)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "customerId",
+     "label": "Customer number",
+     "type": "string",
+     "key": true,
+     "plain": "The unique DMS ID for this customer — the key everything else joins to",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "hostItemId",
+     "label": "DMS customer ID (alternate)",
+     "type": "string",
+     "key": false,
+     "plain": "Also documented as 'the DMS customer ID', functionally the same key concept as customerId",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "customerName (firstName/lastName or companyName)",
+     "label": "Name — person or company",
+     "type": "object",
+     "key": false,
+     "plain": "Individual and business customers are mutually exclusive: populate first/last name OR company name, never both",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "partsFlag / partsType / partsCounterCode",
+     "label": "Wholesale parts customer flag",
+     "type": "string",
+     "key": false,
+     "plain": "partsType = 'W' marks a wholesale parts customer — affects the pricing matrix applied at the counter",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "serviceCustomer",
+     "label": "Service-only customer flag",
+     "type": "string",
+     "key": false,
+     "plain": "'S' marks a service-only customer who isn't tracked as an AR or Parts customer",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "balances / creditLimit / currentDue",
+     "label": "AR balance and credit limit",
+     "type": "currency",
+     "key": false,
+     "plain": "The customer's current account-receivable numbers, held right on the customer record",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "overDues",
+     "label": "Aging buckets",
+     "type": "object",
+     "key": false,
+     "plain": "30/60/90/120+ day aging of what this customer owes us",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "blockEmailFlag / blockMailFlag / blockPhoneFlag",
+     "label": "Do-not-contact flags",
+     "type": "boolean",
+     "key": false,
+     "plain": "Marketing block flags per channel, default false — but no timestamp of when/why consent was given",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "isDeleteDataFlag / deleteDataDate",
+     "label": "Right-to-delete flag (CCPA)",
+     "type": "boolean",
+     "key": false,
+     "plain": "Marks that this customer asked to have their data deleted, and when",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "optOutFlag / optOutDate",
+     "label": "Privacy opt-out flag",
+     "type": "boolean",
+     "key": false,
+     "plain": "Customer opted out of their info being sold/shared — a US CCPA-style field, not a Canadian CASL consent record",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "vehicle-master",
+     "label": "owns/drives",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "repair-order",
+     "label": "billed to",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "deal-jacket-vehicle-sale",
+     "label": "buys via",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "Is the same fleet customer showing up as separate customerId records at more than one of our 9 stores today?",
+    "Do we have anything beyond the block-flags that proves when/how a customer gave marketing consent, for CASL purposes?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive parts API specification (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    {
+     "title": "CDK Drive Customers API PDF",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/c0e82268-70cc-4d04-92c1-da9934800505/external/20220621170422548-uYfTqXe1.pdf"
+    }
+   ]
+  },
+  {
+   "id": "vehicle-master",
+   "name": "Vehicle / Unit Master",
+   "luke_name": "The truck record — VIN, stock number, who owns it",
+   "group": "master",
+   "one_liner": "The record for one specific truck, whether it's a customer's unit coming in for service or a unit sitting on our lot.",
+   "sap_analogue": "Equipment master (EQUI), serialized — VIN plays the role of the SAP equipment number",
+   "why_it_matters": "There are two separate CDK objects here that people assume are one: the inventory/stock record (AUN screen) and the service-side vehicle record. If a new unit isn't explicitly pushed across with the 'F8-VEH' step, service history and warranty won't attach to it correctly, and a tech pulling up a truck by VIN may not see it's still floored inventory.",
+   "api": {
+    "reachable": "partial",
+    "note": "CDK Drive Service Vehicles API is documented (create/update/query) but does not include stock number in its schema; the inventory-side vehicle record is a separate, less publicly documented object.",
+    "endpoints": [
+     "CDK Drive Service Vehicles"
+    ]
+   },
+   "fields": [
+    {
+     "name": "identification.vin",
+     "label": "VIN",
+     "type": "string",
+     "key": true,
+     "plain": "The 17-character factory VIN — the one truly universal key across every system",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "vehicleId",
+     "label": "DMS vehicle record ID",
+     "type": "string",
+     "key": true,
+     "plain": "CDK's own internal ID for this vehicle record, layered on top of VIN",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "Stock Number",
+     "label": "Stock number",
+     "type": "string",
+     "key": true,
+     "plain": "Dealer-assigned inventory number set at intake, configurable per location/inventory type, and can change independently of VIN (e.g. after a used-to-wholesale reclass)",
+     "confidence": "documented",
+     "source": {
+      "title": "Lithia connectCDK \u2014 Vehicle Inventory Setups, Stock Number Definition",
+      "url": "https://lithia.vehicle.connectcdk.com/pid1033/help/client/scr-vehsetups-inventory/veh_ov_vehicle_inventory_setups_-_stock_number_definition.htm"
+     }
+    },
+    {
+     "name": "specification.makeCode/model/modelYear",
+     "label": "Make/model/year",
+     "type": "object",
+     "key": false,
+     "plain": "Basic spec block for the vehicle",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "mileage.value/units",
+     "label": "Current mileage",
+     "type": "number",
+     "key": false,
+     "plain": "Odometer reading as last recorded",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "status",
+     "label": "New / used / certified",
+     "type": "enum",
+     "key": false,
+     "plain": "Limited to new, used, or certified on this API — wholesale is tracked at the customer level instead, not here",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "dates.delivered/inService/warrantyExpiration",
+     "label": "Delivery, in-service, and warranty-expiry dates",
+     "type": "date",
+     "key": false,
+     "plain": "Lifecycle dates that drive warranty eligibility checks",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "ownerHref / primaryDriverHref",
+     "label": "Link to the owning customer",
+     "type": "string",
+     "key": false,
+     "plain": "A hyperlink to the customer resource — vehicles link to customers by reference, not by an embedded customer record",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+     }
+    },
+    {
+     "name": "chassis number / unit number / body builder record",
+     "label": "Heavy-truck chassis and body-builder detail",
+     "type": "object",
+     "key": false,
+     "plain": "Standard heavy-truck practice tracks the incoming cab-chassis number separately from a dealer-assigned unit number and a body-builder upfit record — CDK does not publicly document its own field names for this",
+     "confidence": "unverified",
+     "source": {
+      "title": "CDK Global Heavy Truck DMS product page",
+      "url": "https://www.cdkglobalheavytruck.com/heavy-truck-dms"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "customer-master",
+     "label": "owned by",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "repair-order",
+     "label": "serviced via",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "deal-jacket-vehicle-sale",
+     "label": "sold via",
+     "cardinality": "one-to-one"
+    }
+   ],
+   "open_questions": [
+    "For a used truck that gets reclassed to wholesale, does its stock number actually change in our system today, and does anyone downstream break when it does?",
+    "Do we have a documented step equivalent to the 'F8-VEH' push so every new inventory unit reliably gets a service-side vehicle record?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+     "url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    {
+     "title": "Lithia connectCDK \u2014 Changing a Vehicle's Stock Number",
+     "url": "https://lithia.vehicle.connectcdk.com/pid1033/help/client/scr-vehinventory/tasks/veh_tk_changing_a_vehicle_s_stock_number.htm"
+    }
+   ]
+  },
+  {
+   "id": "employee-master",
+   "name": "Employee / Technician Identifiers",
+   "luke_name": "Who did the work — advisor, tech, cashier, parts counter person",
+   "group": "master",
+   "one_liner": "The numbers CDK uses to say who wrote up the RO, who turned the wrench, who sold the part, and who took the payment.",
+   "sap_analogue": "HR-adjacent Z-fields stamped onto transaction tables (no clean SAP HR master analogue)",
+   "why_it_matters": "There is no publicly documented standalone employee master API — CDK answers 'who did it' by stamping numeric employee IDs directly onto RO, labor, and parts-sale records rather than joining to a real HR table. That means pay-plan and commission calculations lean on third-party report exports (Advisor Daily Sales Summary, Tech Performance Report), not a clean employee record, which is exactly the kind of gap that makes payroll reconciliation painful across 9 stores.",
+   "api": {
+    "reachable": "partial",
+    "note": "CDK Get Employee is announced by name but has no public field-level schema; the richest documented employee fields live inside the Repair Order v3 payload, not a dedicated employee API.",
+    "endpoints": [
+     "CDK Get Employee",
+     "CDKDrive Repair Orders v1 (Query technicians / Query service advisors)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "serviceAdvisor",
+     "label": "Service advisor number",
+     "type": "number",
+     "key": true,
+     "plain": "The advisor number on the RO header",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "cashier",
+     "label": "Cashier ID",
+     "type": "string",
+     "key": false,
+     "plain": "DMS employee ID of the cashier who closed out the RO",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "bookerNo",
+     "label": "Booker (labor poster) number",
+     "type": "number",
+     "key": false,
+     "plain": "Employee number of whoever posted the labor charge",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "line.laborOperations[].technicianIds[]",
+     "label": "Technician(s) on this labor line",
+     "type": "array",
+     "key": false,
+     "plain": "One or more techs assigned to a labor line — shows 'MULT' if more than one worked it",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "line.laborOperations[].comebackSA / comebackTech",
+     "label": "Original advisor/tech on a comeback",
+     "type": "string",
+     "key": false,
+     "plain": "When a job comes back for redo, this tags who did it originally, for accountability",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].employeeId",
+     "label": "Parts counter person",
+     "type": "string",
+     "key": false,
+     "plain": "Who at the parts counter sold this part on the RO",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "technicianPunchTimes[].technicianId / workType",
+     "label": "Tech clock-punch record",
+     "type": "object",
+     "key": false,
+     "plain": "Time clock punches per technician with a work-type code — the closest thing to real clock-hours data",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "technicianId / serviceAdvisorId (lookup)",
+     "label": "Technician/advisor lookup key",
+     "type": "string",
+     "key": true,
+     "plain": "Dedicated lookup endpoints exist to query a technician or a service advisor by these IDs",
+     "confidence": "documented",
+     "source": {
+      "title": "CDKDrive Repair Orders v1 API Developer Guide",
+      "url": "https://prod-fortellis-provider-api-reference-documents.s3-us-west-2.amazonaws.com/c7771500-1c95-4f8e-9241-eddc17cd55f6"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "assigned to",
+     "cardinality": "many-to-many"
+    },
+    {
+     "to": "technician-time-punch",
+     "label": "clocks via",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "Where do our pay-plan/commission calculations actually pull technician numbers from — CDK reports, or a spreadsheet layered on top?",
+    "Is a technician's ID the same number across all 9 stores, or store-scoped like customer numbers appear to be?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    {
+     "title": "LinkedIn \u2014 CDK Fortellis extract APIs announcement",
+     "url": "https://www.linkedin.com/posts/ankitraheja_apis-data-automotivecommerce-activity-7053939674595155968-KyYH"
+    }
+   ]
+  },
+  {
+   "id": "vendor-master",
+   "name": "Vendor / Supplier Master",
+   "luke_name": "Who we owe money to — PACCAR, sublet shops, everyone else",
+   "group": "master",
+   "one_liner": "The record for anyone we owe money to: PACCAR itself as parts/warranty payer, an outside sublet shop, or a general trade supplier.",
+   "sap_analogue": "LFA1 (vendor master, general data)",
+   "why_it_matters": "This is one of the thinnest parts of CDK's public surface — there's no published Fortellis vendor/AP API and no documented field that flags a vendor as 'OEM' vs 'sublet' vs general trade. If your AP process depends on a clean vendor classification for reporting, that classification is living in dealer convention, not a CDK schema, which is a real risk if you ever need to migrate or audit it.",
+   "api": {
+    "reachable": "none",
+    "note": "No public Fortellis developer guide for a vendor/AP master API was found; only marketing language confirms a 'Vendor workflow' exists in-DMS, with documentation stated as 'coming soon'.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "Vendor workflow record (view/edit vendor information)",
+     "label": "Vendor record",
+     "type": "object",
+     "key": true,
+     "plain": "CDK's own marketing confirms a vendor workflow exists to view/edit vendor info, but no field names are published",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Accounting Workflows",
+      "url": "https://www2.cdkglobal.com/accounting-workflows"
+     }
+    },
+    {
+     "name": "OEM vendor classification flag",
+     "label": "Is this vendor PACCAR/factory",
+     "type": "boolean",
+     "key": false,
+     "plain": "Dealer-accounting convention treats OEM parts/warranty payables as flowing through the AP vendor master, but CDK has no documented flag distinguishing OEM from other vendors",
+     "confidence": "inferred",
+     "source": {
+      "title": "CDK Global \u2014 Accounting Workflows page",
+      "url": "https://www2.cdkglobal.com/accounting-workflows"
+     }
+    },
+    {
+     "name": "Sublet vendor classification flag",
+     "label": "Is this vendor an outside repair shop",
+     "type": "boolean",
+     "key": false,
+     "plain": "Sublet (outside vendor) labor is a standard dealer-accounting concept but has no documented CDK vendor-record flag",
+     "confidence": "inferred",
+     "source": {
+      "title": "reddit.com",
+      "url": "https://www.reddit.com/r/serviceadvisors/comments/1to4b52/cdk_users_sublet_in_customer_pay_in_an_internal/"
+     }
+    },
+    {
+     "name": "Corpay payment-processor integration reference",
+     "label": "Vendor payment integration link",
+     "type": "string",
+     "key": false,
+     "plain": "CDK Heavy Truck integrates a Corpay connection specifically 'to simplify vendor payments and boost AP efficiency' — direct evidence a vendor/AP record exists and is externally addressable",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global Heavy Truck \u2014 OEM & ISV Integrations",
+      "url": "https://www.cdkglobalheavytruck.com/oem-integrations"
+     }
+    },
+    {
+     "name": "Accounts Payable module (Foundations Suite)",
+     "label": "The AP module vendor records live in",
+     "type": "string",
+     "key": false,
+     "plain": "CDK's Foundations Suite advertises an 'Accounts Payable' module with 'multicompany Accounting' and seamless data flow from Sales and Service into Accounting",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Foundations Suite",
+      "url": "https://www.cdkglobal.com/insights/cdk-foundations-suite-core-connected-dealership"
+     }
+    },
+    {
+     "name": "Three-way match (PO / receipt / vendor invoice)",
+     "label": "Does the order, delivery, and bill all agree",
+     "type": "boolean",
+     "key": false,
+     "plain": "No CDK-specific public documentation confirms a native three-way match inside CDK Drive AP; competitor Karmak explicitly advertises this for PACCAR parts invoices, which is indirect evidence dealers expect it",
+     "confidence": "unverified",
+     "source": {
+      "title": "Karmak \u2014 PACCAR Integration",
+      "url": "https://www.karmak.com/integrations/paccar"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "purchase-receipt-document",
+     "label": "invoices via",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "gl-account-master",
+     "label": "posts AP to",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "How do we currently tag a vendor record as PACCAR/OEM vs. sublet vs. general trade for reporting — is that a manual convention?",
+    "Are we using the Corpay integration for vendor payments, and if so what does that connection actually expose back to us?",
+    "Do we have any three-way match happening today between our POs, receipts, and PACCAR's electronic invoices, or is that fully manual?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Global \u2014 Accounting Workflows page",
+     "url": "https://www2.cdkglobal.com/accounting-workflows"
+    },
+    {
+     "title": "CDK Global Heavy Truck \u2014 OEM & ISV Integrations",
+     "url": "https://www.cdkglobalheavytruck.com/oem-integrations"
+    }
+   ]
+  },
+  {
+   "id": "gl-account-master",
+   "name": "GL Account Master",
+   "luke_name": "The chart of accounts — the account numbers everything posts to",
+   "group": "ledger",
+   "one_liner": "The list of account numbers (like 231 New Cars, 263 Warranty Claims) that everything in the store eventually posts to.",
+   "sap_analogue": "SKA1/SKB1 (chart-of-accounts master + company-code GL segment)",
+   "why_it_matters": "Every OEM, PACCAR included by dealer-accounting norm, forces your chart of accounts onto a factory-standard numbering scheme so your monthly statement can be compared against the OEM's own format. Getting an account's department suffix or schedule wrong means your factory statement won't tie out and your 20-Group/ATD benchmarking is comparing apples to oranges.",
+   "api": {
+    "reachable": "none",
+    "note": "GL account master schema (account number format, type codes, cost-center segmentation) is not publicly documented at field level anywhere in CDK/Fortellis material; only workflow-level marketing language and a third-party audit tool's export path confirm the object exists.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "Base account number (3-digit)",
+     "label": "Natural account number",
+     "type": "string",
+     "key": true,
+     "plain": "3-digit number identifying the natural account, e.g. 231 = New Cars inventory",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Department suffix (2-digit)",
+     "label": "Which department this account belongs to",
+     "type": "string",
+     "key": true,
+     "plain": "A 2-digit code appended after a hyphen, e.g. 013-01 = Delivery Expense, New Vehicle Dept",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Sub-account letter suffix",
+     "label": "Further split for audit/analysis",
+     "type": "string",
+     "key": false,
+     "plain": "A letter suffix splits an account further, e.g. 446A Used Cars Retail-Certified vs 446B Used Cars Retail-Other",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Numeric range (statement section)",
+     "label": "Which financial statement section this falls in",
+     "type": "string",
+     "key": false,
+     "plain": "200s=assets, 300s=liabilities/equity, 400s=sales, 600s=cost of sales, 700s=lease/rental detail, 800s/900s=other income/F&I",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Reporting Account (factory statement mapping)",
+     "label": "Which OEM statement line this maps to",
+     "type": "string",
+     "key": false,
+     "plain": "A many-to-one mapping from your internal GL account to the manufacturer's own statement line number, confirmed on a comparable DMS's GL setup screen",
+     "confidence": "documented",
+     "source": {
+      "title": "Dominion DMS help \u2014 Create a new sales general ledger account",
+      "url": "https://help.dominiondms.com/en/knowledge/create-a-new-sales-general-ledger-account"
+     }
+    },
+    {
+     "name": "Company Number (grouping dimension)",
+     "label": "Which store/legal entity this GL data belongs to",
+     "type": "string",
+     "key": true,
+     "plain": "A third-party audit tool confirms exporting CDK's GL by 'company number', proving this dimension exists above the account number for multi-rooftop groups",
+     "confidence": "documented",
+     "source": {
+      "title": "MindBridge \u2014 CDK ERP: Export the general ledger",
+      "url": "https://support.mindbridge.ai/hc/en-us/articles/360058269153-CDK-ERP-Export-the-general-ledger"
+     }
+    },
+    {
+     "name": "Account Mapping (inventory-to-GL interface)",
+     "label": "Link from inventory screens to GL codes",
+     "type": "string",
+     "key": false,
+     "plain": "An 'Account Mapping' function interfaces vehicle inventory setup screens to the Accounting subsystem to retrieve GL codes, journals, and chart of accounts",
+     "confidence": "documented",
+     "source": {
+      "title": "Lithia connectCDK \u2014 Vehicle Inventory Setups, Account Mapping",
+      "url": "https://lithia.vehicle.connectcdk.com/pid1033/help/client/scr-vehsetups-inventory/old_veh_ov_vehicle_inventory_setups_-_account_mapping.htm"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "accounting-schedule",
+     "label": "controlled by",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "gl-journal-posting",
+     "label": "posted to by",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "dealer-rooftop-partition",
+     "label": "scoped by",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "Do we have PACCAR's own factory chart-of-accounts numbering, or are we mapping to a generic NADA-format template?",
+    "How are our 9 stores' GL account structures reconciled to one another for the group consolidation, given CDK doesn't publish a multi-rooftop consolidation pattern?"
+   ],
+   "sources": [
+    {
+     "title": "GM Dealer Standard Accounting Manual",
+     "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    {
+     "title": "CDK Global \u2014 Accounting Workflows page",
+     "url": "https://www2.cdkglobal.com/accounting-workflows"
+    }
+   ]
+  },
+  {
+   "id": "accounting-schedule",
+   "name": "Accounting Schedule",
+   "luke_name": "The control sheet that has to match the GL account balance every month-end",
+   "group": "ledger",
+   "one_liner": "A supporting worksheet (like a list of every unit in inventory) that has to add up to exactly what a GL account says, so the accountant can prove the balance is real.",
+   "sap_analogue": "Subledger reconciliation / open-item list tied to a control account (like FI open items vs. a GL reconciliation account)",
+   "why_it_matters": "Schedules are how a controller proves an inventory or WIP balance isn't just a number sitting in the GL, it's backed by real open items (unsold units, open ROs, unbilled warranty claims). If a schedule doesn't tie to its control account at month-end, that's the single most common find in a dealership financial review, and it's usually a sign something posted to the wrong account or a unit fell off the schedule without a matching GL entry.",
+   "api": {
+    "reachable": "none",
+    "note": "Accounting schedules are described only at a workflow/concept level in CDK/dealer-accounting materials; no Fortellis API for schedule detail lines was found.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "Control account number",
+     "label": "Which GL account this schedule proves out",
+     "type": "string",
+     "key": true,
+     "plain": "The GL account balance this schedule has to reconcile to exactly",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual \u2014 schedule/control account discussion",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Schedule line item (unit/RO/claim reference)",
+     "label": "One open item on the list",
+     "type": "string",
+     "key": true,
+     "plain": "Each line is a real open item — a stock number, an open RO, or an unpaid claim — that together should sum to the control balance",
+     "confidence": "inferred",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Schedule balance vs. GL balance (variance)",
+     "label": "Does the schedule tie to the GL",
+     "type": "currency",
+     "key": false,
+     "plain": "The month-end check: schedule total minus GL account balance should be zero",
+     "confidence": "inferred",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Floor plan schedule (unit-level payable)",
+     "label": "What we owe the floor-plan lender, unit by unit",
+     "type": "currency",
+     "key": false,
+     "plain": "A named example schedule type: the floor-plan payable broken out by individual financed unit",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Warranty receivable schedule (open claim list)",
+     "label": "What PACCAR owes us on open warranty claims",
+     "type": "currency",
+     "key": false,
+     "plain": "A named example schedule type: open/submitted warranty claims awaiting factory payment",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "WIP schedule (open RO list)",
+     "label": "Every RO still open, with its running cost",
+     "type": "currency",
+     "key": false,
+     "plain": "A named example schedule type: every open repair order and the cost posted to it so far",
+     "confidence": "inferred",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "gl-account-master",
+     "label": "reconciles to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "work-in-process",
+     "label": "lists open items from",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "warranty-claim",
+     "label": "lists open items from",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "Which of our schedules failed to tie out at last month-end across our 9 stores, and why?",
+    "Do we run one consolidated floor-plan schedule or 9 separate store-level ones?"
+   ],
+   "sources": [
+    {
+     "title": "GM Dealer Standard Accounting Manual",
+     "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    }
+   ]
+  },
+  {
+   "id": "gl-journal-posting",
+   "name": "GL Journal / Posting",
+   "luke_name": "The actual debit/credit entry that lands in the books",
+   "group": "ledger",
+   "one_liner": "The individual debit-and-credit entry that actually moves a dollar amount from one account to another when an RO closes, a part sells, or a deal funds.",
+   "sap_analogue": "BKPF/BSEG (accounting document header and line items)",
+   "why_it_matters": "Almost none of these postings are made by a human typing a journal entry; they're auto-generated by closing an RO, finalizing a deal, or booking a parts sale. If the underlying transaction is coded wrong (wrong pay type, wrong department), the journal entry inherits that mistake, and finding it means tracing back from the GL to the source document CDK calls the 'reference number', not the other way around.",
+   "api": {
+    "reachable": "partial",
+    "note": "Fortellis documents multiple GL posting/interface APIs by name (Journal Entry, Post to GL) at the catalogue level, but full request/response field schemas for a generic journal entry object were not found in the accessible material.",
+    "endpoints": [
+     "CDK Drive GL Posting/Journal Entry API (catalogue-level)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "Reference number (source document link)",
+     "label": "Which RO/deal/invoice created this entry",
+     "type": "string",
+     "key": true,
+     "plain": "Ties the journal line back to the originating RO, deal, or parts invoice — your audit trail",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Account number (debit/credit line)",
+     "label": "Which GL account this line hits",
+     "type": "string",
+     "key": true,
+     "plain": "The GL account number being debited or credited on this line",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Debit / Credit amount",
+     "label": "How much moved",
+     "type": "currency",
+     "key": true,
+     "plain": "The dollar amount posted on this line, and whether it's a debit or a credit",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Posting date / accounting period",
+     "label": "Which month this lands in",
+     "type": "date",
+     "key": false,
+     "plain": "The date/period the entry posts to, which drives which month's financials it affects",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Department code (cost-centre tag)",
+     "label": "Which department's P&L this hits",
+     "type": "string",
+     "key": false,
+     "plain": "The department tag carried onto the journal line so departmental P&Ls roll up correctly",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Auto-generated source flag (RO close / deal finalize / parts sale)",
+     "label": "What triggered this entry automatically",
+     "type": "enum",
+     "key": false,
+     "plain": "Tags whether this journal line was auto-created by closing an RO, finalizing a deal, or a parts sale, versus a manual entry",
+     "confidence": "inferred",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "gl-account-master",
+     "label": "posts to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "repair-order",
+     "label": "generated by closing",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "deal-jacket-vehicle-sale",
+     "label": "generated by finalizing",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "When we see an unexplained journal entry in the GL, how far back can we actually trace it to the source RO or deal today?",
+    "Are month-end closes staggered or simultaneous across our 9 stores?"
+   ],
+   "sources": [
+    {
+     "title": "GM Dealer Standard Accounting Manual",
+     "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    }
+   ]
+  },
+  {
+   "id": "repair-order",
+   "name": "Repair Order",
+   "luke_name": "The RO you open when a truck rolls in",
+   "group": "transaction",
+   "one_liner": "The work order for one visit — what the truck came in for, who's paying, and everything that got done to it.",
+   "sap_analogue": "Internal order (AUFK/COEP) with a settlement rule splitting cost across customer/warranty/internal payers",
+   "why_it_matters": "The RO is the single cost object every dollar of labor, parts, and sublet flows through before it settles to a payer — customer, warranty, or internal. If the pay-type flags on the header are wrong, revenue posts to the wrong department, warranty submissions get rejected by PACCAR, or a truck that should have been billed to a fleet account gets absorbed as an internal loss.",
+   "api": {
+    "reachable": "full",
+    "note": "Get Repair Order v3 on Fortellis is the deepest documented object in the whole platform — full header, labor, parts, sublet, and technician punch detail.",
+    "endpoints": [
+     "CDK Drive Get Repair Order v3",
+     "CDKDrive Repair Orders v1"
+    ]
+   },
+   "fields": [
+    {
+     "name": "repairOrderNumber",
+     "label": "RO number",
+     "type": "string",
+     "key": true,
+     "plain": "The RO number written on the ticket and the invoice",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "hasCustPayFlag",
+     "label": "Customer-pay portion",
+     "type": "boolean",
+     "key": false,
+     "plain": "Says part of this RO is billed to the customer, not warranty or internal",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "hasWarrPayFlag",
+     "label": "Warranty portion",
+     "type": "boolean",
+     "key": false,
+     "plain": "Says part of this RO is billed to PACCAR warranty",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "hasIntPayFlag",
+     "label": "Internal portion",
+     "type": "boolean",
+     "key": false,
+     "plain": "Says part of this RO is billed internally (shop's own truck, recon, etc.) rather than to a paying customer",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "status (Open/WIP/Closed)",
+     "label": "RO status",
+     "type": "enum",
+     "key": true,
+     "plain": "Whether the RO is still open, in progress, or fully closed and invoiced",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "customerId",
+     "label": "Customer billed",
+     "type": "string",
+     "key": false,
+     "plain": "Link to the customer master record this RO bills to",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "vin / vehicleId",
+     "label": "Truck worked on",
+     "type": "string",
+     "key": false,
+     "plain": "Link to the vehicle master record for the truck on this RO",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "openDate / closedDate",
+     "label": "Opened and closed dates",
+     "type": "date",
+     "key": false,
+     "plain": "When the RO was opened and, if closed, when it was closed",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "totalAmount (labor+parts+sublet+misc)",
+     "label": "Total RO amount",
+     "type": "currency",
+     "key": false,
+     "plain": "The all-in total for the whole RO across labor, parts, sublet, and misc charges",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "serviceAdvisor",
+     "label": "Advisor who wrote it up",
+     "type": "number",
+     "key": false,
+     "plain": "The advisor number responsible for the RO",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "customer-master",
+     "label": "billed to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "vehicle-master",
+     "label": "performed on",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "ro-labour-line",
+     "label": "contains",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "ro-part-line",
+     "label": "contains",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "work-in-process",
+     "label": "tracked as",
+     "cardinality": "one-to-one"
+    },
+    {
+     "to": "warranty-claim",
+     "label": "generates",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "gl-journal-posting",
+     "label": "generates on close",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "How often do we see an RO with more than one pay-type flag true, and is the split calculated correctly?",
+    "What's our average number of days between openDate and closedDate across our 9 stores, and is that consistent with the WIP schedule?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+   ]
+  },
+  {
+   "id": "ro-labour-line",
+   "name": "RO Labour Line",
+   "luke_name": "One job on the RO — what the tech did and how long it took",
+   "group": "transaction",
+   "one_liner": "One line on the RO describing a single job, the flat-rate hours it should take, and the actual hours a tech spent on it.",
+   "sap_analogue": "Confirmation/activity allocation line (COEP) charging labor hours to the internal order",
+   "why_it_matters": "This line is where flat-rate pay-plan math and shop efficiency numbers actually come from — the gap between billed flat-rate hours and actual clocked hours is your technician efficiency metric. If flat rate and actual are miscoded, or a comeback isn't flagged, you'll pay a tech for hours they didn't work, or you won't catch a comeback pattern until it's cost you goodwill.",
+   "api": {
+    "reachable": "full",
+    "note": "Labor operations are a nested array inside Get Repair Order v3 — fully documented alongside the RO header.",
+    "endpoints": [
+     "CDK Drive Get Repair Order v3 (line.laborOperations[])"
+    ]
+   },
+   "fields": [
+    {
+     "name": "laborOperations[].opCode",
+     "label": "Job/operation code",
+     "type": "string",
+     "key": true,
+     "plain": "The standard labor operation code identifying what job this is (e.g. brake job, oil change)",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].flatRateHours",
+     "label": "Flat-rate (book) hours",
+     "type": "number",
+     "key": false,
+     "plain": "The standard hours the job is supposed to take, used for billing and pay-plan calculations",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].actualHours",
+     "label": "Actual hours worked",
+     "type": "number",
+     "key": false,
+     "plain": "The real clock time the tech spent, compared against flat-rate hours for efficiency",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].technicianIds[]",
+     "label": "Tech(s) assigned",
+     "type": "array",
+     "key": false,
+     "plain": "Which technician(s) worked this specific labor line",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].payType (Customer/Warranty/Internal)",
+     "label": "Who pays for this specific line",
+     "type": "enum",
+     "key": true,
+     "plain": "Line-level pay type — lets one RO split cost across payers job by job",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].laborSaleAmount / laborCostAmount",
+     "label": "Billed amount vs. cost amount",
+     "type": "currency",
+     "key": false,
+     "plain": "What was charged for this labor line versus what it cost the shop (tech's effective rate x hours)",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "laborOperations[].comebackFlag / comebackSA / comebackTech",
+     "label": "Comeback flag and who did it originally",
+     "type": "boolean",
+     "key": false,
+     "plain": "Marks this job as a redo of prior work and tags who did the original job",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "belongs to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "employee-master",
+     "label": "worked by",
+     "cardinality": "many-to-many"
+    },
+    {
+     "to": "technician-time-punch",
+     "label": "clocked against",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "What's our shop-wide flat-rate-to-actual-hours ratio across all 9 stores, and which store is the outlier?",
+    "How many comebacks did we have last month, and were they all correctly flagged rather than opened as fresh ROs?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+   ]
+  },
+  {
+   "id": "ro-part-line",
+   "name": "RO Part Line",
+   "luke_name": "One part on the RO — what it cost us, what we charged, whether it's a core",
+   "group": "transaction",
+   "one_liner": "One line on the RO for a single part used on the job, with its cost, its sale price, and whether it's a warranty/core part.",
+   "sap_analogue": "Goods movement / material consumption line (MSEG) charging a part's cost to the internal order",
+   "why_it_matters": "This is where parts margin actually gets made or lost job by job. A miscoded core charge or a part billed at cost instead of list price is invisible on the RO total but shows up as gross-profit erosion in the parts department at month-end, and if the part line's pay type doesn't match the RO's warranty flag, PACCAR will reject the claim outright.",
+   "api": {
+    "reachable": "full",
+    "note": "Parts lines are a nested array inside Get Repair Order v3, fully documented alongside labor lines.",
+    "endpoints": [
+     "CDK Drive Get Repair Order v3 (line.parts[])"
+    ]
+   },
+   "fields": [
+    {
+     "name": "parts[].partNumber",
+     "label": "Part number",
+     "type": "string",
+     "key": true,
+     "plain": "The part number used on this line, joining back to the parts master",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].quantity",
+     "label": "Quantity used",
+     "type": "number",
+     "key": false,
+     "plain": "How many of this part were used on the job",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].costAmount",
+     "label": "What it cost us",
+     "type": "currency",
+     "key": false,
+     "plain": "The dealer's cost for the part quantity used on this line",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].saleAmount",
+     "label": "What we charged",
+     "type": "currency",
+     "key": false,
+     "plain": "What the customer/payer was actually charged for this part line",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].payType (Customer/Warranty/Internal)",
+     "label": "Who pays for this part",
+     "type": "enum",
+     "key": true,
+     "plain": "Line-level pay type for this part, independent of but usually matching the RO-level flags",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].coreCharge / coreReturned",
+     "label": "Core charge / core returned",
+     "type": "currency",
+     "key": false,
+     "plain": "The refundable core deposit charged on this part, and whether the old core has been returned",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "parts[].employeeId",
+     "label": "Who sold/pulled it",
+     "type": "string",
+     "key": false,
+     "plain": "The parts counter employee who sold this part on the RO",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "belongs to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "parts-master-inventory",
+     "label": "drawn from",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "warranty-claim",
+     "label": "claimed via",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "How often are core charges left uncollected or unreturned across our 9 stores, and does anyone track that separately?",
+    "Do part-line pay types ever disagree with the RO header's pay flags, and how would we catch it if they did?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+   ]
+  },
+  {
+   "id": "parts-master-inventory",
+   "name": "Parts Master / Inventory",
+   "luke_name": "The parts bin record — what we have, where, and what it's worth",
+   "group": "inventory",
+   "one_liner": "One record per part number: how many we have, at which of our locations, what it costs, what we sell it for, and how fast it moves.",
+   "sap_analogue": "MARA/MARC/MBEW (material master, plant data, valuation) combined",
+   "why_it_matters": "This drives both your parts fill rate and your month-end inventory valuation. If mcdPercentage or valuation fields drift from what's physically on the shelf, your GL parts inventory balance stops meaning anything, and your obsolescence write-off decisions are based on bad data — both are classic sources of a parts department 'phantom' shrinkage number.",
+   "api": {
+    "reachable": "partial",
+    "note": "CDK documents an Async Parts Inventory API for bulk extract, but real-time single-part-number lookup and full valuation-field schema are thinner than the RO/customer APIs.",
+    "endpoints": [
+     "CDK Drive Async Parts Inventory API"
+    ]
+   },
+   "fields": [
+    {
+     "name": "partNumber",
+     "label": "Part number",
+     "type": "string",
+     "key": true,
+     "plain": "The unique identifier for this part",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "description",
+     "label": "Part description",
+     "type": "string",
+     "key": false,
+     "plain": "The plain-text description printed on the RO and pick ticket",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "onHandQty (by location)",
+     "label": "How many we have, by location",
+     "type": "number",
+     "key": false,
+     "plain": "Quantity on hand, broken out per stocking location for multi-location inventory",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK bin/location help",
+      "url": "https://www.reddit.com/r/partscounter/comments/1dz1eqq/cdk_help/"
+     }
+    },
+    {
+     "name": "cost",
+     "label": "Our cost",
+     "type": "currency",
+     "key": false,
+     "plain": "What we pay for the part — the basis for GL inventory valuation",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "list",
+     "label": "List price",
+     "type": "currency",
+     "key": false,
+     "plain": "The manufacturer's suggested/list price for the part",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "sale",
+     "label": "Our sale price",
+     "type": "currency",
+     "key": false,
+     "plain": "What we actually charge, which may differ from list depending on pricing matrix/customer type",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "coreCost",
+     "label": "Core cost",
+     "type": "currency",
+     "key": false,
+     "plain": "The cost basis for the refundable core portion of a remanufactured part",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "mcdPercentage",
+     "label": "Monthly consumption / demand percentage",
+     "type": "number",
+     "key": false,
+     "plain": "A demand/movement ratio used to classify a part's stocking status and feed reorder logic",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "movementType (stock/special-order/non-stock)",
+     "label": "How this part is normally sold/ordered",
+     "type": "enum",
+     "key": false,
+     "plain": "Classifies the part's typical movement pattern, which drives ordering and obsolescence logic",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Async Parts Inventory field list (Fortellis community Q&A)",
+      "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "ro-part-line",
+     "label": "supplies",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "parts-order-supersession",
+     "label": "replenished via",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "gl-account-master",
+     "label": "valued against",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "Does our physical inventory count reconcile to CDK's onHandQty per location across all 9 stores, or is there a known drift?",
+    "How current is our mcdPercentage-driven stocking classification — has anyone reviewed it since PACCAR's last supersession wave?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Async Parts Inventory field list (Fortellis community Q&A)",
+     "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    },
+    {
+     "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+   ]
+  },
+  {
+   "id": "parts-order-supersession",
+   "name": "Parts Order + Supersession",
+   "luke_name": "The order we place with PACCAR, and what happens when a part number gets replaced",
+   "group": "inventory",
+   "one_liner": "The order sent to PACCAR to replenish stock or fill a special order, plus the mechanism that swaps an old part number for its factory replacement.",
+   "sap_analogue": "Purchase order (EKKO/EKPO) plus material supersession/follow-up-material chain",
+   "why_it_matters": "PACCAR routinely retires part numbers and issues a superseding number; if a counter person orders the old number and CDK doesn't resolve the supersession automatically, you either get a rejected order or you receive the wrong part physically boxed under a new label. Order-type coding (IRO vs IRE vs PO vs RMR) also determines who gets billed for freight and whether the part counts as emergency-order margin or standard stock replenishment.",
+   "api": {
+    "reachable": "partial",
+    "note": "CDK documents parts ordering concepts (IRO/IRE/PO/RMR order types, OPC, MDI) at the workflow level; a full public request/response schema for the order object itself is thinner than the RO API.",
+    "endpoints": [
+     "CDK Drive Parts Order API (catalogue-level)",
+     "PACCAR OPC (Order Parts Center)",
+     "PACCAR MDI (Multi-Dealer Inventory)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "Order type: IRO (Immediate Requirement Order)",
+     "label": "Rush/emergency order",
+     "type": "enum",
+     "key": true,
+     "plain": "Order type flag for a rush order needed right away, usually at a freight premium",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+     }
+    },
+    {
+     "name": "Order type: IRE (Immediate Requirement Emergency)",
+     "label": "Emergency order",
+     "type": "enum",
+     "key": true,
+     "plain": "Order type flag for an emergency order, distinct from a standard rush order",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+     }
+    },
+    {
+     "name": "Order type: PO (standard stock order)",
+     "label": "Regular stock replenishment order",
+     "type": "enum",
+     "key": true,
+     "plain": "Standard, non-urgent order type used for routine stock replenishment",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+     }
+    },
+    {
+     "name": "Order type: RMR (Return Merchandise Request)",
+     "label": "Return-to-vendor request",
+     "type": "enum",
+     "key": true,
+     "plain": "Order type used to return parts back to the vendor/factory",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+     }
+    },
+    {
+     "name": "OPC (Order Parts Center) reference",
+     "label": "PACCAR's ordering portal reference",
+     "type": "string",
+     "key": false,
+     "plain": "Reference to PACCAR's own Order Parts Center system that the CDK order interfaces with",
+     "confidence": "documented",
+     "source": {
+      "title": "PACCAR Technology page \u2014 MDI daily inventory sync",
+      "url": "https://www.paccarparts.com/technology/"
+     }
+    },
+    {
+     "name": "MDI (Multi-Dealer Inventory) lookup",
+     "label": "Check another PACCAR dealer's stock",
+     "type": "string",
+     "key": false,
+     "plain": "PACCAR's cross-dealer inventory visibility tool, used to source a part from a sister dealer instead of the factory",
+     "confidence": "documented",
+     "source": {
+      "title": "PACCAR Technology page \u2014 MDI daily inventory sync",
+      "url": "https://www.paccarparts.com/technology/"
+     }
+    },
+    {
+     "name": "Superseded part number -> replacement part number",
+     "label": "Old part number to new part number chain",
+     "type": "string",
+     "key": false,
+     "plain": "When PACCAR retires a part number, this chain points from the old number to its replacement so old orders/inventory records still resolve",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK auto supersession help",
+      "url": "https://www.reddit.com/r/partscounter/comments/1j51sgh/cdk_auto_supersession_help/"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "parts-master-inventory",
+     "label": "replenishes",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "vendor-master",
+     "label": "placed with",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "purchase-receipt-document",
+     "label": "received via",
+     "cardinality": "one-to-one"
+    }
+   ],
+   "open_questions": [
+    "How many open supersession chains do we currently have sitting in inventory as the old, retired part number?",
+    "Are we using MDI to check sister-dealer stock before placing an IRO/IRE rush order, or defaulting straight to the factory?"
+   ],
+   "sources": [
+    {
+     "title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+     "url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+    },
+    {
+     "title": "PACCAR Technology page \u2014 MDI daily inventory sync",
+     "url": "https://www.paccarparts.com/technology/"
+    }
+   ]
+  },
+  {
+   "id": "parts-pick-ticket",
+   "name": "Parts Pick Ticket",
+   "luke_name": "The slip that says which parts to pull off the shelf for an RO",
+   "group": "transaction",
+   "one_liner": "The internal slip generated for a repair order telling the parts department which parts to physically pull and stage for the tech.",
+   "sap_analogue": "Reservation / goods issue slip (MB1A-style) against the internal order",
+   "why_it_matters": "This is the physical hand-off point between the parts department and the shop floor. If a pick ticket doesn't get closed out against the actual part pulled (or a substitute is grabbed without updating the ticket), the RO's parts cost can be wrong and the inventory count drifts from what CDK thinks is on the shelf.",
+   "api": {
+    "reachable": "partial",
+    "note": "Referenced as a workflow step tied to RO parts lines in the materials/cost-object documentation; no standalone Fortellis pick-ticket API schema was found separate from the RO parts array.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "repairOrderNumber (linked RO)",
+     "label": "Which RO this pick is for",
+     "type": "string",
+     "key": true,
+     "plain": "The RO number this pick ticket was generated against",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+     }
+    },
+    {
+     "name": "partNumber requested",
+     "label": "Part requested",
+     "type": "string",
+     "key": true,
+     "plain": "The part number the tech/advisor requested be pulled",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+     }
+    },
+    {
+     "name": "quantity requested vs. quantity pulled",
+     "label": "Requested vs. actually pulled quantity",
+     "type": "number",
+     "key": false,
+     "plain": "Lets the parts counter flag a shortage or substitution against what was originally requested",
+     "confidence": "inferred",
+     "source": {
+      "title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+     }
+    },
+    {
+     "name": "location pulled from",
+     "label": "Which bin/location it came from",
+     "type": "string",
+     "key": false,
+     "plain": "For multi-location inventory, which physical location supplied the part",
+     "confidence": "inferred",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK bin/location help",
+      "url": "https://www.reddit.com/r/partscounter/comments/1dz1eqq/cdk_help/"
+     }
+    },
+    {
+     "name": "pick status (open/staged/closed)",
+     "label": "Has it been pulled yet",
+     "type": "enum",
+     "key": false,
+     "plain": "Tracks whether the part is still needed, has been staged, or the ticket is closed out",
+     "confidence": "inferred",
+     "source": {
+      "title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+     }
+    },
+    {
+     "name": "employeeId (picker)",
+     "label": "Who pulled it",
+     "type": "string",
+     "key": false,
+     "plain": "The parts employee who physically pulled and staged the part",
+     "confidence": "inferred",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF \u2014 employee identifiers on RO",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "generated for",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "parts-master-inventory",
+     "label": "draws down",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "ro-part-line",
+     "label": "fulfills",
+     "cardinality": "one-to-one"
+    }
+   ],
+   "open_questions": [
+    "Do our stores close out pick tickets consistently, or is that a step people skip when they're busy?",
+    "How often does a pick-ticket substitution happen without the RO parts line being corrected to match?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+     "url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    }
+   ]
+  },
+  {
+   "id": "counter-parts-sale",
+   "name": "Counter / Parts Sale",
+   "luke_name": "A straight parts-counter sale — no RO attached",
+   "group": "transaction",
+   "one_liner": "A parts sale made straight across the counter to a customer or another dealer, with no repair order attached.",
+   "sap_analogue": "Standard sales order + billing document (VBAK/VBRK) for a cash/wholesale sale",
+   "why_it_matters": "This is a different revenue stream than RO parts lines — counter sales carry their own open/closed status and their own margin profile (often wholesale, lower margin, higher volume). If counter sales aren't closed out same-day, they sit as open tickets that distort your daily parts gross and your inventory-on-hand numbers simultaneously.",
+   "api": {
+    "reachable": "partial",
+    "note": "Documented at the workflow level (open sale / closed sale distinction) in the transactions lane; a dedicated Fortellis 'Parts Counter Sale' object schema separate from Get Repair Order v3 was not found in the accessible material.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "Sale status (open/closed)",
+     "label": "Is this sale finished",
+     "type": "enum",
+     "key": true,
+     "plain": "An open counter sale hasn't been paid/closed yet; a closed one has been rung out and posted",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "url": "https://www2.cdkglobal.com/api-solutions-parts"
+     }
+    },
+    {
+     "name": "customerId (or cash sale flag)",
+     "label": "Who bought it",
+     "type": "string",
+     "key": false,
+     "plain": "Link to the customer master, or a flag that this was an anonymous cash sale",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "url": "https://www2.cdkglobal.com/api-solutions-parts"
+     }
+    },
+    {
+     "name": "partNumber / quantity",
+     "label": "What was sold",
+     "type": "string",
+     "key": true,
+     "plain": "The part(s) and quantities sold on this ticket",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "saleAmount",
+     "label": "Amount charged",
+     "type": "currency",
+     "key": false,
+     "plain": "Total charged for this counter sale",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "url": "https://www2.cdkglobal.com/api-solutions-parts"
+     }
+    },
+    {
+     "name": "wholesale vs. retail pricing flag",
+     "label": "Wholesale or retail price applied",
+     "type": "enum",
+     "key": false,
+     "plain": "Whether the wholesale pricing matrix (tied to customer partsType='W') or standard retail pricing applied",
+     "confidence": "inferred",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF \u2014 partsType wholesale flag",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "employeeId (counter person)",
+     "label": "Who rang it up",
+     "type": "string",
+     "key": false,
+     "plain": "The parts counter employee who processed the sale",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF \u2014 employee identifiers on RO",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "customer-master",
+     "label": "sold to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "parts-master-inventory",
+     "label": "draws down",
+     "cardinality": "many-to-many"
+    },
+    {
+     "to": "gl-journal-posting",
+     "label": "generates on close",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "How many open counter sales are sitting unclosed right now across our 9 stores, and what's the dollar exposure?",
+    "Do we track wholesale counter-sale margin separately from RO-attached parts margin in our reporting today?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+     "url": "https://www2.cdkglobal.com/api-solutions-parts"
+    }
+   ]
+  },
+  {
+   "id": "deal-jacket-vehicle-sale",
+   "name": "Deal Jacket / Vehicle Sale",
+   "luke_name": "The truck deal — desking, F&I, and the finalized sale",
+   "group": "transaction",
+   "one_liner": "The paper (and electronic) folder for one truck sale, from the first quote through F&I products to the finalized, funded deal.",
+   "sap_analogue": "Sales order + billing document (VBAK/VBRK) with a separate financing/insurance line-item set",
+   "why_it_matters": "A deal isn't 'done' just because the truck left the lot — it has to 'wash out' (all debits/credits net to zero) before it can close, and We-Owes (accessories, service work promised at delivery but not yet done) live on as their own open schedule. If a We-Owe never gets fulfilled or written off, it sits as a silent liability, and if front-end gross gets recognized before the deal is actually finalized, your F&I numbers will not tie to the factory holdback receivable schedule.",
+   "api": {
+    "reachable": "partial",
+    "note": "FI Sales History/Bulk/Delta is a documented read-only extract of already-finalized deals; there is no public Fortellis write API for desking/menu-selling/washout screens.",
+    "endpoints": [
+     "CDK Drive FI Sales History Setup / Bulk / Delta",
+     "CDK Drive Payment Settling API"
+    ]
+   },
+   "fields": [
+    {
+     "name": "Deal status code (C, B, P, F, I, U)",
+     "label": "Where the deal stands (pending/booked/finalized/etc.)",
+     "type": "enum",
+     "key": true,
+     "plain": "FI Sales records carry a status code — C, B, P, F, I, or U — marking the deal's stage from pending through finalized",
+     "confidence": "documented",
+     "source": {
+      "title": "BettrData \u2014 Fortellis CDK Drive API integration guide",
+      "url": "https://docs.bettrdata.io/user-docs/how-to-guides/fortellis-cdk-drive-api"
+     }
+    },
+    {
+     "name": "We-Owe (Pending Deals, We Owes)",
+     "label": "What we still owe the customer at delivery",
+     "type": "object",
+     "key": false,
+     "plain": "A distinct tracked object for dealer obligations — accessories, service, cash-back — promised on the deal but not yet fulfilled",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Partner Program Pricing Guide PDF",
+      "url": "https://www.cdkglobal.com/sites/cdk4/files/PDFfiles/Partner_Program_Price_Guide.pdf"
+     }
+    },
+    {
+     "name": "Finalized / Booked status",
+     "label": "Deal is closed and washed out",
+     "type": "boolean",
+     "key": true,
+     "plain": "Marks the deal as balanced (all debits/credits net to zero) and closed — called 'Finalized' or 'Booked' in CDK/3PA language",
+     "confidence": "documented",
+     "source": {
+      "title": "DMS Cheat Sheet, Scribd/dealer-integrator reference",
+      "url": "https://www.scribd.com/document/809504766/DMS-Cheat-Sheet-6-20-2023"
+     }
+    },
+    {
+     "name": "customerId (deal buyer)",
+     "label": "Who's buying",
+     "type": "string",
+     "key": false,
+     "plain": "Link to the customer record associated with this deal, shared across Deals and Repair Orders",
+     "confidence": "documented",
+     "source": {
+      "title": "Microsoft Learn \u2014 CDK Drive Customer connector",
+      "url": "https://learn.microsoft.com/en-us/connectors/cdkdrivecustomer/"
+     }
+    },
+    {
+     "name": "vin / Sales Vehicles reference",
+     "label": "Which truck is being sold",
+     "type": "string",
+     "key": false,
+     "plain": "Link to the specific vehicle unit on this deal, from the partner-era 'Sales Vehicles' extract",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Partner Program Pricing Guide PDF",
+      "url": "https://www.cdkglobal.com/sites/cdk4/files/PDFfiles/Partner_Program_Price_Guide.pdf"
+     }
+    },
+    {
+     "name": "Front-end gross (selling price minus vehicle cost/pack/recon)",
+     "label": "Profit on the truck itself",
+     "type": "currency",
+     "key": false,
+     "plain": "Selling price minus vehicle cost, pack, and reconditioning — recognized at delivery, not at contract signing",
+     "confidence": "inferred",
+     "source": {
+      "title": "WickedFile \u2014 Car Dealership Accounting",
+      "url": "https://www.wickedfile.com/blogs/car-dealership-accounting/"
+     }
+    },
+    {
+     "name": "Back-end gross (F&I commissions, reserve, aftermarket income)",
+     "label": "Profit on financing/insurance products",
+     "type": "currency",
+     "key": false,
+     "plain": "F&I product commissions, finance reserve, and aftermarket income booked against a chargeback/EPO reserve",
+     "confidence": "inferred",
+     "source": {
+      "title": "DealerInt \u2014 Car Dealership Accounting Basics",
+      "url": "https://www.dealerint.com/blog/car-dealership-accounting-basics"
+     }
+    },
+    {
+     "name": "Payment settling reference (PayNow / Invite-2-Pay)",
+     "label": "How the deal payment was collected",
+     "type": "string",
+     "key": false,
+     "plain": "Ties the deal to the payment-settling workflow that collects funds back into the DMS",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Payment Settling API",
+      "url": "https://www2.cdkglobal.com/payment-settling-api"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "customer-master",
+     "label": "sold to",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "vehicle-master",
+     "label": "disposes of",
+     "cardinality": "one-to-one"
+    },
+    {
+     "to": "gl-journal-posting",
+     "label": "generates on finalize",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "accounting-schedule",
+     "label": "tracked via (We-Owe schedule)",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "How many open We-Owe commitments do we have outstanding right now across our 9 stores, and what's the aging on them?",
+    "Do our front-end and back-end gross numbers actually get recognized at delivery consistently, or does anyone book at contract signing?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Partner Program Pricing Guide PDF",
+     "url": "https://www.cdkglobal.com/sites/cdk4/files/PDFfiles/Partner_Program_Price_Guide.pdf"
+    },
+    {
+     "title": "BettrData \u2014 Fortellis CDK Drive API integration guide",
+     "url": "https://docs.bettrdata.io/user-docs/how-to-guides/fortellis-cdk-drive-api"
+    }
+   ]
+  },
+  {
+   "id": "technician-time-punch",
+   "name": "Technician Time Punch",
+   "luke_name": "The tech's clock — when they punched in/out on a job",
+   "group": "transaction",
+   "one_liner": "The actual clock-in/clock-out record for a technician working a specific job, as opposed to the flat-rate hours billed for that job.",
+   "sap_analogue": "Time confirmation (CATS-style) feeding an activity allocation",
+   "why_it_matters": "This is the raw data behind technician efficiency and, if you're running a flat-rate pay plan, potentially payroll itself. Flat-rate pay is calculated off billed hours, not clocked hours, so if punches aren't accurate, you lose the ability to see whether a tech is actually fast or just good at booking favorable jobs — and payroll disputes get very hard to settle without it.",
+   "api": {
+    "reachable": "partial",
+    "note": "technicianPunchTimes is a documented nested array inside Get Repair Order v3; there's no standalone real-time punch-clock API found separate from the RO payload.",
+    "endpoints": [
+     "CDK Drive Get Repair Order v3 (technicianPunchTimes[])"
+    ]
+   },
+   "fields": [
+    {
+     "name": "technicianPunchTimes[].technicianId",
+     "label": "Which tech punched",
+     "type": "string",
+     "key": true,
+     "plain": "The technician ID this punch record belongs to",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "technicianPunchTimes[].workType",
+     "label": "What kind of work this punch covers",
+     "type": "string",
+     "key": false,
+     "plain": "A work-type code classifying what the punched time was for",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "technicianPunchTimes[].startTime / endTime",
+     "label": "Punch in / punch out times",
+     "type": "date",
+     "key": true,
+     "plain": "The actual clock-in and clock-out timestamps for this punch",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "repairOrderNumber (linked RO)",
+     "label": "Which RO this punch is against",
+     "type": "string",
+     "key": false,
+     "plain": "Ties the punch back to the specific repair order the tech was working on",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "flatRateHours vs. clocked duration (efficiency comparison)",
+     "label": "Billed time vs. real time",
+     "type": "number",
+     "key": false,
+     "plain": "Comparing the labor line's flat-rate hours to the tech's actual clocked duration gives shop efficiency",
+     "confidence": "inferred",
+     "source": {
+      "title": "Journal Entries Hub \u2014 Flat-Rate Technician Payroll",
+      "url": "https://www.journalentrieshub.com/entries/auto-service-technician-payroll"
+     }
+    },
+    {
+     "name": "Payroll Plus module reference",
+     "label": "Link to CDK's payroll add-on",
+     "type": "string",
+     "key": false,
+     "plain": "CDK sells a 'Payroll Plus' module that would consume this punch data for pay calculations",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Payroll Plus",
+      "url": "https://www.cdkglobal.com/dealership-operations/operations/payroll"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "employee-master",
+     "label": "logged by",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "ro-labour-line",
+     "label": "clocked against",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "repair-order",
+     "label": "belongs to",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "What's our average clocked-vs-flat-rate efficiency by technician and by store, and who's the outlier?",
+    "Are we using CDK's Payroll Plus module, or exporting punch data to a third-party payroll system?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    {
+     "title": "CDK Global \u2014 Payroll Plus",
+     "url": "https://www.cdkglobal.com/dealership-operations/operations/payroll"
+    }
+   ]
+  },
+  {
+   "id": "work-in-process",
+   "name": "Work-in-Process (WIP)",
+   "luke_name": "The running total of every open RO's cost, before it's billed out",
+   "group": "ledger",
+   "one_liner": "The balance-sheet holding account for every open repair order's accumulated labor, parts, and sublet cost until the RO closes and the money moves to revenue and cost of sales.",
+   "sap_analogue": "WIP account tied to the internal order settlement, cleared to zero when the order settles",
+   "why_it_matters": "WIP is supposed to net to zero the moment the RO closes — cost comes out of WIP and gets reclassified into revenue/COGS. An RO that's been open for months with no activity is dead money sitting in WIP inflating your balance sheet, and a WIP balance that doesn't tie to the sum of all open ROs on the WIP schedule is one of the fastest ways a controller finds a coding error.",
+   "api": {
+    "reachable": "partial",
+    "note": "WIP itself is not a separately named Fortellis API; it's the accounting-side mirror of the RO's open/WIP/closed status field, documented explicitly in the RO lifecycle.",
+    "endpoints": [
+     "CDK Drive Get Repair Order v3 (status field)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "status = 'WIP' (or Open)",
+     "label": "RO is open and accumulating cost",
+     "type": "enum",
+     "key": true,
+     "plain": "CDK's own RO API models the open/WIP/closed lifecycle explicitly on the status field",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "Accumulated cost (labor + parts + sublet, not yet billed)",
+     "label": "Running cost total on the open RO",
+     "type": "currency",
+     "key": false,
+     "plain": "The sum of every labor, parts, and sublet cost posted to this RO while it's still open",
+     "confidence": "inferred",
+     "source": {
+      "title": "IntelliDealer \u2014 Work in Process",
+      "url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+     }
+    },
+    {
+     "name": "getClosedRepairOrdersBulk / Delta (close event)",
+     "label": "The moment WIP clears to zero",
+     "type": "string",
+     "key": false,
+     "plain": "The documented bulk/delta retrieval for closed ROs — the trigger point where WIP nets to zero and reclassifies to revenue/COGS",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "WIP schedule (open-RO listing) balance",
+     "label": "Sum of every open RO, for the tie-out",
+     "type": "currency",
+     "key": false,
+     "plain": "The supporting schedule listing every open RO and its running cost, which must sum to the GL WIP account",
+     "confidence": "inferred",
+     "source": {
+      "title": "IntelliDealer \u2014 Work in Process",
+      "url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+     }
+    },
+    {
+     "name": "Days-in-WIP (age of open RO)",
+     "label": "How long has this RO been sitting open",
+     "type": "number",
+     "key": false,
+     "plain": "Elapsed time since openDate, used to flag ROs that have been open too long",
+     "confidence": "inferred",
+     "source": {
+      "title": "IntelliDealer \u2014 Work in Process",
+      "url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+     }
+    },
+    {
+     "name": "openDate (WIP aging start point)",
+     "label": "When the clock started on this open RO",
+     "type": "date",
+     "key": false,
+     "plain": "The RO's own opened date, which WIP aging is calculated from",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "WIP net-to-zero at close (reclassification event)",
+     "label": "Where the WIP dollars go when the RO closes",
+     "type": "currency",
+     "key": false,
+     "plain": "Cross-DMS documentation confirms the WIP entry nets to zero and the amount is reclassified to revenue/COGS only at close, not before",
+     "confidence": "documented",
+     "source": {
+      "title": "IntelliDealer \u2014 Work in Process",
+      "url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "mirrors status of",
+     "cardinality": "one-to-one"
+    },
+    {
+     "to": "accounting-schedule",
+     "label": "reconciled via",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "gl-account-master",
+     "label": "posts to",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "How many ROs across our 9 stores have been sitting open more than 30 days, and what's the total dollar exposure?",
+    "Does our WIP GL balance actually tie to the sum of open ROs at last month-end, store by store?"
+   ],
+   "sources": [
+    {
+     "title": "IntelliDealer \u2014 Work in Process",
+     "url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+    },
+    {
+     "title": "CDK Drive Get Repair Order v3 PDF",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+   ]
+  },
+  {
+   "id": "warranty-claim",
+   "name": "Warranty Claim",
+   "luke_name": "The claim we submit to PACCAR to get paid back for warranty work",
+   "group": "transaction",
+   "one_liner": "The claim submitted to PACCAR after warranty work is done on an RO, asking to be reimbursed for the labor and parts that were covered.",
+   "sap_analogue": "Debit memo / claims-management document against a factory receivable account",
+   "why_it_matters": "Warranty receivable leakage — claims that get rejected, short-paid, or never chased down — is a known, material problem in CDK-based stores. If the stamped/signed part evidence required for a claim isn't retained, or the RO's warranty pay flag doesn't match what was actually claimed, PACCAR can reject the whole thing, and that's real cash that never comes back.",
+   "api": {
+    "reachable": "none",
+    "note": "The RO-to-claim document chain (RO -> draft warranty claim (PRWS) -> submission) is confirmed to exist and now available on Fortellis at a high level, but no public field-level schema for the warranty claim object itself was found.",
+    "endpoints": [
+     "PRWS (PACCAR warranty claim system, referenced)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "hasWarrPayFlag (source RO)",
+     "label": "This RO has warranty-covered work",
+     "type": "boolean",
+     "key": true,
+     "plain": "The RO-level flag confirming part of the work is warranty pay, which is what triggers a claim",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "repairOrderNumber (source RO)",
+     "label": "Which RO this claim comes from",
+     "type": "string",
+     "key": true,
+     "plain": "Links the claim back to the specific repair order that generated the warranty work",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "PRWS draft claim reference",
+     "label": "The PACCAR claim system record",
+     "type": "string",
+     "key": false,
+     "plain": "Confirms the document chain RO -> draft warranty claim (PRWS) -> submission, now available on Fortellis",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Heavy Truck OEM page",
+      "url": "https://www2.cdkglobal.com/ht-oem"
+     }
+    },
+    {
+     "name": "Stamped/signed part evidence retained",
+     "label": "Proof the failed part was kept",
+     "type": "boolean",
+     "key": false,
+     "plain": "PACCAR requires the physical, stamped/signed failed-part evidence to be retained to support the claim",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK Tracking Warranty Parts",
+      "url": "https://www.reddit.com/r/partscounter/comments/1hs9xwc/cdk_tracking_warranty_parts/"
+     }
+    },
+    {
+     "name": "Warranty parts[].payType and parts on the RO claim",
+     "label": "Which specific part lines were claimed",
+     "type": "array",
+     "key": false,
+     "plain": "The specific warranty-pay part lines from the RO that are included in this claim",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Repair Order v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+     }
+    },
+    {
+     "name": "Warranty receivable schedule balance",
+     "label": "What PACCAR owes us right now, unpaid",
+     "type": "currency",
+     "key": false,
+     "plain": "The open/submitted claim total awaiting factory payment, tracked as its own accounting schedule",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Warranty Reimbursement Explained",
+      "url": "https://www.cdkglobal.com/insights/warranty-reimbursement-explained-wrap-questions-answered"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "repair-order",
+     "label": "generated from",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "ro-part-line",
+     "label": "claims",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "accounting-schedule",
+     "label": "tracked via",
+     "cardinality": "many-to-one"
+    }
+   ],
+   "open_questions": [
+    "What's our warranty claim rejection/short-pay rate across our 9 stores, and how far back does it go unreconciled?",
+    "Are we consistently retaining the stamped/signed part evidence PACCAR requires before submitting a claim?"
+   ],
+   "sources": [
+    {
+     "title": "CDK Global \u2014 Heavy Truck OEM page",
+     "url": "https://www2.cdkglobal.com/ht-oem"
+    },
+    {
+     "title": "CDK Global \u2014 Warranty Reimbursement Explained",
+     "url": "https://www.cdkglobal.com/insights/warranty-reimbursement-explained-wrap-questions-answered"
+    }
+   ]
+  },
+  {
+   "id": "purchase-receipt-document",
+   "name": "Purchase / Receipt Document",
+   "luke_name": "The paperwork for a parts shipment coming in the door",
+   "group": "transaction",
+   "one_liner": "The document trail for parts ordered from PACCAR or another vendor arriving at the dealership and being checked into inventory.",
+   "sap_analogue": "Purchase order + goods receipt (EKKO/EKBE) feeding a three-way match against the vendor invoice",
+   "why_it_matters": "This is the weakest documented lane in the whole platform — there's no public Fortellis spec for vendor invoice or purchase-order matching, even though the Data Extract API Bundle explicitly claims to cover 'accounting and general ledger data.' If receiving isn't matched cleanly to the PO and the vendor invoice, you either pay for parts that never arrived or sit on unbilled receipts that never get reconciled to AP.",
+   "api": {
+    "reachable": "none",
+    "note": "No public spec names vendor-invoice or purchase-order matching; only a General Ledger Inquiry API supporting search/view of GL transaction history is confirmed, plus indirect competitor evidence (Karmak) that PO receipts 'can be automatically posted into Accounts Payable.'",
+    "endpoints": [
+     "CDK Global General Ledger Inquiry API (GL transaction history, indirect)"
+    ]
+   },
+   "fields": [
+    {
+     "name": "Receipt against PO (transaction code, normal receipt)",
+     "label": "Parts received against an order",
+     "type": "string",
+     "key": true,
+     "plain": "CDK's transaction code sheet confirms a normal receipt posts an on-hand increase against a purchase order",
+     "confidence": "documented",
+     "source": {
+      "title": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+      "url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
+     }
+    },
+    {
+     "name": "EDI 856 ASN (Advance Ship Notice)",
+     "label": "Heads-up that a shipment is coming",
+     "type": "string",
+     "key": false,
+     "plain": "PACCAR's order flow confirms Order to Receipt happens via ePortal/EDI 856 Advance Ship Notice",
+     "confidence": "documented",
+     "source": {
+      "title": "EDIXT PACCAR Parts EDI spec page",
+      "url": "https://edixtb2b.com/partners/automotive/paccar-parts"
+     }
+    },
+    {
+     "name": "Return to vendor (transaction code)",
+     "label": "Sending a part back",
+     "type": "string",
+     "key": false,
+     "plain": "CDK's transaction code for returning parts to the vendor, part of 'dirty core' processing and RDCI reconciliation",
+     "confidence": "documented",
+     "source": {
+      "title": "Reddit r/partscounter \u2014 CDK Core Tracking",
+      "url": "https://www.reddit.com/r/partscounter/comments/1am0j27/cdk_core_tracking/"
+     }
+    },
+    {
+     "name": "Physical inventory adjustment codes (M = minus, P = plus)",
+     "label": "Manual count correction",
+     "type": "string",
+     "key": false,
+     "plain": "CDK codes M (minus adjustment) and P (plus adjustment) for correcting on-hand quantity after a physical count",
+     "confidence": "documented",
+     "source": {
+      "title": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+      "url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
+     }
+    },
+    {
+     "name": "Three-way match (PO, receipt, vendor invoice)",
+     "label": "Checking the order, the shipment, and the bill all agree",
+     "type": "boolean",
+     "key": false,
+     "plain": "Standard accounting practice; competitor DMS Karmak explicitly documents PO receipts posting automatically into AP, implying a similar capability exists in the CDK/PACCAR chain",
+     "confidence": "inferred",
+     "source": {
+      "title": "Karmak \u2014 PACCAR Integration",
+      "url": "https://www.karmak.com/integrations/paccar"
+     }
+    },
+    {
+     "name": "General Ledger Inquiry API (GL transaction history)",
+     "label": "Where a posted receipt eventually shows up",
+     "type": "string",
+     "key": false,
+     "plain": "A separate API supporting search/view of GL transaction history, the closest confirmed link between receiving and the ledger",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Global \u2014 Accounting Workflows page",
+      "url": "https://www2.cdkglobal.com/accounting-workflows"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "parts-order-supersession",
+     "label": "fulfills",
+     "cardinality": "one-to-one"
+    },
+    {
+     "to": "vendor-master",
+     "label": "received from",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "parts-master-inventory",
+     "label": "increases stock of",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "Do we have a real three-way match process today, or is receiving reconciled to AP manually across our 9 stores?",
+    "How many unbilled receipts or unmatched vendor invoices are sitting open right now?"
+   ],
+   "sources": [
+    {
+     "title": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+     "url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
+    },
+    {
+     "title": "CDK Global \u2014 Accounting Workflows page",
+     "url": "https://www2.cdkglobal.com/accounting-workflows"
+    }
+   ]
+  },
+  {
+   "id": "cost-centre-department",
+   "name": "Cost Centre / Department",
+   "luke_name": "The department's own P&L — New Trucks, Used Trucks, Parts, Service, Body Shop",
+   "group": "org",
+   "one_liner": "The profit-centre bucket — New Trucks, Used Trucks, Parts, Service, Body Shop — that revenue and cost roll up into for departmental reporting.",
+   "sap_analogue": "Cost centre / profit centre (CSKS/CEPC)",
+   "why_it_matters": "Every RO, parts sale, and deal ultimately settles to one of these departments, and it's how you measure whether Service is actually profitable on its own or riding on Parts' margin. The department code is baked into the GL account's suffix, so a coding mistake at the transaction level quietly misstates one department's P&L and overstates another's, and nobody catches it until someone asks why absorption rate looks wrong.",
+   "api": {
+    "reachable": "none",
+    "note": "Department/cost-centre structure is documented only through the GL account department-suffix convention and Department-Id header scoping; no standalone Fortellis 'department master' API was found.",
+    "endpoints": []
+   },
+   "fields": [
+    {
+     "name": "Department suffix (2-digit, on GL account)",
+     "label": "Which department this ties to",
+     "type": "string",
+     "key": true,
+     "plain": "The 2-digit code appended to a GL account number identifying its department, e.g. -01 = New Vehicle Dept",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Department-Id (Fortellis header)",
+     "label": "Which department an API call is scoped to",
+     "type": "string",
+     "key": true,
+     "plain": "The header value that scopes every Fortellis API call to one specific department/DMS-type combination",
+     "confidence": "documented",
+     "source": {
+      "title": "CDK Drive Get Customer v3 PDF",
+      "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+     }
+    },
+    {
+     "name": "Absorption rate (fixed-ops metric)",
+     "label": "Does Service+Parts cover the whole store's fixed costs",
+     "type": "number",
+     "key": false,
+     "plain": "A named KPI measuring whether fixed operations (Service + Parts) gross profit covers total dealership fixed expenses",
+     "confidence": "documented",
+     "source": {
+      "title": "GM Dealer Standard Accounting Manual",
+      "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+     }
+    },
+    {
+     "name": "Reporting Account (department roll-up to factory statement)",
+     "label": "Where this department's numbers land on the factory statement",
+     "type": "string",
+     "key": false,
+     "plain": "The mapping from a department's internal accounts to the manufacturer's own statement format",
+     "confidence": "documented",
+     "source": {
+      "title": "Dominion DMS help \u2014 Create a new sales general ledger account",
+      "url": "https://help.dominiondms.com/en/knowledge/create-a-new-sales-general-ledger-account"
+     }
+    },
+    {
+     "name": "Company Number (store-level department scoping)",
+     "label": "Which store this department instance belongs to",
+     "type": "string",
+     "key": true,
+     "plain": "Departments are scoped per Company Number/store, so 'Service' at one rooftop is a separate cost centre from 'Service' at another",
+     "confidence": "documented",
+     "source": {
+      "title": "MindBridge \u2014 CDK ERP: Export the general ledger",
+      "url": "https://support.mindbridge.ai/hc/en-us/articles/360058269153-CDK-ERP-Export-the-general-ledger"
+     }
+    },
+    {
+     "name": "Department name (New Vehicle / Used Vehicle / Parts / Service / Body Shop / Rental / F&I / Admin)",
+     "label": "Which of the standard departments this is",
+     "type": "enum",
+     "key": false,
+     "plain": "The standard NADA/NIADA department set every dealer chart of accounts is built around, with Service+Parts+Body Shop jointly called 'Fixed Operations'",
+     "confidence": "documented",
+     "source": {
+      "title": "NIADA Dealership Chart of Accounts Manual",
+      "url": "https://studylib.net/doc/8765679/dealership-chart-of-accounts-manual"
+     }
+    },
+    {
+     "name": "Per-rooftop Department-Id set",
+     "label": "Each store has its own list of department IDs",
+     "type": "string",
+     "key": false,
+     "plain": "Fortellis community guidance confirms each physical store/rooftop has its own set of Department-Ids, visible in the app's subscription report",
+     "confidence": "documented",
+     "source": {
+      "title": "Fortellis Community \u2014 Marketplace Subscriptions",
+      "url": "https://community.fortellis.io/community/forum/install-app-subscriptions-and-support/cdk-fortellis-marketplace-subscriptions-and-support"
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "to": "gl-account-master",
+     "label": "segments",
+     "cardinality": "one-to-many"
+    },
+    {
+     "to": "dealer-rooftop-partition",
+     "label": "scoped by",
+     "cardinality": "many-to-one"
+    },
+    {
+     "to": "repair-order",
+     "label": "receives revenue from",
+     "cardinality": "one-to-many"
+    }
+   ],
+   "open_questions": [
+    "What's our absorption rate at each of our 9 stores individually, not just group-wide?",
+    "Are department suffixes consistent across all 9 stores' charts of accounts, or did any store customize them?"
+   ],
+   "sources": [
+    {
+     "title": "GM Dealer Standard Accounting Manual",
+     "url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    {
+     "title": "CDK Drive parts API specification (Fortellis PDF)",
+     "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    }
+   ]
+  }
+ ]
+}

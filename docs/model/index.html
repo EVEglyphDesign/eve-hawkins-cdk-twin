@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CDK Data Model Explorer — EVEglyphDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line);background:var(--cream2)}
+header .wrap{padding-top:26px;padding-bottom:26px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:10px}
+h1{font-size:clamp(26px,3.6vw,40px);line-height:1.15;margin-bottom:8px}
+header p{margin:0;color:var(--mute);max-width:62ch}
+.crumbs{margin-top:14px;font-size:13px}
+.crumbs a{margin-right:16px;text-decoration:none;border-bottom:1px solid rgba(232,119,34,.35)}
+
+/* spine */
+.spine{padding:38px 0 8px}
+.spine h2{font-size:22px;margin-bottom:4px}
+.spine .sub{color:var(--mute);font-size:14px;margin:0 0 22px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.node{flex:1 1 122px;min-width:118px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:13px 14px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:.14s}
+.node:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,26,26,.07)}
+.node .n-l{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:5px}
+.node .n-t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;line-height:1.25}
+.node .n-s{font-size:12.5px;color:var(--mute);margin-top:5px;line-height:1.45}
+.arrow{align-self:center;color:var(--line);font-size:20px;line-height:1}
+
+/* layout */
+.cols{display:grid;grid-template-columns:290px 1fr;gap:34px;padding:34px 0 70px;align-items:start}
+.side{position:sticky;top:18px}
+#q{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:7px;background:#fff;font:inherit;font-size:14px;color:var(--ink)}
+#q:focus{outline:none;border-color:var(--accent)}
+.grp{margin-top:22px}
+.grp h4{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:8px;font-family:'Inter',sans-serif}
+.ent{display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;padding:6px 0 6px 12px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;border-radius:0 5px 5px 0}
+.ent:hover{background:var(--cream2)}
+.ent.on{border-left-color:var(--accent);background:var(--cream2);font-weight:600}
+.ent small{display:block;color:var(--mute);font-size:11.5px;font-weight:400;line-height:1.35;margin-top:1px}
+
+/* detail */
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:30px 32px;min-height:420px}
+.panel h2{font-size:29px;line-height:1.15}
+.luke{font-size:17px;color:var(--ink);margin:10px 0 0;font-family:'Fraunces',serif;font-weight:300}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.pill{font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--mute);background:var(--cream2)}
+.pill.full{border-color:#bcd8bc;background:#eef6ee;color:#3d6b3d}
+.pill.partial{border-color:#f0d3ac;background:#fdf3e5;color:#9a6017}
+.pill.none{border-color:#e3c7c7;background:#faeded;color:#8f4141}
+.sec{margin-top:26px}
+.sec h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-family:'Inter',sans-serif;font-weight:600;margin-bottom:10px}
+.sec p{margin:0 0 10px}
+.callout{background:var(--cream2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:13px 16px;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:0 10px 7px 0}
+td{border-bottom:1px solid var(--line);padding:9px 10px 9px 0;vertical-align:top}
+td.f{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;white-space:nowrap}
+.keytag{display:inline-block;background:var(--accent);color:#fff;font-size:9.5px;letter-spacing:.06em;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:1px;font-family:'Inter',sans-serif}
+.cf{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.cf.documented{color:#3d6b3d}.cf.inferred{color:#9a6017}.cf.unverified{color:#8f4141}
+.rels{display:flex;flex-wrap:wrap;gap:8px}
+.rel{background:none;border:1px solid var(--line);border-radius:20px;padding:5px 13px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.rel:hover{border-color:var(--accent)}
+.rel span{color:var(--mute);font-size:12px}
+ul.oq{margin:0;padding-left:19px}
+ul.oq li{margin-bottom:6px}
+.srcs{font-size:12.5px;color:var(--mute)}
+.srcs a{display:inline-block;margin:0 14px 5px 0}
+footer{border-top:1px solid var(--line);background:var(--cream2);font-size:12.5px;color:var(--mute)}
+footer .wrap{padding:22px 24px}
+@media(max-width:880px){.cols{grid-template-columns:1fr}.side{position:static}.arrow{display:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="eyebrow">EVEglyph Design · Hawkins CDK Twin</div>
+  <h1>The CDK data model, one record at a time</h1>
+  <p>Every record CDK Drive keeps on your business, in your language first and the system's language second — what it controls, what it is called in an ERP, and whether an API will actually hand it to you.</p>
+  <div class="crumbs">
+    <a href="../">Twin overview</a>
+    <a href="../EVEglyphDesign_CDK_Briefing_Note.pdf">Briefing note (PDF, 21 pp)</a>
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin">Repository</a>
+  </div>
+</div></header>
+
+<div class="wrap spine">
+  <h2>Start where the work starts</h2>
+  <p class="sub">A truck rolls onto the lot. Follow it left to right — every box is a record, click one to open it.</p>
+  <div class="flow" id="flow"></div>
+</div>
+
+<div class="wrap cols">
+  <aside class="side">
+    <input id="q" type="search" placeholder="Search records and fields…" autocomplete="off">
+    <div id="list"></div>
+  </aside>
+  <main class="panel" id="panel"><p style="color:var(--mute)">Loading the model…</p></main>
+</div>
+
+<footer><div class="wrap">
+  © 2026 EVEglyphDesign. All rights reserved. Controlled copy · Key ID EgD-KEY-2026-07 ·
+  built from eight cited research lanes held in <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/research">the repository</a>.
+  Confidence is stated per field: documented means a vendor or regulator published it, inferred means it follows from published behaviour, unverified means we still have to ask.
+  <br><em>Pour le bien-être du peuple.</em>
+</div></footer>
+
+<script>
+const SPINE=[
+ ["Who","customer-master","The customer of record"],
+ ["What","vehicle-master","The unit — VIN or stock number"],
+ ["The job","repair-order","The RO"],
+ ["Hours","ro-labour-line","Labour lines and time punches"],
+ ["Parts","ro-part-line","Parts on the ticket"],
+ ["Money owed","accounting-schedule","The schedule it lands on"],
+ ["The books","gl-journal-posting","The general ledger"]
+];
+const GROUPS=[["org","How the nine rooftops are partitioned"],["master","Master records — the things that persist"],["transaction","Transactions — the things that happen"],["inventory","Parts and inventory"],["ledger","The ledger and the money"]];
+let M=null,cur=null,scrollOnOpen=false;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byId=id=>M.entities.find(e=>e.id===id);
+
+fetch('model.json').then(r=>r.json()).then(d=>{M=d;drawFlow();drawList('');open(location.hash.slice(1)||SPINE[2][1]);})
+ .catch(e=>{$('#panel').innerHTML='<p>The model file could not be loaded. Open it directly: <a href="model.json">model.json</a></p>';});
+
+function drawFlow(){
+  const f=$('#flow');f.innerHTML='';
+  SPINE.forEach((s,i)=>{
+    const e=byId(s[1]); if(!e) return;
+    const b=document.createElement('button');b.className='node';
+    b.innerHTML='<div class="n-l">'+esc(s[0])+'</div><div class="n-t">'+esc(e.name)+'</div><div class="n-s">'+esc(s[2])+'</div>';
+    b.onclick=()=>open(e.id);f.appendChild(b);
+    if(i<SPINE.length-1){const a=document.createElement('div');a.className='arrow';a.textContent='→';f.appendChild(a);}
+  });
+}
+function drawList(q){
+  q=q.trim().toLowerCase();
+  const L=$('#list');L.innerHTML='';
+  GROUPS.forEach(([g,label])=>{
+    let ents=M.entities.filter(e=>e.group===g);
+    if(q) ents=ents.filter(e=>(e.name+' '+e.luke_name+' '+e.one_liner+' '+(e.sap_analogue||'')+' '+e.fields.map(f=>f.name+' '+f.label+' '+f.plain).join(' ')).toLowerCase().includes(q));
+    if(!ents.length) return;
+    const d=document.createElement('div');d.className='grp';
+    d.innerHTML='<h4>'+esc(label)+'</h4>';
+    ents.forEach(e=>{
+      const b=document.createElement('button');b.className='ent'+(e.id===cur?' on':'');
+      b.innerHTML=esc(e.name)+'<small>'+esc(e.luke_name)+'</small>';
+      b.onclick=()=>open(e.id);d.appendChild(b);
+    });
+    L.appendChild(d);
+  });
+  if(!L.children.length) L.innerHTML='<div class="grp"><h4>No match</h4></div>';
+}
+function open(id){
+  const e=byId(id); if(!e) return;
+  cur=id; history.replaceState(null,'','#'+id);
+  const reach={full:'API reaches this record',partial:'API reaches part of this record',none:'No API — file export only'}[e.api&&e.api.reachable]||'API status unknown';
+  let h='<h2>'+esc(e.name)+'</h2><p class="luke">'+esc(e.luke_name)+'</p>';
+  h+='<div class="meta"><span class="pill '+esc(e.api?e.api.reachable:'')+'">'+esc(reach)+'</span>';
+  if(e.sap_analogue) h+='<span class="pill">ERP shape: '+esc(e.sap_analogue)+'</span>';
+  h+='<span class="pill">'+e.fields.length+' fields</span></div>';
+  h+='<div class="sec"><h3>What it is</h3><p>'+esc(e.one_liner)+'</p></div>';
+  if(e.why_it_matters) h+='<div class="sec"><h3>Why it matters to you</h3><div class="callout">'+esc(e.why_it_matters)+'</div></div>';
+  if(e.api&&e.api.note) h+='<div class="sec"><h3>Can we get at it</h3><p>'+esc(e.api.note)+'</p>'+((e.api.endpoints||[]).length?'<p class="srcs">Endpoints: '+e.api.endpoints.map(esc).join(' · ')+'</p>':'')+'</div>';
+  if(e.fields.length){
+    h+='<div class="sec"><h3>The fields that carry meaning</h3><table><thead><tr><th>Field</th><th>What it means</th><th>Confidence</th></tr></thead><tbody>';
+    e.fields.forEach(f=>{
+      h+='<tr><td class="f">'+esc(f.name)+(f.key?'<span class="keytag">KEY</span>':'')+'<br><span style="font-family:Inter,sans-serif;color:var(--mute);font-size:12px;white-space:normal">'+esc(f.label||'')+'</span></td>';
+      h+='<td>'+esc(f.plain||'')+(f.source&&f.source.url?' <a href="'+esc(f.source.url)+'" target="_blank" rel="noopener" style="white-space:nowrap">'+esc(f.source.title||'source')+'</a>':'')+'</td>';
+      h+='<td class="cf '+esc(f.confidence)+'">'+esc(f.confidence||'')+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
+  }
+  if((e.relationships||[]).length){
+    h+='<div class="sec"><h3>What it connects to</h3><div class="rels">';
+    e.relationships.forEach(r=>{const t=byId(r.to);if(!t)return;
+      h+='<button class="rel" onclick="open(\''+esc(r.to)+'\')">'+esc(r.label||'linked to')+' <strong>'+esc(t.name)+'</strong> <span>'+esc(r.cardinality||'')+'</span></button>';});
+    h+='</div></div>';
+  }
+  if((e.open_questions||[]).length){
+    h+='<div class="sec"><h3>What we still need you to confirm</h3><ul class="oq">'+e.open_questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul></div>';
+  }
+  if((e.sources||[]).length){
+    h+='<div class="sec"><h3>Sources</h3><div class="srcs">'+e.sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.title)+'</a>').join('')+'</div></div>';
+  }
+  $('#panel').innerHTML=h; drawList($('#q').value);
+  if(scrollOnOpen) window.scrollTo({top:$('.cols').offsetTop-14,behavior:'smooth'});
+  scrollOnOpen=true;
+}
+window.open=open;
+$('#q').addEventListener('input',e=>drawList(e.target.value));
+</script>
+</body>
+</html>
