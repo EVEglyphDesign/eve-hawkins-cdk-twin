@@ -3,450 +3,259 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CDK Field Dictionary — EVEglyphDesign</title>
+<title>CDK Data Model Explorer — EVEglyphDesign</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="dictionary.css">
+<style>
+:root{--cream:#fdfaf4;--cream2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;margin:0}
+.wrap{max-width:1300px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line);background:var(--cream2)}
+header .wrap{padding-top:26px;padding-bottom:26px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:10px}
+h1{font-size:clamp(26px,3.6vw,40px);line-height:1.15;margin-bottom:8px}
+header p{margin:0;color:var(--mute);max-width:64ch}
+.crumbs{margin-top:14px;font-size:13px}
+.crumbs a{margin-right:16px;text-decoration:none;border-bottom:1px solid rgba(232,119,34,.35)}
+
+.counts{display:flex;flex-wrap:wrap;gap:26px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.counts div{min-width:88px}
+.counts b{display:block;font-family:'Fraunces',serif;font-size:26px;line-height:1.1}
+.counts span{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:600}
+
+.spine{padding:36px 0 6px}
+.spine h2{font-size:22px;margin-bottom:4px}
+.spine .sub{color:var(--mute);font-size:14px;margin:0 0 20px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.node{flex:1 1 122px;min-width:118px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:13px 14px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:.14s}
+.node:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,26,26,.07)}
+.node .n-l{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:5px}
+.node .n-t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;line-height:1.25}
+.node .n-s{font-size:12.5px;color:var(--mute);margin-top:5px;line-height:1.45}
+
+.cols{display:grid;grid-template-columns:298px 1fr;gap:34px;padding:32px 0 70px;align-items:start}
+.side{position:sticky;top:18px}
+#q{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:7px;background:#fff;font:inherit;font-size:14px;color:var(--ink)}
+#q:focus{outline:none;border-color:var(--accent)}
+.filters{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.fbtn{font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 9px;border-radius:20px;border:1px solid var(--line);background:#fff;color:var(--mute);cursor:pointer}
+.fbtn.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.grp{margin-top:20px}
+.grp h4{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:8px;font-family:'Inter',sans-serif}
+.ent{display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;padding:6px 0 6px 12px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;border-radius:0 5px 5px 0}
+.ent:hover{background:var(--cream2)}
+.ent.on{border-left-color:var(--accent);background:var(--cream2);font-weight:600}
+.ent small{display:block;color:var(--mute);font-size:11.5px;font-weight:400;line-height:1.35;margin-top:1px}
+.ent i{font-style:normal;float:right;color:var(--mute);font-size:11px;font-weight:400}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:30px 32px;min-height:440px}
+.panel h2{font-size:29px;line-height:1.15}
+.luke{font-size:17px;margin:10px 0 0;font-family:'Fraunces',serif;font-weight:300}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px}
+.pill{font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--mute);background:var(--cream2)}
+.pill.full{border-color:#bcd8bc;background:#eef6ee;color:#3d6b3d}
+.pill.partial{border-color:#f0d3ac;background:#fdf3e5;color:#9a6017}
+.pill.none{border-color:#e3c7c7;background:#faeded;color:#8f4141}
+.sec{margin-top:24px}
+.sec h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-family:'Inter',sans-serif;font-weight:600;margin-bottom:10px}
+.sec p{margin:0 0 10px}
+.callout{background:var(--cream2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:13px 16px;font-size:14px}
+.bar{display:flex;height:7px;border-radius:4px;overflow:hidden;margin:0 0 8px;background:var(--line)}
+.bar i{display:block}
+.bar .DOC{background:#4f7d4f}.bar .COMM{background:#e0a457}.bar .INF{background:#c2b8a3}.bar .UNK{background:#c98b8b}
+.legend{font-size:12px;color:var(--mute)}
+.legend b{font-weight:600;color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:0 10px 7px 0}
+td{border-bottom:1px solid var(--line);padding:9px 10px 9px 0;vertical-align:top}
+td.f{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+td.f span.lbl{font-family:'Inter',sans-serif;color:var(--mute);font-size:12px;display:block}
+.keytag{display:inline-block;background:var(--accent);color:#fff;font-size:9.5px;letter-spacing:.06em;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:1px;font-family:'Inter',sans-serif}
+.tier{font-size:10px;font-weight:700;letter-spacing:.07em;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.tier.DOC{background:#eef6ee;color:#3d6b3d}
+.tier.COMM{background:#fdf3e5;color:#9a6017}
+.tier.INF{background:#f2efe7;color:#6b665c}
+.tier.UNK{background:#faeded;color:#8f4141}
+.objhead td{background:var(--cream2);font-family:'Inter',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:8px 10px 8px 0}
+.rels{display:flex;flex-wrap:wrap;gap:8px}
+.rel{background:none;border:1px solid var(--line);border-radius:20px;padding:5px 13px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.rel:hover{border-color:var(--accent)}
+.rel span{color:var(--mute);font-size:12px}
+ul.oq{margin:0;padding-left:19px}ul.oq li{margin-bottom:6px}
+.srcs{font-size:12.5px;color:var(--mute)}
+.srcs a{display:inline-block;margin:0 14px 5px 0}
+.cmd{display:inline-block;font-family:ui-monospace,Menlo,monospace;background:var(--ink);color:var(--cream);padding:2px 7px;border-radius:4px;font-size:12px;margin-right:6px}
+.gaps{background:#faeded;border-left:3px solid #8f4141;border-radius:0 6px 6px 0;padding:14px 18px;margin:0 0 14px}
+.gaps h3{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8f4141;margin-bottom:8px}
+.gaps ul{margin:0;padding-left:18px;font-size:13.5px}
+footer{border-top:1px solid var(--line);background:var(--cream2);font-size:12.5px;color:var(--mute)}
+footer .wrap{padding:22px 24px}
+@media(max-width:880px){.cols{grid-template-columns:1fr}.side{position:static}}
+</style>
 </head>
 <body>
 <header><div class="wrap">
   <div class="eyebrow">EVEglyph Design · Hawkins CDK Twin</div>
-  <h1>The CDK field dictionary, one object at a time</h1>
-  <p>Every field CDK Drive keeps on your business: sequence, type, length, key role, enum codes, its SAP analogue, and the load column it lands on — sourced and confidence-marked, not summarized away.</p>
+  <h1>The CDK data model, one record at a time</h1>
+  <p>Every record CDK Drive keeps on the business — named in dealer language first, the system's language second, every field carrying the source it came from and how strongly that source stands behind it.</p>
   <div class="crumbs">
     <a href="../">Twin overview</a>
-    <a href="../EVEglyphDesign_CDK_Briefing_Note.pdf">Briefing note (PDF, 21 pp)</a>
+    <a href="../EVEglyphDesign_CDK_Briefing_Note.pdf">Briefing note (PDF)</a>
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/research">The research behind it</a>
     <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin">Repository</a>
   </div>
+  <div class="counts" id="counts"></div>
 </div></header>
 
 <div class="wrap spine">
   <h2>Start where the work starts</h2>
   <p class="sub">A truck rolls onto the lot. Follow it left to right — every box is a record, click one to open it.</p>
   <div class="flow" id="flow"></div>
-  <div class="gsearch">
-    <input id="gq" type="search" placeholder="Search all 21 objects — field path, label, load column, enum code…" autocomplete="off">
-    <div class="gresults empty" id="gresults"></div>
-  </div>
+  <div id="edge"></div>
 </div>
-
-<div id="banner"></div>
 
 <div class="wrap cols">
   <aside class="side">
-    <input id="q" type="search" placeholder="Filter objects…" autocomplete="off">
+    <input id="q" type="search" placeholder="Search records, fields, codes…" autocomplete="off">
+    <div class="filters" id="filters">
+      <button class="fbtn on" data-t="ALL">All evidence</button>
+      <button class="fbtn" data-t="DOC">Documented only</button>
+    </div>
     <div id="list"></div>
   </aside>
-  <main class="panel" id="panel"><p style="color:var(--mute)">Loading the field dictionary…</p></main>
+  <main class="panel" id="panel"><p style="color:var(--mute)">Loading the model…</p></main>
 </div>
 
 <footer><div class="wrap">
   © 2026 EVEglyphDesign. All rights reserved. Controlled copy · Key ID EgD-KEY-2026-07 ·
-  built from eight cited research lanes held in <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/research">the repository</a>.
-  Confidence is stated per field: DOCUMENTED means a vendor or regulator published that exact field, INFERRED means it follows from published behaviour or ERP convention, UNVERIFIED means we still have to confirm it on the admin login.
+  assembled from vendor API specifications, court and regulatory filings, OEM accounting manuals, patent filings and practitioner testimony, held in
+  <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/research">the repository</a>.
+  <b>DOC</b> the vendor, a court, a regulator or an OEM published it · <b>COMM</b> a practitioner or integrator states it ·
+  <b>INF</b> reasoned from published behaviour · <b>UNK</b> looked for, not found.
   <br><em>Pour le bien-être du peuple.</em>
 </div></footer>
 
 <script>
-const SPINE=[
- ["Who","customer-master","The customer of record"],
- ["What","vehicle-master","The unit — VIN or stock number"],
- ["The job","repair-order","The RO"],
- ["Hours","ro-labour-line","Labour lines and time punches"],
- ["Parts","ro-part-line","Parts on the ticket"],
- ["Money owed","accounting-schedule","The schedule it lands on"],
- ["The books","gl-journal-posting","The general ledger"]
-];
-const GROUPS=[["org","How the nine rooftops are partitioned"],["master","Master records — the things that persist"],["transaction","Transactions — the things that happen"],["inventory","Parts and inventory"],["ledger","The ledger and the money"]];
-const CONF_ORDER={DOCUMENTED:0,INFERRED:1,UNVERIFIED:2};
-
-let M=null,cur=null,scrollOnOpen=false,SCHEMA_V2=false;
-let sortKey='seq',sortDir=1;
-let filt={text:'',conf:'',key:'',apiOnly:false};
-
+const SPINE=[["Who","customer-master","The customer of record","Customer"],["What","vehicle-master","The unit — VIN or stock number","Vehicle / Unit"],["The job","repair-order","The RO","Repair Order"],["Hours","ro-labour-operation","Labour and technician time","Labour Line"],["Parts","ro-part-line","Parts on the ticket","Part Line"],["Money owed","accounting-schedule","The schedule it reconciles on","Schedule"],["The books","gl-journal-posting","The general ledger","GL Posting"]];
+const GROUPS=[["org","How the nine rooftops are partitioned"],["master","Master records — the things that persist"],["transaction","Transactions — the things that happen"],["inventory","Parts and inventory"],["ledger","The ledger and the money"],["access","Getting the data out"]];
+let M=null,cur=null,tier='ALL',scrollOnOpen=false;
 const $=s=>document.querySelector(s);
-const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const byId=id=>M.entities.find(e=>e.id===id);
+const shown=e=>tier==='ALL'?e.fields:e.fields.filter(f=>f.tier==='DOC');
 
-// ---------- load with fallback ----------
-fetch('fields.json',{cache:'no-store'}).then(r=>{
-  if(!r.ok) throw new Error('no fields.json yet');
-  return r.json();
-}).then(d=>{
-  if(!d || d.contract!=='EgD-CDK-FIELDS-v2' || !Array.isArray(d.entities)) throw new Error('unexpected shape');
-  M=normalizeV2(d);
-  SCHEMA_V2=true;
-  boot();
-}).catch(()=>{
-  showBanner('Showing the prior field summary (model.json) — the deeper field dictionary (fields.json) has not published yet. This page will pick it up automatically once it lands.');
-  fetch('model.json').then(r=>r.json()).then(d=>{
-    M=normalizeV1(d);
-    SCHEMA_V2=false;
-    boot();
-  }).catch(e=>{
-    $('#panel').innerHTML='<p>The model file could not be loaded. Open it directly: <a href="model.json">model.json</a></p>';
-  });
-});
+fetch('model.json?v=2').then(r=>r.json()).then(d=>{M=d;synthAccess();drawCounts();drawEdge();drawFlow();drawList('');show(location.hash.slice(1)||'repair-order');})
+ .catch(()=>{$('#panel').innerHTML='<p>The model file could not be loaded. Open it directly: <a href="model.json">model.json</a></p>';});
 
-function showBanner(msg){
-  $('#banner').innerHTML='<div class="wrap"><div class="banner">'+esc(msg)+'</div></div>';
+function synthAccess(){
+  const ap=M.access_paths||[];if(!ap.length)return;
+  if(byId('exit-paths'))return;
+  M.entities.push({id:'exit-paths',name:'Every way data leaves CDK',luke_name:'How we actually get our own numbers out',group:'access',
+    one_liner:'The complete set of documented routes out of CDK Drive, with the format each one hands you, what it costs, and whether we can use it today.',
+    sap_analogue:'Extraction layer',why_it_matters:'The twin is only as good as the widest pipe we are allowed to use. Every route below is a real, published mechanism \u2014 not a workaround \u2014 and the cheap ones are cheap because they are slow, while the fast ones are metered.',
+    api:{reachable:'partial',note:'Mixed: REST for some records, scheduled file export for the ledger, screen access for the rest.'},
+    fields:ap.map(p=>({name:p.name,label:p.format||'',type:p.cadence||'',key:false,
+      plain:[p.note,p.cost?('Cost: '+p.cost):'',p.reachable_now===false?'Not available to us today.':''].filter(Boolean).join(' '),
+      tier:p.tier||'INF',source:p.source||{}})),
+    relationships:[],open_questions:[],sources:ap.map(p=>p.source).filter(s=>s&&s.url)});
 }
-
-// ---------- normalize both shapes into one internal shape ----------
-function normalizeV2(d){
-  return {entities: d.entities.map(e=>({
-    id:e.entity_id, name:e.entity_name, dealer_name:e.dealer_name, group:e.group,
-    sap_analogue:e.sap_analogue, table_name:e.table_name, grain:e.grain,
-    api:e.api||{}, sources:e.sources||[], relationships:e.relationships||[],
-    open_questions:e.open_questions||[],
-    fields:(e.fields||[]).map(f=>({
-      seq:f.seq, path:f.path, legacy_name:f.legacy_name, label:f.label, dealer_label:f.dealer_label,
-      datatype:f.datatype, length:f.length, precision:f.precision, scale:f.scale, nullable:f.nullable,
-      key:f.key, fk_target:f.fk_target, enum_values:f.enum_values||[], unit:f.unit,
-      source:f.source, source_url:f.source_url, sap_field:f.sap_field, load_column:f.load_column,
-      confidence:(f.confidence||'').toUpperCase(), notes:f.notes
-    }))
-  }))};
+function drawCounts(){
+  const c=M.coverage||{},t=c.by_tier||{};
+  const items=[[c.entities||M.entities.length,'Records'],[c.fields||'','Fields'],[t.DOC||0,'Documented'],[t.COMM||0,'Practitioner'],[t.INF||0,'Inferred'],[c.sources_consulted||'','Sources']];
+  $('#counts').innerHTML=items.filter(i=>i[0]!=='').map(i=>'<div><b>'+esc(i[0])+'</b><span>'+esc(i[1])+'</span></div>').join('');
 }
-function normalizeV1(d){
-  return {entities: d.entities.map(e=>({
-    id:e.id, name:e.name, dealer_name:e.luke_name, group:e.group,
-    sap_analogue:e.sap_analogue, table_name:null, grain:null,
-    api:e.api||{}, sources:e.sources||[], relationships:e.relationships||[],
-    open_questions:e.open_questions||[],
-    fields:(e.fields||[]).map((f,i)=>({
-      seq:i+1, path:f.name, legacy_name:'', label:f.label, dealer_label:f.plain,
-      datatype:f.type, length:null, precision:null, scale:null, nullable:!f.key,
-      key:f.key?'business':'none', fk_target:null, enum_values:[], unit:null,
-      source:(f.source&&f.source.title)||'', source_url:(f.source&&f.source.url)||'', sap_field:'', load_column:'',
-      confidence:(f.confidence||'').toUpperCase(), notes:''
-    }))
-  }))};
+function drawEdge(){
+  const c=M.coverage||{},g=c.what_we_do_not_know||[],gt=c.gated||[];
+  if(!g.length&&!gt.length)return;
+  let h='<div class="gaps" style="margin-top:26px"><h3>The honest edge of the map</h3><ul>';
+  g.forEach(x=>h+='<li>'+esc(x)+'</li>');
+  gt.forEach(x=>h+='<li><strong>'+esc(x.what)+'</strong> — held by '+esc(x.who)+'. Opens with: '+esc(x.how_to_open)+'. '+srcLink(x.source)+'</li>');
+  h+='</ul></div>';
+  $('#edge').innerHTML=h;
 }
-
-// ---------- boot ----------
-function boot(){
-  drawFlow();
-  drawList('');
-  open(location.hash.slice(1)||SPINE[2][1]);
-}
-
-function fmtType(f){
-  let t=f.datatype||'';
-  if(f.datatype==='decimal'&&(f.precision||f.scale)) t+='('+(f.precision??'')+','+(f.scale??'')+')';
-  else if(f.length) t+='('+f.length+')';
-  return t;
-}
-function reachLabel(r){return {full:'API reaches this record',partial:'API reaches part of this record',none:'No API — file export only'}[r]||'API status unknown';}
-
 function drawFlow(){
   const f=$('#flow');f.innerHTML='';
-  SPINE.forEach((s,i)=>{
-    const e=byId(s[1]); if(!e) return;
+  SPINE.forEach(s=>{const e=byId(s[1]);if(!e)return;
     const b=document.createElement('button');b.className='node';
-    b.innerHTML='<div class="n-l">'+esc(s[0])+'</div><div class="n-t">'+esc(e.name)+'</div><div class="n-s">'+esc(s[2])+'</div>';
-    b.onclick=()=>open(e.id);f.appendChild(b);
-    if(i<SPINE.length-1){const a=document.createElement('div');a.className='arrow';a.textContent='→';f.appendChild(a);}
-  });
+    b.innerHTML='<div class="n-l">'+esc(s[0])+'</div><div class="n-t">'+esc(s[3]||e.name)+'</div><div class="n-s">'+esc(s[2])+'</div>';
+    b.onclick=()=>show(e.id);f.appendChild(b);});
 }
-
 function drawList(q){
-  q=q.trim().toLowerCase();
+  q=(q||'').trim().toLowerCase();
   const L=$('#list');L.innerHTML='';
   GROUPS.forEach(([g,label])=>{
     let ents=M.entities.filter(e=>e.group===g);
-    if(q) ents=ents.filter(e=>(e.name+' '+e.dealer_name+' '+(e.sap_analogue||'')+' '+e.fields.map(f=>f.path+' '+f.label+' '+(f.load_column||'')).join(' ')).toLowerCase().includes(q));
+    if(q) ents=ents.filter(e=>(e.name+' '+e.luke_name+' '+e.one_liner+' '+(e.sap_analogue||'')+' '+(e.commands||[]).map(c=>c.code+' '+c.meaning).join(' ')+' '+e.fields.map(f=>f.name+' '+(f.label||'')+' '+(f.plain||'')).join(' ')).toLowerCase().includes(q));
+    if(tier==='DOC') ents=ents.filter(e=>e.fields.some(f=>f.tier==='DOC'));
     if(!ents.length) return;
-    const d=document.createElement('div');d.className='grp';
-    d.innerHTML='<h4>'+esc(label)+'</h4>';
-    ents.forEach(e=>{
-      const b=document.createElement('button');b.className='ent'+(e.id===cur?' on':'');
-      b.innerHTML=esc(e.name)+'<small>'+esc(e.dealer_name)+'</small>';
-      b.onclick=()=>open(e.id);d.appendChild(b);
-    });
+    const d=document.createElement('div');d.className='grp';d.innerHTML='<h4>'+esc(label)+'</h4>';
+    ents.forEach(e=>{const b=document.createElement('button');b.className='ent'+(e.id===cur?' on':'');
+      b.innerHTML='<i>'+shown(e).length+'</i>'+esc(e.name)+'<small>'+esc(e.luke_name)+'</small>';
+      b.onclick=()=>show(e.id);d.appendChild(b);});
     L.appendChild(d);
   });
   if(!L.children.length) L.innerHTML='<div class="grp"><h4>No match</h4></div>';
 }
-
-// ---------- global cross-object search ----------
-function globalSearch(q){
-  const box=$('#gresults');
-  q=q.trim().toLowerCase();
-  if(!q){box.classList.add('empty');box.innerHTML='';return;}
-  let rows=[];
-  M.entities.forEach(e=>{
-    e.fields.forEach(f=>{
-      const hay=[f.path,f.label,f.load_column,f.legacy_name,(f.enum_values||[]).map(v=>v.code+' '+v.meaning).join(' ')].join(' ').toLowerCase();
-      if(hay.includes(q)) rows.push({e,f});
-    });
-  });
-  rows=rows.slice(0,40);
-  if(!rows.length){box.classList.remove('empty');box.innerHTML='<div class="gres-row" style="cursor:default">No fields match “'+esc(q)+'”.</div>';return;}
-  box.classList.remove('empty');
-  box.innerHTML=rows.map(({e,f})=>
-    '<button class="gres-row" data-obj="'+esc(e.id)+'" data-path="'+esc(f.path)+'"><span class="gr-path">'+esc(f.path)+'</span> — '+esc(f.label||'')+
-    '<div class="gr-obj">'+esc(e.name)+' · '+esc(f.load_column||'')+'</div></button>'
-  ).join('');
-  box.querySelectorAll('.gres-row[data-obj]').forEach(btn=>{
-    btn.onclick=()=>{open(btn.dataset.obj);$('#gq').value='';globalSearch('');
-      setTimeout(()=>highlightField(btn.dataset.path),80);
-    };
-  });
-}
-function highlightField(path){
-  const el=document.querySelector('[data-fieldpath="'+CSS.escape(path)+'"]');
-  if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.outline='2px solid var(--accent)';setTimeout(()=>el.style.outline='',1800);}
-}
-
-// ---------- confidence mix ----------
-function confMix(fields){
+function tierBar(fields){
+  const t={DOC:0,COMM:0,INF:0,UNK:0};fields.forEach(f=>{t[f.tier]=(t[f.tier]||0)+1});
   const n=fields.length||1;
-  let doc=0,inf=0,unv=0;
-  fields.forEach(f=>{if(f.confidence==='DOCUMENTED')doc++;else if(f.confidence==='INFERRED')inf++;else unv++;});
-  return {doc,inf,unv,n,pd:doc/n*100,pi:inf/n*100,pu:unv/n*100};
-}
-
-// ---------- filtering + sorting fields ----------
-function applyFilters(fields){
-  let out=fields;
-  if(filt.text){
-    const t=filt.text.toLowerCase();
-    out=out.filter(f=>[f.path,f.label,f.load_column,(f.enum_values||[]).map(v=>v.code+' '+v.meaning).join(' ')].join(' ').toLowerCase().includes(t));
-  }
-  if(filt.conf) out=out.filter(f=>f.confidence===filt.conf);
-  if(filt.key) out=out.filter(f=>(f.key||'none').toLowerCase()===filt.key);
-  if(filt.apiOnly) out=out.filter(f=>f.confidence==='DOCUMENTED');
-  return out;
-}
-function sortFields(fields){
-  const arr=fields.slice();
-  arr.sort((a,b)=>{
-    let av=a[sortKey],bv=b[sortKey];
-    if(sortKey==='confidence'){av=CONF_ORDER[a.confidence]??9;bv=CONF_ORDER[b.confidence]??9;}
-    if(av==null) av='';
-    if(bv==null) bv='';
-    if(typeof av==='number'&&typeof bv==='number') return (av-bv)*sortDir;
-    return String(av).localeCompare(String(bv))*sortDir;
-  });
-  return arr;
-}
-
-// ---------- CSV / clipboard helpers ----------
-function csvEsc(v){v=String(v==null?'':v);if(/[",\n]/.test(v)) return '"'+v.replace(/"/g,'""')+'"';return v;}
-function toCSV(fields){
-  const cols=['seq','path','legacy_name','label','datatype','length','precision','scale','nullable','key','fk_target','unit','sap_field','load_column','confidence','source_url'];
-  const head=cols.join(',');
-  const rows=fields.map(f=>cols.map(c=>csvEsc(f[c])).join(','));
-  return [head,...rows].join('\n');
-}
-async function copyText(text,btn){
-  try{await navigator.clipboard.writeText(text);}catch(e){
-    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
-  }
-  if(btn){const old=btn.textContent;btn.textContent='Copied ✓';btn.classList.add('copied');setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied');},1400);}
-}
-
-// ---------- render field table (desktop) + field cards (mobile) ----------
-function renderFieldSection(e){
-  const all=e.fields||[];
-  const filtered=applyFilters(all);
-  const sorted=sortFields(filtered);
-
-  let h='<div class="sec"><h3>Field dictionary</h3>';
-  h+='<div class="toolbar">';
-  h+='<input type="search" id="ftext" placeholder="Search fields, labels, load columns, enum codes…" value="'+esc(filt.text)+'">';
-  h+='<select id="fconf"><option value="">Confidence: all</option>'+['DOCUMENTED','INFERRED','UNVERIFIED'].map(c=>'<option value="'+c+'"'+(filt.conf===c?' selected':'')+'>'+c+'</option>').join('')+'</select>';
-  h+='<select id="fkey"><option value="">Key role: all</option>'+['pk','fk','control','business','none'].map(c=>'<option value="'+c+'"'+(filt.key===c?' selected':'')+'>'+c.toUpperCase()+'</option>').join('')+'</select>';
-  h+='<label class="toggle-chip'+(filt.apiOnly?' active':'')+'"><input type="checkbox" id="fapi" '+(filt.apiOnly?'checked':'')+'> API-reachable only</label>';
-  h+='</div>';
-
-  h+='<div class="btnrow">';
-  h+='<button class="btn" id="btnCsv">Copy field list as CSV</button>';
-  h+='<button class="btn" id="btnCols">Copy as column list</button>';
-  h+='<button class="btn" id="btnLoad">Copy load columns</button>';
-  h+='</div>';
-
-  h+='<p class="f-count">'+sorted.length+' of '+all.length+' fields shown'+(filt.text||filt.conf||filt.key||filt.apiOnly?' (filtered)':'')+'</p>';
-
-  // desktop table
-  h+='<div class="tblwrap"><table class="dict" id="dicttbl"><thead><tr>';
-  const cols=[['seq','#'],['path','Field path'],['legacy_name','Legacy'],['label','Label'],['type','Type'],['nullable','Null?'],['key','Key'],['unit','Unit'],['source','Source'],['sap_field','SAP'],['load_column','Load column'],['confidence','Conf.']];
-  cols.forEach(([k,label])=>{
-    h+='<th data-k="'+k+'" class="'+(sortKey===k?'sorted'+(sortDir<0?' desc':''):'')+'">'+esc(label)+'</th>';
-  });
-  h+='</tr></thead><tbody>';
-  sorted.forEach(f=>{
-    h+=renderRow(f,e);
-  });
-  h+='</tbody></table></div>';
-
-  // mobile cards
-  h+='<div class="fieldcards">';
-  sorted.forEach(f=>{ h+=renderCard(f,e); });
-  h+='</div>';
-
-  h+='</div>';
-  return {html:h,filteredFields:sorted};
-}
-
-function keyBadge(key){
-  key=(key||'none').toLowerCase();
-  if(key==='none') return '';
-  const label=key==='pk'?'PK':key==='fk'?'FK':key==='control'?'CTRL':'BIZ';
-  return '<span class="badge '+esc(key)+'">'+label+'</span>';
-}
-function enumHtml(f,idPrefix){
-  if(!f.enum_values||!f.enum_values.length) return '';
-  const id=idPrefix+'-'+f.seq+'-'+Math.random().toString(36).slice(2,7);
-  const list=f.enum_values.map(v=>'<code>'+esc(v.code)+'</code> '+esc(v.meaning)).join(' · ');
-  return '<button class="enum-toggle" onclick="var l=document.getElementById(\''+id+'\');l.classList.toggle(\'open\')">'+f.enum_values.length+' codes ▾</button>'+
-         '<div class="enum-list" id="'+id+'">'+list+'</div>';
-}
-function confBadge(f){
-  const c=(f.confidence||'').toLowerCase()||'unverified';
-  const label=f.confidence||'UNVERIFIED';
-  if(f.source_url) return '<a class="cf '+c+' cf-link" href="'+esc(f.source_url)+'" target="_blank" rel="noopener" title="'+esc(f.source||'')+'">'+esc(label)+'</a>';
-  return '<span class="cf '+c+'" title="'+esc(f.source||'')+'">'+esc(label)+'</span>';
-}
-function fkHtml(f){
-  if(!f.fk_target) return '';
-  const targetEntity=f.fk_target.split('.')[0];
-  const tgt=byId(targetEntity);
-  const label=tgt?tgt.name:f.fk_target;
-  return '<button class="fk-link" onclick="jumpFk(\''+esc(f.fk_target)+'\')">→ '+esc(label)+'</button>';
-}
-function jumpFk(fkTarget){
-  const entityId=fkTarget.split('.')[0];
-  const rest=fkTarget.split('.').slice(1).join('.');
-  open(entityId);
-  setTimeout(()=>highlightField(rest),100);
-}
-window.jumpFk=jumpFk;
-
-function renderRow(f,e){
-  let h='<tr data-fieldpath="'+esc(f.path)+'">';
-  h+='<td class="f-path">'+esc(f.seq)+'</td>';
-  h+='<td class="f-path">'+esc(f.path)+'</td>';
-  h+='<td class="f-legacy">'+esc(f.legacy_name||'—')+'</td>';
-  h+='<td class="f-label">'+esc(f.label||'')+(f.dealer_label?'<span class="dl">'+esc(f.dealer_label)+'</span>':'')+(enumHtml(f,'e-'+e.id)? '<div style="margin-top:4px">'+enumHtml(f,'e-'+e.id)+'</div>':'')+'</td>';
-  h+='<td class="f-type">'+esc(fmtType(f))+'</td>';
-  h+='<td>'+(f.nullable?'<span class="nullable-yes">yes</span>':'<span class="nullable-no">no</span>')+'</td>';
-  h+='<td>'+keyBadge(f.key)+(fkHtml(f)?'<br>'+fkHtml(f):'')+'</td>';
-  h+='<td>'+esc(f.unit||'—')+'</td>';
-  h+='<td>'+(f.source_url?'<a href="'+esc(f.source_url)+'" target="_blank" rel="noopener">'+esc(f.source||'source')+'</a>':esc(f.source||'—'))+'</td>';
-  h+='<td class="f-sap">'+esc(f.sap_field||'—')+'</td>';
-  h+='<td class="f-load">'+esc(f.load_column||'—')+'</td>';
-  h+='<td>'+confBadge(f)+'</td>';
-  h+='</tr>';
+  let h='<div class="bar">';['DOC','COMM','INF','UNK'].forEach(k=>{if(t[k])h+='<i class="'+k+'" style="width:'+(100*t[k]/n).toFixed(1)+'%"></i>'});
+  h+='</div><div class="legend">'+['DOC','COMM','INF','UNK'].filter(k=>t[k]).map(k=>'<b>'+t[k]+'</b> '+({DOC:'documented',COMM:'practitioner-stated',INF:'inferred',UNK:'unknown'}[k])).join(' · ')+'</div>';
   return h;
 }
-function renderCard(f,e){
-  let h='<div class="fieldcard" data-fieldpath="'+esc(f.path)+'">';
-  h+='<div class="fc-top"><div><div class="fc-path">'+esc(f.path)+'</div>';
-  h+='<div class="fc-label">'+esc(f.label||'')+'</div>';
-  if(f.dealer_label) h+='<div class="fc-dl">'+esc(f.dealer_label)+'</div>';
-  h+='</div>'+confBadge(f)+'</div>';
-  h+='<div class="fc-grid">';
-  h+='<div><span class="k">Seq</span><span class="v">'+esc(f.seq)+'</span></div>';
-  h+='<div><span class="k">Legacy</span><span class="v">'+esc(f.legacy_name||'—')+'</span></div>';
-  h+='<div><span class="k">Type</span><span class="v">'+esc(fmtType(f))+'</span></div>';
-  h+='<div><span class="k">Nullable</span><span class="v">'+(f.nullable?'yes':'no')+'</span></div>';
-  h+='<div><span class="k">Key role</span><span class="v">'+keyBadge(f.key)+'</span></div>';
-  h+='<div><span class="k">Unit</span><span class="v">'+esc(f.unit||'—')+'</span></div>';
-  h+='<div><span class="k">SAP field</span><span class="v">'+esc(f.sap_field||'—')+'</span></div>';
-  h+='<div><span class="k">Load column</span><span class="v">'+esc(f.load_column||'—')+'</span></div>';
-  h+='</div>';
-  if(fkHtml(f)) h+='<div style="margin-top:8px">'+fkHtml(f)+'</div>';
-  if(f.enum_values&&f.enum_values.length) h+='<div class="fc-enum">'+enumHtml(f,'c-'+e.id)+'</div>';
-  h+='<div class="fc-src">'+(f.source_url?'<a href="'+esc(f.source_url)+'" target="_blank" rel="noopener">'+esc(f.source||'source')+'</a>':'<span style="color:var(--mute);font-size:11.5px">'+esc(f.source||'no source yet')+'</span>')+'</div>';
-  h+='</div>';
-  return h;
-}
-
-// ---------- open an entity ----------
-function open(id){
-  const e=byId(id); if(!e) return;
-  cur=id; history.replaceState(null,'','#'+id);
-  filt={text:'',conf:'',key:'',apiOnly:false};
-  sortKey='seq';sortDir=1;
-  render(e);
-  drawList($('#q').value);
-  if(scrollOnOpen) window.scrollTo({top:$('.cols').offsetTop-14,behavior:'smooth'});
-  scrollOnOpen=true;
-}
-window.open=open;
-
-function render(e){
-  const mix=confMix(e.fields);
-  let h='<h2>'+esc(e.name)+'</h2><p class="dealer">'+esc(e.dealer_name)+'</p>';
-
-  // header strip
-  h+='<div class="hstrip">';
-  if(e.table_name) h+='<div class="hitem"><div class="hl">Table</div><div class="hv mono">'+esc(e.table_name)+'</div></div>';
-  if(e.grain) h+='<div class="hitem"><div class="hl">Grain</div><div class="hv">'+esc(e.grain)+'</div></div>';
-  h+='<div class="hitem"><div class="hl">API reach</div><div class="hv"><span class="pill '+esc(e.api?e.api.reachable:'')+'">'+esc(reachLabel(e.api&&e.api.reachable))+'</span></div></div>';
-  if(e.sap_analogue) h+='<div class="hitem"><div class="hl">ERP shape</div><div class="hv">'+esc(e.sap_analogue)+'</div></div>';
-  h+='<div class="hitem"><div class="hl">Fields</div><div class="hv">'+e.fields.length+'</div></div>';
-  h+='<div class="hitem"><div class="hl">Confidence mix</div><div class="hv"><div class="cmix"><div class="cmix-bar"><span class="c-doc" style="width:'+mix.pd+'%"></span><span class="c-inf" style="width:'+mix.pi+'%"></span><span class="c-unv" style="width:'+mix.pu+'%"></span></div><span class="cmix-txt">'+mix.doc+'D / '+mix.inf+'I / '+mix.unv+'U</span></div></div></div>';
-  h+='</div>';
-
-  if(e.api&&e.api.note) h+='<div class="sec"><h3>Can we get at it</h3><p>'+esc(e.api.note)+'</p>'+((e.api.endpoints||[]).length?'<p class="srcs">Endpoints: '+e.api.endpoints.map(esc).join(' · ')+'</p>':'')+'</div>';
-
-  const {html:fieldHtml}=renderFieldSection(e);
-  h+=fieldHtml;
-
+function srcLink(s){return s&&s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.title||'source')+'</a>':''}
+function show(id){
+  const e=byId(id);if(!e)return;
+  cur=id;history.replaceState(null,'','#'+id);
+  const reach={full:'API reaches this record',partial:'API reaches part of this record',none:'No API — export or screen only'}[e.api&&e.api.reachable]||'API status unknown';
+  const F=shown(e);
+  let h='<h2>'+esc(e.name)+'</h2><p class="luke">'+esc(e.luke_name)+'</p>';
+  h+='<div class="meta"><span class="pill '+esc(e.api?e.api.reachable:'')+'">'+esc(reach)+'</span>';
+  if(e.sap_analogue)h+='<span class="pill">ERP shape: '+esc(e.sap_analogue)+'</span>';
+  if(e.physical&&e.physical.layer)h+='<span class="pill">Lives in: '+esc(e.physical.layer)+'</span>';
+  h+='<span class="pill">'+F.length+(tier==='DOC'?' documented fields':' fields')+'</span></div>';
+  h+='<div class="sec"><h3>What it is</h3><p>'+esc(e.one_liner)+'</p></div>';
+  if(e.why_it_matters)h+='<div class="sec"><h3>Why it matters to you</h3><div class="callout">'+esc(e.why_it_matters)+'</div></div>';
+  if(e.physical&&e.physical.note)h+='<div class="sec"><h3>Where it physically lives</h3><p>'+esc(e.physical.note)+' '+srcLink(e.physical.source)+'</p></div>';
+  if((e.commands||[]).length)h+='<div class="sec"><h3>How the counter gets to it</h3><p>'+e.commands.map(c=>'<span class="cmd">'+esc(c.code)+'</span>'+esc(c.meaning)+' '+srcLink(c.source)).join('<br>')+'</p></div>';
+  if(e.api&&e.api.note)h+='<div class="sec"><h3>Can we get at it</h3><p>'+esc(e.api.note)+' '+srcLink(e.api.spec)+'</p>'+((e.api.endpoints||[]).length?'<p class="srcs">Endpoints: '+e.api.endpoints.map(esc).join(' · ')+'</p>':'')+'</div>';
+  if(F.length){
+    h+='<div class="sec"><h3>The fields, and how well we know them</h3>'+tierBar(F);
+    h+='<table><thead><tr><th>Field</th><th>What it means</th><th>Evidence</th></tr></thead><tbody>';
+    let obj=null;
+    F.forEach(f=>{
+      if((f.object||null)!==obj){obj=f.object||null;if(obj)h+='<tr class="objhead"><td colspan="3">'+esc(obj)+'</td></tr>';}
+      h+='<tr><td class="f">'+esc(f.name)+(f.key?'<span class="keytag">KEY</span>':'')+((f.label&&f.label!==f.name)?'<span class="lbl">'+esc(f.label)+'</span>':'')+'</td>';
+      h+='<td>'+(f.plain?esc(f.plain):'<span style="color:var(--mute)">no description published in the spec</span>')+(f.type?' <span style="color:var(--mute)">('+esc(f.type)+')</span>':'')+' '+srcLink(f.source)+'</td>';
+      h+='<td><span class="tier '+esc(f.tier)+'">'+esc(f.tier)+'</span></td></tr>';
+    });
+    h+='</tbody></table></div>';
+  } else if(tier==='DOC'){
+    h+='<div class="sec"><div class="gaps"><h3>Nothing documented</h3><p style="margin:0">No field on this record is backed by a published vendor, court, regulator or OEM source. Switch back to all evidence to see what practitioners say and what we inferred — and treat every one of those as a question for CDK, not an answer.</p></div></div>';
+  }
   if((e.relationships||[]).length){
     h+='<div class="sec"><h3>What it connects to</h3><div class="rels">';
     e.relationships.forEach(r=>{const t=byId(r.to);if(!t)return;
-      h+='<button class="rel" onclick="open(\''+esc(r.to)+'\')">'+esc(r.label||'linked to')+' <strong>'+esc(t.name)+'</strong> <span>'+esc(r.cardinality||'')+'</span></button>';});
+      h+='<button class="rel" onclick="show(\''+esc(r.to)+'\')">'+esc(r.label||'linked to')+' <strong>'+esc(t.name)+'</strong> <span>'+esc(r.cardinality||'')+'</span></button>';});
     h+='</div></div>';
   }
-  if((e.open_questions||[]).length){
-    h+='<div class="sec"><h3>What we still need you to confirm</h3><ul class="oq">'+e.open_questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul></div>';
-  }
-  if((e.sources||[]).length){
-    h+='<div class="sec"><h3>Sources</h3><div class="srcs">'+e.sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.label||s.title||'source')+'</a>').join('')+'</div></div>';
-  }
-
-  $('#panel').innerHTML=h;
-  wireFieldControls(e);
+  if((e.open_questions||[]).length)h+='<div class="sec"><h3>What we still need you to confirm</h3><ul class="oq">'+e.open_questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul></div>';
+  if((e.sources||[]).length)h+='<div class="sec"><h3>Sources</h3><div class="srcs">'+e.sources.map(srcLink).join('')+'</div></div>';
+  $('#panel').innerHTML=h;drawList($('#q').value);
+  if(scrollOnOpen)window.scrollTo({top:$('.cols').offsetTop-14,behavior:'smooth'});
+  scrollOnOpen=true;
 }
-
-function wireFieldControls(e){
-  const t=$('#ftext'); if(t){t.addEventListener('input',ev=>{filt.text=ev.target.value;rerenderFields(e);t.focus();t.setSelectionRange(t.value.length,t.value.length);});}
-  const c=$('#fconf'); if(c){c.addEventListener('change',ev=>{filt.conf=ev.target.value;rerenderFields(e);});}
-  const k=$('#fkey'); if(k){k.addEventListener('change',ev=>{filt.key=ev.target.value;rerenderFields(e);});}
-  const a=$('#fapi'); if(a){a.addEventListener('change',ev=>{filt.apiOnly=ev.target.checked;rerenderFields(e);});}
-  const tbl=$('#dicttbl');
-  if(tbl){
-    tbl.querySelectorAll('th[data-k]').forEach(th=>{
-      th.addEventListener('click',()=>{
-        const k2=th.dataset.k;
-        if(sortKey===k2) sortDir*=-1; else {sortKey=k2;sortDir=1;}
-        rerenderFields(e);
-      });
-    });
-  }
-  const bCsv=$('#btnCsv'), bCols=$('#btnCols'), bLoad=$('#btnLoad');
-  if(bCsv) bCsv.onclick=()=>{const f=sortFields(applyFilters(e.fields));copyText(toCSV(f),bCsv);};
-  if(bCols) bCols.onclick=()=>{const f=sortFields(applyFilters(e.fields));copyText(f.map(x=>x.path).join('\n'),bCols);};
-  if(bLoad) bLoad.onclick=()=>{const f=sortFields(applyFilters(e.fields));copyText(f.map(x=>x.load_column||'').filter(Boolean).join('\n'),bLoad);};
-}
-function rerenderFields(e){
-  // Preserve scroll position of the section
-  const {html}=renderFieldSection(e);
-  const sections=$('#panel').querySelectorAll('.sec');
-  // find the field-dictionary section (has .toolbar) and swap it
-  for(const s of sections){
-    if(s.querySelector('.toolbar')){ s.outerHTML=html; break; }
-  }
-  wireFieldControls(e);
-}
-
+window.show=show;
 $('#q').addEventListener('input',ev=>drawList(ev.target.value));
-$('#gq').addEventListener('input',ev=>globalSearch(ev.target.value));
+document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{
+  tier=b.dataset.t;document.querySelectorAll('.fbtn').forEach(x=>x.classList.toggle('on',x===b));
+  drawList($('#q').value);const s=scrollOnOpen;scrollOnOpen=false;show(cur);scrollOnOpen=s;});
 </script>
 </body>
 </html>
