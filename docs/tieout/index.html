@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tie-Out Board — EVEglyphDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream-2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(232,119,34,.35);text-underline-offset:2px}
+a:hover{text-decoration-color:var(--accent)}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line);background:var(--cream-2)}
+header .wrap{padding-top:30px;padding-bottom:28px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+h1.pagehead{font-size:clamp(28px,4vw,44px);line-height:1.15;margin-bottom:10px;max-width:820px}
+header p.lede{margin:0;color:var(--mute);max-width:64ch;font-size:16.5px}
+.crumbs{margin-top:16px;font-size:13px}
+.crumbs a{margin-right:18px}
+.status-pill{display:inline-block;margin-top:18px;font-size:12.5px;font-weight:600;padding:5px 13px;border:1px solid var(--line);border-radius:100px;background:var(--cream);color:var(--mute)}
+
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:25px;margin-bottom:10px}
+section > p.section-intro{color:var(--mute);max-width:74ch;margin-bottom:30px}
+
+/* month + tolerance strip */
+.info-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+@media (max-width:820px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px 24px}
+.info-card h3{font-size:17px;margin-bottom:10px}
+.info-card p{color:var(--mute);font-size:14.5px;margin:0 0 8px}
+.tier-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.tier-row:last-child{border-bottom:none}
+.tier-name{font-weight:600;white-space:nowrap}
+.tier-rule{color:var(--mute);text-align:right}
+
+/* chain */
+.chain{display:flex;flex-direction:column;gap:0}
+.chain-item{position:relative;padding-left:38px}
+.chain-item::before{content:"";position:absolute;left:13px;top:34px;bottom:-14px;width:1px;background:var(--line)}
+.chain-item:last-child::before{display:none}
+.chain-dot{position:absolute;left:0;top:8px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center}
+.chain-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:22px;cursor:pointer;transition:.14s;text-align:left;width:100%;font:inherit;color:inherit}
+.chain-card:hover{border-color:var(--accent);box-shadow:0 4px 14px rgba(26,26,26,.06);transform:translateY(-1px)}
+.chain-card .kicker{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:6px}
+.chain-card h3{font-size:19px;margin-bottom:6px}
+.chain-card .recon-line{color:var(--mute);font-size:14px;margin-bottom:0}
+.chain-card .expand-hint{margin-top:10px;font-size:12.5px;color:var(--accent);font-weight:600}
+
+/* detail panel (revealed on click) */
+.detail{display:none;background:var(--cream-2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:18px 22px;margin:-6px 0 22px 38px;font-size:14px}
+.detail.open{display:block}
+.detail dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-top:14px}
+.detail dt:first-child{margin-top:0}
+.detail dd{margin:4px 0 0;color:var(--ink)}
+.cf{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-top:14px}
+.cf.documented{background:#eef6ee;color:#3d6b3d;border:1px solid #bcd8bc}
+.cf.inferred{background:#fdf3e5;color:#9a6017;border:1px solid #f0d3ac}
+.cf.unverified{background:#faeded;color:#8f4141;border:1px solid #e3c7c7}
+
+/* break register table */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:920px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:11px 12px;background:var(--cream-2);white-space:nowrap}
+td{border-bottom:1px solid var(--line);padding:12px 12px;color:var(--mute);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.reg-note{margin-top:14px;font-size:13px;color:var(--mute)}
+
+/* cards grid for links out */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:720px){.grid-2{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:10px;padding:20px 22px;background:#fff}
+.card h3{font-size:17px;margin-bottom:8px}
+.card p{color:var(--mute);font-size:14.5px;margin-bottom:10px}
+
+.signoff-box{background:#1a1a1a;border-radius:8px;padding:24px 28px;color:var(--cream)}
+.signoff-box h3{font-size:19px;margin-bottom:10px;color:var(--cream)}
+.signoff-box p{color:#e7e1d3;margin:0 0 10px;font-size:14.5px}
+.signoff-box .sig-status{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:20px;background:#8f4141;color:#faeded}
+
+footer{border-top:1px solid var(--line);background:var(--cream-2);font-size:12.5px;color:var(--mute)}
+footer .wrap{padding:22px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);font-size:14.5px}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="eyebrow">EVEglyph Design · Hawkins CDK Twin</div>
+  <h1 class="pagehead">The Tie-Out Board — proving the June rebuild against what was actually reported</h1>
+  <p class="lede">The proof step that decides whether this whole exercise worked: rebuild Peterbilt
+    Atlantic's June 2026 financials from data we extracted ourselves — nothing borrowed from CDK's
+    own reports — and show the numbers land where CDK and PACCAR already said they would.</p>
+  <div class="crumbs">
+    <a href="../">Twin overview</a>
+    <a href="../extract/">Extract board</a>
+    <a href="../model/">Model explorer</a>
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/tieout">Repository — tieout/</a>
+  </div>
+  <span class="status-pill" id="statusPill">Status: plan drafted, not yet run — loading…</span>
+</div></header>
+
+<section id="window">
+  <div class="wrap">
+    <h2>Why June, and what "tied out" means here</h2>
+    <p class="section-intro">Three months are captured (May–July 2026 by default); the middle
+      month is the tie-out target because it is the only one bracketed on both sides — a full
+      prior month to catch schedule items that opened before the window, a full following month
+      to catch items that clear after it.</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3 id="windowTitle">Extraction window</h3>
+        <p id="windowNote">Loading…</p>
+      </div>
+      <div class="info-card">
+        <h3>Tolerance policy</h3>
+        <p id="tolStatement" style="margin-bottom:14px">Loading…</p>
+        <div id="tolTiers"></div>
+        <p id="tolConfidence" style="margin-top:14px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chain">
+  <div class="wrap">
+    <h2>The reconciliation chain, one click at a time</h2>
+    <p class="section-intro">Seven links, source documents to the filed statement — the chain a
+      controller already recognises. Click any card for the full reconciliation spec: what we
+      check, from which file, against which reported figure, the tolerance, and what a break means.</p>
+    <div class="chain" id="chainList"></div>
+  </div>
+</section>
+
+<section id="register">
+  <div class="wrap">
+    <h2>Break register</h2>
+    <p class="section-intro">Empty by design — a template to fill in on the day the June 2026
+      extract is complete, not a forecast of what will break. <code>tieout/bin/reconcile.py</code>
+      populates this same structure automatically once <code>extract/out/2026-06/</code> exists.</p>
+    <div class="table-wrap">
+      <table id="registerTable">
+        <thead><tr id="registerHead"></tr></thead>
+        <tbody>
+          <tr><td colspan="13" style="text-align:center;color:var(--mute);padding:26px">No breaks logged yet — nothing has been run against a live June 2026 extract.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="reg-note" id="registerNote"></p>
+  </div>
+</section>
+
+<section id="signoff">
+  <div class="wrap">
+    <h2>Sign-off</h2>
+    <div class="signoff-box">
+      <h3 id="signoffTitle">Tie-out statement</h3>
+      <p id="signoffStatement">Loading…</p>
+      <p id="signoffSigners" style="margin-bottom:0"></p>
+      <span class="sig-status" id="signoffStatus">Loading…</span>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <h2>What's behind this board</h2>
+    <p class="section-intro">The method and the code that runs it, once the extract exists.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3><a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/blob/main/tieout/README.md">tieout/README.md</a></h3>
+        <p>Five reconciliation statements, in order of increasing difficulty — from transaction
+          completeness through the absorption-rate recompute — each with its formula, its input
+          files, expected variance sources, and pass criterion.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/blob/main/tieout/bin/reconcile.py">tieout/bin/reconcile.py</a></h3>
+        <p>The reconciliation script itself — stdlib Python, pandas-optional, reads the normalised
+          extract output, emits a markdown + JSON report with per-statement pass/fail and a
+          populated break register. Runs cleanly with <code>--help</code> even before any extract exists.</p>
+      </div>
+      <div class="card">
+        <h3><a href="../extract/">Extract board</a></h3>
+        <p>The upstream surface — every file this board's reconciliation chain reads from, and the
+          confidence rating on each extracted field.</p>
+      </div>
+      <div class="card">
+        <h3><a href="../model/">Model explorer</a></h3>
+        <p>The 21-entity data model these reconciliation targets are drawn from — accounting
+          schedule, GL journal posting, repair order, and the rest, each with its API reach and
+          SAP analogue.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>© 2026 EVEglyphDesign. All rights reserved. Controlled copy · Key ID EgD-KEY-2026-07 ·
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/tieout">tieout/ in the repository</a>.
+    Confidence is stated per item: documented means a vendor, regulator, or this repo's own prior
+    work states it; inferred means it follows from published behaviour; unverified means we still
+    have to ask.</span>
+  <span class="mark">Pour le bien-être du peuple.</span>
+</div></footer>
+
+<script>
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cfClass=s=>{s=String(s||'').toLowerCase();if(s.includes('documented'))return'documented';if(s.includes('inferred'))return'inferred';return'unverified';};
+const cfLabel=s=>{s=String(s||'').toLowerCase();if(s.includes('documented'))return'DOCUMENTED';if(s.includes('inferred'))return'INFERRED';return'UNVERIFIED';};
+
+fetch('tieout-plan.json').then(r=>r.json()).then(d=>{
+  render(d);
+}).catch(e=>{
+  document.getElementById('statusPill').textContent='Could not load tieout-plan.json — open it directly.';
+});
+
+function render(d){
+  document.getElementById('statusPill').textContent =
+    'Status: ' + (d.signoff && d.signoff.status ? d.signoff.status : 'plan drafted, not yet run');
+
+  // window
+  const w = d.window || {};
+  document.getElementById('windowTitle').textContent =
+    'Extraction window — tie-out on ' + (w.tieout_month || '(unset)');
+  document.getElementById('windowNote').textContent = w.note || '';
+
+  // tolerance
+  const t = d.tolerance_policy || {};
+  document.getElementById('tolStatement').textContent = t.statement || '';
+  const tierBox = document.getElementById('tolTiers');
+  (t.tiers || []).forEach(tier=>{
+    const row = document.createElement('div'); row.className='tier-row';
+    row.innerHTML = '<span class="tier-name">'+esc(tier.tier)+'</span><span class="tier-rule">'+esc(tier.rule)+' — '+esc(tier.action)+'</span>';
+    tierBox.appendChild(row);
+  });
+  const tc = document.createElement('span'); tc.className='cf '+cfClass(t.confidence);
+  tc.textContent = cfLabel(t.confidence);
+  document.getElementById('tolConfidence').appendChild(tc);
+  const tcText = document.createElement('span');
+  tcText.style.marginLeft='8px'; tcText.style.color='var(--mute)'; tcText.style.fontSize='13px';
+  tcText.textContent = (t.confidence||'').replace(/^[A-Z]+\s*[—-]\s*/,'');
+  document.getElementById('tolConfidence').appendChild(tcText);
+
+  // chain
+  const chainList = document.getElementById('chainList');
+  (d.chain || []).forEach((c,i)=>{
+    const item = document.createElement('div'); item.className='chain-item';
+    const dot = document.createElement('div'); dot.className='chain-dot'; dot.textContent = c.step;
+    item.appendChild(dot);
+
+    const card = document.createElement('button'); card.className='chain-card'; card.type='button';
+    card.innerHTML = '<div class="kicker">'+esc(c.kicker)+'</div><h3>'+esc(c.title)+'</h3>'+
+      '<p class="recon-line">'+esc(c.reconciles)+'</p>'+
+      '<div class="expand-hint" data-state="closed">Click to open the full reconciliation spec ▾</div>';
+    const detailId = 'detail-'+c.id;
+    card.onclick = ()=>{
+      const det = document.getElementById(detailId);
+      const hint = card.querySelector('.expand-hint');
+      det.classList.toggle('open');
+      hint.textContent = det.classList.contains('open') ? 'Click to collapse ▴' : 'Click to open the full reconciliation spec ▾';
+    };
+    item.appendChild(card);
+
+    const det = document.createElement('dl'); det.className='detail'; det.id=detailId;
+    det.innerHTML =
+      '<dt>Reconciles</dt><dd>'+esc(c.reconciles)+'</dd>'+
+      '<dt>From which extracted file</dt><dd>'+esc(c.from_file)+'</dd>'+
+      '<dt>Against which reported figure</dt><dd>'+esc(c.against)+'</dd>'+
+      '<dt>Tolerance</dt><dd>'+esc(c.tolerance)+'</dd>'+
+      '<dt>What a break means</dt><dd>'+esc(c.break_meaning)+'</dd>';
+    const cfSpan = document.createElement('span'); cfSpan.className='cf '+cfClass(c.confidence);
+    cfSpan.textContent = cfLabel(c.confidence);
+    det.appendChild(cfSpan);
+    const cfP = document.createElement('dd'); cfP.style.marginTop='6px';
+    cfP.textContent = (c.confidence||'').replace(/^[A-Z]+\s*[—-]?\s*/,'');
+    det.appendChild(cfP);
+    item.appendChild(det);
+
+    chainList.appendChild(item);
+  });
+
+  // break register header
+  const head = document.getElementById('registerHead');
+  (d.break_register_columns || []).forEach(col=>{
+    const th=document.createElement('th'); th.textContent = col.replace(/_/g,' ');
+    head.appendChild(th);
+  });
+  document.getElementById('registerNote').textContent = d.break_register_seed_note || '';
+
+  // signoff
+  const s = d.signoff || {};
+  document.getElementById('signoffStatement').textContent = s.statement || '';
+  document.getElementById('signoffSigners').textContent = 'Signers: ' + ((s.signers_placeholder||[]).join(' · '));
+  document.getElementById('signoffStatus').textContent = s.status || 'UNVERIFIED';
+}
+</script>
+</body>
+</html>

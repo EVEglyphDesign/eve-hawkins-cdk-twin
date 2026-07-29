@@ -1,0 +1,125 @@
+{
+  "generated": "2026-07-29T06:00:00Z",
+  "window": {
+    "months": ["2026-05", "2026-06", "2026-07"],
+    "tieout_month": "2026-06",
+    "note": "DOCUMENTED (brief): three prior full months extracted, default May/June/July 2026, confirmed on the day access lands. Tie-out runs on the MIDDLE month — June 2026 — because it is the only month in the window with a full prior month (May) to catch schedule items that opened before the window and a full following month (July) to catch items that clear after it."
+  },
+  "tolerance_policy": {
+    "statement": "Two-tier tolerance, following the GM Dealer Standard Accounting Manual's own 'adjustment for the difference between the month-end schedule and the account balance' convention — a reconciliation difference is itself a bookable, named event, not evidence the exercise failed.",
+    "tiers": [
+      {
+        "tier": "Clean tie",
+        "rule": "Variance = $0.00 and abs(variance) / abs(reported base) < 0.05%",
+        "action": "No entry required. Statement passes."
+      },
+      {
+        "tier": "Tolerable variance",
+        "rule": "abs(variance) <= $25.00 per schedule/account, or <= 0.25% of the reported base, whichever is greater",
+        "action": "Logged in the break register as INFO, not a break. Typically timing (in-transit posting, rounding on flat-rate hour conversion, or a document dated across midnight in a different timezone than the report engine)."
+      },
+      {
+        "tier": "Break",
+        "rule": "Exceeds the tolerable-variance threshold on any single schedule, GL account, or department line",
+        "action": "Logged in the break register as OPEN with a required root-cause field. No financial statement is considered tied out with an unresolved OPEN break."
+      }
+    ],
+    "confidence": "INFERRED — thresholds are our proposal, modelled on the GM manual's own adjustment-entry convention (see modules/02-ledger.md §4) and standard month-end close practice. Peterbilt Atlantic's own or PACCAR's tolerance policy, if either publishes one, is UNVERIFIED and should override this on the day."
+  },
+  "chain": [
+    {
+      "id": "source-documents",
+      "step": 0,
+      "title": "Source documents",
+      "kicker": "Where the money starts",
+      "reconciles": "Nothing yet — this is the evidentiary floor every later step points back to: the repair order, the counter parts ticket, the deal jacket, the AP/purchase document, the GL journal posting, as captured at the moment of the transaction.",
+      "from_file": "extract/out/2026-06/repair_orders.jsonl, extract/out/2026-06/counter_parts_sales.jsonl, extract/out/2026-06/deal_jackets.jsonl, extract/out/2026-06/ap_documents.jsonl, extract/out/2026-06/gl_journal_postings.jsonl (extract lane's normalised output — see the extract board)",
+      "against": "The dealer's own CDK Drive tenant (the system of record). No reported figure to compare yet — this step only proves completeness of capture, not correctness of a number.",
+      "tolerance": "100% of transaction rows dated within the calendar month, matched by document number against the CDK-side count/log if one was captured on export day. See Statement (a) in tieout/README.md.",
+      "break_meaning": "A missing document ID means the capture pass on day one had a gap — either a report cut off pagination early, or a document type was skipped. This must be closed before any later step is trusted, because every downstream reconciliation inherits this population.",
+      "confidence": "DOCUMENTED (brief) for the transaction classes in scope; INFERRED for exact file paths, which follow the extract lane's own naming convention and may shift — check docs/extract/ for the live layout."
+    },
+    {
+      "id": "subledger-schedule",
+      "step": 1,
+      "title": "Subledger schedule",
+      "kicker": "Open items behind one balance",
+      "reconciles": "Every open item on a controlled accounting schedule (warranty claims receivable, new-vehicle floor plan, factory receivables, contracts in transit, service/parts WIP) sums to that schedule's month-end balance.",
+      "from_file": "extract/out/2026-06/accounting_schedules/*.jsonl — one file per schedule type, control key = RO#, stock#, VIN-last-8, or claim# per modules/02-ledger.md §2",
+      "against": "The schedule balance CDK Drive itself reports for June 2026 close, captured by screen-driven report export (accounting-schedule has NO Fortellis API reach — see model.json, api.reachable = none).",
+      "tolerance": "Tolerable variance per the tolerance policy above; see Statement (b) in tieout/README.md.",
+      "break_meaning": "An open item on our rebuilt schedule with no counterpart on CDK's own report (or vice versa) means either a stale item that should have cleared, or a transaction our capture pass missed — the schedule step is where these surface first, before they contaminate the GL step.",
+      "confidence": "INFERRED — the schedule mechanism itself is DOCUMENTED (GM Dealer Standard Accounting Manual, Digital Dealer); CDK Drive's own internal schedule table/report name is UNVERIFIED (see modules/02-ledger.md)."
+    },
+    {
+      "id": "gl-account",
+      "step": 2,
+      "title": "GL account",
+      "kicker": "The control account that owns the schedule",
+      "reconciles": "The schedule's summed open-item total (step 1) equals its GL reconciliation-account balance at month-end — the same check the GM manual requires before any factory statement is submitted.",
+      "from_file": "extract/out/2026-06/gl_journal_postings.jsonl, rolled up by account number (gl-journal-posting is PARTIAL API reach per model.json — some postings arrive via glpost/glwippost, others only via file export)",
+      "against": "CDK Drive's GL trial balance / account-balance display for the account, captured by report export for June 2026.",
+      "tolerance": "Tolerable variance per the tolerance policy above; see Statement (b) in tieout/README.md — same statement as the schedule check, run one level up.",
+      "break_meaning": "A GL account balance that does not equal its own schedule total is, per the GM manual, itself a named adjusting entry — 'Adjustment for the difference between the month-end schedule and the account balance.' A break here means a posting bypassed the schedule (a manual journal entry booked directly to a reconciliation account, which SAP-shape design blocks natively but CDK Drive may not).",
+      "confidence": "DOCUMENTED for the GM-manual reconciliation requirement; INFERRED that CDK Drive follows the same discipline; UNVERIFIED whether CDK technically prevents direct posting to a schedule-controlled account the way SAP's reconciliation-account flag does."
+    },
+    {
+      "id": "department-income-statement",
+      "step": 3,
+      "title": "Department income statement",
+      "kicker": "Gross profit by profit centre",
+      "reconciles": "Departmental gross profit rebuilt bottom-up from RO labour lines, RO part lines, and counter parts sales (split by pay type: customer / warranty / internal) matches the reported department income statement line for Service, Parts, Body Shop, New Vehicle, Used Vehicle.",
+      "from_file": "extract/out/2026-06/ro_labour_lines.jsonl, extract/out/2026-06/ro_part_lines.jsonl, extract/out/2026-06/counter_parts_sales.jsonl — both RO line types are FULL API reach per model.json, the highest-confidence inputs in this whole chain",
+      "against": "The dealer's June 2026 department income statement (factory/NADA-format composite, or CDK's internal equivalent), captured by report export.",
+      "tolerance": "Tolerable variance per the tolerance policy above, evaluated per department line, not in aggregate; see Statement (c) in tieout/README.md.",
+      "break_meaning": "A department gross-profit break usually traces to a pay-type misclassification (a warranty RO line booked to customer-pay gross, or an internal recon job left off the used-vehicle stock-number roll-up per modules/03-cost-objects.md §6) or an overhead-allocation timing difference, not a missing transaction — those should already have surfaced at steps 0–2.",
+      "confidence": "INFERRED — the rebuild formula is ours; the reported figure it targets is DOCUMENTED to exist (every OEM requires a department-format statement) but the PACCAR-specific format/deadline is UNVERIFIED per docs/current-state.md."
+    },
+    {
+      "id": "trial-balance",
+      "step": 4,
+      "title": "Trial balance",
+      "kicker": "Debits equal credits, dealership-wide",
+      "reconciles": "Every GL account's June 2026 debit and credit total nets to zero across the whole chart of accounts, and the resulting balances roll up to the reported balance sheet (assets, liabilities, equity).",
+      "from_file": "extract/out/2026-06/gl_journal_postings.jsonl, aggregated across all accounts — no accounting-schedule detail needed at this step, only the posted GL line items",
+      "against": "The dealer's June 2026 balance sheet, captured by report export (gl-account-master itself has NO Fortellis API reach per model.json — the chart of accounts must come from export, not the API).",
+      "tolerance": "Zero tolerance on debits = credits (this is an arithmetic identity, not an estimate); tolerable variance per the tolerance policy above on the roll-up to each balance sheet line; see Statement (d) in tieout/README.md.",
+      "break_meaning": "Debits not equalling credits in our own rebuild means a capture gap or a doubled/dropped posting in our extract — not a real dealership break, since a real general ledger cannot be out of balance. A break in the roll-up to the reported balance sheet line, with debits=credits holding internally, means a chart-of-accounts mapping error between our SAP-shape schema and CDK's own account numbers.",
+      "confidence": "DOCUMENTED that a trial balance must net to zero (basic double-entry accounting); INFERRED that our GL-posting capture is complete enough to prove it before cross-checking against CDK's own trial balance report."
+    },
+    {
+      "id": "absorption-rate",
+      "step": 5,
+      "title": "Absorption rate",
+      "kicker": "The one number every dealer principal already watches",
+      "reconciles": "Fixed and total absorption, recomputed from our rebuilt department gross profit (step 3) and overhead (step 4), against the NADA/ATD-format absorption figure the dealer already tracks — the hardest tie because it is a derived KPI, not a posted balance.",
+      "from_file": "Derived entirely from the outputs of steps 3 and 4 — no new extract file, per modules/03-cost-objects.md §8, which states absorption rate is report-only and never stored as its own GL object.",
+      "against": "The dealer's own June 2026 absorption-rate report (NADA/ATD Slide Guide formula: Total Absorption = used-vehicle + service + parts + body shop gross profit ÷ total dealership expense; Fixed Absorption = fixed-ops gross profit ÷ adjusted total dealer expense).",
+      "tolerance": "Tolerable variance per the tolerance policy above, expressed in percentage points (not dollars) since absorption is itself a ratio; see Statement (e) in tieout/README.md.",
+      "break_meaning": "Because absorption is a ratio of two already-reconciled totals, a break here with steps 3 and 4 both clean means the dealer's own absorption report uses a different overhead-allocation method (square footage vs. gross-profit-contribution-share per modules/03-cost-objects.md §7) than our rebuild assumed — a policy difference to confirm with Luke Weatherbie, not a data error.",
+      "confidence": "DOCUMENTED (NADA/ATD Slide Guide publishes the formula and the 100%/60% guide rates); UNVERIFIED whether Peterbilt Atlantic's own overhead-allocation method matches the generic NADA formula without adjustment."
+    },
+    {
+      "id": "dealer-financial-statement",
+      "step": 6,
+      "title": "Dealer financial statement / PACCAR composite",
+      "kicker": "What actually gets filed",
+      "reconciles": "The full chain closes here: every prior step's reconciled figure appears, unchanged, on the dealer's own factory-format financial statement and the PACCAR dealer composite it feeds.",
+      "from_file": "No new extract — this is the reported artifact itself, captured on export day as a PDF/report-export, held for comparison only (we do not re-derive PACCAR's composite, only trace our rebuild into it).",
+      "against": "The dealer's actual June 2026 financial statement as submitted, and PACCAR's dealer composite/wholesale-financing monitoring feed referenced in modules/02-ledger.md §1 (Karmak's PACCAR integration page documents 'financial statements are automatically downloaded to PACCAR' as the standard DMS-to-OEM pattern; CDK Drive's own equivalent submission mechanism is UNVERIFIED).",
+      "tolerance": "No new tolerance — this step inherits pass/fail from steps 0–5. If every prior step is clean or within tolerance, this step is a formality; if any prior step carries an OPEN break, this step cannot be signed off.",
+      "break_meaning": "A break surviving to this step that was not caught at steps 0–5 means our chain missed a reconciliation point PACCAR's own submission process checks — the single most valuable finding this exercise can produce, because it tells us what to add to the chain before the next month's tie-out.",
+      "confidence": "DOCUMENTED that OEM-mandated dealer financial reporting exists industry-wide (GM/Ford manuals, PACCAR 10-K dealer-financing disclosures); UNVERIFIED for PACCAR's specific chart of accounts, submission deadline, and whether CDK Drive automates the download the way Karmak's integration does."
+    }
+  ],
+  "break_register_columns": [
+    "break_id", "date_found", "chain_step", "schedule_or_account", "our_figure", "reported_figure",
+    "variance_amount", "variance_pct", "tier", "root_cause", "owner", "status", "closed_date"
+  ],
+  "break_register_seed_note": "DOCUMENTED (brief): rows are intentionally empty — this table is a template to fill in on the day access lands and the June 2026 extract is complete, not a forecast of what will break.",
+  "signoff": {
+    "statement": "Tie-out statement: the dealer's June 2026 reported financials reconcile to data extracted independently from CDK Drive and PACCAR-facing systems, within the tolerance policy stated above, with all breaks logged and either closed or carried forward with a named owner.",
+    "signers_placeholder": ["EVEglyphDesign lane owner", "Luke Weatherbie (dealer controller/ops)"],
+    "status": "UNVERIFIED — not yet run. This board is the plan; reconcile.py produces the actual report once extract/out/2026-06/ exists."
+  }
+}

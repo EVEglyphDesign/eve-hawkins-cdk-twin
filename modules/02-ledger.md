@@ -86,7 +86,38 @@ screen-name level. The general DMS/ERP pattern is that once a period is closed, 
 modules are blocked from posting back into it
 ([ERP Software Blog, Dynamics GP Subledger Reconciliation](https://erpsoftwareblog.com/2018/07/dynamics-gp-subledger-reconciliation-best-practices/)).
 
-## 4. Month-end close and factory statement submission
+## 4. Trial balance and financial statement generation — OEM format vs GAAP/ASPE
+
+`DOCUMENTED`: DMS-class systems generate the OEM-format statement by mapping every live GL
+account to a **standard/reporting account number** defined by the manufacturer, independent of
+the dealer's own internal account numbering — *"Assign all your General Ledger accounts to
+standard account numbers which correspond to the account numbers on the manufacturer's
+forms... To produce Formatted Financial Statements with the correct format, it is essential
+that you execute the above steps first"*
+([SDS Documentation, Formatted Financial Statement X159-1](https://sdswebservices-soldoc.serti.com/sds-documentation/55b/en/x159/x159-1.pdf)).
+The same source shows one DMS ledger can print three distinct outputs: the **Formatted
+(factory) Financial Statement**, the **Trial Balance**, and the **Dealer Values report**
+([SDS X159-1](https://sdswebservices-soldoc.serti.com/sds-documentation/55b/en/x159/x159-1.pdf))
+— one chart of accounts, multiple presentation layers. Dominion DMS's GL setup screen has an
+action button labeled **"Reporting Accounts"** where the user enters "the appropriate
+Reporting Account number for each Financial Statement listed" per GL account — direct evidence
+of a many-to-one mapping from internal GL accounts to one or more external statement formats
+([Dominion DMS help](https://help.dominiondms.com/en/knowledge/create-a-new-sales-general-ledger-account)).
+
+`INFERRED (dealer-accounting norm)`: the OEM factory statement is a management/compliance report
+keyed to the manufacturer's own line-item definitions (holdback, incentives netted a specific
+way, LIFO shown on a dedicated schedule page) and is not itself a GAAP- or ASPE-compliant
+statement; the dealer's accountant/CPA separately produces GAAP (US) or **ASPE (Canada — the
+relevant standard for Peterbilt Atlantic)** financial statements from the same underlying GL,
+with different treatment of items such as LIFO (a US tax-driven inventory method not permitted
+under IFRS/ASPE) and consolidation. This is the practical reason the tie-out chain in
+[`docs/tieout/index.html`](../docs/tieout/index.html) targets the factory/NADA-format composite
+specifically rather than a GAAP/ASPE statement — it is the one both CDK and PACCAR are
+positioned to have an opinion on. `UNVERIFIED`: whether CDK Drive itself outputs a labeled
+"GAAP" or "ASPE" statement distinct from the OEM statement, and what that screen or report is
+called.
+
+## 5. Month-end close and factory statement submission
 
 Each major balance-sheet schedule must be reconciled to its GL control account before close;
 factory receivable balances must be reconciled specifically to the manufacturer's own
@@ -105,7 +136,7 @@ LIFO/inventory valuation adjustments; (5) run trial balance; (6) generate and tr
 factory-formatted financial statement. No CDK-specific screen name for the submission step is
 publicly documented.
 
-## 5. Vehicle inventory accounting — floor plan, curtailment
+## 6. Vehicle inventory accounting — floor plan, curtailment
 
 Floor plan interest is **not** capitalized into vehicle inventory under GM's documented
 treatment — it posts as a period expense against Interest Payable
@@ -116,7 +147,7 @@ requiring periodic principal reductions for stale inventory
 PACCAR Financial Services operates dealer wholesale financing as a distinct segment
 ([PACCAR SEC 10-K filing](https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/R32.htm)).
 
-## 6. Warranty receivable accounting
+## 7. Warranty receivable accounting
 
 Warranty claims create a GL receivable (GM `263 Warranty Claims`; Ford `1140 Warranty Claims
 Receivable`) that is debited when a claim is filed and credited only when the factory pays or
@@ -124,7 +155,34 @@ rejects it, requiring aged schedule reporting by RO/claim number
 ([GM manual](http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf);
 [Digital Dealer](https://digitaldealer.com/news/your-dms-and-schedules/65829/)).
 
-## 7. Proposed SAP-shape mapping
+## 8. What we could not verify
+
+Carried forward from the lane 2 research (`research/cdk_02_ledger.md`) as explicit open items,
+each also tracked in [`docs/open-questions.md`](../docs/open-questions.md):
+
+- A PACCAR/Peterbilt-specific dealer accounting manual or chart-of-accounts document
+  (equivalent to the GM or Ford manuals) — not publicly located; PACCAR's factory-statement
+  format and account numbers are `UNVERIFIED`.
+- CDK Drive's actual internal schedule numbers/names (an equivalent to Ford's "1140" account or
+  Autosoft's GLSKEDS export) — not found in any public CDK document.
+- The exact CDK Drive screen/table names for posting-period lock (closed-period enforcement) —
+  architecture is `INFERRED` from cross-DMS norms only.
+- Whether CDK Drive itself outputs a labeled "GAAP" or "ASPE" statement distinct from the OEM
+  statement, and what that screen or report is called.
+- Full request/response schema of the `glpost`/`glwippost` Fortellis APIs (journal line fields,
+  period fields) — only the endpoint paths and existence were confirmed via a support thread.
+- Any CDK-specific curtailment or floor plan GL account numbers (only generic bank/OCC-level
+  curtailment mechanics and PACCAR Financial Services' existence as a wholesale lender were
+  confirmed).
+
+**Why this matters for the tie-out:** every one of these is a place the reconciliation chain in
+[`docs/tieout/index.html`](../docs/tieout/index.html) has to fall back to screen-driven report
+export rather than a documented API or table name — see statement (b) and (d) in
+[`tieout/README.md`](../tieout/README.md), both of which depend on `accounting-schedule` and
+`gl-account-master`, the two ledger entities marked `none` for API reach in
+[`docs/model/model.json`](../docs/model/model.json).
+
+## 9. Proposed SAP-shape mapping
 
 | CDK/dealer-accounting concept | Proposed SAP object/table | Rationale |
 |---|---|---|

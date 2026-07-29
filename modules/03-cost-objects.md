@@ -159,7 +159,38 @@ overhead figures, **not a discrete GL account or journal entry**
 meaning it belongs in the semantic-views layer of `ARCHITECTURE.md`, computed from posted
 department and RO data rather than stored as its own object.
 
-## 9. Proposed SAP-shape mapping
+## 9. What we could not verify
+
+Carried forward from the lane 3 research (`research/cdk_03_costobjects.md`) as explicit open
+items, each also tracked in [`docs/open-questions.md`](../docs/open-questions.md):
+
+1. The exact CDK host-side (non-Fortellis) field/table name for the department dimension on a
+   raw GL posting line (only the externally exposed Fortellis `Department-Id` header is
+   documented publicly).
+2. The literal field name CDK uses for "flat rate hours" / "book time" inside the OpCodes API
+   schema (only the API's existence is confirmed).
+3. Whether CDK Drive posts an explicit intercompany-style elimination entry for internal work
+   between departments, or nets the transfer purely through the vehicle inventory schedule —
+   no public source documents the GL mechanics at this granularity.
+4. The specific GL account/field breakdown (acquisition, pack, recon labor, recon parts,
+   floorplan interest) inside the Display Vehicle Cost roll-up.
+5. Whether CDK exposes a native "technician efficiency"/"technician proficiency" calculated
+   field, or whether these are purely 20-group/DMS-report constructs computed downstream of raw
+   clock/flag-hour data.
+6. Whether Peterbilt/PACCAR heavy-truck dealers report into NADA's ATD 20 Group composite
+   specifically, or a PACCAR-proprietary equivalent — not found in public sources.
+
+**Why this matters for the tie-out:** items 1 and 3 are exactly the gaps that make statement (c)
+in [`tieout/README.md`](../tieout/README.md) — departmental gross profit rebuilt from RO
+labour/parts lines — the reconciliation most likely to surface a real pay-type or
+internal-work-elimination break rather than a pure data-capture gap, since the underlying
+`ro-labour-line` and `ro-part-line` extracts are themselves the two highest-confidence, `full`
+API-reach entities in [`docs/model/model.json`](../docs/model/model.json). Item 6 bears directly
+on statement (e) — absorption rate — since it decides whether "the reported figure" to
+reconcile against is a NADA/ATD composite or a PACCAR-internal equivalent; see
+[the Tie-Out Board](https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/tieout/).
+
+## 10. Proposed SAP-shape mapping
 
 | CDK concept | CDK evidence | Proposed SAP object in the twin |
 |---|---|---|
