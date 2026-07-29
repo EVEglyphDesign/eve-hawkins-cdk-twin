@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/vendor-master.schema.json",
+  "title": "Vendor / Supplier Master",
+  "description": "The record for anyone we owe money to: PACCAR itself as parts/warranty payer, an outside sublet shop, or a general trade supplier.",
+  "x-cdk-group": "master",
+  "x-sap-analogue": "LFA1 (vendor master, general data)",
+  "x-api-reachable": "none",
+  "x-api-note": "No public Fortellis developer guide for a vendor/AP master API was found; only marketing language confirms a 'Vendor workflow' exists in-DMS, with documentation stated as 'coming soon'.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "vendor_workflow_record_view_edit_vendor_information": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "CDK's own marketing confirms a vendor workflow exists to view/edit vendor info, but no field names are published",
+      "x-cdk-field-name": "Vendor workflow record (view/edit vendor information)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Accounting Workflows",
+      "x-source-url": "https://www2.cdkglobal.com/accounting-workflows"
+    },
+    "oem_vendor_classification_flag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Dealer-accounting convention treats OEM parts/warranty payables as flowing through the AP vendor master, but CDK has no documented flag distinguishing OEM from other vendors",
+      "x-cdk-field-name": "OEM vendor classification flag",
+      "x-confidence": "inferred",
+      "x-source-title": "CDK Global \u2014 Accounting Workflows page",
+      "x-source-url": "https://www2.cdkglobal.com/accounting-workflows"
+    },
+    "sublet_vendor_classification_flag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Sublet (outside vendor) labor is a standard dealer-accounting concept but has no documented CDK vendor-record flag",
+      "x-cdk-field-name": "Sublet vendor classification flag",
+      "x-confidence": "inferred",
+      "x-source-title": "reddit.com",
+      "x-source-url": "https://www.reddit.com/r/serviceadvisors/comments/1to4b52/cdk_users_sublet_in_customer_pay_in_an_internal/"
+    },
+    "corpay_payment_processor_integration_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK Heavy Truck integrates a Corpay connection specifically 'to simplify vendor payments and boost AP efficiency' \u2014 direct evidence a vendor/AP record exists and is externally addressable",
+      "x-cdk-field-name": "Corpay payment-processor integration reference",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global Heavy Truck \u2014 OEM & ISV Integrations",
+      "x-source-url": "https://www.cdkglobalheavytruck.com/oem-integrations"
+    },
+    "accounts_payable_module_foundations_suite": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK's Foundations Suite advertises an 'Accounts Payable' module with 'multicompany Accounting' and seamless data flow from Sales and Service into Accounting",
+      "x-cdk-field-name": "Accounts Payable module (Foundations Suite)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Foundations Suite",
+      "x-source-url": "https://www.cdkglobal.com/insights/cdk-foundations-suite-core-connected-dealership"
+    },
+    "three_way_match_po_receipt_vendor_invoice": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "No CDK-specific public documentation confirms a native three-way match inside CDK Drive AP; competitor Karmak explicitly advertises this for PACCAR parts invoices, which is indirect evidence dealers expect it",
+      "x-cdk-field-name": "Three-way match (PO / receipt / vendor invoice)",
+      "x-confidence": "unverified",
+      "x-source-title": "Karmak \u2014 PACCAR Integration",
+      "x-source-url": "https://www.karmak.com/integrations/paccar"
+    }
+  },
+  "required": [
+    "vendor_workflow_record_view_edit_vendor_information"
+  ],
+  "additionalProperties": true
+}

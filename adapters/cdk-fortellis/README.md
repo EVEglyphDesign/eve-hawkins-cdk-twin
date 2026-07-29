@@ -1,12 +1,41 @@
 # CDK Drive (Fortellis) adapter
 
-**Status: wireframe / to be filled from lanes 1, 4, 5, 6.** Ingest logic (`ingest.py`) and
-field-level mapping (`fields.md`) are not yet written — the task scope for this repo covers
-only this README. Every API name below is confirmed via lane research; refresh cadences and
-some field targets are proposed, not confirmed against a live tenant.
+**Status: wireframe / to be filled from lanes 1, 4, 5, 6, plus the Lane B extract harness.**
+Field-level mapping (`fields.md`) is not yet written. The runnable side of this adapter now
+lives in [`../../extract/bin/`](../../extract/bin/) (`00_validate_access.py`,
+`10_extract_metadata.py`, `20_extract_masters.py`, `30_extract_transactions.py`) and is
+driven by [`../../extract/config/targets.yaml`](../../extract/config/targets.yaml) — see
+[`../../extract/README.md`](../../extract/README.md) for the operator runbook. Every API
+name below is confirmed via lane research; literal REST paths, pagination parameters, and
+response envelope shapes used by the extract scripts are `UNVERIFIED` against a live tenant
+until day one — each script's module docstring states its specific assumptions.
 
 Pulls Peterbilt Atlantic's live DMS data — organization, ledger, cost objects, materials,
 master data, and document flow — from CDK Drive via the **Fortellis** REST platform.
+
+## What this adapter can and cannot reach — plainly
+
+Per [`../../docs/model/model.json`](../../docs/model/model.json) (21 entities), copied
+honestly, not rounded up:
+
+- **FULL (documented, field-level schema confirmed):** customer master, repair order
+  (header + labor + parts + sublet + technician punches, all nested in one call).
+- **PARTIAL (endpoint or workflow documented, but schema/pagination gaps remain):**
+  dealer/rooftop partition, vehicle/unit master, employee identifiers, GL journal
+  posting, parts master/inventory (async bulk only), parts order/supersession, parts pick
+  ticket, counter parts sale, deal jacket (FI Sales History bulk/delta — **read-only**,
+  no write path for deal creation/update), technician time punch, work-in-process (mirrored
+  off the RO status field, not a standalone object).
+- **NONE — cannot be reached via this adapter, full stop:** vendor master, GL account
+  master, accounting schedule, warranty claim, purchase/receipt document, cost
+  centre/department master. These route through
+  [`../export-fallback/`](../export-fallback/README.md) instead — see that adapter's
+  README for the mechanism (DMS UI export, or hand capture on day one).
+
+The practical consequence: **the ledger cannot be pulled by API at all.** Every GL-side
+object needed for the tie-out (chart of accounts, accounting schedules, department master)
+is a `NONE` above and must come from a file export or a screen capture, never from this
+adapter.
 
 ## What it ingests
 

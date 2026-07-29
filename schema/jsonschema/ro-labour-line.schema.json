@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/ro-labour-line.schema.json",
+  "title": "RO Labour Line",
+  "description": "One line on the RO describing a single job, the flat-rate hours it should take, and the actual hours a tech spent on it.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Confirmation/activity allocation line (COEP) charging labor hours to the internal order",
+  "x-api-reachable": "full",
+  "x-api-note": "Labor operations are a nested array inside Get Repair Order v3 \u2014 fully documented alongside the RO header.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "laboroperations_opcode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The standard labor operation code identifying what job this is (e.g. brake job, oil change)",
+      "x-cdk-field-name": "laborOperations[].opCode",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_flatratehours": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "The standard hours the job is supposed to take, used for billing and pay-plan calculations",
+      "x-cdk-field-name": "laborOperations[].flatRateHours",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_actualhours": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "The real clock time the tech spent, compared against flat-rate hours for efficiency",
+      "x-cdk-field-name": "laborOperations[].actualHours",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_technicianids": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Which technician(s) worked this specific labor line",
+      "x-cdk-field-name": "laborOperations[].technicianIds[]",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_paytype_customer_warranty_internal": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Line-level pay type \u2014 lets one RO split cost across payers job by job",
+      "x-cdk-field-name": "laborOperations[].payType (Customer/Warranty/Internal)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_laborsaleamount_laborcostamount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "What was charged for this labor line versus what it cost the shop (tech's effective rate x hours)",
+      "x-cdk-field-name": "laborOperations[].laborSaleAmount / laborCostAmount",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "laboroperations_comebackflag_comebacksa_comebacktech": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Marks this job as a redo of prior work and tags who did the original job",
+      "x-cdk-field-name": "laborOperations[].comebackFlag / comebackSA / comebackTech",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+  },
+  "required": [
+    "laboroperations_opcode",
+    "laboroperations_paytype_customer_warranty_internal"
+  ],
+  "additionalProperties": true
+}

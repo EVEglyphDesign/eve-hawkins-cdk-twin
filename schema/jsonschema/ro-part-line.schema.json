@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/ro-part-line.schema.json",
+  "title": "RO Part Line",
+  "description": "One line on the RO for a single part used on the job, with its cost, its sale price, and whether it's a warranty/core part.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Goods movement / material consumption line (MSEG) charging a part's cost to the internal order",
+  "x-api-reachable": "full",
+  "x-api-note": "Parts lines are a nested array inside Get Repair Order v3, fully documented alongside labor lines.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "parts_partnumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The part number used on this line, joining back to the parts master",
+      "x-cdk-field-name": "parts[].partNumber",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_quantity": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "How many of this part were used on the job",
+      "x-cdk-field-name": "parts[].quantity",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_costamount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The dealer's cost for the part quantity used on this line",
+      "x-cdk-field-name": "parts[].costAmount",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_saleamount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "What the customer/payer was actually charged for this part line",
+      "x-cdk-field-name": "parts[].saleAmount",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_paytype_customer_warranty_internal": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Line-level pay type for this part, independent of but usually matching the RO-level flags",
+      "x-cdk-field-name": "parts[].payType (Customer/Warranty/Internal)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_corecharge_corereturned": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The refundable core deposit charged on this part, and whether the old core has been returned",
+      "x-cdk-field-name": "parts[].coreCharge / coreReturned",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_employeeid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The parts counter employee who sold this part on the RO",
+      "x-cdk-field-name": "parts[].employeeId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+  },
+  "required": [
+    "parts_partnumber",
+    "parts_paytype_customer_warranty_internal"
+  ],
+  "additionalProperties": true
+}

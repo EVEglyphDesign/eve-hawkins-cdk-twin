@@ -1,0 +1,303 @@
+# extract/config/targets.yaml
+#
+# Declarative extract manifest for the CDK Twin Day-1 extract harness.
+# One entry per extraction target, ordered metadata -> master data -> transactions -> ledger
+# per the brief (docs/CDK_EXTRACT_BRIEF.md -- metadata before transactions, always).
+#
+# api_reach is copied honestly from model.json (docs/model/model.json), entity.api.reachable
+# and entity.api.note -- full | partial | none. Do not upgrade a `none`/`partial` entry
+# because an endpoint LOOKS like it should work; only a live tenant response upgrades it.
+#
+# source: fortellis = Fortellis REST (adapters/cdk-fortellis) | export = scheduled/manual
+# file export out of the DMS UI (adapters/export-fallback) | screen = one-time hand capture
+# of a DMS UI screen/report on day one (also adapters/export-fallback).
+#
+# control_key: the field this target's rows reconcile against downstream (RO number,
+# stock number, VIN, control account) -- see schema/README.md for the SAP-analogue mapping.
+
+targets:
+  - id: dealer-rooftop-partition
+    name: "Dealer / Rooftop Partition"
+    phase: metadata
+    source: fortellis
+    endpoint: "Fortellis Subscriptions API (+ Subscription-Id/Department-Id headers on every call)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "Subscription-Id"
+    output_path: extract/out/metadata/dealer-rooftop-partition.ndjson
+    api_reach: partial
+    api_reach_note: "Subscription-Id and Department-Id are required headers on every Fortellis CDK Drive call, but there is no public REST field named 'Company Number' — that concept is legacy/EDI-layer only."
+
+  - id: gl-account-master
+    name: "GL Account Master"
+    phase: metadata
+    source: export
+    endpoint: "No API -- CDK Data Export Tool / GL chart-of-accounts report export from DMS UI"
+    pagination_strategy: "full-file replace per export run; no pagination -- delta is whatever the DMS UI export screen windows by date"
+    date_window: null
+    control_key: "Base account number (3-digit)"
+    output_path: extract/out/metadata/gl-account-master.ndjson
+    api_reach: none
+    api_reach_note: "GL account master schema (account number format, type codes, cost-center segmentation) is not publicly documented at field level anywhere in CDK/Fortellis material; only workflow-level marketing language and a third-party audit tool's export path confirm the object exists."
+
+  - id: accounting-schedule
+    name: "Accounting Schedule"
+    phase: metadata
+    source: export
+    endpoint: "No API -- CDK Data Export Tool / accounting-schedule report export from DMS UI"
+    pagination_strategy: "full-file replace per export run; no pagination -- delta is whatever the DMS UI export screen windows by date"
+    date_window: null
+    control_key: "Control account number"
+    output_path: extract/out/metadata/accounting-schedule.ndjson
+    api_reach: none
+    api_reach_note: "Accounting schedules are described only at a workflow/concept level in CDK/dealer-accounting materials; no Fortellis API for schedule detail lines was found."
+
+  - id: cost-centre-department
+    name: "Cost Centre / Department"
+    phase: metadata
+    source: export
+    endpoint: "No API -- department suffix convention on GL account export + Department-Id header inventory"
+    pagination_strategy: "full-file replace per export run; no pagination -- delta is whatever the DMS UI export screen windows by date"
+    date_window: null
+    control_key: "Department suffix (2-digit, on GL account)"
+    output_path: extract/out/metadata/cost-centre-department.ndjson
+    api_reach: none
+    api_reach_note: "Department/cost-centre structure is documented only through the GL account department-suffix convention and Department-Id header scoping; no standalone Fortellis 'department master' API was found."
+
+  - id: employee-master
+    name: "Employee / Technician Identifiers"
+    phase: metadata
+    source: fortellis
+    endpoint: "CDK Get Employee (named, no public schema) + CDKDrive Repair Orders v1 technician/advisor query"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "serviceAdvisor"
+    output_path: extract/out/metadata/employee-master.ndjson
+    api_reach: partial
+    api_reach_note: "CDK Get Employee is announced by name but has no public field-level schema; the richest documented employee fields live inside the Repair Order v3 payload, not a dedicated employee API."
+
+  - id: customer-master
+    name: "Customer Master"
+    phase: masters
+    source: fortellis
+    endpoint: "CDK Drive Get Customer v3 (bulk/delta)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "customerId"
+    output_path: extract/out/masters/customer-master.ndjson
+    api_reach: full
+    api_reach_note: "Get Customer v3 (read, bulk/delta) and the older Customers API v1 (search/create/update) are both documented and reachable."
+
+  - id: vehicle-master
+    name: "Vehicle / Unit Master"
+    phase: masters
+    source: fortellis
+    endpoint: "CDK Drive Service Vehicles API"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "identification.vin"
+    output_path: extract/out/masters/vehicle-master.ndjson
+    api_reach: partial
+    api_reach_note: "CDK Drive Service Vehicles API is documented (create/update/query) but does not include stock number in its schema; the inventory-side vehicle record is a separate, less publicly documented object."
+
+  - id: vendor-master
+    name: "Vendor / Supplier Master"
+    phase: masters
+    source: screen
+    endpoint: "No API -- DMS UI Vendor workflow screen (view/edit vendor information), captured by hand"
+    pagination_strategy: "manual capture, single snapshot per visit; no pagination"
+    date_window: null
+    control_key: "Vendor workflow record (view/edit vendor information)"
+    output_path: extract/out/masters/vendor-master.ndjson
+    api_reach: none
+    api_reach_note: "No public Fortellis developer guide for a vendor/AP master API was found; only marketing language confirms a 'Vendor workflow' exists in-DMS, with documentation stated as 'coming soon'."
+
+  - id: parts-master-inventory
+    name: "Parts Master / Inventory"
+    phase: masters
+    source: fortellis
+    endpoint: "CDK Drive Async Parts Inventory API (bulk)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "partNumber"
+    output_path: extract/out/masters/parts-master-inventory.ndjson
+    api_reach: partial
+    api_reach_note: "CDK documents an Async Parts Inventory API for bulk extract, but real-time single-part-number lookup and full valuation-field schema are thinner than the RO/customer APIs."
+
+  - id: parts-order-supersession
+    name: "Parts Order + Supersession"
+    phase: masters
+    source: fortellis
+    endpoint: "CDK Drive Parts Order API (catalogue-level) / PACCAR OPC / PACCAR MDI"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window: null
+    control_key: "Order type: IRO (Immediate Requirement Order)"
+    output_path: extract/out/masters/parts-order-supersession.ndjson
+    api_reach: partial
+    api_reach_note: "CDK documents parts ordering concepts (IRO/IRE/PO/RMR order types, OPC, MDI) at the workflow level; a full public request/response schema for the order object itself is thinner than the RO API."
+
+  - id: repair-order
+    name: "Repair Order"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Get Repair Order v3 + getOpenRepairOrdersBulk"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "repairOrderNumber"
+    output_path: extract/out/transactions/repair-order.ndjson
+    api_reach: full
+    api_reach_note: "Get Repair Order v3 on Fortellis is the deepest documented object in the whole platform — full header, labor, parts, sublet, and technician punch detail."
+
+  - id: ro-labour-line
+    name: "RO Labour Line"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Get Repair Order v3 (laborOperations[] nested array)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "laborOperations[].opCode"
+    output_path: extract/out/transactions/ro-labour-line.ndjson
+    api_reach: full
+    api_reach_note: "Labor operations are a nested array inside Get Repair Order v3 — fully documented alongside the RO header."
+
+  - id: ro-part-line
+    name: "RO Part Line"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Get Repair Order v3 (parts[] nested array)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "parts[].partNumber"
+    output_path: extract/out/transactions/ro-part-line.ndjson
+    api_reach: full
+    api_reach_note: "Parts lines are a nested array inside Get Repair Order v3, fully documented alongside labor lines."
+
+  - id: parts-pick-ticket
+    name: "Parts Pick Ticket"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Search Parts Pick Ticket"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "repairOrderNumber (linked RO)"
+    output_path: extract/out/transactions/parts-pick-ticket.ndjson
+    api_reach: partial
+    api_reach_note: "Referenced as a workflow step tied to RO parts lines in the materials/cost-object documentation; no standalone Fortellis pick-ticket API schema was found separate from the RO parts array."
+
+  - id: counter-parts-sale
+    name: "Counter / Parts Sale"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Async Open/Closed Parts Sales"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "Sale status (open/closed)"
+    output_path: extract/out/transactions/counter-parts-sale.ndjson
+    api_reach: partial
+    api_reach_note: "Documented at the workflow level (open sale / closed sale distinction) in the transactions lane; a dedicated Fortellis 'Parts Counter Sale' object schema separate from Get Repair Order v3 was not found in the accessible material."
+
+  - id: deal-jacket-vehicle-sale
+    name: "Deal Jacket / Vehicle Sale"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive FI Sales History Setup/Bulk/Delta (read-only) + Payment Settling API"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "Deal status code (C, B, P, F, I, U)"
+    output_path: extract/out/transactions/deal-jacket-vehicle-sale.ndjson
+    api_reach: partial
+    api_reach_note: "FI Sales History/Bulk/Delta is a documented read-only extract of already-finalized deals; there is no public Fortellis write API for desking/menu-selling/washout screens."
+
+  - id: technician-time-punch
+    name: "Technician Time Punch"
+    phase: transactions
+    source: fortellis
+    endpoint: "CDK Drive Get Repair Order v3 (technicianPunchTimes[] nested array)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "technicianPunchTimes[].technicianId"
+    output_path: extract/out/transactions/technician-time-punch.ndjson
+    api_reach: partial
+    api_reach_note: "technicianPunchTimes is a documented nested array inside Get Repair Order v3; there's no standalone real-time punch-clock API found separate from the RO payload."
+
+  - id: warranty-claim
+    name: "Warranty Claim"
+    phase: transactions
+    source: screen
+    endpoint: "No API -- PRWS (PACCAR warranty claim system) screen / RO-to-claim document chain captured by hand"
+    pagination_strategy: "manual capture, single snapshot per visit; no pagination"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "prior three full months (see extract/lib/common.py prior_three_full_months)"
+    control_key: "hasWarrPayFlag (source RO)"
+    output_path: extract/out/transactions/warranty-claim.ndjson
+    api_reach: none
+    api_reach_note: "The RO-to-claim document chain (RO -> draft warranty claim (PRWS) -> submission) is confirmed to exist and now available on Fortellis at a high level, but no public field-level schema for the warranty claim object itself was found."
+
+  - id: gl-journal-posting
+    name: "GL Journal / Posting"
+    phase: ledger
+    source: fortellis
+    endpoint: "CDK Drive GL Posting/Journal Entry API (catalogue-level; request/response schema UNVERIFIED)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "tie-out middle month default June 2026, else prior three full months"
+    control_key: "Reference number (source document link)"
+    output_path: extract/out/ledger/gl-journal-posting.ndjson
+    api_reach: partial
+    api_reach_note: "Fortellis documents multiple GL posting/interface APIs by name (Journal Entry, Post to GL) at the catalogue level, but full request/response field schemas for a generic journal entry object were not found in the accessible material."
+
+  - id: work-in-process
+    name: "Work-in-Process (WIP)"
+    phase: ledger
+    source: fortellis
+    endpoint: "CDK Drive Get Repair Order v3 (status field; no standalone WIP API)"
+    pagination_strategy: "async bulk (start -> poll long-operations/{id}/status -> pull result); page via operation result cursor if present -- UNVERIFIED whether result pages or returns one payload"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "tie-out middle month default June 2026, else prior three full months"
+    control_key: "status = 'WIP' (or Open)"
+    output_path: extract/out/ledger/work-in-process.ndjson
+    api_reach: partial
+    api_reach_note: "WIP itself is not a separately named Fortellis API; it's the accounting-side mirror of the RO's open/WIP/closed status field, documented explicitly in the RO lifecycle."
+
+  - id: purchase-receipt-document
+    name: "Purchase / Receipt Document"
+    phase: ledger
+    source: export
+    endpoint: "No dedicated API -- CDK Global General Ledger Inquiry API (indirect) or DMS UI report export"
+    pagination_strategy: "full-file replace per export run; no pagination -- delta is whatever the DMS UI export screen windows by date"
+    date_window:
+      from_param: "--from"
+      to_param: "--to"
+      default: "tie-out middle month default June 2026, else prior three full months"
+    control_key: "Receipt against PO (transaction code, normal receipt)"
+    output_path: extract/out/ledger/purchase-receipt-document.ndjson
+    api_reach: none
+    api_reach_note: "No public spec names vendor-invoice or purchase-order matching; only a General Ledger Inquiry API supporting search/view of GL transaction history is confirmed, plus indirect competitor evidence (Karmak) that PO receipts 'can be automatically posted into Accounts Payable.'"
+

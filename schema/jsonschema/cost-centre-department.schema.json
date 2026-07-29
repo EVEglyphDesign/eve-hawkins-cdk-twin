@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/cost-centre-department.schema.json",
+  "title": "Cost Centre / Department",
+  "description": "The profit-centre bucket \u2014 New Trucks, Used Trucks, Parts, Service, Body Shop \u2014 that revenue and cost roll up into for departmental reporting.",
+  "x-cdk-group": "org",
+  "x-sap-analogue": "Cost centre / profit centre (CSKS/CEPC)",
+  "x-api-reachable": "none",
+  "x-api-note": "Department/cost-centre structure is documented only through the GL account department-suffix convention and Department-Id header scoping; no standalone Fortellis 'department master' API was found.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "department_suffix_2_digit_on_gl_account": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The 2-digit code appended to a GL account number identifying its department, e.g. -01 = New Vehicle Dept",
+      "x-cdk-field-name": "Department suffix (2-digit, on GL account)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "department_id_fortellis_header": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The header value that scopes every Fortellis API call to one specific department/DMS-type combination",
+      "x-cdk-field-name": "Department-Id (Fortellis header)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "absorption_rate_fixed_ops_metric": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "A named KPI measuring whether fixed operations (Service + Parts) gross profit covers total dealership fixed expenses",
+      "x-cdk-field-name": "Absorption rate (fixed-ops metric)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "reporting_account_department_roll_up_to_factory_statement": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The mapping from a department's internal accounts to the manufacturer's own statement format",
+      "x-cdk-field-name": "Reporting Account (department roll-up to factory statement)",
+      "x-confidence": "documented",
+      "x-source-title": "Dominion DMS help \u2014 Create a new sales general ledger account",
+      "x-source-url": "https://help.dominiondms.com/en/knowledge/create-a-new-sales-general-ledger-account"
+    },
+    "company_number_store_level_department_scoping": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Departments are scoped per Company Number/store, so 'Service' at one rooftop is a separate cost centre from 'Service' at another",
+      "x-cdk-field-name": "Company Number (store-level department scoping)",
+      "x-confidence": "documented",
+      "x-source-title": "MindBridge \u2014 CDK ERP: Export the general ledger",
+      "x-source-url": "https://support.mindbridge.ai/hc/en-us/articles/360058269153-CDK-ERP-Export-the-general-ledger"
+    },
+    "department_name_new_vehicle_used_vehicle_parts_service_body_shop_rental_f_i_admin": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The standard NADA/NIADA department set every dealer chart of accounts is built around, with Service+Parts+Body Shop jointly called 'Fixed Operations'",
+      "x-cdk-field-name": "Department name (New Vehicle / Used Vehicle / Parts / Service / Body Shop / Rental / F&I / Admin)",
+      "x-confidence": "documented",
+      "x-source-title": "NIADA Dealership Chart of Accounts Manual",
+      "x-source-url": "https://studylib.net/doc/8765679/dealership-chart-of-accounts-manual"
+    },
+    "per_rooftop_department_id_set": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Fortellis community guidance confirms each physical store/rooftop has its own set of Department-Ids, visible in the app's subscription report",
+      "x-cdk-field-name": "Per-rooftop Department-Id set",
+      "x-confidence": "documented",
+      "x-source-title": "Fortellis Community \u2014 Marketplace Subscriptions",
+      "x-source-url": "https://community.fortellis.io/community/forum/install-app-subscriptions-and-support/cdk-fortellis-marketplace-subscriptions-and-support"
+    }
+  },
+  "required": [
+    "department_suffix_2_digit_on_gl_account",
+    "department_id_fortellis_header",
+    "company_number_store_level_department_scoping"
+  ],
+  "additionalProperties": true
+}

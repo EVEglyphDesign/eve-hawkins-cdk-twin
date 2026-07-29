@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/warranty-claim.schema.json",
+  "title": "Warranty Claim",
+  "description": "The claim submitted to PACCAR after warranty work is done on an RO, asking to be reimbursed for the labor and parts that were covered.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Debit memo / claims-management document against a factory receivable account",
+  "x-api-reachable": "none",
+  "x-api-note": "The RO-to-claim document chain (RO -> draft warranty claim (PRWS) -> submission) is confirmed to exist and now available on Fortellis at a high level, but no public field-level schema for the warranty claim object itself was found.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "haswarrpayflag_source_ro": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "The RO-level flag confirming part of the work is warranty pay, which is what triggers a claim",
+      "x-cdk-field-name": "hasWarrPayFlag (source RO)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "repairordernumber_source_ro": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Links the claim back to the specific repair order that generated the warranty work",
+      "x-cdk-field-name": "repairOrderNumber (source RO)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "prws_draft_claim_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Confirms the document chain RO -> draft warranty claim (PRWS) -> submission, now available on Fortellis",
+      "x-cdk-field-name": "PRWS draft claim reference",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Heavy Truck OEM page",
+      "x-source-url": "https://www2.cdkglobal.com/ht-oem"
+    },
+    "stamped_signed_part_evidence_retained": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "PACCAR requires the physical, stamped/signed failed-part evidence to be retained to support the claim",
+      "x-cdk-field-name": "Stamped/signed part evidence retained",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK Tracking Warranty Parts",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1hs9xwc/cdk_tracking_warranty_parts/"
+    },
+    "warranty_parts_paytype_and_parts_on_the_ro_claim": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "The specific warranty-pay part lines from the RO that are included in this claim",
+      "x-cdk-field-name": "Warranty parts[].payType and parts on the RO claim",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "warranty_receivable_schedule_balance": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The open/submitted claim total awaiting factory payment, tracked as its own accounting schedule",
+      "x-cdk-field-name": "Warranty receivable schedule balance",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Warranty Reimbursement Explained",
+      "x-source-url": "https://www.cdkglobal.com/insights/warranty-reimbursement-explained-wrap-questions-answered"
+    }
+  },
+  "required": [
+    "haswarrpayflag_source_ro",
+    "repairordernumber_source_ro"
+  ],
+  "additionalProperties": true
+}

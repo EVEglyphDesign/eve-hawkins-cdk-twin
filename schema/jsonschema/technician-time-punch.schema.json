@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/technician-time-punch.schema.json",
+  "title": "Technician Time Punch",
+  "description": "The actual clock-in/clock-out record for a technician working a specific job, as opposed to the flat-rate hours billed for that job.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Time confirmation (CATS-style) feeding an activity allocation",
+  "x-api-reachable": "partial",
+  "x-api-note": "technicianPunchTimes is a documented nested array inside Get Repair Order v3; there's no standalone real-time punch-clock API found separate from the RO payload.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "technicianpunchtimes_technicianid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The technician ID this punch record belongs to",
+      "x-cdk-field-name": "technicianPunchTimes[].technicianId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "technicianpunchtimes_worktype": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A work-type code classifying what the punched time was for",
+      "x-cdk-field-name": "technicianPunchTimes[].workType",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "technicianpunchtimes_starttime_endtime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The actual clock-in and clock-out timestamps for this punch",
+      "x-cdk-field-name": "technicianPunchTimes[].startTime / endTime",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "repairordernumber_linked_ro": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Ties the punch back to the specific repair order the tech was working on",
+      "x-cdk-field-name": "repairOrderNumber (linked RO)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "flatratehours_vs_clocked_duration_efficiency_comparison": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Comparing the labor line's flat-rate hours to the tech's actual clocked duration gives shop efficiency",
+      "x-cdk-field-name": "flatRateHours vs. clocked duration (efficiency comparison)",
+      "x-confidence": "inferred",
+      "x-source-title": "Journal Entries Hub \u2014 Flat-Rate Technician Payroll",
+      "x-source-url": "https://www.journalentrieshub.com/entries/auto-service-technician-payroll"
+    },
+    "payroll_plus_module_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK sells a 'Payroll Plus' module that would consume this punch data for pay calculations",
+      "x-cdk-field-name": "Payroll Plus module reference",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Payroll Plus",
+      "x-source-url": "https://www.cdkglobal.com/dealership-operations/operations/payroll"
+    }
+  },
+  "required": [
+    "technicianpunchtimes_technicianid",
+    "technicianpunchtimes_starttime_endtime"
+  ],
+  "additionalProperties": true
+}

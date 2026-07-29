@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/work-in-process.schema.json",
+  "title": "Work-in-Process (WIP)",
+  "description": "The balance-sheet holding account for every open repair order's accumulated labor, parts, and sublet cost until the RO closes and the money moves to revenue and cost of sales.",
+  "x-cdk-group": "ledger",
+  "x-sap-analogue": "WIP account tied to the internal order settlement, cleared to zero when the order settles",
+  "x-api-reachable": "partial",
+  "x-api-note": "WIP itself is not a separately named Fortellis API; it's the accounting-side mirror of the RO's open/WIP/closed status field, documented explicitly in the RO lifecycle.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "status_wip_or_open": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK's own RO API models the open/WIP/closed lifecycle explicitly on the status field",
+      "x-cdk-field-name": "status = 'WIP' (or Open)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "accumulated_cost_labor_parts_sublet_not_yet_billed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The sum of every labor, parts, and sublet cost posted to this RO while it's still open",
+      "x-cdk-field-name": "Accumulated cost (labor + parts + sublet, not yet billed)",
+      "x-confidence": "inferred",
+      "x-source-title": "IntelliDealer \u2014 Work in Process",
+      "x-source-url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+    },
+    "getclosedrepairordersbulk_delta_close_event": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The documented bulk/delta retrieval for closed ROs \u2014 the trigger point where WIP nets to zero and reclassifies to revenue/COGS",
+      "x-cdk-field-name": "getClosedRepairOrdersBulk / Delta (close event)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "wip_schedule_open_ro_listing_balance": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The supporting schedule listing every open RO and its running cost, which must sum to the GL WIP account",
+      "x-cdk-field-name": "WIP schedule (open-RO listing) balance",
+      "x-confidence": "inferred",
+      "x-source-title": "IntelliDealer \u2014 Work in Process",
+      "x-source-url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+    },
+    "days_in_wip_age_of_open_ro": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Elapsed time since openDate, used to flag ROs that have been open too long",
+      "x-cdk-field-name": "Days-in-WIP (age of open RO)",
+      "x-confidence": "inferred",
+      "x-source-title": "IntelliDealer \u2014 Work in Process",
+      "x-source-url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+    },
+    "opendate_wip_aging_start_point": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The RO's own opened date, which WIP aging is calculated from",
+      "x-cdk-field-name": "openDate (WIP aging start point)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "wip_net_to_zero_at_close_reclassification_event": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Cross-DMS documentation confirms the WIP entry nets to zero and the amount is reclassified to revenue/COGS only at close, not before",
+      "x-cdk-field-name": "WIP net-to-zero at close (reclassification event)",
+      "x-confidence": "documented",
+      "x-source-title": "IntelliDealer \u2014 Work in Process",
+      "x-source-url": "https://help.intellidealer.com/intellidealer/Content/Ref/Work_in_Process.htm"
+    }
+  },
+  "required": [
+    "status_wip_or_open"
+  ],
+  "additionalProperties": true
+}

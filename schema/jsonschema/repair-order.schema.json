@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/repair-order.schema.json",
+  "title": "Repair Order",
+  "description": "The work order for one visit \u2014 what the truck came in for, who's paying, and everything that got done to it.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Internal order (AUFK/COEP) with a settlement rule splitting cost across customer/warranty/internal payers",
+  "x-api-reachable": "full",
+  "x-api-note": "Get Repair Order v3 on Fortellis is the deepest documented object in the whole platform \u2014 full header, labor, parts, sublet, and technician punch detail.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "repairordernumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The RO number written on the ticket and the invoice",
+      "x-cdk-field-name": "repairOrderNumber",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "hascustpayflag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Says part of this RO is billed to the customer, not warranty or internal",
+      "x-cdk-field-name": "hasCustPayFlag",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "haswarrpayflag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Says part of this RO is billed to PACCAR warranty",
+      "x-cdk-field-name": "hasWarrPayFlag",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "hasintpayflag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Says part of this RO is billed internally (shop's own truck, recon, etc.) rather than to a paying customer",
+      "x-cdk-field-name": "hasIntPayFlag",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "status_open_wip_closed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Whether the RO is still open, in progress, or fully closed and invoiced",
+      "x-cdk-field-name": "status (Open/WIP/Closed)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "customerid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Link to the customer master record this RO bills to",
+      "x-cdk-field-name": "customerId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "vin_vehicleid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Link to the vehicle master record for the truck on this RO",
+      "x-cdk-field-name": "vin / vehicleId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "opendate_closeddate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When the RO was opened and, if closed, when it was closed",
+      "x-cdk-field-name": "openDate / closedDate",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "totalamount_labor_parts_sublet_misc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The all-in total for the whole RO across labor, parts, sublet, and misc charges",
+      "x-cdk-field-name": "totalAmount (labor+parts+sublet+misc)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "serviceadvisor": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "The advisor number responsible for the RO",
+      "x-cdk-field-name": "serviceAdvisor",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+  },
+  "required": [
+    "repairordernumber",
+    "status_open_wip_closed"
+  ],
+  "additionalProperties": true
+}

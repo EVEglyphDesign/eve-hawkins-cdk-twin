@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/gl-account-master.schema.json",
+  "title": "GL Account Master",
+  "description": "The list of account numbers (like 231 New Cars, 263 Warranty Claims) that everything in the store eventually posts to.",
+  "x-cdk-group": "ledger",
+  "x-sap-analogue": "SKA1/SKB1 (chart-of-accounts master + company-code GL segment)",
+  "x-api-reachable": "none",
+  "x-api-note": "GL account master schema (account number format, type codes, cost-center segmentation) is not publicly documented at field level anywhere in CDK/Fortellis material; only workflow-level marketing language and a third-party audit tool's export path confirm the object exists.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "base_account_number_3_digit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "3-digit number identifying the natural account, e.g. 231 = New Cars inventory",
+      "x-cdk-field-name": "Base account number (3-digit)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "department_suffix_2_digit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A 2-digit code appended after a hyphen, e.g. 013-01 = Delivery Expense, New Vehicle Dept",
+      "x-cdk-field-name": "Department suffix (2-digit)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "sub_account_letter_suffix": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A letter suffix splits an account further, e.g. 446A Used Cars Retail-Certified vs 446B Used Cars Retail-Other",
+      "x-cdk-field-name": "Sub-account letter suffix",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "numeric_range_statement_section": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "200s=assets, 300s=liabilities/equity, 400s=sales, 600s=cost of sales, 700s=lease/rental detail, 800s/900s=other income/F&I",
+      "x-cdk-field-name": "Numeric range (statement section)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "reporting_account_factory_statement_mapping": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A many-to-one mapping from your internal GL account to the manufacturer's own statement line number, confirmed on a comparable DMS's GL setup screen",
+      "x-cdk-field-name": "Reporting Account (factory statement mapping)",
+      "x-confidence": "documented",
+      "x-source-title": "Dominion DMS help \u2014 Create a new sales general ledger account",
+      "x-source-url": "https://help.dominiondms.com/en/knowledge/create-a-new-sales-general-ledger-account"
+    },
+    "company_number_grouping_dimension": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A third-party audit tool confirms exporting CDK's GL by 'company number', proving this dimension exists above the account number for multi-rooftop groups",
+      "x-cdk-field-name": "Company Number (grouping dimension)",
+      "x-confidence": "documented",
+      "x-source-title": "MindBridge \u2014 CDK ERP: Export the general ledger",
+      "x-source-url": "https://support.mindbridge.ai/hc/en-us/articles/360058269153-CDK-ERP-Export-the-general-ledger"
+    },
+    "account_mapping_inventory_to_gl_interface": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An 'Account Mapping' function interfaces vehicle inventory setup screens to the Accounting subsystem to retrieve GL codes, journals, and chart of accounts",
+      "x-cdk-field-name": "Account Mapping (inventory-to-GL interface)",
+      "x-confidence": "documented",
+      "x-source-title": "Lithia connectCDK \u2014 Vehicle Inventory Setups, Account Mapping",
+      "x-source-url": "https://lithia.vehicle.connectcdk.com/pid1033/help/client/scr-vehsetups-inventory/old_veh_ov_vehicle_inventory_setups_-_account_mapping.htm"
+    }
+  },
+  "required": [
+    "base_account_number_3_digit",
+    "department_suffix_2_digit",
+    "company_number_grouping_dimension"
+  ],
+  "additionalProperties": true
+}

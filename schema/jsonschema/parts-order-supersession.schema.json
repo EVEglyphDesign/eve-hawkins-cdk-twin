@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/parts-order-supersession.schema.json",
+  "title": "Parts Order + Supersession",
+  "description": "The order sent to PACCAR to replenish stock or fill a special order, plus the mechanism that swaps an old part number for its factory replacement.",
+  "x-cdk-group": "inventory",
+  "x-sap-analogue": "Purchase order (EKKO/EKPO) plus material supersession/follow-up-material chain",
+  "x-api-reachable": "partial",
+  "x-api-note": "CDK documents parts ordering concepts (IRO/IRE/PO/RMR order types, OPC, MDI) at the workflow level; a full public request/response schema for the order object itself is thinner than the RO API.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "order_type_iro_immediate_requirement_order": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Order type flag for a rush order needed right away, usually at a freight premium",
+      "x-cdk-field-name": "Order type: IRO (Immediate Requirement Order)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+    },
+    "order_type_ire_immediate_requirement_emergency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Order type flag for an emergency order, distinct from a standard rush order",
+      "x-cdk-field-name": "Order type: IRE (Immediate Requirement Emergency)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+    },
+    "order_type_po_standard_stock_order": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Standard, non-urgent order type used for routine stock replenishment",
+      "x-cdk-field-name": "Order type: PO (standard stock order)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+    },
+    "order_type_rmr_return_merchandise_request": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Order type used to return parts back to the vendor/factory",
+      "x-cdk-field-name": "Order type: RMR (Return Merchandise Request)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK suggested parts order daily",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1l2kqsw/how_do_i_make_a_suggested_parts_order_daily_in_cdk/"
+    },
+    "opc_order_parts_center_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reference to PACCAR's own Order Parts Center system that the CDK order interfaces with",
+      "x-cdk-field-name": "OPC (Order Parts Center) reference",
+      "x-confidence": "documented",
+      "x-source-title": "PACCAR Technology page \u2014 MDI daily inventory sync",
+      "x-source-url": "https://www.paccarparts.com/technology/"
+    },
+    "mdi_multi_dealer_inventory_lookup": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "PACCAR's cross-dealer inventory visibility tool, used to source a part from a sister dealer instead of the factory",
+      "x-cdk-field-name": "MDI (Multi-Dealer Inventory) lookup",
+      "x-confidence": "documented",
+      "x-source-title": "PACCAR Technology page \u2014 MDI daily inventory sync",
+      "x-source-url": "https://www.paccarparts.com/technology/"
+    },
+    "superseded_part_number_replacement_part_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When PACCAR retires a part number, this chain points from the old number to its replacement so old orders/inventory records still resolve",
+      "x-cdk-field-name": "Superseded part number -> replacement part number",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK auto supersession help",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1j51sgh/cdk_auto_supersession_help/"
+    }
+  },
+  "required": [
+    "order_type_iro_immediate_requirement_order",
+    "order_type_ire_immediate_requirement_emergency",
+    "order_type_po_standard_stock_order",
+    "order_type_rmr_return_merchandise_request"
+  ],
+  "additionalProperties": true
+}

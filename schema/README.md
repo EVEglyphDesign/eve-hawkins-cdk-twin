@@ -64,4 +64,76 @@ own migration files once written, not in the parts twin.
 
 ---
 
+## CDK-to-SAP object mapping (operator vocabulary), and JSON Schema files
+
+**Added by the Lane B extract harness** (`extract/**`, `adapters/cdk-fortellis/**`,
+`adapters/export-fallback/**`) to give the extract scripts in `extract/bin/` a concrete
+normalisation target ahead of live-tenant DDL. This section maps the 21 entities in
+[`docs/model/model.json`](../docs/model/model.json) to their SAP analogue in the operator's
+own vocabulary — Luke Weatherbie thinks in dealer/DMS terms, not SAP terms, so this table
+reads dealer-object -> SAP-object -> what that actually means for a controller:
+
+- **Repair order ≈ internal order with a settlement rule.** A CDK repair order (RO) behaves
+  like an SAP internal order (AUFK/COEP): it collects labor and parts cost, then settles to
+  one of three payer schedules (customer / warranty / internal) exactly the way an internal
+  order settles to a cost object.
+- **Accounting schedule ≈ reconciliation account subledger.** A CDK accounting schedule is a
+  list of open items (by RO, stock number, or VIN) sitting behind one GL control account —
+  the same role SAP's reconciliation-account open-item list plays behind a control account.
+- **Department ≈ cost centre.** CDK's department suffix on a GL account is the same
+  dimension as an SAP cost centre (CSKS/CEPC) — it is how "which part of the store" gets
+  reported without a separate GL account per department.
+- **Parts master ≈ MM material master.** CDK's parts master/inventory record maps to the
+  combination of SAP's MARA (material), MARC (plant data), and MBEW (valuation) — one CDK
+  part number carries what SAP splits across three tables.
+
+| CDK entity (`docs/model/model.json` id) | Name | SAP analogue | API reach | Field confidence mix |
+|---|---|---|---|---|
+| `dealer-rooftop-partition` | Dealer / Rooftop Partition | Company Code (T001) / Plant (WERKS) plus a module-scoping flag | partial | documented: 7 |
+| `customer-master` | Customer Master | KNA1 (general customer master), per-store scoping like KNVV | full | documented: 10 |
+| `vehicle-master` | Vehicle / Unit Master | Equipment master (EQUI), serialized — VIN as equipment number | partial | documented: 8, unverified: 1 |
+| `employee-master` | Employee / Technician Identifiers | HR-adjacent Z-fields on transaction tables (no clean HR analogue) | partial | documented: 8 |
+| `vendor-master` | Vendor / Supplier Master | LFA1 (vendor master, general data) | none | documented: 3, inferred: 2, unverified: 1 |
+| `gl-account-master` | GL Account Master | SKA1/SKB1 (chart of accounts + company-code GL segment) | none | documented: 7 |
+| `accounting-schedule` | Accounting Schedule | Reconciliation-account subledger / open-item list | none | documented: 3, inferred: 3 |
+| `gl-journal-posting` | GL Journal / Posting | BKPF/BSEG (accounting document header + line items) | partial | documented: 5, inferred: 1 |
+| `repair-order` | Repair Order | Internal order (AUFK/COEP) with a payer settlement rule | full | documented: 10 |
+| `ro-labour-line` | RO Labour Line | Confirmation/activity allocation line (COEP) | full | documented: 7 |
+| `ro-part-line` | RO Part Line | Goods movement / material consumption line (MSEG) | full | documented: 7 |
+| `parts-master-inventory` | Parts Master / Inventory | MARA/MARC/MBEW combined | partial | documented: 9 |
+| `parts-order-supersession` | Parts Order + Supersession | Purchase order (EKKO/EKPO) + material supersession chain | partial | documented: 7 |
+| `parts-pick-ticket` | Parts Pick Ticket | Reservation / goods issue slip (MB1A-style) | partial | documented: 2, inferred: 4 |
+| `counter-parts-sale` | Counter / Parts Sale | Sales order + billing document (VBAK/VBRK), cash/wholesale | partial | documented: 5, inferred: 1 |
+| `deal-jacket-vehicle-sale` | Deal Jacket / Vehicle Sale | Sales order + billing document (VBAK/VBRK) + F&I lines | partial | documented: 6, inferred: 2 |
+| `technician-time-punch` | Technician Time Punch | Time confirmation (CATS-style) feeding activity allocation | partial | documented: 5, inferred: 1 |
+| `work-in-process` | Work-in-Process (WIP) | WIP account tied to internal order settlement | partial | documented: 4, inferred: 3 |
+| `warranty-claim` | Warranty Claim | Debit memo / claims-management document vs. factory receivable | none | documented: 6 |
+| `purchase-receipt-document` | Purchase / Receipt Document | Purchase order + goods receipt (EKKO/EKBE), 3-way match | none | documented: 5, inferred: 1 |
+| `cost-centre-department` | Cost Centre / Department | Cost centre / profit centre (CSKS/CEPC) | none | documented: 7 |
+
+"API reach" and the confidence mix are copied verbatim from
+[`docs/model/model.json`](../docs/model/model.json) — do not re-derive or round these up.
+Where an entity shows `none`, that is a finding (no Fortellis path exists), not a gap to
+pad; see [`../adapters/export-fallback/README.md`](../adapters/export-fallback/README.md)
+for how that data actually reaches the twin.
+
+### `schema/jsonschema/*.schema.json`
+
+One [JSON Schema](https://json-schema.org/) file per entity — the canonical target shape
+the `extract/bin/*.py` scripts normalise rows into before anything is loaded into the SQL
+tables proposed above. Each property carries:
+
+- `x-cdk-field-name` — the literal CDK/Fortellis field name, never renamed silently
+- `x-confidence` — `documented` / `inferred` / `unverified`, copied from
+  [`docs/model/model.json`](../docs/model/model.json) at the field level (never uniform
+  across an entity — see the mix column above)
+- `x-source-title` / `x-source-url` — the original Fortellis doc or research source, where one exists
+
+These are intentionally permissive (`additionalProperties: true`, nullable types) because
+real tenant payloads are UNVERIFIED beyond the documented shape — see
+[`../extract/README.md`](../extract/README.md) for how the extract scripts treat unknown
+fields (never invented, always passed through and flagged).
+
+---
+
 © 2026 Dany Theriault. EVE "digital stem cell" glyph and glyph-based design principles — all rights reserved. Stewardship of rights of use and assignment for large public and institutional usage rests with the Pacific Utilities Design Council. Published as a time-stamped record of authorship and intent.

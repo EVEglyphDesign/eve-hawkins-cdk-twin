@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/gl-journal-posting.schema.json",
+  "title": "GL Journal / Posting",
+  "description": "The individual debit-and-credit entry that actually moves a dollar amount from one account to another when an RO closes, a part sells, or a deal funds.",
+  "x-cdk-group": "ledger",
+  "x-sap-analogue": "BKPF/BSEG (accounting document header and line items)",
+  "x-api-reachable": "partial",
+  "x-api-note": "Fortellis documents multiple GL posting/interface APIs by name (Journal Entry, Post to GL) at the catalogue level, but full request/response field schemas for a generic journal entry object were not found in the accessible material.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "reference_number_source_document_link": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Ties the journal line back to the originating RO, deal, or parts invoice \u2014 your audit trail",
+      "x-cdk-field-name": "Reference number (source document link)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "account_number_debit_credit_line": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The GL account number being debited or credited on this line",
+      "x-cdk-field-name": "Account number (debit/credit line)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "debit_credit_amount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The dollar amount posted on this line, and whether it's a debit or a credit",
+      "x-cdk-field-name": "Debit / Credit amount",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "posting_date_accounting_period": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The date/period the entry posts to, which drives which month's financials it affects",
+      "x-cdk-field-name": "Posting date / accounting period",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "department_code_cost_centre_tag": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The department tag carried onto the journal line so departmental P&Ls roll up correctly",
+      "x-cdk-field-name": "Department code (cost-centre tag)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "auto_generated_source_flag_ro_close_deal_finalize_parts_sale": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Tags whether this journal line was auto-created by closing an RO, finalizing a deal, or a parts sale, versus a manual entry",
+      "x-cdk-field-name": "Auto-generated source flag (RO close / deal finalize / parts sale)",
+      "x-confidence": "inferred",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    }
+  },
+  "required": [
+    "reference_number_source_document_link",
+    "account_number_debit_credit_line",
+    "debit_credit_amount"
+  ],
+  "additionalProperties": true
+}

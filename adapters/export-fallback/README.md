@@ -1,8 +1,29 @@
 # Export-fallback adapter
 
-**Status: wireframe / to be filled from lanes 1, 6.** Draws on CDK's own documented
-non-API extract paths (lane 1) and the payroll/AP file-export findings (lane 6). `ingest.py`
-and `fields.md` are not yet written.
+**Status: wireframe / to be filled from lanes 1, 6, plus the Lane B extract harness.** Draws
+on CDK's own documented non-API extract paths (lane 1) and the payroll/AP file-export
+findings (lane 6). `fields.md` is not yet written. The runnable parser now exists at
+[`../../extract/bin/40_ingest_exports.py`](../../extract/bin/40_ingest_exports.py) — see
+[`../../extract/README.md`](../../extract/README.md) for the operator runbook.
+
+## What this adapter can and cannot reach — plainly
+
+This adapter reaches **only what a human exports or captures from the DMS UI** — it has no
+API credentials and makes no network calls of its own. Per
+[`../../docs/model/model.json`](../../docs/model/model.json), the objects with
+`api.reachable: none` route here exclusively: **vendor master, GL account master,
+accounting schedule, warranty claim, purchase/receipt document, cost centre/department
+master.** Payroll and employee-master identifiers also route here (no CDK-native API at
+all, per Module 05). Everything else in `docs/model/model.json` has at least a `partial`
+Fortellis path and belongs to [`../cdk-fortellis/`](../cdk-fortellis/README.md) first,
+with this adapter only as backfill/reconciliation.
+
+The parser itself ([`40_ingest_exports.py`](../../extract/bin/40_ingest_exports.py))
+can read well-formed CSV or fixed-width text. It **cannot** infer a column's business
+meaning beyond a small, hand-curated alias table — an unrecognized column is passed
+through under its raw header name and flagged in a discovered-schema report, never guessed.
+Until a real file has been exported from the live Peterbilt Atlantic tenant, every layout
+assumption in that script is `UNVERIFIED`.
 
 Handles the categories of data with **no confirmed Fortellis API** — either because none was
 found in the lane research, or because CDK's own alternative extract tooling is the only

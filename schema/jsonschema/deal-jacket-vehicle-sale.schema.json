@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/deal-jacket-vehicle-sale.schema.json",
+  "title": "Deal Jacket / Vehicle Sale",
+  "description": "The paper (and electronic) folder for one truck sale, from the first quote through F&I products to the finalized, funded deal.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Sales order + billing document (VBAK/VBRK) with a separate financing/insurance line-item set",
+  "x-api-reachable": "partial",
+  "x-api-note": "FI Sales History/Bulk/Delta is a documented read-only extract of already-finalized deals; there is no public Fortellis write API for desking/menu-selling/washout screens.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "deal_status_code_c_b_p_f_i_u": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "FI Sales records carry a status code \u2014 C, B, P, F, I, or U \u2014 marking the deal's stage from pending through finalized",
+      "x-cdk-field-name": "Deal status code (C, B, P, F, I, U)",
+      "x-confidence": "documented",
+      "x-source-title": "BettrData \u2014 Fortellis CDK Drive API integration guide",
+      "x-source-url": "https://docs.bettrdata.io/user-docs/how-to-guides/fortellis-cdk-drive-api"
+    },
+    "we_owe_pending_deals_we_owes": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "A distinct tracked object for dealer obligations \u2014 accessories, service, cash-back \u2014 promised on the deal but not yet fulfilled",
+      "x-cdk-field-name": "We-Owe (Pending Deals, We Owes)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Partner Program Pricing Guide PDF",
+      "x-source-url": "https://www.cdkglobal.com/sites/cdk4/files/PDFfiles/Partner_Program_Price_Guide.pdf"
+    },
+    "finalized_booked_status": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Marks the deal as balanced (all debits/credits net to zero) and closed \u2014 called 'Finalized' or 'Booked' in CDK/3PA language",
+      "x-cdk-field-name": "Finalized / Booked status",
+      "x-confidence": "documented",
+      "x-source-title": "DMS Cheat Sheet, Scribd/dealer-integrator reference",
+      "x-source-url": "https://www.scribd.com/document/809504766/DMS-Cheat-Sheet-6-20-2023"
+    },
+    "customerid_deal_buyer": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Link to the customer record associated with this deal, shared across Deals and Repair Orders",
+      "x-cdk-field-name": "customerId (deal buyer)",
+      "x-confidence": "documented",
+      "x-source-title": "Microsoft Learn \u2014 CDK Drive Customer connector",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdrivecustomer/"
+    },
+    "vin_sales_vehicles_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Link to the specific vehicle unit on this deal, from the partner-era 'Sales Vehicles' extract",
+      "x-cdk-field-name": "vin / Sales Vehicles reference",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Partner Program Pricing Guide PDF",
+      "x-source-url": "https://www.cdkglobal.com/sites/cdk4/files/PDFfiles/Partner_Program_Price_Guide.pdf"
+    },
+    "front_end_gross_selling_price_minus_vehicle_cost_pack_recon": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Selling price minus vehicle cost, pack, and reconditioning \u2014 recognized at delivery, not at contract signing",
+      "x-cdk-field-name": "Front-end gross (selling price minus vehicle cost/pack/recon)",
+      "x-confidence": "inferred",
+      "x-source-title": "WickedFile \u2014 Car Dealership Accounting",
+      "x-source-url": "https://www.wickedfile.com/blogs/car-dealership-accounting/"
+    },
+    "back_end_gross_f_i_commissions_reserve_aftermarket_income": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "F&I product commissions, finance reserve, and aftermarket income booked against a chargeback/EPO reserve",
+      "x-cdk-field-name": "Back-end gross (F&I commissions, reserve, aftermarket income)",
+      "x-confidence": "inferred",
+      "x-source-title": "DealerInt \u2014 Car Dealership Accounting Basics",
+      "x-source-url": "https://www.dealerint.com/blog/car-dealership-accounting-basics"
+    },
+    "payment_settling_reference_paynow_invite_2_pay": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Ties the deal to the payment-settling workflow that collects funds back into the DMS",
+      "x-cdk-field-name": "Payment settling reference (PayNow / Invite-2-Pay)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Payment Settling API",
+      "x-source-url": "https://www2.cdkglobal.com/payment-settling-api"
+    }
+  },
+  "required": [
+    "deal_status_code_c_b_p_f_i_u",
+    "finalized_booked_status"
+  ],
+  "additionalProperties": true
+}

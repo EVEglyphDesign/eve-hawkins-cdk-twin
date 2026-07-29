@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/vehicle-master.schema.json",
+  "title": "Vehicle / Unit Master",
+  "description": "The record for one specific truck, whether it's a customer's unit coming in for service or a unit sitting on our lot.",
+  "x-cdk-group": "master",
+  "x-sap-analogue": "Equipment master (EQUI), serialized \u2014 VIN plays the role of the SAP equipment number",
+  "x-api-reachable": "partial",
+  "x-api-note": "CDK Drive Service Vehicles API is documented (create/update/query) but does not include stock number in its schema; the inventory-side vehicle record is a separate, less publicly documented object.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "identification_vin": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The 17-character factory VIN \u2014 the one truly universal key across every system",
+      "x-cdk-field-name": "identification.vin",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "vehicleid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK's own internal ID for this vehicle record, layered on top of VIN",
+      "x-cdk-field-name": "vehicleId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "stock_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Dealer-assigned inventory number set at intake, configurable per location/inventory type, and can change independently of VIN (e.g. after a used-to-wholesale reclass)",
+      "x-cdk-field-name": "Stock Number",
+      "x-confidence": "documented",
+      "x-source-title": "Lithia connectCDK \u2014 Vehicle Inventory Setups, Stock Number Definition",
+      "x-source-url": "https://lithia.vehicle.connectcdk.com/pid1033/help/client/scr-vehsetups-inventory/veh_ov_vehicle_inventory_setups_-_stock_number_definition.htm"
+    },
+    "specification_makecode_model_modelyear": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Basic spec block for the vehicle",
+      "x-cdk-field-name": "specification.makeCode/model/modelYear",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "mileage_value_units": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Odometer reading as last recorded",
+      "x-cdk-field-name": "mileage.value/units",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Limited to new, used, or certified on this API \u2014 wholesale is tracked at the customer level instead, not here",
+      "x-cdk-field-name": "status",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "dates_delivered_inservice_warrantyexpiration": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Lifecycle dates that drive warranty eligibility checks",
+      "x-cdk-field-name": "dates.delivered/inService/warrantyExpiration",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "ownerhref_primarydriverhref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A hyperlink to the customer resource \u2014 vehicles link to customers by reference, not by an embedded customer record",
+      "x-cdk-field-name": "ownerHref / primaryDriverHref",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Service Vehicles \u2014 Microsoft Learn connector doc",
+      "x-source-url": "https://learn.microsoft.com/en-us/connectors/cdkdriveservicevehicles/"
+    },
+    "chassis_number_unit_number_body_builder_record": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Standard heavy-truck practice tracks the incoming cab-chassis number separately from a dealer-assigned unit number and a body-builder upfit record \u2014 CDK does not publicly document its own field names for this",
+      "x-cdk-field-name": "chassis number / unit number / body builder record",
+      "x-confidence": "unverified",
+      "x-source-title": "CDK Global Heavy Truck DMS product page",
+      "x-source-url": "https://www.cdkglobalheavytruck.com/heavy-truck-dms"
+    }
+  },
+  "required": [
+    "identification_vin",
+    "vehicleid",
+    "stock_number"
+  ],
+  "additionalProperties": true
+}

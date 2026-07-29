@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/customer-master.schema.json",
+  "title": "Customer Master",
+  "description": "One record per person or company who's bought a truck, bought parts, or had service done with us.",
+  "x-cdk-group": "master",
+  "x-sap-analogue": "KNA1 (general customer master), with per-store scoping like KNVV",
+  "x-api-reachable": "full",
+  "x-api-note": "Get Customer v3 (read, bulk/delta) and the older Customers API v1 (search/create/update) are both documented and reachable.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "customerid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique DMS ID for this customer \u2014 the key everything else joins to",
+      "x-cdk-field-name": "customerId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "hostitemid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Also documented as 'the DMS customer ID', functionally the same key concept as customerId",
+      "x-cdk-field-name": "hostItemId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "customername_firstname_lastname_or_companyname": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Individual and business customers are mutually exclusive: populate first/last name OR company name, never both",
+      "x-cdk-field-name": "customerName (firstName/lastName or companyName)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "partsflag_partstype_partscountercode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "partsType = 'W' marks a wholesale parts customer \u2014 affects the pricing matrix applied at the counter",
+      "x-cdk-field-name": "partsFlag / partsType / partsCounterCode",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "servicecustomer": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "'S' marks a service-only customer who isn't tracked as an AR or Parts customer",
+      "x-cdk-field-name": "serviceCustomer",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "balances_creditlimit_currentdue": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The customer's current account-receivable numbers, held right on the customer record",
+      "x-cdk-field-name": "balances / creditLimit / currentDue",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "overdues": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "30/60/90/120+ day aging of what this customer owes us",
+      "x-cdk-field-name": "overDues",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "blockemailflag_blockmailflag_blockphoneflag": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Marketing block flags per channel, default false \u2014 but no timestamp of when/why consent was given",
+      "x-cdk-field-name": "blockEmailFlag / blockMailFlag / blockPhoneFlag",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "isdeletedataflag_deletedatadate": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Marks that this customer asked to have their data deleted, and when",
+      "x-cdk-field-name": "isDeleteDataFlag / deleteDataDate",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "optoutflag_optoutdate": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Customer opted out of their info being sold/shared \u2014 a US CCPA-style field, not a Canadian CASL consent record",
+      "x-cdk-field-name": "optOutFlag / optOutDate",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    }
+  },
+  "required": [
+    "customerid"
+  ],
+  "additionalProperties": true
+}

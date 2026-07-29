@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/purchase-receipt-document.schema.json",
+  "title": "Purchase / Receipt Document",
+  "description": "The document trail for parts ordered from PACCAR or another vendor arriving at the dealership and being checked into inventory.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Purchase order + goods receipt (EKKO/EKBE) feeding a three-way match against the vendor invoice",
+  "x-api-reachable": "none",
+  "x-api-note": "No public spec names vendor-invoice or purchase-order matching; only a General Ledger Inquiry API supporting search/view of GL transaction history is confirmed, plus indirect competitor evidence (Karmak) that PO receipts 'can be automatically posted into Accounts Payable.'",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "receipt_against_po_transaction_code_normal_receipt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK's transaction code sheet confirms a normal receipt posts an on-hand increase against a purchase order",
+      "x-cdk-field-name": "Receipt against PO (transaction code, normal receipt)",
+      "x-confidence": "documented",
+      "x-source-title": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+      "x-source-url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
+    },
+    "edi_856_asn_advance_ship_notice": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "PACCAR's order flow confirms Order to Receipt happens via ePortal/EDI 856 Advance Ship Notice",
+      "x-cdk-field-name": "EDI 856 ASN (Advance Ship Notice)",
+      "x-confidence": "documented",
+      "x-source-title": "EDIXT PACCAR Parts EDI spec page",
+      "x-source-url": "https://edixtb2b.com/partners/automotive/paccar-parts"
+    },
+    "return_to_vendor_transaction_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK's transaction code for returning parts to the vendor, part of 'dirty core' processing and RDCI reconciliation",
+      "x-cdk-field-name": "Return to vendor (transaction code)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK Core Tracking",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1am0j27/cdk_core_tracking/"
+    },
+    "physical_inventory_adjustment_codes_m_minus_p_plus": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "CDK codes M (minus adjustment) and P (plus adjustment) for correcting on-hand quantity after a physical count",
+      "x-cdk-field-name": "Physical inventory adjustment codes (M = minus, P = plus)",
+      "x-confidence": "documented",
+      "x-source-title": "Total Dealer Solutions \u2014 CDK Transaction Codes",
+      "x-source-url": "https://totaldealersolutions.zendesk.com/hc/en-us/articles/360060331572-CDK-Transaction-Codes"
+    },
+    "three_way_match_po_receipt_vendor_invoice": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Standard accounting practice; competitor DMS Karmak explicitly documents PO receipts posting automatically into AP, implying a similar capability exists in the CDK/PACCAR chain",
+      "x-cdk-field-name": "Three-way match (PO, receipt, vendor invoice)",
+      "x-confidence": "inferred",
+      "x-source-title": "Karmak \u2014 PACCAR Integration",
+      "x-source-url": "https://www.karmak.com/integrations/paccar"
+    },
+    "general_ledger_inquiry_api_gl_transaction_history": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A separate API supporting search/view of GL transaction history, the closest confirmed link between receiving and the ledger",
+      "x-cdk-field-name": "General Ledger Inquiry API (GL transaction history)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global \u2014 Accounting Workflows page",
+      "x-source-url": "https://www2.cdkglobal.com/accounting-workflows"
+    }
+  },
+  "required": [
+    "receipt_against_po_transaction_code_normal_receipt"
+  ],
+  "additionalProperties": true
+}

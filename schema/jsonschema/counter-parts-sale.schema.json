@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/counter-parts-sale.schema.json",
+  "title": "Counter / Parts Sale",
+  "description": "A parts sale made straight across the counter to a customer or another dealer, with no repair order attached.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Standard sales order + billing document (VBAK/VBRK) for a cash/wholesale sale",
+  "x-api-reachable": "partial",
+  "x-api-note": "Documented at the workflow level (open sale / closed sale distinction) in the transactions lane; a dedicated Fortellis 'Parts Counter Sale' object schema separate from Get Repair Order v3 was not found in the accessible material.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "sale_status_open_closed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An open counter sale hasn't been paid/closed yet; a closed one has been rung out and posted",
+      "x-cdk-field-name": "Sale status (open/closed)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "x-source-url": "https://www2.cdkglobal.com/api-solutions-parts"
+    },
+    "customerid_or_cash_sale_flag": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Link to the customer master, or a flag that this was an anonymous cash sale",
+      "x-cdk-field-name": "customerId (or cash sale flag)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "x-source-url": "https://www2.cdkglobal.com/api-solutions-parts"
+    },
+    "partnumber_quantity": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The part(s) and quantities sold on this ticket",
+      "x-cdk-field-name": "partNumber / quantity",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "saleamount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Total charged for this counter sale",
+      "x-cdk-field-name": "saleAmount",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Global Parts APIs \u2014 Get Parts Sales / Async Open/Closed Parts Sales",
+      "x-source-url": "https://www2.cdkglobal.com/api-solutions-parts"
+    },
+    "wholesale_vs_retail_pricing_flag": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Whether the wholesale pricing matrix (tied to customer partsType='W') or standard retail pricing applied",
+      "x-cdk-field-name": "wholesale vs. retail pricing flag",
+      "x-confidence": "inferred",
+      "x-source-title": "CDK Drive Get Customer v3 PDF \u2014 partsType wholesale flag",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "employeeid_counter_person": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The parts counter employee who processed the sale",
+      "x-cdk-field-name": "employeeId (counter person)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF \u2014 employee identifiers on RO",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+  },
+  "required": [
+    "sale_status_open_closed",
+    "partnumber_quantity"
+  ],
+  "additionalProperties": true
+}

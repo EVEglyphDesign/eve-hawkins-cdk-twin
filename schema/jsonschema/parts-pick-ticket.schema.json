@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/parts-pick-ticket.schema.json",
+  "title": "Parts Pick Ticket",
+  "description": "The internal slip generated for a repair order telling the parts department which parts to physically pull and stage for the tech.",
+  "x-cdk-group": "transaction",
+  "x-sap-analogue": "Reservation / goods issue slip (MB1A-style) against the internal order",
+  "x-api-reachable": "partial",
+  "x-api-note": "Referenced as a workflow step tied to RO parts lines in the materials/cost-object documentation; no standalone Fortellis pick-ticket API schema was found separate from the RO parts array.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "repairordernumber_linked_ro": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The RO number this pick ticket was generated against",
+      "x-cdk-field-name": "repairOrderNumber (linked RO)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "x-source-url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    },
+    "partnumber_requested": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The part number the tech/advisor requested be pulled",
+      "x-cdk-field-name": "partNumber requested",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "x-source-url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    },
+    "quantity_requested_vs_quantity_pulled": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Lets the parts counter flag a shortage or substitution against what was originally requested",
+      "x-cdk-field-name": "quantity requested vs. quantity pulled",
+      "x-confidence": "inferred",
+      "x-source-title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "x-source-url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    },
+    "location_pulled_from": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "For multi-location inventory, which physical location supplied the part",
+      "x-cdk-field-name": "location pulled from",
+      "x-confidence": "inferred",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK bin/location help",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1dz1eqq/cdk_help/"
+    },
+    "pick_status_open_staged_closed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Tracks whether the part is still needed, has been staged, or the ticket is closed out",
+      "x-cdk-field-name": "pick status (open/staged/closed)",
+      "x-confidence": "inferred",
+      "x-source-title": "CDK Drive Search Parts Pick Ticket (Fortellis community Q&A)",
+      "x-source-url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    },
+    "employeeid_picker": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The parts employee who physically pulled and staged the part",
+      "x-cdk-field-name": "employeeId (picker)",
+      "x-confidence": "inferred",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF \u2014 employee identifiers on RO",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    }
+  },
+  "required": [
+    "repairordernumber_linked_ro",
+    "partnumber_requested"
+  ],
+  "additionalProperties": true
+}

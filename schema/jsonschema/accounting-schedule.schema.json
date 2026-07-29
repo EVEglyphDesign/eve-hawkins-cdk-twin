@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/accounting-schedule.schema.json",
+  "title": "Accounting Schedule",
+  "description": "A supporting worksheet (like a list of every unit in inventory) that has to add up to exactly what a GL account says, so the accountant can prove the balance is real.",
+  "x-cdk-group": "ledger",
+  "x-sap-analogue": "Subledger reconciliation / open-item list tied to a control account (like FI open items vs. a GL reconciliation account)",
+  "x-api-reachable": "none",
+  "x-api-note": "Accounting schedules are described only at a workflow/concept level in CDK/dealer-accounting materials; no Fortellis API for schedule detail lines was found.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "control_account_number": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The GL account balance this schedule has to reconcile to exactly",
+      "x-cdk-field-name": "Control account number",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual \u2014 schedule/control account discussion",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "schedule_line_item_unit_ro_claim_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Each line is a real open item \u2014 a stock number, an open RO, or an unpaid claim \u2014 that together should sum to the control balance",
+      "x-cdk-field-name": "Schedule line item (unit/RO/claim reference)",
+      "x-confidence": "inferred",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "schedule_balance_vs_gl_balance_variance": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The month-end check: schedule total minus GL account balance should be zero",
+      "x-cdk-field-name": "Schedule balance vs. GL balance (variance)",
+      "x-confidence": "inferred",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "floor_plan_schedule_unit_level_payable": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A named example schedule type: the floor-plan payable broken out by individual financed unit",
+      "x-cdk-field-name": "Floor plan schedule (unit-level payable)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "warranty_receivable_schedule_open_claim_list": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A named example schedule type: open/submitted warranty claims awaiting factory payment",
+      "x-cdk-field-name": "Warranty receivable schedule (open claim list)",
+      "x-confidence": "documented",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    },
+    "wip_schedule_open_ro_list": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A named example schedule type: every open repair order and the cost posted to it so far",
+      "x-cdk-field-name": "WIP schedule (open RO list)",
+      "x-confidence": "inferred",
+      "x-source-title": "GM Dealer Standard Accounting Manual",
+      "x-source-url": "http://gm.acctmanual.com/misc/gm_acct_manual%20v2-2-1-1.pdf"
+    }
+  },
+  "required": [
+    "control_account_number",
+    "schedule_line_item_unit_ro_claim_reference"
+  ],
+  "additionalProperties": true
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/parts-master-inventory.schema.json",
+  "title": "Parts Master / Inventory",
+  "description": "One record per part number: how many we have, at which of our locations, what it costs, what we sell it for, and how fast it moves.",
+  "x-cdk-group": "inventory",
+  "x-sap-analogue": "MARA/MARC/MBEW (material master, plant data, valuation) combined",
+  "x-api-reachable": "partial",
+  "x-api-note": "CDK documents an Async Parts Inventory API for bulk extract, but real-time single-part-number lookup and full valuation-field schema are thinner than the RO/customer APIs.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "partnumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier for this part",
+      "x-cdk-field-name": "partNumber",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The plain-text description printed on the RO and pick ticket",
+      "x-cdk-field-name": "description",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "onhandqty_by_location": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Quantity on hand, broken out per stocking location for multi-location inventory",
+      "x-cdk-field-name": "onHandQty (by location)",
+      "x-confidence": "documented",
+      "x-source-title": "Reddit r/partscounter \u2014 CDK bin/location help",
+      "x-source-url": "https://www.reddit.com/r/partscounter/comments/1dz1eqq/cdk_help/"
+    },
+    "cost": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "What we pay for the part \u2014 the basis for GL inventory valuation",
+      "x-cdk-field-name": "cost",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "list": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The manufacturer's suggested/list price for the part",
+      "x-cdk-field-name": "list",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "sale": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "What we actually charge, which may differ from list depending on pricing matrix/customer type",
+      "x-cdk-field-name": "sale",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "corecost": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The cost basis for the refundable core portion of a remanufactured part",
+      "x-cdk-field-name": "coreCost",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "mcdpercentage": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "A demand/movement ratio used to classify a part's stocking status and feed reorder logic",
+      "x-cdk-field-name": "mcdPercentage",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 parts array (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "movementtype_stock_special_order_non_stock": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Classifies the part's typical movement pattern, which drives ordering and obsolescence logic",
+      "x-cdk-field-name": "movementType (stock/special-order/non-stock)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Async Parts Inventory field list (Fortellis community Q&A)",
+      "x-source-url": "https://community.fortellis.io/community/forum/qa/cdk-drive-search-parts-pick-ticket-and-cdk-drive-async-parts-inventory"
+    }
+  },
+  "required": [
+    "partnumber"
+  ],
+  "additionalProperties": true
+}

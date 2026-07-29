@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/employee-master.schema.json",
+  "title": "Employee / Technician Identifiers",
+  "description": "The numbers CDK uses to say who wrote up the RO, who turned the wrench, who sold the part, and who took the payment.",
+  "x-cdk-group": "master",
+  "x-sap-analogue": "HR-adjacent Z-fields stamped onto transaction tables (no clean SAP HR master analogue)",
+  "x-api-reachable": "partial",
+  "x-api-note": "CDK Get Employee is announced by name but has no public field-level schema; the richest documented employee fields live inside the Repair Order v3 payload, not a dedicated employee API.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "serviceadvisor": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "The advisor number on the RO header",
+      "x-cdk-field-name": "serviceAdvisor",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "cashier": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "DMS employee ID of the cashier who closed out the RO",
+      "x-cdk-field-name": "cashier",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "bookerno": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Employee number of whoever posted the labor charge",
+      "x-cdk-field-name": "bookerNo",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "line_laboroperations_technicianids": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "One or more techs assigned to a labor line \u2014 shows 'MULT' if more than one worked it",
+      "x-cdk-field-name": "line.laborOperations[].technicianIds[]",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "line_laboroperations_comebacksa_comebacktech": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When a job comes back for redo, this tags who did it originally, for accountability",
+      "x-cdk-field-name": "line.laborOperations[].comebackSA / comebackTech",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "parts_employeeid": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Who at the parts counter sold this part on the RO",
+      "x-cdk-field-name": "parts[].employeeId",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "technicianpunchtimes_technicianid_worktype": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Time clock punches per technician with a work-type code \u2014 the closest thing to real clock-hours data",
+      "x-cdk-field-name": "technicianPunchTimes[].technicianId / workType",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Repair Order v3 PDF",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/cf3e1079-e617-4e4d-acd0-21e991f60408/external/20251117202238328-ze9Edh5W.pdf"
+    },
+    "technicianid_serviceadvisorid_lookup": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Dedicated lookup endpoints exist to query a technician or a service advisor by these IDs",
+      "x-cdk-field-name": "technicianId / serviceAdvisorId (lookup)",
+      "x-confidence": "documented",
+      "x-source-title": "CDKDrive Repair Orders v1 API Developer Guide",
+      "x-source-url": "https://prod-fortellis-provider-api-reference-documents.s3-us-west-2.amazonaws.com/c7771500-1c95-4f8e-9241-eddc17cd55f6"
+    }
+  },
+  "required": [
+    "serviceadvisor",
+    "technicianid_serviceadvisorid_lookup"
+  ],
+  "additionalProperties": true
+}

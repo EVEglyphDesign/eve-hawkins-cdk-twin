@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/schema/jsonschema/dealer-rooftop-partition.schema.json",
+  "title": "Dealer / Rooftop Partition",
+  "description": "The layer that tells CDK which Peterbilt Atlantic rooftop and which department (parts, service, accounting...) a piece of data lives in.",
+  "x-cdk-group": "org",
+  "x-sap-analogue": "Company Code (T001) / Plant (WERKS) plus a module-scoping flag",
+  "x-api-reachable": "partial",
+  "x-api-note": "Subscription-Id and Department-Id are required headers on every Fortellis CDK Drive call, but there is no public REST field named 'Company Number' \u2014 that concept is legacy/EDI-layer only.",
+  "x-confidence-legend": "Every property carries x-confidence: documented | inferred | unverified, copied from docs/model/model.json field-level confidence -- never uniform across an entity.",
+  "type": "object",
+  "properties": {
+    "subscription_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Fortellis-issued ID that says which store/app pairing is making this call",
+      "x-cdk-field-name": "Subscription-Id",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3, Fortellis API doc",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "department_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Says which DMS department (Accounting, Finance, Inventory, Parts, or Service) the request is scoped to; response data is filtered by it",
+      "x-cdk-field-name": "Department-Id",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3, Fortellis API doc",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "dms_type_accounting_finance_inventory_parts_service": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Each Department-Id is permanently bound to exactly one of these five subsystems",
+      "x-cdk-field-name": "DMS type (Accounting/Finance/Inventory/Parts/Service)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive parts API specification (Fortellis PDF)",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    },
+    "cmf_client_dealer_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The top-level CDK client ID tied to the dealership's DealerSuite/eStore account \u2014 the anchor everything else hangs off",
+      "x-cdk-field-name": "CMF / Client # (Dealer ID)",
+      "x-confidence": "documented",
+      "x-source-title": "DealerTrack 3PA authorization guide",
+      "x-source-url": "https://us.dealertrack.com/wp-content/uploads/sites/2/2020/08/Dealertrack%20CDK%20Authorization%20Process.pdf"
+    },
+    "company_number_company_id_co_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Store-level accounting entity inside your CMF; third-party shop tools require a 'Default Company ID (store number)' per store",
+      "x-cdk-field-name": "Company Number / Company ID (\"Co ID\")",
+      "x-confidence": "documented",
+      "x-source-title": "Mitchell RepairCenter CDK setup guide",
+      "x-source-url": "https://www.mymitchell.com/tchs/helpfiles/RepairCenter/1033/Content/18181.htm"
+    },
+    "orgname_apidmsinfo_subscription_report": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Field in the Fortellis subscription report that lists the store associated with each API for a subscription",
+      "x-cdk-field-name": "orgName / apiDmsInfo (Subscription Report)",
+      "x-confidence": "documented",
+      "x-source-title": "Fortellis Community \u2014 Marketplace Subscriptions",
+      "x-source-url": "https://community.fortellis.io/community/forum/install-app-subscriptions-and-support/cdk-fortellis-marketplace-subscriptions-and-support"
+    },
+    "authorization_bearer_token": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "OAuth2 bearer token from Fortellis's identity server, required on every call",
+      "x-cdk-field-name": "Authorization (Bearer token)",
+      "x-confidence": "documented",
+      "x-source-title": "CDK Drive Get Customer v3 developer guide",
+      "x-source-url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+    }
+  },
+  "required": [
+    "subscription_id",
+    "department_id",
+    "cmf_client_dealer_id",
+    "company_number_company_id_co_id"
+  ],
+  "additionalProperties": true
+}
