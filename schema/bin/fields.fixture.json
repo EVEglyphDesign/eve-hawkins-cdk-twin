@@ -1,0 +1,2548 @@
+{
+  "generated": "2026-07-29T00:00:00Z",
+  "contract": "EgD-CDK-FIELDS-v2",
+  "entities": [
+    {
+      "entity_id": "dealer-rooftop-partition",
+      "entity_name": "Dealer / Rooftop Partition",
+      "dealer_name": "which of the 9 stores this record belongs to",
+      "group": "org",
+      "sap_analogue": "Company Code (T001) / Plant (WERKS) plus a module-scoping flag",
+      "table_name": "cdk_dealer_rooftop_partition",
+      "grain": "one row per rooftop/department scope pairing",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "dealer-rooftop-partition.subscription_id",
+          "legacy_name": "SUBSCRIPTION_ID",
+          "label": "Subscription Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for dealer-rooftop-partition",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "subscription_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "dealer-rooftop-partition.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for dealer-rooftop-partition",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "dealer-rooftop-partition.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for dealer-rooftop-partition",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "dealer-rooftop-partition.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for dealer-rooftop-partition",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "cost-centre-department",
+      "entity_name": "Cost Centre / Department",
+      "dealer_name": "which part of the store a cost belongs to",
+      "group": "org",
+      "sap_analogue": "Cost centre / profit centre (CSKS/CEPC)",
+      "table_name": "cdk_cost_centre_department",
+      "grain": "one row per department per rooftop",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "cost-centre-department.department_id",
+          "legacy_name": "DEPARTMENT_ID",
+          "label": "Department Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for cost-centre-department",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "department_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "cost-centre-department.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for cost-centre-department",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "cost-centre-department.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for cost-centre-department",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "cost-centre-department.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for cost-centre-department",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "customer-master",
+      "entity_name": "Customer Master",
+      "dealer_name": "the customer record \u2014 fleet account, walk-in owner, or company",
+      "group": "master",
+      "sap_analogue": "KNA1 / KNB1 / KNVV \u2014 customer master, general + company-code + sales views",
+      "table_name": "cdk_customer_master",
+      "grain": "one row per customer per rooftop",
+      "api": {
+        "reachable": "full",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "customer-master.customer_id",
+          "legacy_name": "CUSTOMER_ID",
+          "label": "Customer Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for customer-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "customer_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "customer-master.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for customer-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "customer-master.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for customer-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "customer-master.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for customer-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "vehicle-master",
+      "entity_name": "Vehicle / Unit Master",
+      "dealer_name": "the truck or unit record, keyed by VIN",
+      "group": "master",
+      "sap_analogue": "Equipment master (EQUI), serialized \u2014 VIN as equipment number",
+      "table_name": "cdk_vehicle_master",
+      "grain": "one row per VIN",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "vehicle-master.vin",
+          "legacy_name": "VIN",
+          "label": "Vin",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for vehicle-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "vin",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "vehicle-master.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for vehicle-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "vehicle-master.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for vehicle-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "vehicle-master.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for vehicle-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "employee-master",
+      "entity_name": "Employee / Technician Identifiers",
+      "dealer_name": "the tech or advisor record",
+      "group": "master",
+      "sap_analogue": "HR-adjacent Z-fields on transaction tables (no clean HR analogue)",
+      "table_name": "cdk_employee_master",
+      "grain": "one row per employee per rooftop",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "employee-master.employee_id",
+          "legacy_name": "EMPLOYEE_ID",
+          "label": "Employee Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for employee-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "employee_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "employee-master.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for employee-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "employee-master.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for employee-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "employee-master.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for employee-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "vendor-master",
+      "entity_name": "Vendor / Supplier Master",
+      "dealer_name": "the supplier record for parts and services purchased",
+      "group": "master",
+      "sap_analogue": "LFA1 / LFB1 \u2014 vendor master, general + company-code data",
+      "table_name": "cdk_vendor_master",
+      "grain": "one row per vendor",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "vendor-master.vendor_id",
+          "legacy_name": "VENDOR_ID",
+          "label": "Vendor Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for vendor-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "vendor_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "vendor-master.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for vendor-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "vendor-master.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for vendor-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "vendor-master.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for vendor-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "gl-account-master",
+      "entity_name": "GL Account Master",
+      "dealer_name": "the chart of accounts entry",
+      "group": "ledger",
+      "sap_analogue": "SKA1 / SKB1 \u2014 chart of accounts + company-code GL segment",
+      "table_name": "cdk_gl_account_master",
+      "grain": "one row per GL account per department suffix",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "gl-account-master.gl_account_number",
+          "legacy_name": "GL_ACCOUNT_NUMBER",
+          "label": "Gl Account Number",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for gl-account-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "gl_account_number",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "gl-account-master.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for gl-account-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "gl-account-master.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for gl-account-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "gl-account-master.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for gl-account-master",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "accounting-schedule",
+      "entity_name": "Accounting Schedule",
+      "dealer_name": "the open-item subledger behind one GL control account",
+      "group": "ledger",
+      "sap_analogue": "Reconciliation-account subledger / open-item list",
+      "table_name": "cdk_accounting_schedule",
+      "grain": "one row per schedule control-key entry",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "accounting-schedule.schedule_id",
+          "legacy_name": "SCHEDULE_ID",
+          "label": "Schedule Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for accounting-schedule",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "schedule_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "accounting-schedule.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for accounting-schedule",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "accounting-schedule.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for accounting-schedule",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "accounting-schedule.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for accounting-schedule",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "gl-journal-posting",
+      "entity_name": "GL Journal / Posting",
+      "dealer_name": "one line of a journal entry",
+      "group": "ledger",
+      "sap_analogue": "BKPF/BSEG \u2014 accounting document header + line items",
+      "table_name": "cdk_gl_journal_posting",
+      "grain": "one row per journal line",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "gl-journal-posting.journal_line_id",
+          "legacy_name": "JOURNAL_LINE_ID",
+          "label": "Journal Line Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for gl-journal-posting",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "journal_line_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "gl-journal-posting.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for gl-journal-posting",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "gl-journal-posting.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for gl-journal-posting",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "gl-journal-posting.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for gl-journal-posting",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "repair-order",
+      "entity_name": "Repair Order",
+      "dealer_name": "the RO \u2014 the work order for a truck",
+      "group": "transaction",
+      "sap_analogue": "Internal order (AUFK/COEP) with a payer settlement rule",
+      "table_name": "cdk_repair_order",
+      "grain": "one row per repair order",
+      "api": {
+        "reachable": "full",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "repair-order.repair_order_number",
+          "legacy_name": "REPAIR_ORDER_NUMBER",
+          "label": "Repair Order Number",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for repair-order",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "repair_order_number",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "repair-order.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for repair-order",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "repair-order.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for repair-order",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "repair-order.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for repair-order",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "ro-labour-line",
+      "entity_name": "RO Labour Line",
+      "dealer_name": "one labour operation on an RO",
+      "group": "transaction",
+      "sap_analogue": "Confirmation/activity allocation line (COEP)",
+      "table_name": "cdk_ro_labour_line",
+      "grain": "one row per labour operation per RO",
+      "api": {
+        "reachable": "full",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 5,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "ro-labour-line.ro_labour_line_id",
+          "legacy_name": "RO_LABOUR_LINE_ID",
+          "label": "Ro Labour Line Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for ro-labour-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "ro_labour_line_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "ro-labour-line.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for ro-labour-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "ro-labour-line.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for ro-labour-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "ro-labour-line.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for ro-labour-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        },
+        {
+          "seq": 5,
+          "path": "ro-labour-line.repairOrderNumber",
+          "legacy_name": "RO-NO",
+          "label": "Repair Order Number",
+          "dealer_label": "which RO this labour line belongs to",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "FK",
+          "fk_target": "repair-order.repair_order_number",
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "AUFK-AUFNR",
+          "load_column": "repair_order_number",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "entity_id": "ro-part-line",
+      "entity_name": "RO Part Line",
+      "dealer_name": "one part consumed on an RO",
+      "group": "transaction",
+      "sap_analogue": "Goods movement / material consumption line (MSEG)",
+      "table_name": "cdk_ro_part_line",
+      "grain": "one row per part line per RO",
+      "api": {
+        "reachable": "full",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "ro-part-line.ro_part_line_id",
+          "legacy_name": "RO_PART_LINE_ID",
+          "label": "Ro Part Line Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for ro-part-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "ro_part_line_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "ro-part-line.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for ro-part-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "ro-part-line.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for ro-part-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "ro-part-line.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for ro-part-line",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "parts-master-inventory",
+      "entity_name": "Parts Master / Inventory",
+      "dealer_name": "the part number record and its on-hand position",
+      "group": "master",
+      "sap_analogue": "MARA/MARC/MBEW combined",
+      "table_name": "cdk_parts_master_inventory",
+      "grain": "one row per part number per rooftop",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "parts-master-inventory.part_number",
+          "legacy_name": "PART_NUMBER",
+          "label": "Part Number",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-master-inventory",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "part_number",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "parts-master-inventory.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for parts-master-inventory",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "parts-master-inventory.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-master-inventory",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "parts-master-inventory.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for parts-master-inventory",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "parts-order-supersession",
+      "entity_name": "Parts Order + Supersession",
+      "dealer_name": "a parts order line and its supersession chain",
+      "group": "transaction",
+      "sap_analogue": "Purchase order (EKKO/EKPO) + material supersession chain",
+      "table_name": "cdk_parts_order_supersession",
+      "grain": "one row per ordered part line",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "parts-order-supersession.order_line_id",
+          "legacy_name": "ORDER_LINE_ID",
+          "label": "Order Line Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-order-supersession",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "order_line_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "parts-order-supersession.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for parts-order-supersession",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "parts-order-supersession.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-order-supersession",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "parts-order-supersession.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for parts-order-supersession",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "parts-pick-ticket",
+      "entity_name": "Parts Pick Ticket",
+      "dealer_name": "the pick slip tied to an RO parts line",
+      "group": "transaction",
+      "sap_analogue": "Reservation / goods issue slip (MB1A-style)",
+      "table_name": "cdk_parts_pick_ticket",
+      "grain": "one row per pick ticket line",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "parts-pick-ticket.pick_ticket_id",
+          "legacy_name": "PICK_TICKET_ID",
+          "label": "Pick Ticket Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-pick-ticket",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "pick_ticket_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "parts-pick-ticket.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for parts-pick-ticket",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "parts-pick-ticket.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for parts-pick-ticket",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "parts-pick-ticket.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for parts-pick-ticket",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "counter-parts-sale",
+      "entity_name": "Counter / Parts Sale",
+      "dealer_name": "a cash or wholesale parts sale at the counter",
+      "group": "transaction",
+      "sap_analogue": "Sales order + billing document (VBAK/VBRK)",
+      "table_name": "cdk_counter_parts_sale",
+      "grain": "one row per counter sale line",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "counter-parts-sale.sale_line_id",
+          "legacy_name": "SALE_LINE_ID",
+          "label": "Sale Line Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for counter-parts-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "sale_line_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "counter-parts-sale.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for counter-parts-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "counter-parts-sale.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for counter-parts-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "counter-parts-sale.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for counter-parts-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "deal-jacket-vehicle-sale",
+      "entity_name": "Deal Jacket / Vehicle Sale",
+      "dealer_name": "the file for one truck sale",
+      "group": "transaction",
+      "sap_analogue": "Sales order + billing document (VBAK/VBRK) + F&I lines",
+      "table_name": "cdk_deal_jacket_vehicle_sale",
+      "grain": "one row per deal jacket",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "deal-jacket-vehicle-sale.deal_number",
+          "legacy_name": "DEAL_NUMBER",
+          "label": "Deal Number",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for deal-jacket-vehicle-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "deal_number",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "deal-jacket-vehicle-sale.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for deal-jacket-vehicle-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "deal-jacket-vehicle-sale.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for deal-jacket-vehicle-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "deal-jacket-vehicle-sale.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for deal-jacket-vehicle-sale",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "technician-time-punch",
+      "entity_name": "Technician Time Punch",
+      "dealer_name": "one clock in/out event against an RO labour line",
+      "group": "transaction",
+      "sap_analogue": "Time confirmation (CATS-style) feeding activity allocation",
+      "table_name": "cdk_technician_time_punch",
+      "grain": "one row per punch event",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "technician-time-punch.punch_id",
+          "legacy_name": "PUNCH_ID",
+          "label": "Punch Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for technician-time-punch",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "punch_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "technician-time-punch.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for technician-time-punch",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "technician-time-punch.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for technician-time-punch",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "technician-time-punch.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for technician-time-punch",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "work-in-process",
+      "entity_name": "Work-in-Process",
+      "dealer_name": "an RO still open, carried as WIP on the balance sheet",
+      "group": "ledger",
+      "sap_analogue": "WIP account tied to internal order settlement",
+      "table_name": "cdk_work_in_process",
+      "grain": "one row per open RO per reporting date",
+      "api": {
+        "reachable": "partial",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "work-in-process.wip_id",
+          "legacy_name": "WIP_ID",
+          "label": "Wip Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for work-in-process",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "wip_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "work-in-process.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for work-in-process",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "work-in-process.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for work-in-process",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "work-in-process.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for work-in-process",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "warranty-claim",
+      "entity_name": "Warranty Claim",
+      "dealer_name": "a factory warranty claim filed against an RO",
+      "group": "transaction",
+      "sap_analogue": "Debit memo / claims-management document vs. factory receivable",
+      "table_name": "cdk_warranty_claim",
+      "grain": "one row per warranty claim",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "warranty-claim.claim_id",
+          "legacy_name": "CLAIM_ID",
+          "label": "Claim Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for warranty-claim",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "claim_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "warranty-claim.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for warranty-claim",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "warranty-claim.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for warranty-claim",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "warranty-claim.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for warranty-claim",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    },
+    {
+      "entity_id": "purchase-receipt-document",
+      "entity_name": "Purchase / Receipt Document",
+      "dealer_name": "a vendor invoice or receipt document",
+      "group": "ledger",
+      "sap_analogue": "Purchase order + goods receipt (EKKO/EKBE), 3-way match",
+      "table_name": "cdk_purchase_receipt_document",
+      "grain": "one row per receipt document line",
+      "api": {
+        "reachable": "none",
+        "endpoints": [],
+        "note": "fixture"
+      },
+      "sources": [
+        {
+          "label": "fixture",
+          "url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf"
+        }
+      ],
+      "field_count": 4,
+      "fields": [
+        {
+          "seq": 1,
+          "path": "purchase-receipt-document.receipt_document_id",
+          "legacy_name": "RECEIPT_DOCUMENT_ID",
+          "label": "Receipt Document Id",
+          "dealer_label": "the key you'd look this record up by",
+          "datatype": "string",
+          "length": 12,
+          "precision": null,
+          "scale": null,
+          "nullable": false,
+          "key": "PK",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for purchase-receipt-document",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "receipt_document_id",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 2,
+          "path": "purchase-receipt-document.amount",
+          "legacy_name": "AMT",
+          "label": "Amount",
+          "dealer_label": "the dollar amount on this line",
+          "datatype": "decimal",
+          "length": null,
+          "precision": 13,
+          "scale": 2,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": "currency",
+          "source": "fixture source for purchase-receipt-document",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": "BSEG-DMBTR",
+          "load_column": "amount",
+          "confidence": "DOCUMENTED",
+          "notes": ""
+        },
+        {
+          "seq": 3,
+          "path": "purchase-receipt-document.createdDate",
+          "legacy_name": "CREATE-DT",
+          "label": "Created Date",
+          "dealer_label": "when this record was first created",
+          "datatype": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [],
+          "unit": null,
+          "source": "fixture source for purchase-receipt-document",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "created_date",
+          "confidence": "INFERRED",
+          "notes": "reasoned from ERP convention, not a documented CDK field"
+        },
+        {
+          "seq": 4,
+          "path": "purchase-receipt-document.statusCode",
+          "legacy_name": "STATUS-CD",
+          "label": "Status Code",
+          "dealer_label": "the status shown on the screen",
+          "datatype": "enum",
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "nullable": true,
+          "key": "none",
+          "fk_target": null,
+          "enum_values": [
+            {
+              "code": "O",
+              "meaning": "Open"
+            },
+            {
+              "code": "C",
+              "meaning": "Closed"
+            }
+          ],
+          "unit": null,
+          "source": "fixture source for purchase-receipt-document",
+          "source_url": "https://fortellis-api-documents-prod.s3-us-west-2.amazonaws.com/f83a79c6-8cf9-4c1a-b45e-b266634eaf90/external/20251119155158640--ZuFlj8i.pdf",
+          "sap_field": null,
+          "load_column": "status_code",
+          "confidence": "UNVERIFIED",
+          "notes": "expected, to be confirmed on tenant login"
+        }
+      ]
+    }
+  ]
+}
