@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS cdk_parts_master_inventory (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_parts_master_inventory.part_number IS '[D] Part Number';
+COMMENT ON COLUMN cdk_parts_master_inventory.part_number IS '[D] Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_parts_master_inventory.description IS '[D] Description';
 COMMENT ON COLUMN cdk_parts_master_inventory.manufacturer IS '[D] Manufacturer';
 COMMENT ON COLUMN cdk_parts_master_inventory.quantity_on_hand IS '[D] Quantity On Hand';

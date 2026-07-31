@@ -1,6 +1,6 @@
 # CDK → SAP field map — enterprise architect reference
 
-Generated 2026-07-29T07:01:53Z by [`schema/bin/gen_mapping.py`](../bin/gen_mapping.py) from [`docs/model/fields.json`](../../docs/model/fields.json), contract `EgD-CDK-FIELDS-v2`. Regenerate, do not hand-edit.
+Generated 2026-07-31T04:54:24Z by [`schema/bin/gen_mapping.py`](../bin/gen_mapping.py) from [`docs/model/fields.json`](../../docs/model/fields.json), contract `EgD-CDK-FIELDS-v2`. Regenerate, do not hand-edit.
 
 This is the artefact for the operator's enterprise architects: one row per CDK field, its legacy DMS name, its data type, the column it lands in on load, the SAP field it maps to in the operator's native vocabulary, and the confidence behind that mapping.
 

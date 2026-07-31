@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS cdk_cost_centre_department (
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
 COMMENT ON COLUMN cdk_cost_centre_department.department_code IS '[D] Dept # (values: 01=New Vehicles; 02=Used Vehicles; 03=Lease & Rental; 04=Finance & Insurance (F&I); 05=Mechanical / Service; 06=Body Shop; 07=Parts & Accessories; 09=General & Administrative)';
-COMMENT ON COLUMN cdk_cost_centre_department.department_id IS '[D] Department-Id';
+COMMENT ON COLUMN cdk_cost_centre_department.department_id IS '[D] Department-Id [WIDENED per WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_cost_centre_department.dms_type IS '[D] Bound DMS Type (values: Accounting=Accounting; Finance=Finance; Inventory=Inventory; Parts=Parts; Service=Service)';
-COMMENT ON COLUMN cdk_cost_centre_department.department_name IS '[I] Department Name';
+COMMENT ON COLUMN cdk_cost_centre_department.department_name IS '[I] Department Name [WIDENED per WIDENING-POLICY.md: SAP CSKT-KTEXT is CHAR(20); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_cost_centre_department.schedule_index IS '[U] Schedule Index Type (values: 0=No Schedule; 1=Vehicle Inventory; 2=Accounts Receivable; 3=Accounts Payable; 4=Miscellaneous Balance Forward; 5=Miscellaneous Detail Forward; 6=Combination)';
 COMMENT ON COLUMN cdk_cost_centre_department.absorption_rate_is_report_only IS '[I] Absorption Rate — Reporting Only';
 COMMENT ON COLUMN cdk_cost_centre_department.cost_center_type IS '[I] Cost Center Type (values: FIXED=Fixed operations (Service/Parts/Body Shop); VARIABLE=Variable operations (New/Used vehicle sales, F&I))';

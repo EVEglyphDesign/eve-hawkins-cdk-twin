@@ -50,11 +50,11 @@ CREATE TABLE IF NOT EXISTS cdk_ro_part_line (
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
 COMMENT ON COLUMN cdk_ro_part_line.ro_number IS '[D] the RO number this part was sold on';
 COMMENT ON COLUMN cdk_ro_part_line.part_sequence_number IS '[D] Part Sequence Number';
-COMMENT ON COLUMN cdk_ro_part_line.part_number IS '[D] Part Number';
+COMMENT ON COLUMN cdk_ro_part_line.part_number IS '[D] Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_ro_part_line.part_description IS '[D] Part Description';
 COMMENT ON COLUMN cdk_ro_part_line.bin1_location IS '[D] Main Bin Location';
 COMMENT ON COLUMN cdk_ro_part_line.part_source_number IS '[D] Part Source Number';
-COMMENT ON COLUMN cdk_ro_part_line.parts_class_code IS '[D] Parts Class Code';
+COMMENT ON COLUMN cdk_ro_part_line.parts_class_code IS '[D] Parts Class Code [WIDENED per WIDENING-POLICY.md: SAP MARA-MTPOS_MARA is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_ro_part_line.associated_labor_sequence_number IS '[D] Associated Labor Sequence Number';
 COMMENT ON COLUMN cdk_ro_part_line.part_labor_type IS '[D] Part Labor Type';
 COMMENT ON COLUMN cdk_ro_part_line.part_line_code IS '[D] Part Repair Line Code';

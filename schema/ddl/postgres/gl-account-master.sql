@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS cdk_gl_account_master (
 COMMENT ON COLUMN cdk_gl_account_master.gl_account_number IS '[D] GL Account Number (base)';
 COMMENT ON COLUMN cdk_gl_account_master.department_suffix IS '[D] Department Suffix';
 COMMENT ON COLUMN cdk_gl_account_master.sub_account_letter IS '[D] Sub-Account Letter Suffix';
-COMMENT ON COLUMN cdk_gl_account_master.account_name IS '[D] Account Name / Description';
+COMMENT ON COLUMN cdk_gl_account_master.account_name IS '[D] Account Name / Description [WIDENED per WIDENING-POLICY.md: SAP SKAT-TXT50 is CHAR(50); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_gl_account_master.account_type IS '[D] Account Type (values: ASSET=200-series: Assets; LIAB_EQUITY=300-series: Liabilities/Equity; SALES=400-series: Sales; COGS=600-series: Cost of Goods Sold; LEASE_RENTAL_COST=700-series: Lease/Rental Cost; OTHER_INCOME_FI=800/900-series: Other Income/F&I)';
 COMMENT ON COLUMN cdk_gl_account_master.normal_balance IS '[I] Normal Balance Side (values: DEBIT=Normal debit balance (assets, COGS, lease/rental cost); CREDIT=Normal credit balance (liabilities, equity, sales, other income))';
 COMMENT ON COLUMN cdk_gl_account_master.is_control_account IS '[D] Reconciliation/Control Account Flag';

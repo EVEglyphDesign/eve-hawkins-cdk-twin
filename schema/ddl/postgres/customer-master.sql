@@ -96,13 +96,13 @@ CREATE TABLE IF NOT EXISTS cdk_customer_master (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_customer_master.customer_id IS '[D] Customer ID';
-COMMENT ON COLUMN cdk_customer_master.host_item_id IS '[D] Host Item ID';
-COMMENT ON COLUMN cdk_customer_master.first_name IS '[D] First Name';
+COMMENT ON COLUMN cdk_customer_master.customer_id IS '[D] Customer ID [WIDENED per WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); DDL emits source-native 32]';
+COMMENT ON COLUMN cdk_customer_master.host_item_id IS '[D] Host Item ID [WIDENED per WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); DDL emits source-native 32]';
+COMMENT ON COLUMN cdk_customer_master.first_name IS '[D] First Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME2 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.middle_name IS '[D] Middle Name';
-COMMENT ON COLUMN cdk_customer_master.last_name IS '[D] Last Name';
+COMMENT ON COLUMN cdk_customer_master.last_name IS '[D] Last Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.full_name IS '[D] Full Name';
-COMMENT ON COLUMN cdk_customer_master.company_name IS '[D] Company Name';
+COMMENT ON COLUMN cdk_customer_master.company_name IS '[D] Company Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); DDL emits source-native 80]';
 COMMENT ON COLUMN cdk_customer_master.name_suffix IS '[D] Name Suffix';
 COMMENT ON COLUMN cdk_customer_master.title IS '[D] Title';
 COMMENT ON COLUMN cdk_customer_master.secondary_first_name IS '[D] Secondary First Name';
@@ -112,17 +112,17 @@ COMMENT ON COLUMN cdk_customer_master.secondary_company_name IS '[D] Secondary C
 COMMENT ON COLUMN cdk_customer_master.birth_day IS '[D] Birth Day';
 COMMENT ON COLUMN cdk_customer_master.birth_month IS '[D] Birth Month';
 COMMENT ON COLUMN cdk_customer_master.birth_year IS '[D] Birth Year';
-COMMENT ON COLUMN cdk_customer_master.address_line1 IS '[D] Address Line 1';
+COMMENT ON COLUMN cdk_customer_master.address_line1 IS '[D] Address Line 1 [WIDENED per WIDENING-POLICY.md: SAP KNA1-STRAS is CHAR(35); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_customer_master.address_line2 IS '[D] Address Line 2';
-COMMENT ON COLUMN cdk_customer_master.city IS '[D] City';
+COMMENT ON COLUMN cdk_customer_master.city IS '[D] City [WIDENED per WIDENING-POLICY.md: SAP KNA1-ORT01 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.county IS '[D] County';
-COMMENT ON COLUMN cdk_customer_master.state IS '[D] State';
-COMMENT ON COLUMN cdk_customer_master.postal_code IS '[D] Postal Code';
-COMMENT ON COLUMN cdk_customer_master.country IS '[D] Country';
-COMMENT ON COLUMN cdk_customer_master.primary_phone IS '[D] Primary Phone';
+COMMENT ON COLUMN cdk_customer_master.state IS '[D] State [WIDENED per WIDENING-POLICY.md: SAP KNA1-REGIO is CHAR(3); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_customer_master.postal_code IS '[D] Postal Code [WIDENED per WIDENING-POLICY.md: SAP KNA1-PSTLZ is CHAR(10); DDL emits source-native 15]';
+COMMENT ON COLUMN cdk_customer_master.country IS '[D] Country [WIDENED per WIDENING-POLICY.md: SAP KNA1-LAND1 is CHAR(3); DDL emits source-native 40]';
+COMMENT ON COLUMN cdk_customer_master.primary_phone IS '[D] Primary Phone [WIDENED per WIDENING-POLICY.md: SAP KNA1-TELF1 is CHAR(16); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_customer_master.home_phone IS '[D] Home Phone';
 COMMENT ON COLUMN cdk_customer_master.secondary_home_phone IS '[D] Secondary Home Phone';
-COMMENT ON COLUMN cdk_customer_master.mobile_phone IS '[D] Mobile Phone';
+COMMENT ON COLUMN cdk_customer_master.mobile_phone IS '[D] Mobile Phone [WIDENED per WIDENING-POLICY.md: SAP KNA1-TELF2 is CHAR(16); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_customer_master.business_phone IS '[D] Business Phone';
 COMMENT ON COLUMN cdk_customer_master.business_phone_ext IS '[D] Business Phone Ext';
 COMMENT ON COLUMN cdk_customer_master.home_fax IS '[D] Home Fax';

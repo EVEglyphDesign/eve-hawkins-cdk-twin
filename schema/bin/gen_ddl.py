@@ -278,6 +278,10 @@ def build_entity_ddl(entity, entities_by_id, dialect):
         enum_note = render_enum_comment(f)
         if enum_note:
             c = c + " (" + enum_note + ")"
+        widening = f.get("widening")
+        if isinstance(widening, dict) and widening.get("widened_length"):
+            wsap = widening.get("sap_table", "") + "-" + widening.get("sap_field", "")
+            c = c + " [WIDENED per WIDENING-POLICY.md: SAP " + wsap + " is CHAR(" + str(widening.get("sap_length")) + "); DDL emits source-native " + str(widening.get("widened_length")) + "]"
         if dialect == "postgres":
             comment_lines.append(f"COMMENT ON COLUMN {table}.{col} IS '{c}';")
         else:

@@ -1,5 +1,5 @@
 -- 000_all.sql -- rollup of every Lane F Postgres DDL file
--- generated 2026-07-29T07:01:53Z by schema/bin/gen_ddl.py from docs/model/fields.json
+-- generated 2026-07-31T04:54:24Z by schema/bin/gen_ddl.py from docs/model/fields.json
 -- Run this file to build the full load-ready schema in one pass.
 
 -- cdk_dealer_rooftop_partition (dealer-rooftop-partition) -- Dealer Rooftop Partition
@@ -26,11 +26,11 @@ CREATE TABLE IF NOT EXISTS cdk_dealer_rooftop_partition (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.subscription_id IS '[D] Subscription-Id';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.department_id IS '[D] Department-Id';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.subscription_id IS '[D] Subscription-Id [WIDENED per WIDENING-POLICY.md: SAP T000-MANDT is CHAR(3); DDL emits source-native 64]';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.department_id IS '[D] Department-Id [WIDENED per WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.request_id IS '[D] Request-Id';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.company_number IS '[U] Co #';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.cmf_client_number IS '[U] Client #';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.company_number IS '[U] Co # [WIDENED per WIDENING-POLICY.md: SAP T001-BUKRS is CHAR(4); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.cmf_client_number IS '[U] Client # [WIDENED per WIDENING-POLICY.md: SAP T000-MANDT is CHAR(3); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.dms_type IS '[D] DMS Type (values: Accounting=Accounting DMS module; Finance=Finance/F&I DMS module; Inventory=Vehicle inventory DMS module; Parts=Parts DMS module; Service=Service DMS module)';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.rooftop_name IS '[I] Dealer Name';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.rooftop_address IS '[I] Dealer Address';
@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS cdk_cost_centre_department (
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
 COMMENT ON COLUMN cdk_cost_centre_department.department_code IS '[D] Dept # (values: 01=New Vehicles; 02=Used Vehicles; 03=Lease & Rental; 04=Finance & Insurance (F&I); 05=Mechanical / Service; 06=Body Shop; 07=Parts & Accessories; 09=General & Administrative)';
-COMMENT ON COLUMN cdk_cost_centre_department.department_id IS '[D] Department-Id';
+COMMENT ON COLUMN cdk_cost_centre_department.department_id IS '[D] Department-Id [WIDENED per WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_cost_centre_department.dms_type IS '[D] Bound DMS Type (values: Accounting=Accounting; Finance=Finance; Inventory=Inventory; Parts=Parts; Service=Service)';
-COMMENT ON COLUMN cdk_cost_centre_department.department_name IS '[I] Department Name';
+COMMENT ON COLUMN cdk_cost_centre_department.department_name IS '[I] Department Name [WIDENED per WIDENING-POLICY.md: SAP CSKT-KTEXT is CHAR(20); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_cost_centre_department.schedule_index IS '[U] Schedule Index Type (values: 0=No Schedule; 1=Vehicle Inventory; 2=Accounts Receivable; 3=Accounts Payable; 4=Miscellaneous Balance Forward; 5=Miscellaneous Detail Forward; 6=Combination)';
 COMMENT ON COLUMN cdk_cost_centre_department.absorption_rate_is_report_only IS '[I] Absorption Rate — Reporting Only';
 COMMENT ON COLUMN cdk_cost_centre_department.cost_center_type IS '[I] Cost Center Type (values: FIXED=Fixed operations (Service/Parts/Body Shop); VARIABLE=Variable operations (New/Used vehicle sales, F&I))';
@@ -172,13 +172,13 @@ CREATE TABLE IF NOT EXISTS cdk_customer_master (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_customer_master.customer_id IS '[D] Customer ID';
-COMMENT ON COLUMN cdk_customer_master.host_item_id IS '[D] Host Item ID';
-COMMENT ON COLUMN cdk_customer_master.first_name IS '[D] First Name';
+COMMENT ON COLUMN cdk_customer_master.customer_id IS '[D] Customer ID [WIDENED per WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); DDL emits source-native 32]';
+COMMENT ON COLUMN cdk_customer_master.host_item_id IS '[D] Host Item ID [WIDENED per WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); DDL emits source-native 32]';
+COMMENT ON COLUMN cdk_customer_master.first_name IS '[D] First Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME2 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.middle_name IS '[D] Middle Name';
-COMMENT ON COLUMN cdk_customer_master.last_name IS '[D] Last Name';
+COMMENT ON COLUMN cdk_customer_master.last_name IS '[D] Last Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.full_name IS '[D] Full Name';
-COMMENT ON COLUMN cdk_customer_master.company_name IS '[D] Company Name';
+COMMENT ON COLUMN cdk_customer_master.company_name IS '[D] Company Name [WIDENED per WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); DDL emits source-native 80]';
 COMMENT ON COLUMN cdk_customer_master.name_suffix IS '[D] Name Suffix';
 COMMENT ON COLUMN cdk_customer_master.title IS '[D] Title';
 COMMENT ON COLUMN cdk_customer_master.secondary_first_name IS '[D] Secondary First Name';
@@ -188,17 +188,17 @@ COMMENT ON COLUMN cdk_customer_master.secondary_company_name IS '[D] Secondary C
 COMMENT ON COLUMN cdk_customer_master.birth_day IS '[D] Birth Day';
 COMMENT ON COLUMN cdk_customer_master.birth_month IS '[D] Birth Month';
 COMMENT ON COLUMN cdk_customer_master.birth_year IS '[D] Birth Year';
-COMMENT ON COLUMN cdk_customer_master.address_line1 IS '[D] Address Line 1';
+COMMENT ON COLUMN cdk_customer_master.address_line1 IS '[D] Address Line 1 [WIDENED per WIDENING-POLICY.md: SAP KNA1-STRAS is CHAR(35); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_customer_master.address_line2 IS '[D] Address Line 2';
-COMMENT ON COLUMN cdk_customer_master.city IS '[D] City';
+COMMENT ON COLUMN cdk_customer_master.city IS '[D] City [WIDENED per WIDENING-POLICY.md: SAP KNA1-ORT01 is CHAR(35); DDL emits source-native 40]';
 COMMENT ON COLUMN cdk_customer_master.county IS '[D] County';
-COMMENT ON COLUMN cdk_customer_master.state IS '[D] State';
-COMMENT ON COLUMN cdk_customer_master.postal_code IS '[D] Postal Code';
-COMMENT ON COLUMN cdk_customer_master.country IS '[D] Country';
-COMMENT ON COLUMN cdk_customer_master.primary_phone IS '[D] Primary Phone';
+COMMENT ON COLUMN cdk_customer_master.state IS '[D] State [WIDENED per WIDENING-POLICY.md: SAP KNA1-REGIO is CHAR(3); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_customer_master.postal_code IS '[D] Postal Code [WIDENED per WIDENING-POLICY.md: SAP KNA1-PSTLZ is CHAR(10); DDL emits source-native 15]';
+COMMENT ON COLUMN cdk_customer_master.country IS '[D] Country [WIDENED per WIDENING-POLICY.md: SAP KNA1-LAND1 is CHAR(3); DDL emits source-native 40]';
+COMMENT ON COLUMN cdk_customer_master.primary_phone IS '[D] Primary Phone [WIDENED per WIDENING-POLICY.md: SAP KNA1-TELF1 is CHAR(16); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_customer_master.home_phone IS '[D] Home Phone';
 COMMENT ON COLUMN cdk_customer_master.secondary_home_phone IS '[D] Secondary Home Phone';
-COMMENT ON COLUMN cdk_customer_master.mobile_phone IS '[D] Mobile Phone';
+COMMENT ON COLUMN cdk_customer_master.mobile_phone IS '[D] Mobile Phone [WIDENED per WIDENING-POLICY.md: SAP KNA1-TELF2 is CHAR(16); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_customer_master.business_phone IS '[D] Business Phone';
 COMMENT ON COLUMN cdk_customer_master.business_phone_ext IS '[D] Business Phone Ext';
 COMMENT ON COLUMN cdk_customer_master.home_fax IS '[D] Home Fax';
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS cdk_vehicle_master (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_vehicle_master.vehicle_id IS '[D] Vehicle ID';
+COMMENT ON COLUMN cdk_vehicle_master.vehicle_id IS '[D] Vehicle ID [WIDENED per WIDENING-POLICY.md: SAP EQUI-EQUNR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_vehicle_master.vin IS '[D] VIN';
 COMMENT ON COLUMN cdk_vehicle_master.license_plate_number IS '[D] License Plate Number';
 COMMENT ON COLUMN cdk_vehicle_master.make_code IS '[D] Make Code';
@@ -433,16 +433,16 @@ CREATE TABLE IF NOT EXISTS cdk_vendor_master (
     -- NOT NULL withheld on vendor_id: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_vendor_master.vendor_id IS '[I] Vendor ID';
-COMMENT ON COLUMN cdk_vendor_master.vendor_name IS '[I] Vendor Name';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_address_line1 IS '[I] Remit-To Address Line 1';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_city IS '[I] Remit-To City';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_state IS '[I] Remit-To State';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_postal_code IS '[I] Remit-To Postal Code';
-COMMENT ON COLUMN cdk_vendor_master.tax_id_1099 IS '[I] 1099 Tax ID';
-COMMENT ON COLUMN cdk_vendor_master.gst_hst_number IS '[I] GST/HST Number';
+COMMENT ON COLUMN cdk_vendor_master.vendor_id IS '[I] Vendor ID [WIDENED per WIDENING-POLICY.md: SAP LFA1-LIFNR is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_vendor_master.vendor_name IS '[I] Vendor Name [WIDENED per WIDENING-POLICY.md: SAP LFA1-NAME1 is CHAR(35); DDL emits source-native 80]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_address_line1 IS '[I] Remit-To Address Line 1 [WIDENED per WIDENING-POLICY.md: SAP LFA1-STRAS is CHAR(35); DDL emits source-native 60]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_city IS '[I] Remit-To City [WIDENED per WIDENING-POLICY.md: SAP LFA1-ORT01 is CHAR(35); DDL emits source-native 40]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_state IS '[I] Remit-To State [WIDENED per WIDENING-POLICY.md: SAP LFA1-REGIO is CHAR(3); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_postal_code IS '[I] Remit-To Postal Code [WIDENED per WIDENING-POLICY.md: SAP LFA1-PSTLZ is CHAR(10); DDL emits source-native 15]';
+COMMENT ON COLUMN cdk_vendor_master.tax_id_1099 IS '[I] 1099 Tax ID [WIDENED per WIDENING-POLICY.md: SAP LFA1-STCD1 is CHAR(16); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_vendor_master.gst_hst_number IS '[I] GST/HST Number [WIDENED per WIDENING-POLICY.md: SAP LFA1-STCD3 is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_vendor_master.vendor_class IS '[U] Vendor Classification (values: OEM=OEM/factory vendor (e.g. PACCAR); SUBLET=Sublet repair vendor; TRADE=Local trade vendor; OTHER=Other/general vendor)';
-COMMENT ON COLUMN cdk_vendor_master.payment_terms IS '[I] Payment Terms';
+COMMENT ON COLUMN cdk_vendor_master.payment_terms IS '[I] Payment Terms [WIDENED per WIDENING-POLICY.md: SAP LFB1-ZTERM is CHAR(4); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_vendor_master.ap_control_gl_account IS '[I] AP Control GL Account';
 COMMENT ON COLUMN cdk_vendor_master.vendor_status IS '[U] Vendor Status (values: ACTIVE=Active vendor; HOLD=Payment hold; INACTIVE=Inactive/closed)';
 COMMENT ON COLUMN cdk_vendor_master._rooftop_id IS '[D] which rooftop/store this extracted row belongs to';
@@ -481,7 +481,7 @@ CREATE TABLE IF NOT EXISTS cdk_gl_account_master (
 COMMENT ON COLUMN cdk_gl_account_master.gl_account_number IS '[D] GL Account Number (base)';
 COMMENT ON COLUMN cdk_gl_account_master.department_suffix IS '[D] Department Suffix';
 COMMENT ON COLUMN cdk_gl_account_master.sub_account_letter IS '[D] Sub-Account Letter Suffix';
-COMMENT ON COLUMN cdk_gl_account_master.account_name IS '[D] Account Name / Description';
+COMMENT ON COLUMN cdk_gl_account_master.account_name IS '[D] Account Name / Description [WIDENED per WIDENING-POLICY.md: SAP SKAT-TXT50 is CHAR(50); DDL emits source-native 60]';
 COMMENT ON COLUMN cdk_gl_account_master.account_type IS '[D] Account Type (values: ASSET=200-series: Assets; LIAB_EQUITY=300-series: Liabilities/Equity; SALES=400-series: Sales; COGS=600-series: Cost of Goods Sold; LEASE_RENTAL_COST=700-series: Lease/Rental Cost; OTHER_INCOME_FI=800/900-series: Other Income/F&I)';
 COMMENT ON COLUMN cdk_gl_account_master.normal_balance IS '[I] Normal Balance Side (values: DEBIT=Normal debit balance (assets, COGS, lease/rental cost); CREDIT=Normal credit balance (liabilities, equity, sales, other income))';
 COMMENT ON COLUMN cdk_gl_account_master.is_control_account IS '[D] Reconciliation/Control Account Flag';
@@ -524,7 +524,7 @@ CREATE TABLE IF NOT EXISTS cdk_accounting_schedule (
 COMMENT ON COLUMN cdk_accounting_schedule.schedule_id IS '[I] Schedule ID';
 COMMENT ON COLUMN cdk_accounting_schedule.gl_account_number IS '[D] Controlling GL Account';
 COMMENT ON COLUMN cdk_accounting_schedule.control_key_type IS '[D] Control Key Type (values: RO_NUMBER=Repair order number; CLAIM_NUMBER=Warranty claim number; STOCK_NUMBER=Vehicle stock number; VIN_LAST8=Last 8 characters of VIN; CUSTOMER_ID=Customer ID; DEAL_CONTRACT_NUMBER=Deal/contract reference number; REFERENCE_DOC_NUMBER=General reference/document number)';
-COMMENT ON COLUMN cdk_accounting_schedule.control_key_value IS '[D] Control Key Value';
+COMMENT ON COLUMN cdk_accounting_schedule.control_key_value IS '[D] Control Key Value [WIDENED per WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_accounting_schedule.open_item_amount IS '[D] Open Item Amount';
 COMMENT ON COLUMN cdk_accounting_schedule.aging_bucket IS '[D] Aging Bucket (values: CURRENT=0-29 days; 30=30-59 days; 60=60-89 days; 90=90-119 days; 120_PLUS=120+ days)';
 COMMENT ON COLUMN cdk_accounting_schedule.posting_date IS '[D] Posting Date';
@@ -571,11 +571,11 @@ CREATE TABLE IF NOT EXISTS cdk_gl_journal_posting (
     -- NOT NULL withheld on posting_date: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_gl_journal_posting.document_number IS '[I] Document Number';
-COMMENT ON COLUMN cdk_gl_journal_posting.journal_number IS '[I] Journal Number';
+COMMENT ON COLUMN cdk_gl_journal_posting.document_number IS '[I] Document Number [WIDENED per WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_gl_journal_posting.journal_number IS '[I] Journal Number [WIDENED per WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_gl_journal_posting.journal_type IS '[D] Journal Type (values: STANDARD_ENTRIES=Standard Entries Journal; CASH_RECEIPTS=Cash Receipts Journal; CASH_DISBURSEMENTS=Cash Disbursements Journal; PURCHASE=Purchase Journal; PAYROLL=Payroll Journal; NEW_VEHICLE_SALES_PURCHASE=New Vehicle Sales/Purchase Journal; USED_CAR_SALES=Used Car Sales Journal; INTERNAL_SALES=Internal Sales Journal; SERVICE_SALES_CASH=Service Sales (Cash) Journal; SERVICE_SALES_CHARGE=Service Sales (Charge) Journal; WARRANTY_SALES=Warranty Sales Journal; PARTS_SALES_CASH=Parts Sales (Cash) Journal; PARTS_SALES_CHARGE=Parts Sales (Charge) Journal; DEALER_EXCHANGE=Dealer Exchange Journal; STATISTICAL_DATA=Statistical Data Journal; GENERAL_JOURNAL_ENTRY=General Journal Entry)';
 COMMENT ON COLUMN cdk_gl_journal_posting.gl_account_number IS '[I] GL Account Number';
-COMMENT ON COLUMN cdk_gl_journal_posting.schedule_field IS '[I] Schedule Field / Control Reference';
+COMMENT ON COLUMN cdk_gl_journal_posting.schedule_field IS '[I] Schedule Field / Control Reference [WIDENED per WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_gl_journal_posting.adjust_to_gl_account IS '[I] Adjust-To GL Account';
 COMMENT ON COLUMN cdk_gl_journal_posting.posting_date IS '[I] Posting Date';
 COMMENT ON COLUMN cdk_gl_journal_posting.debit_amount IS '[I] Debit Amount';
@@ -682,7 +682,7 @@ CREATE TABLE IF NOT EXISTS cdk_repair_order (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_repair_order.ro_number IS '[D] Repair Order Number';
+COMMENT ON COLUMN cdk_repair_order.ro_number IS '[D] Repair Order Number [WIDENED per WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_repair_order.host_item_id IS '[D] Host Item ID';
 COMMENT ON COLUMN cdk_repair_order.status_code IS '[D] Status Code';
 COMMENT ON COLUMN cdk_repair_order.status_desc IS '[D] Status Description';
@@ -842,7 +842,7 @@ COMMENT ON COLUMN cdk_ro_labour_line.estimated_duration_hours IS '[D] Estimated 
 COMMENT ON COLUMN cdk_ro_labour_line.story_text IS '[D] Technician Story Text';
 COMMENT ON COLUMN cdk_ro_labour_line.story_sequence_number IS '[D] Story Sequence Number';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_op_sequence_number IS '[D] Labor Operation Sequence Number';
-COMMENT ON COLUMN cdk_ro_labour_line.labor_op_code IS '[D] Labor Operation Code';
+COMMENT ON COLUMN cdk_ro_labour_line.labor_op_code IS '[D] Labor Operation Code [WIDENED per WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_op_desc IS '[D] Labor Operation Description';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_type_code IS '[D] Labor Type Code';
 COMMENT ON COLUMN cdk_ro_labour_line.technician_ids IS '[D] Technician ID(s)';
@@ -930,11 +930,11 @@ CREATE TABLE IF NOT EXISTS cdk_ro_part_line (
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
 COMMENT ON COLUMN cdk_ro_part_line.ro_number IS '[D] the RO number this part was sold on';
 COMMENT ON COLUMN cdk_ro_part_line.part_sequence_number IS '[D] Part Sequence Number';
-COMMENT ON COLUMN cdk_ro_part_line.part_number IS '[D] Part Number';
+COMMENT ON COLUMN cdk_ro_part_line.part_number IS '[D] Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_ro_part_line.part_description IS '[D] Part Description';
 COMMENT ON COLUMN cdk_ro_part_line.bin1_location IS '[D] Main Bin Location';
 COMMENT ON COLUMN cdk_ro_part_line.part_source_number IS '[D] Part Source Number';
-COMMENT ON COLUMN cdk_ro_part_line.parts_class_code IS '[D] Parts Class Code';
+COMMENT ON COLUMN cdk_ro_part_line.parts_class_code IS '[D] Parts Class Code [WIDENED per WIDENING-POLICY.md: SAP MARA-MTPOS_MARA is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_ro_part_line.associated_labor_sequence_number IS '[D] Associated Labor Sequence Number';
 COMMENT ON COLUMN cdk_ro_part_line.part_labor_type IS '[D] Part Labor Type';
 COMMENT ON COLUMN cdk_ro_part_line.part_line_code IS '[D] Part Repair Line Code';
@@ -1007,7 +1007,7 @@ CREATE TABLE IF NOT EXISTS cdk_parts_master_inventory (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_parts_master_inventory.part_number IS '[D] Part Number';
+COMMENT ON COLUMN cdk_parts_master_inventory.part_number IS '[D] Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_parts_master_inventory.description IS '[D] Description';
 COMMENT ON COLUMN cdk_parts_master_inventory.manufacturer IS '[D] Manufacturer';
 COMMENT ON COLUMN cdk_parts_master_inventory.quantity_on_hand IS '[D] Quantity On Hand';
@@ -1352,18 +1352,18 @@ CREATE TABLE IF NOT EXISTS cdk_warranty_claim (
     -- NOT NULL withheld on vin: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_warranty_claim.claim_number IS '[U] Warranty Claim Number';
-COMMENT ON COLUMN cdk_warranty_claim.ro_number IS '[I] Source RO Number';
+COMMENT ON COLUMN cdk_warranty_claim.claim_number IS '[U] Warranty Claim Number [WIDENED per WIDENING-POLICY.md: SAP BSID-XBLNR is CHAR(16); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_warranty_claim.ro_number IS '[I] Source RO Number [WIDENED per WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_warranty_claim.vin IS '[I] Vehicle VIN';
-COMMENT ON COLUMN cdk_warranty_claim.causal_part_number IS '[I] Causal / Removed Part Number';
+COMMENT ON COLUMN cdk_warranty_claim.causal_part_number IS '[I] Causal / Removed Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_warranty_claim.claim_category_code IS '[I] Claim Category Code';
 COMMENT ON COLUMN cdk_warranty_claim.concern_text IS '[I] Concern Narrative';
 COMMENT ON COLUMN cdk_warranty_claim.cause_text IS '[I] Cause Narrative';
 COMMENT ON COLUMN cdk_warranty_claim.correction_text IS '[I] Correction Narrative';
-COMMENT ON COLUMN cdk_warranty_claim.srt_code IS '[I] SRT (Standard Repair Time) Code';
+COMMENT ON COLUMN cdk_warranty_claim.srt_code IS '[I] SRT (Standard Repair Time) Code [WIDENED per WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_warranty_claim.claim_story_text IS '[I] Claim Story Text';
 COMMENT ON COLUMN cdk_warranty_claim.campaign_number IS '[I] Campaign Number';
-COMMENT ON COLUMN cdk_warranty_claim.failure_code IS '[I] Failure Code';
+COMMENT ON COLUMN cdk_warranty_claim.failure_code IS '[I] Failure Code [WIDENED per WIDENING-POLICY.md: SAP QMFE-FEGRP is CHAR(8); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_warranty_claim.submission_window_days IS '[I] Submission Window (Days)';
 COMMENT ON COLUMN cdk_warranty_claim.claim_type IS '[I] Claim Type (values: QUICK=Quick Claim (pre-coded campaign/failure code); LONG=Long-form claim (manual narrative entry))';
 COMMENT ON COLUMN cdk_warranty_claim.claim_status IS '[U] Claim Status (values: DRAFT=Draft (created from RO, not yet submitted); SUBMITTED=Submitted to PRWS; PAID=Factory paid; REJECTED=Factory rejected)';
@@ -1417,21 +1417,21 @@ CREATE TABLE IF NOT EXISTS cdk_purchase_receipt_document (
     -- NOT NULL withheld on po_line_number: nullable=false per source but confidence=UNVERIFIED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_purchase_receipt_document.purchase_order_number IS '[U] Purchase Order Number';
-COMMENT ON COLUMN cdk_purchase_receipt_document.vendor_id IS '[I] Vendor ID';
+COMMENT ON COLUMN cdk_purchase_receipt_document.purchase_order_number IS '[U] Purchase Order Number [WIDENED per WIDENING-POLICY.md: SAP EKKO-EBELN is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_purchase_receipt_document.vendor_id IS '[I] Vendor ID [WIDENED per WIDENING-POLICY.md: SAP EKKO-LIFNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.po_date IS '[U] PO Date';
 COMMENT ON COLUMN cdk_purchase_receipt_document.po_line_number IS '[U] PO Line Number';
-COMMENT ON COLUMN cdk_purchase_receipt_document.part_number IS '[I] Part Number';
+COMMENT ON COLUMN cdk_purchase_receipt_document.part_number IS '[I] Part Number [WIDENED per WIDENING-POLICY.md: SAP EKPO-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.quantity_ordered IS '[U] Quantity Ordered';
 COMMENT ON COLUMN cdk_purchase_receipt_document.quantity_received IS '[I] Quantity Received';
-COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_document_number IS '[U] Receipt (GR) Document Number';
+COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_document_number IS '[U] Receipt (GR) Document Number [WIDENED per WIDENING-POLICY.md: SAP MKPF-MBLNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_date IS '[I] Receipt Date';
 COMMENT ON COLUMN cdk_purchase_receipt_document.asn_number IS '[I] Advance Ship Notice (ASN) Number';
 COMMENT ON COLUMN cdk_purchase_receipt_document.invoice_number IS '[I] Vendor Invoice Number';
 COMMENT ON COLUMN cdk_purchase_receipt_document.unit_cost IS '[U] Unit Cost (Invoiced)';
 COMMENT ON COLUMN cdk_purchase_receipt_document.three_way_match_status IS '[I] Three-Way Match Status (values: MATCHED=PO, receipt, and invoice all agree; QTY_VARIANCE=Quantity variance between receipt and invoice; PRICE_VARIANCE=Price variance between PO and invoice; UNMATCHED=Not yet matched)';
 COMMENT ON COLUMN cdk_purchase_receipt_document.ap_posting_gl_account IS '[I] AP Posting GL Account';
-COMMENT ON COLUMN cdk_purchase_receipt_document.movement_type_sap_analogue IS '[I] Movement Type (SAP Analogue)';
+COMMENT ON COLUMN cdk_purchase_receipt_document.movement_type_sap_analogue IS '[I] Movement Type (SAP Analogue) [WIDENED per WIDENING-POLICY.md: SAP MSEG-BWART is CHAR(3); DDL emits source-native 4]';
 COMMENT ON COLUMN cdk_purchase_receipt_document._rooftop_id IS '[D] which rooftop/store this extracted row belongs to';
 COMMENT ON COLUMN cdk_purchase_receipt_document._extracted_at IS '[D] when this row was pulled from CDK by the extract harness';
 COMMENT ON COLUMN cdk_purchase_receipt_document._source_route IS '[D] which of the three extract routes produced this row: fortellis | export | screen';

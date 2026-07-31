@@ -34,21 +34,21 @@ CREATE TABLE IF NOT EXISTS cdk_purchase_receipt_document (
     -- NOT NULL withheld on po_line_number: nullable=false per source but confidence=UNVERIFIED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_purchase_receipt_document.purchase_order_number IS '[U] Purchase Order Number';
-COMMENT ON COLUMN cdk_purchase_receipt_document.vendor_id IS '[I] Vendor ID';
+COMMENT ON COLUMN cdk_purchase_receipt_document.purchase_order_number IS '[U] Purchase Order Number [WIDENED per WIDENING-POLICY.md: SAP EKKO-EBELN is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_purchase_receipt_document.vendor_id IS '[I] Vendor ID [WIDENED per WIDENING-POLICY.md: SAP EKKO-LIFNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.po_date IS '[U] PO Date';
 COMMENT ON COLUMN cdk_purchase_receipt_document.po_line_number IS '[U] PO Line Number';
-COMMENT ON COLUMN cdk_purchase_receipt_document.part_number IS '[I] Part Number';
+COMMENT ON COLUMN cdk_purchase_receipt_document.part_number IS '[I] Part Number [WIDENED per WIDENING-POLICY.md: SAP EKPO-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.quantity_ordered IS '[U] Quantity Ordered';
 COMMENT ON COLUMN cdk_purchase_receipt_document.quantity_received IS '[I] Quantity Received';
-COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_document_number IS '[U] Receipt (GR) Document Number';
+COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_document_number IS '[U] Receipt (GR) Document Number [WIDENED per WIDENING-POLICY.md: SAP MKPF-MBLNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_purchase_receipt_document.receipt_date IS '[I] Receipt Date';
 COMMENT ON COLUMN cdk_purchase_receipt_document.asn_number IS '[I] Advance Ship Notice (ASN) Number';
 COMMENT ON COLUMN cdk_purchase_receipt_document.invoice_number IS '[I] Vendor Invoice Number';
 COMMENT ON COLUMN cdk_purchase_receipt_document.unit_cost IS '[U] Unit Cost (Invoiced)';
 COMMENT ON COLUMN cdk_purchase_receipt_document.three_way_match_status IS '[I] Three-Way Match Status (values: MATCHED=PO, receipt, and invoice all agree; QTY_VARIANCE=Quantity variance between receipt and invoice; PRICE_VARIANCE=Price variance between PO and invoice; UNMATCHED=Not yet matched)';
 COMMENT ON COLUMN cdk_purchase_receipt_document.ap_posting_gl_account IS '[I] AP Posting GL Account';
-COMMENT ON COLUMN cdk_purchase_receipt_document.movement_type_sap_analogue IS '[I] Movement Type (SAP Analogue)';
+COMMENT ON COLUMN cdk_purchase_receipt_document.movement_type_sap_analogue IS '[I] Movement Type (SAP Analogue) [WIDENED per WIDENING-POLICY.md: SAP MSEG-BWART is CHAR(3); DDL emits source-native 4]';
 COMMENT ON COLUMN cdk_purchase_receipt_document._rooftop_id IS '[D] which rooftop/store this extracted row belongs to';
 COMMENT ON COLUMN cdk_purchase_receipt_document._extracted_at IS '[D] when this row was pulled from CDK by the extract harness';
 COMMENT ON COLUMN cdk_purchase_receipt_document._source_route IS '[D] which of the three extract routes produced this row: fortellis | export | screen';

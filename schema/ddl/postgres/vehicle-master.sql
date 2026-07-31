@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS cdk_vehicle_master (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_vehicle_master.vehicle_id IS '[D] Vehicle ID';
+COMMENT ON COLUMN cdk_vehicle_master.vehicle_id IS '[D] Vehicle ID [WIDENED per WIDENING-POLICY.md: SAP EQUI-EQUNR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_vehicle_master.vin IS '[D] VIN';
 COMMENT ON COLUMN cdk_vehicle_master.license_plate_number IS '[D] License Plate Number';
 COMMENT ON COLUMN cdk_vehicle_master.make_code IS '[D] Make Code';

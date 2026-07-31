@@ -31,7 +31,13 @@ Resolution statuses:
 Type-compatibility verdicts (only meaningful when RESOLVED):
   OK                    CDK length fits within SAP length, and any currency/quantity
                         decimals convention matches
-  TRUNCATION_RISK       CDK field is longer than the SAP field can hold
+  TRUNCATION_RISK       CDK field is longer than the SAP field can hold, and no
+                        `widening` block is declared on the field in fields.json —
+                        an undeclared truncation risk. Fatal in validate_crosswalk.py.
+  WIDENED               CDK field is longer than the SAP field can hold, but the field
+                        carries a declared `widening` block (docs/model/WIDENING-POLICY.md):
+                        the spine keeps SAP semantics with the source-native width. Recorded,
+                        not silent — a PASS in validate_crosswalk.py, never a silent drop.
   PRECISION_MISMATCH    CDK field carries currency but SAP field is not 2-decimal CURR,
                         or CDK field carries quantity but SAP field is not 3-decimal QUAN
   N_A                   type compatibility not evaluated (not RESOLVED)
@@ -269,20 +275,54 @@ CDK_MAX_LEN_BY_TYPE_DEFAULT = None  # CDK length comes from the field itself
 
 def compare_types(cdk_field, sap_field_def):
     """
-    Returns (verdict, detail) where verdict in {OK, TRUNCATION_RISK, PRECISION_MISMATCH}.
+    Returns (verdict, detail, widening) where verdict in
+    {OK, TRUNCATION_RISK, WIDENED, PRECISION_MISMATCH} and `widening` is the
+    field's declared widening block (or None).
+
+    Widening policy (docs/model/WIDENING-POLICY.md): the sovereign spine keeps SAP
+    semantics with source-native widths. A field whose CDK length exceeds its SAP
+    analogue's length is only a fatal TRUNCATION_RISK when the excess is
+    *undeclared*. If the field carries a `widening` block recording the SAP length,
+    the source length, and the widened length actually emitted in DDL, the same
+    excess is a WIDENED pass — declared, not silent.
     """
     cdk_len = cdk_field.get("length")
     cdk_unit = cdk_field.get("unit")
     cdk_datatype = cdk_field.get("datatype")
+    widening = cdk_field.get("widening")
 
     sap_len = sap_field_def.get("length")
     sap_dec = sap_field_def.get("decimals") or 0
     sap_datatype = sap_field_def.get("datatype")
 
     issues = []
+    is_truncation = False
 
     if isinstance(cdk_len, int) and isinstance(sap_len, int) and cdk_len > sap_len:
-        issues.append(f"CDK length {cdk_len} > SAP {sap_datatype}({sap_len}) — truncation risk")
+        is_truncation = True
+        if (
+            isinstance(widening, dict)
+            and widening.get("sap_length") == sap_len
+            and widening.get("source_length") == cdk_len
+            and widening.get("widened_length") == cdk_len
+            and widening.get("reason")
+        ):
+            issues.append(
+                f"CDK length {cdk_len} > SAP {sap_datatype}({sap_len}) — declared widening "
+                f"to {widening.get('widened_length')}, recorded in WIDENING-POLICY.md: "
+                f"{widening.get('reason')}"
+            )
+        else:
+            detail = (
+                f"CDK length {cdk_len} > SAP {sap_datatype}({sap_len}) — truncation risk"
+            )
+            if widening is not None:
+                detail += (
+                    " (a `widening` block is present but does not match this pair "
+                    f"— expected sap_length={sap_len}, source_length={cdk_len}, "
+                    "widened_length=source_length, plus a reason; treated as undeclared)"
+                )
+            issues.append(detail)
 
     if cdk_unit == "currency":
         if sap_datatype != "CURR" or sap_dec != 2:
@@ -298,13 +338,24 @@ def compare_types(cdk_field, sap_field_def):
             )
 
     if not issues:
-        return "OK", None
+        return "OK", None, None
 
-    if any("truncation" in i for i in issues):
-        verdict = "TRUNCATION_RISK"
-    else:
-        verdict = "PRECISION_MISMATCH"
-    return verdict, "; ".join(issues)
+    precision_issues = [i for i in issues if "precision mismatch" in i]
+
+    if is_truncation:
+        declared = (
+            isinstance(widening, dict)
+            and widening.get("sap_length") == sap_len
+            and widening.get("source_length") == cdk_len
+            and widening.get("widened_length") == cdk_len
+            and widening.get("reason")
+        )
+        verdict = "WIDENED" if declared else "TRUNCATION_RISK"
+        detail = "; ".join(issues)
+        return verdict, detail, (widening if declared else None)
+
+    verdict = "PRECISION_MISMATCH"
+    return verdict, "; ".join(precision_issues), None
 
 
 # --------------------------------------------------------------------------------------
@@ -346,6 +397,7 @@ def build_rows(fields_doc, inventoried, defined):
                 "type_verdict": "N_A",
                 "type_detail": None,
                 "resolution_detail": None,
+                "widening": None,
             }
 
             if table is None:
@@ -395,9 +447,10 @@ def build_rows(fields_doc, inventoried, defined):
             row["sap_is_key"] = bool(fdef.get("key"))
             row["resolution_detail"] = f"resolved against {tdef['path']}"
 
-            verdict, detail = compare_types(f, fdef)
+            verdict, detail, widening = compare_types(f, fdef)
             row["type_verdict"] = verdict
             row["type_detail"] = detail
+            row["widening"] = widening
 
             rows.append(row)
 
@@ -414,11 +467,13 @@ def summarize(rows):
         by_module[mod] = by_module.get(mod, 0) + 1
         if r["type_verdict"] in ("TRUNCATION_RISK", "PRECISION_MISMATCH"):
             type_mismatch += 1
+    widened_count = sum(1 for r in rows if r["type_verdict"] == "WIDENED")
     return {
         "total_rows": len(rows),
         "by_status": dict(sorted(by_status.items())),
         "by_module": dict(sorted(by_module.items())),
         "type_mismatch_count": type_mismatch,
+        "widened_count": widened_count,
     }
 
 
@@ -428,7 +483,7 @@ CSV_COLUMNS = [
     "sap_field_raw", "sap_table", "sap_field", "sap_annotation",
     "sap_module", "sap_data_element", "sap_datatype", "sap_length",
     "sap_decimals", "sap_is_key", "status", "type_verdict", "type_detail",
-    "resolution_detail",
+    "resolution_detail", "widened_length", "widening_reason",
 ]
 
 
@@ -483,7 +538,11 @@ def main():
         w = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
         w.writeheader()
         for r in rows:
-            w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in CSV_COLUMNS})
+            flat = dict(r)
+            widening = r.get("widening") or {}
+            flat["widened_length"] = widening.get("widened_length")
+            flat["widening_reason"] = widening.get("reason")
+            w.writerow({k: ("" if flat.get(k) is None else flat.get(k)) for k in CSV_COLUMNS})
 
     eprint(f"wrote {json_path} ({len(rows)} rows)")
     eprint(f"wrote {csv_path}")

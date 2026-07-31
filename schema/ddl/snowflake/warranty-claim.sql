@@ -37,18 +37,18 @@ CREATE TABLE IF NOT EXISTS cdk_warranty_claim (
     -- NOT NULL withheld on vin: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_warranty_claim.claim_number IS '[U] Warranty Claim Number';
-COMMENT ON COLUMN cdk_warranty_claim.ro_number IS '[I] Source RO Number';
+COMMENT ON COLUMN cdk_warranty_claim.claim_number IS '[U] Warranty Claim Number [WIDENED per WIDENING-POLICY.md: SAP BSID-XBLNR is CHAR(16); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_warranty_claim.ro_number IS '[I] Source RO Number [WIDENED per WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_warranty_claim.vin IS '[I] Vehicle VIN';
-COMMENT ON COLUMN cdk_warranty_claim.causal_part_number IS '[I] Causal / Removed Part Number';
+COMMENT ON COLUMN cdk_warranty_claim.causal_part_number IS '[I] Causal / Removed Part Number [WIDENED per WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_warranty_claim.claim_category_code IS '[I] Claim Category Code';
 COMMENT ON COLUMN cdk_warranty_claim.concern_text IS '[I] Concern Narrative';
 COMMENT ON COLUMN cdk_warranty_claim.cause_text IS '[I] Cause Narrative';
 COMMENT ON COLUMN cdk_warranty_claim.correction_text IS '[I] Correction Narrative';
-COMMENT ON COLUMN cdk_warranty_claim.srt_code IS '[I] SRT (Standard Repair Time) Code';
+COMMENT ON COLUMN cdk_warranty_claim.srt_code IS '[I] SRT (Standard Repair Time) Code [WIDENED per WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_warranty_claim.claim_story_text IS '[I] Claim Story Text';
 COMMENT ON COLUMN cdk_warranty_claim.campaign_number IS '[I] Campaign Number';
-COMMENT ON COLUMN cdk_warranty_claim.failure_code IS '[I] Failure Code';
+COMMENT ON COLUMN cdk_warranty_claim.failure_code IS '[I] Failure Code [WIDENED per WIDENING-POLICY.md: SAP QMFE-FEGRP is CHAR(8); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_warranty_claim.submission_window_days IS '[I] Submission Window (Days)';
 COMMENT ON COLUMN cdk_warranty_claim.claim_type IS '[I] Claim Type (values: QUICK=Quick Claim (pre-coded campaign/failure code); LONG=Long-form claim (manual narrative entry))';
 COMMENT ON COLUMN cdk_warranty_claim.claim_status IS '[U] Claim Status (values: DRAFT=Draft (created from RO, not yet submitted); SUBMITTED=Submitted to PRWS; PAID=Factory paid; REJECTED=Factory rejected)';

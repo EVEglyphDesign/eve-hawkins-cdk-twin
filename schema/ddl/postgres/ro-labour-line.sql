@@ -71,7 +71,7 @@ COMMENT ON COLUMN cdk_ro_labour_line.estimated_duration_hours IS '[D] Estimated 
 COMMENT ON COLUMN cdk_ro_labour_line.story_text IS '[D] Technician Story Text';
 COMMENT ON COLUMN cdk_ro_labour_line.story_sequence_number IS '[D] Story Sequence Number';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_op_sequence_number IS '[D] Labor Operation Sequence Number';
-COMMENT ON COLUMN cdk_ro_labour_line.labor_op_code IS '[D] Labor Operation Code';
+COMMENT ON COLUMN cdk_ro_labour_line.labor_op_code IS '[D] Labor Operation Code [WIDENED per WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_op_desc IS '[D] Labor Operation Description';
 COMMENT ON COLUMN cdk_ro_labour_line.labor_type_code IS '[D] Labor Type Code';
 COMMENT ON COLUMN cdk_ro_labour_line.technician_ids IS '[D] Technician ID(s)';

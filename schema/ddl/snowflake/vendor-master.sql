@@ -29,16 +29,16 @@ CREATE TABLE IF NOT EXISTS cdk_vendor_master (
     -- NOT NULL withheld on vendor_id: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_vendor_master.vendor_id IS '[I] Vendor ID';
-COMMENT ON COLUMN cdk_vendor_master.vendor_name IS '[I] Vendor Name';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_address_line1 IS '[I] Remit-To Address Line 1';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_city IS '[I] Remit-To City';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_state IS '[I] Remit-To State';
-COMMENT ON COLUMN cdk_vendor_master.remit_to_postal_code IS '[I] Remit-To Postal Code';
-COMMENT ON COLUMN cdk_vendor_master.tax_id_1099 IS '[I] 1099 Tax ID';
-COMMENT ON COLUMN cdk_vendor_master.gst_hst_number IS '[I] GST/HST Number';
+COMMENT ON COLUMN cdk_vendor_master.vendor_id IS '[I] Vendor ID [WIDENED per WIDENING-POLICY.md: SAP LFA1-LIFNR is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_vendor_master.vendor_name IS '[I] Vendor Name [WIDENED per WIDENING-POLICY.md: SAP LFA1-NAME1 is CHAR(35); DDL emits source-native 80]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_address_line1 IS '[I] Remit-To Address Line 1 [WIDENED per WIDENING-POLICY.md: SAP LFA1-STRAS is CHAR(35); DDL emits source-native 60]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_city IS '[I] Remit-To City [WIDENED per WIDENING-POLICY.md: SAP LFA1-ORT01 is CHAR(35); DDL emits source-native 40]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_state IS '[I] Remit-To State [WIDENED per WIDENING-POLICY.md: SAP LFA1-REGIO is CHAR(3); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_vendor_master.remit_to_postal_code IS '[I] Remit-To Postal Code [WIDENED per WIDENING-POLICY.md: SAP LFA1-PSTLZ is CHAR(10); DDL emits source-native 15]';
+COMMENT ON COLUMN cdk_vendor_master.tax_id_1099 IS '[I] 1099 Tax ID [WIDENED per WIDENING-POLICY.md: SAP LFA1-STCD1 is CHAR(16); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_vendor_master.gst_hst_number IS '[I] GST/HST Number [WIDENED per WIDENING-POLICY.md: SAP LFA1-STCD3 is CHAR(18); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_vendor_master.vendor_class IS '[U] Vendor Classification (values: OEM=OEM/factory vendor (e.g. PACCAR); SUBLET=Sublet repair vendor; TRADE=Local trade vendor; OTHER=Other/general vendor)';
-COMMENT ON COLUMN cdk_vendor_master.payment_terms IS '[I] Payment Terms';
+COMMENT ON COLUMN cdk_vendor_master.payment_terms IS '[I] Payment Terms [WIDENED per WIDENING-POLICY.md: SAP LFB1-ZTERM is CHAR(4); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_vendor_master.ap_control_gl_account IS '[I] AP Control GL Account';
 COMMENT ON COLUMN cdk_vendor_master.vendor_status IS '[U] Vendor Status (values: ACTIVE=Active vendor; HOLD=Payment hold; INACTIVE=Inactive/closed)';
 COMMENT ON COLUMN cdk_vendor_master._rooftop_id IS '[D] which rooftop/store this extracted row belongs to';

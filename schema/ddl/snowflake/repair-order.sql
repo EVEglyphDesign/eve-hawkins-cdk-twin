@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS cdk_repair_order (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_repair_order.ro_number IS '[D] Repair Order Number';
+COMMENT ON COLUMN cdk_repair_order.ro_number IS '[D] Repair Order Number [WIDENED per WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_repair_order.host_item_id IS '[D] Host Item ID';
 COMMENT ON COLUMN cdk_repair_order.status_code IS '[D] Status Code';
 COMMENT ON COLUMN cdk_repair_order.status_desc IS '[D] Status Description';

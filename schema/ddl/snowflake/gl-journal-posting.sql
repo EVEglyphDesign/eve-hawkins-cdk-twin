@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS cdk_gl_journal_posting (
     -- NOT NULL withheld on posting_date: nullable=false per source but confidence=INFERRED (never enforce a constraint on an inference)
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_gl_journal_posting.document_number IS '[I] Document Number';
-COMMENT ON COLUMN cdk_gl_journal_posting.journal_number IS '[I] Journal Number';
+COMMENT ON COLUMN cdk_gl_journal_posting.document_number IS '[I] Document Number [WIDENED per WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); DDL emits source-native 20]';
+COMMENT ON COLUMN cdk_gl_journal_posting.journal_number IS '[I] Journal Number [WIDENED per WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); DDL emits source-native 20]';
 COMMENT ON COLUMN cdk_gl_journal_posting.journal_type IS '[D] Journal Type (values: STANDARD_ENTRIES=Standard Entries Journal; CASH_RECEIPTS=Cash Receipts Journal; CASH_DISBURSEMENTS=Cash Disbursements Journal; PURCHASE=Purchase Journal; PAYROLL=Payroll Journal; NEW_VEHICLE_SALES_PURCHASE=New Vehicle Sales/Purchase Journal; USED_CAR_SALES=Used Car Sales Journal; INTERNAL_SALES=Internal Sales Journal; SERVICE_SALES_CASH=Service Sales (Cash) Journal; SERVICE_SALES_CHARGE=Service Sales (Charge) Journal; WARRANTY_SALES=Warranty Sales Journal; PARTS_SALES_CASH=Parts Sales (Cash) Journal; PARTS_SALES_CHARGE=Parts Sales (Charge) Journal; DEALER_EXCHANGE=Dealer Exchange Journal; STATISTICAL_DATA=Statistical Data Journal; GENERAL_JOURNAL_ENTRY=General Journal Entry)';
 COMMENT ON COLUMN cdk_gl_journal_posting.gl_account_number IS '[I] GL Account Number';
-COMMENT ON COLUMN cdk_gl_journal_posting.schedule_field IS '[I] Schedule Field / Control Reference';
+COMMENT ON COLUMN cdk_gl_journal_posting.schedule_field IS '[I] Schedule Field / Control Reference [WIDENED per WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_gl_journal_posting.adjust_to_gl_account IS '[I] Adjust-To GL Account';
 COMMENT ON COLUMN cdk_gl_journal_posting.posting_date IS '[I] Posting Date';
 COMMENT ON COLUMN cdk_gl_journal_posting.debit_amount IS '[I] Debit Amount';

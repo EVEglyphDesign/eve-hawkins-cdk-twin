@@ -13,12 +13,19 @@ Reads docs/model/sap-crosswalk.json (contract EgD-CDK-SAP-XWALK-v1) and docs/mod
      debit/credit amount, GL account, posting date), and schedule control key / open
      amount (accounting-schedule control key fields and open item amount). "Unresolved"
      means: no sap_field at all, or a sap_field present but status != RESOLVED.
-  3. Any RESOLVED pair carries a TRUNCATION_RISK type verdict.
+  3. Any RESOLVED pair carries a TRUNCATION_RISK type verdict -- i.e. an UNDECLARED
+     truncation risk. A RESOLVED pair carrying a WIDENED verdict is NOT fatal: per
+     docs/model/WIDENING-POLICY.md, the sovereign spine deliberately keeps SAP semantics
+     with source-native field widths, and a widening that is declared and recorded (a
+     `widening` block on the field, with matching sap_length/source_length/widened_length
+     and a stated reason) is exactly the intended, safe outcome -- silently truncating a
+     real dealer value to fit a legacy SAP length would be the actual defect.
 
 This validator does not evaluate PRECISION_MISMATCH as fatal on its own (surfaced as a
 warning) because a currency/quantity precision mismatch is routinely fixable at load time
 with a cast, whereas truncation silently drops data. Ledger-critical failures and
-truncation risk are load-breaking; precision mismatches are load-review items.
+undeclared truncation risk are load-breaking; precision mismatches are load-review items;
+declared widening is a pass.
 
 Exit code 0 = pass. Exit code 1 = fail (real gaps reported). Exit code 2 = usage/input error.
 
@@ -134,13 +141,36 @@ def main():
                 f"(status={statuses}, sap_field_raw={raws})."
             )
 
-    # --- Check 3: any RESOLVED pair with TRUNCATION_RISK is fatal.
+    # --- Check 3: any RESOLVED pair with an UNDECLARED TRUNCATION_RISK is fatal.
+    # A declared widening (type_verdict == WIDENED, carrying a `widening` block per
+    # docs/model/WIDENING-POLICY.md) is deliberately NOT in this failing set -- it is the
+    # policy-sanctioned outcome, recorded rather than silent. Defensively re-check the
+    # widening block's shape here too, not just trust the generator's classification: a
+    # WIDENED row with a missing/malformed widening block is still treated as failing.
     truncation_rows = [r for r in rows if r["status"] == "RESOLVED" and r["type_verdict"] == "TRUNCATION_RISK"]
     for r in truncation_rows:
         failures.append(
             f"[truncation] {r['cdk_entity_id']}.{r['cdk_path']} -> {r['sap_table']}-{r['sap_field']}: "
             f"{r['type_detail']}"
         )
+
+    widened_rows = [r for r in rows if r["status"] == "RESOLVED" and r["type_verdict"] == "WIDENED"]
+    for r in widened_rows:
+        w = r.get("widening") or {}
+        ok = (
+            isinstance(w, dict)
+            and w.get("sap_length") == r.get("sap_length")
+            and w.get("source_length") == r.get("cdk_length")
+            and w.get("widened_length") == r.get("cdk_length")
+            and w.get("reason")
+        )
+        if not ok:
+            failures.append(
+                f"[truncation] {r['cdk_entity_id']}.{r['cdk_path']} -> {r['sap_table']}-{r['sap_field']}: "
+                "marked WIDENED but the widening block is missing or malformed "
+                "(needs sap_length, source_length, widened_length==source_length, and a reason) "
+                "-- treated as an undeclared truncation risk."
+            )
 
     # --- Non-fatal: precision mismatches, surfaced as warnings.
     precision_rows = [r for r in rows if r["status"] == "RESOLVED" and r["type_verdict"] == "PRECISION_MISMATCH"]
@@ -153,7 +183,8 @@ def main():
     print(f"Crosswalk validation — {len(rows)} rows checked from {args.crosswalk}")
     print(f"  entities with sap_field references: {len(entities_with_sap_field)}")
     print(f"  ledger-critical fields checked: {len(LEDGER_CRITICAL)}")
-    print(f"  truncation-risk rows: {len(truncation_rows)}")
+    print(f"  truncation-risk rows (undeclared, fatal): {len(truncation_rows)}")
+    print(f"  widened rows (declared per WIDENING-POLICY.md, pass): {len(widened_rows)}")
     print(f"  precision-mismatch rows (warning only): {len(precision_rows)}")
     print()
 

@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS cdk_accounting_schedule (
 COMMENT ON COLUMN cdk_accounting_schedule.schedule_id IS '[I] Schedule ID';
 COMMENT ON COLUMN cdk_accounting_schedule.gl_account_number IS '[D] Controlling GL Account';
 COMMENT ON COLUMN cdk_accounting_schedule.control_key_type IS '[D] Control Key Type (values: RO_NUMBER=Repair order number; CLAIM_NUMBER=Warranty claim number; STOCK_NUMBER=Vehicle stock number; VIN_LAST8=Last 8 characters of VIN; CUSTOMER_ID=Customer ID; DEAL_CONTRACT_NUMBER=Deal/contract reference number; REFERENCE_DOC_NUMBER=General reference/document number)';
-COMMENT ON COLUMN cdk_accounting_schedule.control_key_value IS '[D] Control Key Value';
+COMMENT ON COLUMN cdk_accounting_schedule.control_key_value IS '[D] Control Key Value [WIDENED per WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_accounting_schedule.open_item_amount IS '[D] Open Item Amount';
 COMMENT ON COLUMN cdk_accounting_schedule.aging_bucket IS '[D] Aging Bucket (values: CURRENT=0-29 days; 30=30-59 days; 60=60-89 days; 90=90-119 days; 120_PLUS=120+ days)';
 COMMENT ON COLUMN cdk_accounting_schedule.posting_date IS '[D] Posting Date';

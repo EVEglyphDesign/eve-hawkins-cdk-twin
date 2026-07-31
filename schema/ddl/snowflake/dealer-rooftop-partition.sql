@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS cdk_dealer_rooftop_partition (
 );
 
 -- Column comments (dealer-language label + confidence mark: [D]=documented [I]=inferred [U]=unverified)
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.subscription_id IS '[D] Subscription-Id';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.department_id IS '[D] Department-Id';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.subscription_id IS '[D] Subscription-Id [WIDENED per WIDENING-POLICY.md: SAP T000-MANDT is CHAR(3); DDL emits source-native 64]';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.department_id IS '[D] Department-Id [WIDENED per WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); DDL emits source-native 32]';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.request_id IS '[D] Request-Id';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.company_number IS '[U] Co #';
-COMMENT ON COLUMN cdk_dealer_rooftop_partition.cmf_client_number IS '[U] Client #';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.company_number IS '[U] Co # [WIDENED per WIDENING-POLICY.md: SAP T001-BUKRS is CHAR(4); DDL emits source-native 10]';
+COMMENT ON COLUMN cdk_dealer_rooftop_partition.cmf_client_number IS '[U] Client # [WIDENED per WIDENING-POLICY.md: SAP T000-MANDT is CHAR(3); DDL emits source-native 10]';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.dms_type IS '[D] DMS Type (values: Accounting=Accounting DMS module; Finance=Finance/F&I DMS module; Inventory=Vehicle inventory DMS module; Parts=Parts DMS module; Service=Service DMS module)';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.rooftop_name IS '[I] Dealer Name';
 COMMENT ON COLUMN cdk_dealer_rooftop_partition.rooftop_address IS '[I] Dealer Address';
