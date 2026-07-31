@@ -252,6 +252,7 @@ function renderLayers(){
         <div class="p-meta">
           ${apiPill(p.api_reach)}
           ${p.field_count!=null ? `<span class="pill">${p.field_count} fields</span>` : ''}
+          ${(CROSSWALK && CROSSWALK.perLayer && CROSSWALK.perLayer[p.cdk_entity_id]) ? `<span class="pill" title="Live, from sap-crosswalk.json">${CROSSWALK.perLayer[p.cdk_entity_id].resolved}/${CROSSWALK.perLayer[p.cdk_entity_id].total} fields resolved to SAP</span>` : ''}
         </div>
         <div class="p-detail">
           <div class="p-row"><div class="k">SAP table(s)</div><div class="v">${sapChips}</div></div>
@@ -350,22 +351,38 @@ fetch('alignment.json').then(r=>r.json()).then(d=>{
   renderGaps();
   renderLinks();
 
-  // Optional: live crosswalk from Lane G, degrade silently if absent.
+  // Optional: live crosswalk from Lane G (contract EgD-CDK-SAP-XWALK-v1), degrade silently if absent/changed shape.
   fetch('../model/sap-crosswalk.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(cw=>{
     try{
-      let resolved=0, unresolved=0, unresolvedList=[];
-      const items = Array.isArray(cw) ? cw : (cw.items || cw.mappings || cw.entries || []);
-      items.forEach(it=>{
-        const ok = it.resolved===true || (it.sap_table && it.status!=='unresolved');
-        if(ok) resolved++; else { unresolved++; if(unresolvedList.length<8) unresolvedList.push(it.label||it.entity_id||it.sap_table||JSON.stringify(it).slice(0,80)); }
+      const rows = Array.isArray(cw) ? cw : (cw.rows || cw.items || cw.mappings || cw.entries || []);
+      if(!rows.length) throw 0;
+      const summary = cw.summary || null;
+      let resolved=0, unresolved=0;
+      const perLayer = {};
+      const unresolvedList = [];
+      rows.forEach(r=>{
+        const isResolved = r.status === 'RESOLVED';
+        if(isResolved) resolved++; else unresolved++;
+        if(!isResolved && unresolvedList.length<10 && r.status !== 'NO_SAP_ANALOGUE'){
+          unresolvedList.push(`${r.cdk_entity_name||r.cdk_entity_id||''} — ${r.cdk_path||''} (${r.status})`);
+        }
+        const eid = r.cdk_entity_id;
+        if(eid){
+          perLayer[eid] = perLayer[eid] || {resolved:0, total:0};
+          perLayer[eid].total++;
+          if(isResolved) perLayer[eid].resolved++;
+        }
       });
+      const total = summary ? summary.total_rows : rows.length;
+      const byStatus = summary && summary.by_status ? Object.entries(summary.by_status).map(([k,v])=>`${v} ${k.replace(/_/g,' ').toLowerCase()}`).join(' · ') : '';
       CROSSWALK = {
-        summary: `Live crosswalk found (<code>docs/model/sap-crosswalk.json</code>): ${resolved} resolved, ${unresolved} unresolved across ${items.length} mapped items.`,
+        perLayer,
+        summary: `Live crosswalk found (<a href="../model/sap-crosswalk.json" target="_blank" rel="noopener"><code>docs/model/sap-crosswalk.json</code></a>, contract ${esc(cw.contract||'EgD-CDK-SAP-XWALK-v1')}): ${resolved} resolved / ${total} total field-level mappings. Breakdown: ${esc(byStatus)}.`,
         unresolved_examples: unresolvedList
       };
       renderLayers();
       renderGaps();
-    }catch(e){ /* malformed crosswalk — degrade silently */ }
+    }catch(e){ /* malformed or absent crosswalk — degrade silently */ }
   }).catch(()=>{ /* not present yet — degrade silently, this is expected until Lane G publishes it */ });
 }).catch(()=>{
   $('#layer-list').innerHTML = '<p>The alignment data could not be loaded. Open it directly: <a href="alignment.json">alignment.json</a></p>';
