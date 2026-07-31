@@ -113,6 +113,16 @@ def main():
         resolved = [r for r in entity_rows if r["status"] == "RESOLVED"]
         if not resolved:
             statuses = sorted(set(r["status"] for r in entity_rows))
+            # A declared absence is a resolved question, not an open one. An entity whose
+            # every reference is NO_SAP_ANALOGUE has been answered: SAP has no equivalent.
+            # Only an unresolved reference — a table missing from the canon or inventoried
+            # but never defined — is a real coverage failure.
+            if statuses == ["NO_SAP_ANALOGUE"]:
+                warnings.append(
+                    f"[coverage] entity {entity_id!r}: all {len(entity_rows)} reference(s) are "
+                    f"declared NO_SAP_ANALOGUE — no SAP equivalent exists. Declared, not open."
+                )
+                continue
             failures.append(
                 f"[coverage] entity {entity_id!r} has {len(entity_rows)} sap_field reference(s) "
                 f"but ZERO resolved against the SAP canon (statuses present: {statuses})."

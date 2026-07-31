@@ -1,5 +1,5 @@
 -- 000_all.sql -- rollup of every Lane F Postgres DDL file
--- generated 2026-07-31T04:54:24Z by schema/bin/gen_ddl.py from docs/model/fields.json
+-- generated 2026-07-31T05:02:05Z by schema/bin/gen_ddl.py from docs/model/fields.json
 -- Run this file to build the full load-ready schema in one pass.
 
 -- cdk_dealer_rooftop_partition (dealer-rooftop-partition) -- Dealer Rooftop Partition

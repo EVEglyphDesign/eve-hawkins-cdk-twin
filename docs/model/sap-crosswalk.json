@@ -1,17 +1,17 @@
 {
-  "generated": "2026-07-31T04:54:24Z",
+  "generated": "2026-07-31T05:02:05Z",
   "contract": "EgD-CDK-SAP-XWALK-v1",
   "source": {
     "cdk_fields": "docs/model/fields.json",
     "cdk_fields_contract": "EgD-CDK-FIELDS-v2",
-    "sap_modules_dir": "../eve-datasphere-sovereign-fresh/schema/sap-modules"
+    "sap_modules_dir": "../ds/schema/sap-modules"
   },
   "summary": {
     "total_rows": 134,
     "by_status": {
       "NO_SAP_ANALOGUE": 30,
-      "RESOLVED": 92,
-      "TABLE_INVENTORIED_NOT_DEFINED": 11,
+      "RESOLVED": 96,
+      "TABLE_INVENTORIED_NOT_DEFINED": 7,
       "TABLE_MISSING": 1
     },
     "by_module": {
@@ -50,7 +50,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 64 > SAP CLNT(3) \u2014 declared widening to 64, recorded in WIDENING-POLICY.md: SAP T000-MANDT is a 3-character client (Mandant) code; the CDK subscriptionId is a much longer DMS subscription/tenant identifier. T000 is the correct semantic anchor for 'which tenant does this belong to' even though CDK's own tenant key format is far wider than SAP's classic 3-digit client.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/cross/tables/T000.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/cross/tables/T000.yaml",
       "widening": {
         "sap_table": "T000",
         "sap_field": "MANDT",
@@ -82,7 +82,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/CSKS.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/CSKS.yaml",
       "widening": {
         "sap_table": "CSKS",
         "sap_field": "KOSTL",
@@ -114,7 +114,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP T001-BUKRS is a 4-character company code; the CDK companyNumber can run to 10 characters in the dealer's own numbering. Keeps T001 as the semantic anchor, source-native width in DDL.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/cross/tables/T001.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/cross/tables/T001.yaml",
       "widening": {
         "sap_table": "T001",
         "sap_field": "BUKRS",
@@ -146,7 +146,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CLNT(3) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: Same tenant/client concept as header.subscriptionId -- SAP T000-MANDT is CHAR(3), CDK's CMF client number is up to 10 characters.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/cross/tables/T000.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/cross/tables/T000.yaml",
       "widening": {
         "sap_table": "T000",
         "sap_field": "MANDT",
@@ -253,7 +253,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/CSKS.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/CSKS.yaml",
       "widening": null
     },
     {
@@ -278,7 +278,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP CSKS-KOSTL is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/CSKS.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/CSKS.yaml",
       "widening": {
         "sap_table": "CSKS",
         "sap_field": "KOSTL",
@@ -335,7 +335,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 60 > SAP CHAR(20) \u2014 declared widening to 60, recorded in WIDENING-POLICY.md: SAP CSKT-KTEXT is CHAR(20); the CDK/dealer-native value for this field can genuinely run up to 60 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (60) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/CSKT.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/CSKT.yaml",
       "widening": {
         "sap_table": "CSKT",
         "sap_field": "KTEXT",
@@ -417,7 +417,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/CSKS.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/CSKS.yaml",
       "widening": null
     },
     {
@@ -442,7 +442,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "KUNNR",
@@ -474,7 +474,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP KNA1-KUNNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "KUNNR",
@@ -506,7 +506,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 declared widening to 40, recorded in WIDENING-POLICY.md: SAP KNA1-NAME2 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 40 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (40) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "NAME2",
@@ -538,7 +538,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 declared widening to 40, recorded in WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 40 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (40) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "NAME1",
@@ -570,7 +570,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 80 > SAP CHAR(35) \u2014 declared widening to 80, recorded in WIDENING-POLICY.md: SAP KNA1-NAME1 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 80 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (80) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "NAME1",
@@ -627,7 +627,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 60 > SAP CHAR(35) \u2014 declared widening to 60, recorded in WIDENING-POLICY.md: SAP KNA1-STRAS is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 60 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (60) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "STRAS",
@@ -659,7 +659,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 declared widening to 40, recorded in WIDENING-POLICY.md: SAP KNA1-ORT01 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 40 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (40) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "ORT01",
@@ -691,7 +691,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(3) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP KNA1-REGIO is CHAR(3); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "REGIO",
@@ -723,7 +723,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 15 > SAP CHAR(10) \u2014 declared widening to 15, recorded in WIDENING-POLICY.md: SAP KNA1-PSTLZ is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 15 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (15) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "PSTLZ",
@@ -755,7 +755,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 40 > SAP CHAR(3) \u2014 declared widening to 40, recorded in WIDENING-POLICY.md: SAP KNA1-LAND1 is CHAR(3); the CDK/dealer-native value for this field can genuinely run up to 40 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (40) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "LAND1",
@@ -787,7 +787,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP KNA1-TELF1 is CHAR(16); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "TELF1",
@@ -819,7 +819,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP KNA1-TELF2 is CHAR(16); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": {
         "sap_table": "KNA1",
         "sap_field": "TELF2",
@@ -876,7 +876,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": null
     },
     {
@@ -901,7 +901,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/KNA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml",
       "widening": null
     },
     {
@@ -951,7 +951,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSID.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSID.yaml",
       "widening": null
     },
     {
@@ -1001,7 +1001,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(18) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP EQUI-EQUNR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pm/tables/EQUI.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/EQUI.yaml",
       "widening": {
         "sap_table": "EQUI",
         "sap_field": "EQUNR",
@@ -1033,7 +1033,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pm/tables/EQUI.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/EQUI.yaml",
       "widening": null
     },
     {
@@ -1049,16 +1049,16 @@
       "sap_table": "PA0001",
       "sap_field": "PERNR",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
+      "sap_data_element": "PERSNO",
+      "sap_datatype": "NUMC",
+      "sap_length": 8,
+      "sap_decimals": 0,
+      "sap_is_key": true,
       "sap_module": "HR",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "PA0001 is named in TABLES.yaml (HR) but has no field-level tables/<TABLE>.yaml yet.",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/hr/tables/PA0001.yaml",
       "widening": null
     },
     {
@@ -1083,7 +1083,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP LFA1-LIFNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "LIFNR",
@@ -1115,7 +1115,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 80 > SAP CHAR(35) \u2014 declared widening to 80, recorded in WIDENING-POLICY.md: SAP LFA1-NAME1 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 80 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (80) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "NAME1",
@@ -1147,7 +1147,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 60 > SAP CHAR(35) \u2014 declared widening to 60, recorded in WIDENING-POLICY.md: SAP LFA1-STRAS is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 60 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (60) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "STRAS",
@@ -1179,7 +1179,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 declared widening to 40, recorded in WIDENING-POLICY.md: SAP LFA1-ORT01 is CHAR(35); the CDK/dealer-native value for this field can genuinely run up to 40 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (40) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "ORT01",
@@ -1211,7 +1211,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(3) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP LFA1-REGIO is CHAR(3); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "REGIO",
@@ -1243,7 +1243,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 15 > SAP CHAR(10) \u2014 declared widening to 15, recorded in WIDENING-POLICY.md: SAP LFA1-PSTLZ is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 15 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (15) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "PSTLZ",
@@ -1275,7 +1275,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP LFA1-STCD1 is CHAR(16); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "STCD1",
@@ -1307,7 +1307,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP LFA1-STCD3 is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": {
         "sap_table": "LFA1",
         "sap_field": "STCD3",
@@ -1339,7 +1339,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": null
     },
     {
@@ -1364,7 +1364,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(4) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP LFB1-ZTERM is CHAR(4); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFB1.yaml",
       "widening": {
         "sap_table": "LFB1",
         "sap_field": "ZTERM",
@@ -1396,7 +1396,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFB1.yaml",
       "widening": null
     },
     {
@@ -1421,7 +1421,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/LFA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml",
       "widening": null
     },
     {
@@ -1446,7 +1446,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKA1.yaml",
       "widening": null
     },
     {
@@ -1521,7 +1521,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 60 > SAP CHAR(50) \u2014 declared widening to 60, recorded in WIDENING-POLICY.md: SAP SKAT-TXT50 (GL account long text) is CHAR(50) as its name implies; the CDK accountName field can hold up to 60 characters. Widened to avoid truncating a real dealer-entered account description.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKAT.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKAT.yaml",
       "widening": {
         "sap_table": "SKAT",
         "sap_field": "TXT50",
@@ -1553,7 +1553,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKA1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKA1.yaml",
       "widening": null
     },
     {
@@ -1578,7 +1578,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml",
       "widening": null
     },
     {
@@ -1603,7 +1603,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml",
       "widening": null
     },
     {
@@ -1653,7 +1653,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml",
       "widening": null
     },
     {
@@ -1703,7 +1703,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml",
       "widening": null
     },
     {
@@ -1728,7 +1728,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -1753,7 +1753,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(18) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": {
         "sap_table": "BSEG",
         "sap_field": "ZUONR",
@@ -1785,7 +1785,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSID.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSID.yaml",
       "widening": null
     },
     {
@@ -1835,7 +1835,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml",
       "widening": null
     },
     {
@@ -1910,7 +1910,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -1935,7 +1935,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml",
       "widening": {
         "sap_table": "BKPF",
         "sap_field": "BELNR",
@@ -1967,7 +1967,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP BKPF-BELNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml",
       "widening": {
         "sap_table": "BKPF",
         "sap_field": "BELNR",
@@ -1999,7 +1999,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml",
       "widening": null
     },
     {
@@ -2024,7 +2024,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -2049,7 +2049,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 32 > SAP CHAR(18) \u2014 declared widening to 32, recorded in WIDENING-POLICY.md: SAP BSEG-ZUONR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 32 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (32) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": {
         "sap_table": "BSEG",
         "sap_field": "ZUONR",
@@ -2081,7 +2081,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -2106,7 +2106,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml",
       "widening": null
     },
     {
@@ -2131,7 +2131,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -2156,7 +2156,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -2231,7 +2231,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(12) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/AUFK.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml",
       "widening": {
         "sap_table": "AUFK",
         "sap_field": "AUFNR",
@@ -2263,7 +2263,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/AUFK.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml",
       "widening": null
     },
     {
@@ -2288,7 +2288,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/AUFK.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml",
       "widening": null
     },
     {
@@ -2313,7 +2313,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pp/tables/AFVC.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFVC.yaml",
       "widening": {
         "sap_table": "AFVC",
         "sap_field": "STEUS",
@@ -2345,7 +2345,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/AUFK.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml",
       "widening": null
     },
     {
@@ -2370,7 +2370,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARA.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml",
       "widening": {
         "sap_table": "MARA",
         "sap_field": "MATNR",
@@ -2452,7 +2452,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP MARA-MTPOS_MARA is CHAR(4); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARA.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml",
       "widening": {
         "sap_table": "MARA",
         "sap_field": "MTPOS_MARA",
@@ -2484,7 +2484,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MBEW.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MBEW.yaml",
       "widening": null
     },
     {
@@ -2534,7 +2534,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARA.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml",
       "widening": null
     },
     {
@@ -2559,7 +2559,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARA.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml",
       "widening": {
         "sap_table": "MARA",
         "sap_field": "MATNR",
@@ -2666,7 +2666,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MBEW.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MBEW.yaml",
       "widening": null
     },
     {
@@ -2691,7 +2691,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARC.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARC.yaml",
       "widening": null
     },
     {
@@ -2716,7 +2716,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARC.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARC.yaml",
       "widening": null
     },
     {
@@ -2732,16 +2732,16 @@
       "sap_table": "AFRU",
       "sap_field": "PERNR",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
+      "sap_data_element": "CO_PERNR",
+      "sap_datatype": "NUMC",
+      "sap_length": 8,
+      "sap_decimals": 0,
+      "sap_is_key": false,
       "sap_module": "PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AFRU is named in TABLES.yaml (PP) but has no field-level tables/<TABLE>.yaml yet.",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFRU.yaml",
       "widening": null
     },
     {
@@ -2757,16 +2757,16 @@
       "sap_table": "AFRU",
       "sap_field": "ISDD",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
+      "sap_data_element": "RU_ISDD",
+      "sap_datatype": "DATS",
+      "sap_length": 8,
+      "sap_decimals": 0,
+      "sap_is_key": false,
       "sap_module": "PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AFRU is named in TABLES.yaml (PP) but has no field-level tables/<TABLE>.yaml yet.",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFRU.yaml",
       "widening": null
     },
     {
@@ -2782,16 +2782,16 @@
       "sap_table": "AFRU",
       "sap_field": "ISMNW",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
+      "sap_data_element": "ISMNW",
+      "sap_datatype": "QUAN",
+      "sap_length": 7,
+      "sap_decimals": 1,
+      "sap_is_key": false,
       "sap_module": "PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AFRU is named in TABLES.yaml (PP) but has no field-level tables/<TABLE>.yaml yet.",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFRU.yaml",
       "widening": null
     },
     {
@@ -2841,7 +2841,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP BSID-XBLNR (reference document number) is CHAR(16); the CDK warranty claim number can run to 20 characters in OEM/DMS claim-numbering schemes. BSID is the correct open-item-document semantic anchor even though the claim number itself is wider than SAP's reference-field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSID.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSID.yaml",
       "widening": {
         "sap_table": "BSID",
         "sap_field": "XBLNR",
@@ -2873,7 +2873,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(12) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP AUFK-AUFNR is CHAR(12); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/co/tables/AUFK.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml",
       "widening": {
         "sap_table": "AUFK",
         "sap_field": "AUFNR",
@@ -2905,7 +2905,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pm/tables/EQUI.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/EQUI.yaml",
       "widening": null
     },
     {
@@ -2930,7 +2930,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP MARA-MATNR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MARA.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml",
       "widening": {
         "sap_table": "MARA",
         "sap_field": "MATNR",
@@ -3062,7 +3062,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP AFVC-STEUS is CHAR(4); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pp/tables/AFVC.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFVC.yaml",
       "widening": {
         "sap_table": "AFVC",
         "sap_field": "STEUS",
@@ -3144,7 +3144,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 10 > SAP CHAR(8) \u2014 declared widening to 10, recorded in WIDENING-POLICY.md: SAP QMFE-FEGRP is CHAR(8); the CDK/dealer-native value for this field can genuinely run up to 10 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (10) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/pm/tables/QMFE.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/QMFE.yaml",
       "widening": {
         "sap_table": "QMFE",
         "sap_field": "FEGRP",
@@ -3226,7 +3226,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml",
       "widening": null
     },
     {
@@ -3251,7 +3251,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/SKB1.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml",
       "widening": null
     },
     {
@@ -3301,7 +3301,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/fi/tables/BSID.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSID.yaml",
       "widening": null
     },
     {
@@ -3326,7 +3326,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP EKKO-EBELN is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKKO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKKO.yaml",
       "widening": {
         "sap_table": "EKKO",
         "sap_field": "EBELN",
@@ -3358,7 +3358,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP EKKO-LIFNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKKO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKKO.yaml",
       "widening": {
         "sap_table": "EKKO",
         "sap_field": "LIFNR",
@@ -3390,7 +3390,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKKO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKKO.yaml",
       "widening": null
     },
     {
@@ -3415,7 +3415,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKPO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKPO.yaml",
       "widening": null
     },
     {
@@ -3440,7 +3440,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP EKPO-MATNR is CHAR(18); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKPO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKPO.yaml",
       "widening": {
         "sap_table": "EKPO",
         "sap_field": "MATNR",
@@ -3472,7 +3472,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKPO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKPO.yaml",
       "widening": null
     },
     {
@@ -3497,7 +3497,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MSEG.yaml",
       "widening": null
     },
     {
@@ -3522,7 +3522,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 declared widening to 20, recorded in WIDENING-POLICY.md: SAP MKPF-MBLNR is CHAR(10); the CDK/dealer-native value for this field can genuinely run up to 20 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (20) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MKPF.yaml",
       "widening": {
         "sap_table": "MKPF",
         "sap_field": "MBLNR",
@@ -3554,7 +3554,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MKPF.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MKPF.yaml",
       "widening": null
     },
     {
@@ -3629,7 +3629,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/EKPO.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/EKPO.yaml",
       "widening": null
     },
     {
@@ -3679,7 +3679,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MSEG.yaml",
       "widening": null
     },
     {
@@ -3704,7 +3704,7 @@
       "status": "RESOLVED",
       "type_verdict": "WIDENED",
       "type_detail": "CDK length 4 > SAP CHAR(3) \u2014 declared widening to 4, recorded in WIDENING-POLICY.md: SAP MSEG-BWART is CHAR(3); the CDK/dealer-native value for this field can genuinely run up to 4 characters. Per docs/model/WIDENING-POLICY.md, the spine keeps SAP semantics (this field IS the SAP analogue conceptually) but emits the source-native width (4) in DDL rather than truncating real dealer data to fit a legacy SAP field length.",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign-fresh/schema/sap-modules/mm/tables/MSEG.yaml",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MSEG.yaml",
       "widening": {
         "sap_table": "MSEG",
         "sap_field": "BWART",
