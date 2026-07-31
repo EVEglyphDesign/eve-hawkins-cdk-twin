@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alignment Surface — CDK Twin ↔ Datasphere Sovereign — EVEglyphDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="alignment.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">EVEglyphDesign · Symmetric Alignment</div>
+    <h1>The CDK twin and the Datasphere sovereign spine are one picture</h1>
+    <p class="lede">
+      Peterbilt Atlantic's data, extracted from CDK Drive in dealer language, lands on the same
+      ACDOCA-shaped spine an SAP architect already reads every day. This page shows the one
+      picture, the three layers that must line up, one repair order walked through both
+      vocabularies, and the honest edges of what isn't aligned yet.
+    </p>
+    <div class="crumbs">
+      <a href="../">CDK Twin overview</a>
+      <a href="../model/">Field dictionary</a>
+      <a href="../extract/">Extract readiness board</a>
+      <a href="../tieout/">Tie-out board</a>
+      <a href="https://github.com/EVEglyphDesign/eve-datasphere-sovereign">Datasphere sovereign repo</a>
+    </div>
+    <div class="destination-note">
+      <strong>Peterbilt Atlantic runs no SAP.</strong> Nothing on this page implies an SAP instance
+      exists at Hawkins. CDK Drive is the dealer's system of record today. The sovereign
+      reference server below is the <strong>destination shape</strong> — a vendor-neutral spine the
+      dealer's own data can be extracted into — not a migration in progress.
+    </div>
+  </div>
+</header>
+
+<!-- ===================== SECTION 1 — ONE PICTURE ===================== -->
+<section id="picture">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">01 · The one picture</div>
+      <h2>Three bands, one flow of truth</h2>
+      <p class="section-intro">
+        Read left to right, top to bottom: the dealer's system of record, the twin's extract and
+        normalisation layer, and the sovereign reference server the extracted data ultimately
+        resolves onto.
+      </p>
+    </div>
+
+    <div class="bands">
+      <div class="band cdk">
+        <div class="b-eyebrow">Band 1 · Today, at Hawkins</div>
+        <h3>CDK Drive — the dealer's system of record</h3>
+        <p>Nine rooftops, one Fortellis tenant. Repair orders, labour and parts lines, counter
+          sales, deal jackets, and the ledger CDK exposes only partially. This is where the truck,
+          the RO, and the invoice actually live today.</p>
+        <div class="b-items">
+          <span class="b-chip">Customer / vehicle / employee</span>
+          <span class="b-chip">Repair order + labour + parts</span>
+          <span class="b-chip">Parts inventory + counter sales</span>
+          <span class="b-chip">GL journal export (partial)</span>
+        </div>
+      </div>
+
+      <div class="band-arrow" aria-hidden="true">
+        <svg width="22" height="26" viewBox="0 0 22 26"><path d="M11 0v20M2 14l9 9 9-9" stroke="#c9c2b0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="band twin">
+        <div class="b-eyebrow">Band 2 · The twin, built here</div>
+        <h3>Extract &amp; normalisation layer</h3>
+        <p>REST where Fortellis reaches, scheduled or manual file export where it doesn't, screen
+          capture on day one for what has no export at all. Every field is typed, keyed, and
+          given an SAP analogue before it is loaded — 21 entities, 443 fields, field-level
+          confidence marked <em>DOCUMENTED / INFERRED / UNVERIFIED</em>.</p>
+        <div class="b-items">
+          <span class="b-chip">Fortellis REST adapter</span>
+          <span class="b-chip">Scheduled file export</span>
+          <span class="b-chip">Screen-driven capture (day one)</span>
+          <span class="b-chip">Load-ready DDL + CDK→SAP field map</span>
+        </div>
+      </div>
+
+      <div class="band-arrow" aria-hidden="true">
+        <svg width="22" height="26" viewBox="0 0 22 26"><path d="M11 0v20M2 14l9 9 9-9" stroke="#c9c2b0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="band sovereign">
+        <div class="b-eyebrow">Band 3 · The destination shape</div>
+        <h3>Sovereign reference server — the ACDOCA spine</h3>
+        <p>A vendor-neutral, SAP-shaped canon that survives CDK, survives any DMS. The universal
+          journal (ACDOCA) is the truth-ledger table; every line carries — once ratified — an ESG
+          score triple and an interaction record attributing profit to the humans who produced
+          it.</p>
+        <div class="b-items">
+          <span class="b-chip">ACDOCA universal journal</span>
+          <span class="b-chip">Master data (KNA1, LFA1, MARA…)</span>
+          <span class="b-chip">ESG score columns (draft)</span>
+          <span class="b-chip">Interaction record (draft)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 2 — THREE LAYERS ===================== -->
+<section id="layers">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">02 · The three alignment layers</div>
+      <h2>Click a layer, see the concrete pairings</h2>
+      <p class="section-intro">
+        Each row expands into the CDK object it starts from, the SAP table(s) it lands on in the
+        sovereign repo, why that matters to the ACDOCA spine, and an honest status pill.
+      </p>
+    </div>
+    <div id="layer-list">Loading alignment data…</div>
+    <div id="live-crosswalk-note" class="live-counts" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 3 — WORKED EXAMPLE ===================== -->
+<section id="example">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">03 · The repair order, walked end to end</div>
+      <h2>One job, two vocabularies, the same event</h2>
+      <p class="section-intro">
+        A dealer principal and an SAP architect should both recognise every step below — dealer
+        language first, SAP language second.
+      </p>
+    </div>
+    <div id="steps-list" class="steps">Loading…</div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 4 — WHAT DOES NOT ALIGN YET ===================== -->
+<section id="gaps">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">04 · What does not align yet</div>
+      <h2>The honest edge of the map</h2>
+      <p class="section-intro">
+        Three kinds of gap, each confidence-marked: CDK objects with no API reach at all, SAP
+        tables inventoried but not yet field-defined, and facts that can only be settled once the
+        CDK admin login lands.
+      </p>
+    </div>
+    <div id="gap-grid" class="gap-grid">Loading…</div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 5 — WHERE THE REPOS MEET ===================== -->
+<section id="meet">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">05 · Where the two repos meet</div>
+      <h2>Every public surface, one table</h2>
+    </div>
+    <div class="link-cols">
+      <div class="link-col">
+        <h3>This repo — <span class="mono">eve-hawkins-cdk-twin</span></h3>
+        <ul id="cdk-links"></ul>
+      </div>
+      <div class="link-col">
+        <h3>The sovereign repo — <span class="mono">eve-datasphere-sovereign</span></h3>
+        <ul id="ds-links"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>© 2026 EVEglyphDesign. All rights reserved. Controlled copy · Key ID EgD-KEY-2026-07.</span>
+  <span class="mark">Pour le bien-être du peuple.</span>
+</div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const DS_BASE = "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/blob/main";
+const DICT_BASE = "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/model/";
+
+function moduleDirOf(mod){ return mod; }
+function sapTableUrl(t){
+  if(!t.module || t.table==='n/a') return null;
+  return `${DS_BASE}/schema/sap-modules/${t.module}/tables/${t.table}.yaml`;
+}
+function sapTableChip(t){
+  const url = t.defined ? sapTableUrl(t) : null;
+  const label = esc(t.table) + (t.module ? ` <span style="opacity:.6">(${esc(t.module.toUpperCase())})</span>` : '');
+  if(url){
+    return `<a class="sap-tab-link" href="${url}" target="_blank" rel="noopener" title="${esc(t.role||'')}">${label}</a>`;
+  }
+  return `<span class="sap-tab-link undefined" title="Inventoried, not yet field-defined — ${esc(t.role||'')}">${label} · not yet defined</span>`;
+}
+function statusLabel(s){
+  return {aligned:'Aligned', 'partially-aligned':'Partially aligned', gap:'Gap'}[s] || s;
+}
+function apiPill(reach){
+  if(reach==='n/a') return '';
+  const cls = reach==='full'?'full':reach==='partial'?'partial':'none';
+  const txt = reach==='full'?'API: full reach':reach==='partial'?'API: partial reach':'API: no reach';
+  return `<span class="pill ${cls}">${txt}</span>`;
+}
+
+let ALIGN = null, CROSSWALK = null;
+
+function renderLayers(){
+  const wrap = document.createElement('div');
+  ALIGN.layers.forEach((layer, idx)=>{
+    const block = document.createElement('div');
+    block.className = 'layer-block' + (idx===0 ? ' open' : '');
+    const aligned = layer.pairings.filter(p=>p.status==='aligned').length;
+    const partial = layer.pairings.filter(p=>p.status==='partially-aligned').length;
+    const gap = layer.pairings.filter(p=>p.status==='gap').length;
+    block.innerHTML = `
+      <button class="layer-head" type="button">
+        <div class="lh-left">
+          <div class="lh-kicker">${esc(layer.kicker)}</div>
+          <h3>${esc(layer.title)}</h3>
+          <p>${esc(layer.summary)}</p>
+        </div>
+        <div class="lh-right">
+          <div class="lh-counts">${aligned} aligned · ${partial} partial · ${gap} gap</div>
+          <div class="chev">▾</div>
+        </div>
+      </button>
+      <div class="layer-body"></div>
+    `;
+    const body = block.querySelector('.layer-body');
+    layer.pairings.forEach(p=>{
+      const dictUrl = p.cdk_entity_id ? `${DICT_BASE}#${p.cdk_entity_id}` : null;
+      const cdkLinkHtml = dictUrl
+        ? `<a class="cdk-obj-link" href="${dictUrl}" target="_blank" rel="noopener">${esc(p.cdk_label)}</a>`
+        : `<span>${esc(p.cdk_label)}</span>`;
+      const sapChips = p.sap_tables.map(sapTableChip).join(' ');
+      const div = document.createElement('div');
+      div.className = 'pairing';
+      div.innerHTML = `
+        <div class="pairing-top">
+          <div>
+            <h4>${cdkLinkHtml}</h4>
+            <p class="p-dealer">${esc(p.dealer_label)}</p>
+          </div>
+          <span class="status-pill ${esc(p.status)}">${esc(statusLabel(p.status))}</span>
+        </div>
+        <div class="p-meta">
+          ${apiPill(p.api_reach)}
+          ${p.field_count!=null ? `<span class="pill">${p.field_count} fields</span>` : ''}
+        </div>
+        <div class="p-detail">
+          <div class="p-row"><div class="k">SAP table(s)</div><div class="v">${sapChips}</div></div>
+          <div class="p-row"><div class="k">ACDOCA relevance</div><div class="v">${esc(p.acdoca_relevance)}</div></div>
+          <div class="p-row"><div class="k">Note</div><div class="v">${esc(p.note)}</div></div>
+        </div>
+      `;
+      body.appendChild(div);
+    });
+    block.querySelector('.layer-head').addEventListener('click', ()=>block.classList.toggle('open'));
+    wrap.appendChild(block);
+  });
+  $('#layer-list').innerHTML = '';
+  $('#layer-list').appendChild(wrap);
+
+  if(CROSSWALK){
+    $('#live-crosswalk-note').style.display='block';
+    $('#live-crosswalk-note').innerHTML = CROSSWALK.summary || 'Live crosswalk data found — resolved/unresolved counts reflect docs/model/sap-crosswalk.json.';
+  }
+}
+
+function renderSteps(){
+  const ex = ALIGN.worked_example;
+  const wrap = document.createElement('div');
+  ex.steps.forEach(s=>{
+    const el = document.createElement('div');
+    el.className = 'step';
+    const chips = s.tables.map(t=>{
+      const found = ALIGN.layers.flatMap(l=>l.pairings).flatMap(p=>p.sap_tables).find(x=>x.table===t);
+      if(found) return sapTableChip(found);
+      return `<span class="sap-tab-link">${esc(t)}</span>`;
+    }).join(' ');
+    el.innerHTML = `
+      <div class="s-num">${String(s.n).padStart(2,'0')}</div>
+      <div>
+        <div class="step-cols">
+          <div class="step-col dealer">
+            <div class="sc-label">Dealer language</div>
+            <p>${esc(s.dealer)}</p>
+          </div>
+          <div class="step-col sap">
+            <div class="sc-label">SAP language</div>
+            <p>${esc(s.sap)}</p>
+          </div>
+        </div>
+        <div class="step-tables">${chips}</div>
+      </div>
+    `;
+    wrap.appendChild(el);
+  });
+  $('#steps-list').innerHTML = '';
+  $('#steps-list').appendChild(wrap);
+}
+
+function confTag(c){ return `<span class="conf-tag ${esc(c)}">${esc(c)}</span>`; }
+
+function renderGaps(){
+  const g = ALIGN.not_aligned_yet;
+  const grid = $('#gap-grid');
+  grid.innerHTML = `
+    <div class="gap-card no-api">
+      <h3>Six CDK objects, no API reach</h3>
+      <div class="gc-sub">File or screen export only — the ledger objects the ACDOCA spine needs most.</div>
+      <ul>${g.no_api_reach.map(x=>`<li><span class="gap-item-title">${esc(x.label)}</span><span class="gap-item-why">${esc(x.why)}</span>${confTag(x.confidence)}</li>`).join('')}</ul>
+    </div>
+    <div class="gap-card undefined-tables">
+      <h3>SAP tables inventoried, not field-defined</h3>
+      <div class="gc-sub">Listed in a module's TABLES.yaml, no field-level YAML written yet.</div>
+      <ul>${g.sap_tables_inventoried_not_defined.map(x=>`<li><span class="gap-item-title">${esc(x.table)} <span style="color:var(--mute);font-weight:400">(${x.modules.map(m=>m.toUpperCase()).join(', ')})</span></span><span class="gap-item-why">${esc(x.why)}</span>${confTag(x.confidence)}</li>`).join('')}</ul>
+    </div>
+    <div class="gap-card settle">
+      <h3>Only settled on tomorrow's admin login</h3>
+      <div class="gc-sub">Facts we expect but have not confirmed against a live CDK tenant.</div>
+      <ul>${g.settle_on_login.map(x=>`<li><span class="gap-item-title">${esc(x.item)}</span>${confTag(x.confidence)}</li>`).join('')}</ul>
+    </div>
+  `;
+  if(CROSSWALK && CROSSWALK.unresolved_examples){
+    const extra = document.createElement('div');
+    extra.className = 'gap-card settle';
+    extra.style.gridColumn = '1 / -1';
+    extra.innerHTML = `<h3>Live crosswalk — unresolved</h3><div class="gc-sub">Pulled at runtime from docs/model/sap-crosswalk.json.</div><ul>${CROSSWALK.unresolved_examples.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+    grid.appendChild(extra);
+  }
+}
+
+function renderLinks(){
+  const cdk = $('#cdk-links'), ds = $('#ds-links');
+  cdk.innerHTML = ALIGN.repo_links.cdk_twin.map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a></li>`).join('');
+  ds.innerHTML = ALIGN.repo_links.datasphere_sovereign.map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a></li>`).join('');
+}
+
+fetch('alignment.json').then(r=>r.json()).then(d=>{
+  ALIGN = d;
+  renderLayers();
+  renderSteps();
+  renderGaps();
+  renderLinks();
+
+  // Optional: live crosswalk from Lane G, degrade silently if absent.
+  fetch('../model/sap-crosswalk.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(cw=>{
+    try{
+      let resolved=0, unresolved=0, unresolvedList=[];
+      const items = Array.isArray(cw) ? cw : (cw.items || cw.mappings || cw.entries || []);
+      items.forEach(it=>{
+        const ok = it.resolved===true || (it.sap_table && it.status!=='unresolved');
+        if(ok) resolved++; else { unresolved++; if(unresolvedList.length<8) unresolvedList.push(it.label||it.entity_id||it.sap_table||JSON.stringify(it).slice(0,80)); }
+      });
+      CROSSWALK = {
+        summary: `Live crosswalk found (<code>docs/model/sap-crosswalk.json</code>): ${resolved} resolved, ${unresolved} unresolved across ${items.length} mapped items.`,
+        unresolved_examples: unresolvedList
+      };
+      renderLayers();
+      renderGaps();
+    }catch(e){ /* malformed crosswalk — degrade silently */ }
+  }).catch(()=>{ /* not present yet — degrade silently, this is expected until Lane G publishes it */ });
+}).catch(()=>{
+  $('#layer-list').innerHTML = '<p>The alignment data could not be loaded. Open it directly: <a href="alignment.json">alignment.json</a></p>';
+});
+</script>
+</body>
+</html>

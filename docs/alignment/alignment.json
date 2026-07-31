@@ -1,0 +1,316 @@
+{
+  "generated": "2026-07-31T05:00:00Z",
+  "contract": "EgD-ALIGN-v1",
+  "note": "Authored by Lane H against FIELD_CONTRACT.md (EgD-CDK-FIELDS-v2) and ALIGNMENT_BRIEF.md. Reads docs/model/fields.json (Lane G) for live counts where present, and the eve-datasphere-sovereign repo's schema/sap-modules/*/TABLES.yaml + tables/*.yaml for definition status. Static fallback values below are used if the runtime fetch of sap-crosswalk.json is unavailable.",
+  "ds_repo_base": "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/blob/main",
+  "cdk_dict_base": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/model/",
+  "layers": [
+    {
+      "id": "master-data",
+      "title": "Master data",
+      "kicker": "Layer 1",
+      "summary": "The nouns of the business — the customer, the truck, the person, the vendor, the account. These persist across every transaction and change slowly.",
+      "pairings": [
+        {
+          "cdk_entity_id": "customer-master",
+          "cdk_label": "Customer Master",
+          "dealer_label": "the customer record — fleet account, walk-in owner, or company",
+          "field_count": 82,
+          "api_reach": "full",
+          "sap_tables": [
+            {"table": "KNA1", "module": "fi", "defined": true, "role": "General customer master"},
+            {"table": "KNB1", "module": "fi", "defined": true, "role": "Company-code data"}
+          ],
+          "acdoca_relevance": "Feeds ACDOCA's KUNNR (customer) coefficient field on every receivable line; the counterparty identity that lets a journal line answer \u201cwho owes this.\u201d",
+          "status": "aligned",
+          "note": "Full API reach, both SAP tables field-defined in the sovereign repo. The cleanest pairing in the twin."
+        },
+        {
+          "cdk_entity_id": "vehicle-master",
+          "cdk_label": "Vehicle / Unit Master",
+          "dealer_label": "the truck — VIN or stock number",
+          "field_count": 25,
+          "api_reach": "partial",
+          "sap_tables": [
+            {"table": "EQUI", "module": "pm", "defined": true, "role": "Equipment master (serialized asset)"},
+            {"table": "EQUZ", "module": "pm", "defined": true, "role": "Equipment time-slice / status history"}
+          ],
+          "acdoca_relevance": "Equipment number carries into ACDOCA as a statistical/technical object reference on service and warranty lines, not a posting key itself.",
+          "status": "aligned",
+          "note": "Partial API reach (Fortellis exposes core unit data, not full lifecycle history), but both SAP analogues are field-defined."
+        },
+        {
+          "cdk_entity_id": "employee-master",
+          "cdk_label": "Employee Master",
+          "dealer_label": "the technician, advisor, or counter person",
+          "field_count": 20,
+          "api_reach": "partial",
+          "sap_tables": [
+            {"table": "PA0001", "module": "hr", "defined": false, "role": "Org. assignment infotype"},
+            {"table": "PA0002", "module": "hr", "defined": false, "role": "Personal data infotype"}
+          ],
+          "acdoca_relevance": "Employee/personnel number is the seed for the interaction record's per-human attribution \u2014 the column set the doctrine calls Layer 3.",
+          "status": "partially-aligned",
+          "note": "HR module in the sovereign repo is inventory-only \u2014 TABLES.yaml lists PA0001/PA0002 but no field-level YAML exists yet. CDK reach itself is also only partial."
+        },
+        {
+          "cdk_entity_id": "vendor-master",
+          "cdk_label": "Vendor Master",
+          "dealer_label": "who we buy from \u2014 parts suppliers, sublet shops, PACCAR itself",
+          "field_count": 12,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "LFA1", "module": "fi", "defined": true, "role": "General vendor master"},
+            {"table": "LFB1", "module": "fi", "defined": true, "role": "Company-code data"}
+          ],
+          "acdoca_relevance": "Feeds ACDOCA's LIFNR (vendor) coefficient field on every payable line \u2014 the counterparty side of AP.",
+          "status": "partially-aligned",
+          "note": "Zero API reach at CDK \u2014 file/screen export only \u2014 even though both SAP tables are already field-defined and waiting on the sovereign side."
+        },
+        {
+          "cdk_entity_id": "gl-account-master",
+          "cdk_label": "GL Account Master",
+          "dealer_label": "the chart of accounts",
+          "field_count": 9,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "SKA1", "module": "fi", "defined": true, "role": "Chart-of-accounts segment"},
+            {"table": "SKB1", "module": "fi", "defined": true, "role": "Company-code segment"}
+          ],
+          "acdoca_relevance": "SKA1/SKB1 resolve the RACCT (G/L account) coefficient on every ACDOCA line \u2014 without it a journal line has no account to sit in.",
+          "status": "partially-aligned",
+          "note": "No API reach \u2014 the chart of accounts comes out by export or screen capture. SAP side is fully defined and ready to receive it."
+        }
+      ]
+    },
+    {
+      "id": "cost-objects",
+      "title": "Cost objects",
+      "kicker": "Layer 2",
+      "summary": "The verbs of the business \u2014 the repair order as an internal order, its labour and parts lines, the department it settles to.",
+      "pairings": [
+        {
+          "cdk_entity_id": "repair-order",
+          "cdk_label": "Repair Order",
+          "dealer_label": "the RO \u2014 the job itself, header to close",
+          "field_count": 74,
+          "api_reach": "full",
+          "sap_tables": [
+            {"table": "AUFK", "module": "co", "defined": false, "role": "Order master header"},
+            {"table": "AFIH", "module": "pm", "defined": true, "role": "Service order header extension"}
+          ],
+          "acdoca_relevance": "AUFK's order number (AUFNR) is the cost-object key that every settled ACDOCA line for the job carries \u2014 the thread that ties labour, parts, and sublet back to one repair.",
+          "status": "partially-aligned",
+          "note": "Full CDK API reach on the RO itself, but AUFK \u2014 the exact table the RO keys on \u2014 is inventoried in three modules (co, pm, pp) and field-defined in none of them. AFIH (service view) is defined. This is the single most important gap to close."
+        },
+        {
+          "cdk_entity_id": "ro-labour-line",
+          "cdk_label": "RO Labour Line",
+          "dealer_label": "the hours a tech billed to the job",
+          "field_count": 41,
+          "api_reach": "full",
+          "sap_tables": [
+            {"table": "AFVC", "module": "pp", "defined": true, "role": "Operation within an order"},
+            {"table": "COEP", "module": "co", "defined": true, "role": "Actual cost line item"}
+          ],
+          "acdoca_relevance": "AFVC operations confirm into COEP actual-cost line items, which post to ACDOCA as activity-type-valued cost lines against the order.",
+          "status": "aligned",
+          "note": "Full API reach, both SAP tables field-defined. Clean end-to-end pairing."
+        },
+        {
+          "cdk_entity_id": "ro-part-line",
+          "cdk_label": "RO Part Line",
+          "dealer_label": "the parts issued to the job",
+          "field_count": 34,
+          "api_reach": "full",
+          "sap_tables": [
+            {"table": "MSEG", "module": "mm", "defined": true, "role": "Material document segment (goods issue)"},
+            {"table": "MKPF", "module": "mm", "defined": true, "role": "Material document header"}
+          ],
+          "acdoca_relevance": "MSEG goods-issue movements value through MBEW and post the material consumption line to ACDOCA against the order's cost object.",
+          "status": "aligned",
+          "note": "Full API reach, MSEG/MKPF both field-defined. Valuation (MBEW) is also defined."
+        },
+        {
+          "cdk_entity_id": "cost-centre-department",
+          "cdk_label": "Cost Centre / Department",
+          "dealer_label": "the department the RO settles to \u2014 service, parts, body shop, F&I",
+          "field_count": 7,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "CSKS", "module": "co", "defined": true, "role": "Cost centre master"},
+            {"table": "CSKT", "module": "co", "defined": false, "role": "Cost centre texts"}
+          ],
+          "acdoca_relevance": "CSKS resolves the KOSTL (cost centre) coefficient that every settled labour and parts line carries on ACDOCA \u2014 the department dimension of the whole ledger.",
+          "status": "gap",
+          "note": "Zero CDK API reach \u2014 department/cost-centre structure is a setup table pulled by screen export only \u2014 and this is precisely the dimension every settlement line depends on."
+        },
+        {
+          "cdk_entity_id": "purchase-receipt-document",
+          "cdk_label": "Purchase / Receipt Document",
+          "dealer_label": "sublet and outside-purchase paperwork on the RO",
+          "field_count": 15,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "EKKO", "module": "mm", "defined": true, "role": "Purchase order header"},
+            {"table": "EKPO", "module": "mm", "defined": true, "role": "Purchase order item"}
+          ],
+          "acdoca_relevance": "EKKO/EKPO drive the goods-receipt/invoice-receipt lines that post sublet cost to the order, then to ACDOCA on settlement.",
+          "status": "partially-aligned",
+          "note": "No CDK API reach, but EKKO/EKPO are fully field-defined on the sovereign side \u2014 ready the moment an export path exists."
+        }
+      ]
+    },
+    {
+      "id": "ledger",
+      "title": "The ledger",
+      "kicker": "Layer 3",
+      "summary": "Where value lands \u2014 the accounting schedule, the journal, and the ACDOCA line with its ESG and interaction columns.",
+      "pairings": [
+        {
+          "cdk_entity_id": "accounting-schedule",
+          "cdk_label": "Accounting Schedule",
+          "dealer_label": "the open-item schedule behind a GL balance \u2014 RO receivables, warranty receivables, stock",
+          "field_count": 10,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "BSID", "module": "fi", "defined": false, "role": "Open customer items (reconciliation subledger)"},
+            {"table": "BSIK", "module": "fi", "defined": false, "role": "Open vendor items (reconciliation subledger)"}
+          ],
+          "acdoca_relevance": "Open-item subledgers behind a reconciliation account are exactly what an accounting schedule is \u2014 the assignment field (ZUONR) is the schedule's control key on the ACDOCA line.",
+          "status": "gap",
+          "note": "Zero API reach at CDK, and the SAP analogues (BSID/BSIK) are inventoried but not field-defined on the sovereign side either. Both halves of this pairing are still open."
+        },
+        {
+          "cdk_entity_id": "gl-journal-posting",
+          "cdk_label": "GL Journal Posting",
+          "dealer_label": "the journal entry itself",
+          "field_count": 11,
+          "api_reach": "partial",
+          "sap_tables": [
+            {"table": "BKPF", "module": "fi", "defined": true, "role": "Accounting document header"},
+            {"table": "BSEG", "module": "fi", "defined": true, "role": "Accounting document segment (line item)"}
+          ],
+          "acdoca_relevance": "BKPF/BSEG are the classic-ledger shape that ACDOCA unifies in S/4 \u2014 every BSEG line has a live ACDOCA twin at posting time.",
+          "status": "aligned",
+          "note": "Partial API reach at CDK (some journal posting visibility via Fortellis), and both classic-ledger SAP tables are field-defined."
+        },
+        {
+          "cdk_entity_id": "acdoca-line",
+          "cdk_label": "ACDOCA line (destination, not a CDK object)",
+          "dealer_label": "the single ledger line the whole repair order eventually becomes",
+          "field_count": null,
+          "api_reach": "n/a",
+          "sap_tables": [
+            {"table": "ACDOCA", "module": "fi", "defined": true, "role": "Universal journal entry line item \u2014 the sovereign spine itself"}
+          ],
+          "acdoca_relevance": "This is the spine. Every other row in this table points here.",
+          "status": "aligned",
+          "note": "ACDOCA is fully field-defined in the sovereign repo. The ESG score columns and interaction record columns described in the doctrine are DRAFT v0, not yet ratified or added as columns \u2014 see the gap panel."
+        },
+        {
+          "cdk_entity_id": "warranty-claim",
+          "cdk_label": "Warranty Claim",
+          "dealer_label": "the OEM warranty receivable on an RO",
+          "field_count": 18,
+          "api_reach": "none",
+          "sap_tables": [
+            {"table": "n/a", "module": null, "defined": false, "role": "No native SAP object \u2014 closest conceptual analogue is a service notification (QMEL/IW51) tied to a debit-memo receivable"}
+          ],
+          "acdoca_relevance": "Settles to its own receivable schedule, which then posts to ACDOCA the same as any other receivable line \u2014 but the claim itself has no clean SAP table shape.",
+          "status": "gap",
+          "note": "No CDK API reach and no clean SAP analogue at all \u2014 the honest answer is this is dealer-specific and stays dealer-specific until PACCAR's PRWS schema is mapped."
+        }
+      ]
+    }
+  ],
+  "not_aligned_yet": {
+    "no_api_reach": [
+      {"entity_id": "cost-centre-department", "label": "Cost Centre / Department", "why": "Setup-table structure, screen export only.", "confidence": "DOCUMENTED"},
+      {"entity_id": "vendor-master", "label": "Vendor Master", "why": "No Fortellis vendor endpoint published.", "confidence": "DOCUMENTED"},
+      {"entity_id": "gl-account-master", "label": "GL Account Master", "why": "Chart of accounts is a setup export, not an API object.", "confidence": "DOCUMENTED"},
+      {"entity_id": "accounting-schedule", "label": "Accounting Schedule", "why": "Subledger/open-item view exists only on screen (FBL3N-equivalent report).", "confidence": "DOCUMENTED"},
+      {"entity_id": "warranty-claim", "label": "Warranty Claim", "why": "PACCAR PRWS integration, not a dealer-facing REST endpoint.", "confidence": "DOCUMENTED"},
+      {"entity_id": "purchase-receipt-document", "label": "Purchase / Receipt Document", "why": "AP/receiving documents are file-export or screen only.", "confidence": "DOCUMENTED"}
+    ],
+    "sap_tables_inventoried_not_defined": [
+      {"table": "AUFK", "modules": ["co", "pm", "pp"], "why": "The order master the repair order itself keys on \u2014 listed in three module inventories, field-level YAML written in none.", "confidence": "DOCUMENTED"},
+      {"table": "COSS", "modules": ["co"], "why": "Cost totals, internal postings \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "COSP", "modules": ["co"], "why": "Cost totals, external postings \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "CSKB", "modules": ["co"], "why": "Cost elements by controlling area \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "CSKT", "modules": ["co"], "why": "Cost centre texts \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "BSID", "modules": ["fi"], "why": "Open customer items \u2014 the accounting-schedule analogue \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "BSIK", "modules": ["fi"], "why": "Open vendor items \u2014 inventory only.", "confidence": "DOCUMENTED"},
+      {"table": "PA0001", "modules": ["hr"], "why": "Employee org-assignment infotype \u2014 HR module has an inventory list but zero field-level YAML files exist yet for any HR table.", "confidence": "DOCUMENTED"},
+      {"table": "PA0002", "modules": ["hr"], "why": "Employee personal-data infotype \u2014 same HR gap.", "confidence": "DOCUMENTED"}
+    ],
+    "settle_on_login": [
+      {"item": "Whether CDK's GL journal export exposes a stable schedule control key (ZUONR-equivalent) or only a free-text reference field.", "confidence": "UNVERIFIED"},
+      {"item": "The exact cost-centre / department suffix convention across all nine Peterbilt Atlantic rooftops \u2014 assumed consistent, not yet seen.", "confidence": "UNVERIFIED"},
+      {"item": "Whether the AP/purchase-receipt export includes a sublet-vs-parts flag needed to route EKKO/EKPO vs. MSEG cleanly.", "confidence": "UNVERIFIED"},
+      {"item": "Whether warranty claims carry a PACCAR PRWS claim number we can use as a durable cross-system key.", "confidence": "UNVERIFIED"},
+      {"item": "Report-catalogue confirmation that a chart-of-accounts export and vendor-master export actually exist as scheduled reports, not just ad hoc screen pulls.", "confidence": "UNVERIFIED"}
+    ]
+  },
+  "worked_example": {
+    "title": "One repair order, walked end to end",
+    "steps": [
+      {
+        "n": 1,
+        "dealer": "A truck rolls onto the lot. The service writer opens a repair order against the customer and the unit.",
+        "sap": "An internal order is created: AUFK header, AFIH service-order extension, keyed by order number (AUFNR).",
+        "tables": ["AUFK", "AFIH"]
+      },
+      {
+        "n": 2,
+        "dealer": "A technician clocks hours against labour operations on the RO \u2014 diagnosis, repair, road test.",
+        "sap": "Operations post as AFVC records; time confirmations write actual-cost line items to COEP against the order.",
+        "tables": ["AFVC", "COEP"]
+      },
+      {
+        "n": 3,
+        "dealer": "Parts are picked and issued against the RO from the parts department's shelf stock.",
+        "sap": "A goods-issue movement writes MSEG (valued through MBEW), with MKPF as the document header \u2014 material consumption posts to the same order.",
+        "tables": ["MSEG", "MKPF", "MBEW"]
+      },
+      {
+        "n": 4,
+        "dealer": "The RO closes. Labour, parts, and any sublet are totalled and the job invoices to the customer, warranty, or internal account.",
+        "sap": "The order settles: COEP actual costs roll up and the settlement rule (pay-type driven) allocates the total to the correct receivable and cost-centre destinations.",
+        "tables": ["COBK", "CSKS"]
+      },
+      {
+        "n": 5,
+        "dealer": "The money lands in the dealer's accounting schedule \u2014 the open-item list behind the receivable GL account, waiting for cash or warranty reimbursement.",
+        "sap": "An open item posts behind a reconciliation account \u2014 BSID (customer) or BSIK (vendor/warranty payer) \u2014 with the order number as the assignment/reference key.",
+        "tables": ["BSID", "BSIK"]
+      },
+      {
+        "n": 6,
+        "dealer": "The journal entry hits the general ledger \u2014 department, account, amount, all tied back to this one job.",
+        "sap": "BKPF header + BSEG line items post the classic-ledger shape of the entry.",
+        "tables": ["BKPF", "BSEG"]
+      },
+      {
+        "n": 7,
+        "dealer": "The job is now one line in the dealer's financial picture \u2014 department revenue, cost, and absorption for the month.",
+        "sap": "The same event lands as one or more ACDOCA lines \u2014 company code, GL account, cost centre, order reference \u2014 plus, once ratified, its ESG score triple (E, S, G) and its interaction record naming which technician, advisor, and counter person contributed, weighted by causal share.",
+        "tables": ["ACDOCA"]
+      }
+    ]
+  },
+  "repo_links": {
+    "cdk_twin": [
+      {"label": "Field dictionary", "url": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/model/"},
+      {"label": "Day-1 extract readiness board", "url": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/extract/"},
+      {"label": "Tie-out board", "url": "https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/tieout/"},
+      {"label": "DDL (Postgres + Snowflake)", "url": "https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/schema/ddl"}
+    ],
+    "datasphere_sovereign": [
+      {"label": "ACDOCA spine", "url": "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/tree/main/schema/acdoca"},
+      {"label": "SAP module canon", "url": "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/tree/main/schema/sap-modules"},
+      {"label": "Doctrine \u2014 ESG / ACDOCA extension", "url": "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/blob/main/docs/DOCTRINE-ESG-ACDOCA-EXTENSION.md"},
+      {"label": "Replication lane", "url": "https://github.com/EVEglyphDesign/eve-datasphere-sovereign/tree/main/replication"}
+    ]
+  }
+}
