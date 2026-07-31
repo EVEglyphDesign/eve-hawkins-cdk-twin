@@ -1,22 +1,22 @@
 {
-  "generated": "2026-07-31T04:33:20Z",
+  "generated": "2026-07-31T04:38:14Z",
   "contract": "EgD-CDK-SAP-XWALK-v1",
   "source": {
     "cdk_fields": "docs/model/fields.json",
     "cdk_fields_contract": "EgD-CDK-FIELDS-v2",
-    "sap_modules_dir": "../eve-datasphere-sovereign/schema/sap-modules"
+    "sap_modules_dir": "../ds/schema/sap-modules"
   },
   "summary": {
     "total_rows": 83,
     "by_status": {
       "FIELD_MISSING": 3,
       "NO_SAP_ANALOGUE": 17,
-      "RESOLVED": 47,
-      "TABLE_INVENTORIED_NOT_DEFINED": 11,
+      "RESOLVED": 51,
+      "TABLE_INVENTORIED_NOT_DEFINED": 7,
       "TABLE_MISSING": 5
     },
     "by_module": {
-      "CO,PM,PP": 4,
+      "CO": 4,
       "CROSS": 1,
       "FI": 39,
       "MM": 14,
@@ -24,7 +24,7 @@
       "PP": 1,
       "UNRESOLVED": 22
     },
-    "type_mismatch_count": 29
+    "type_mismatch_count": 30
   },
   "rows": [
     {
@@ -313,7 +313,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -337,7 +337,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 32 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -361,7 +361,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -385,7 +385,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -409,7 +409,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 80 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -433,7 +433,7 @@
       "status": "FIELD_MISSING",
       "type_verdict": "N_A",
       "type_detail": null,
-      "resolution_detail": "KNA1 is defined at ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml but has no field named GBDAT."
+      "resolution_detail": "KNA1 is defined at ../ds/schema/sap-modules/fi/tables/KNA1.yaml but has no field named GBDAT."
     },
     {
       "cdk_entity_id": "customer-master",
@@ -457,7 +457,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 60 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -481,7 +481,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -505,7 +505,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 10 > SAP CHAR(3) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -529,7 +529,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 15 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -553,7 +553,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 40 > SAP CHAR(3) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -577,7 +577,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -601,7 +601,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -649,7 +649,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -673,7 +673,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/KNA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/KNA1.yaml"
     },
     {
       "cdk_entity_id": "customer-master",
@@ -769,7 +769,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 32 > SAP CHAR(18) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/pm/tables/EQUI.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/EQUI.yaml"
     },
     {
       "cdk_entity_id": "vehicle-master",
@@ -793,7 +793,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/pm/tables/EQUI.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pm/tables/EQUI.yaml"
     },
     {
       "cdk_entity_id": "employee-master",
@@ -841,7 +841,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -865,7 +865,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 80 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -889,7 +889,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 60 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -913,7 +913,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 40 > SAP CHAR(35) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -937,7 +937,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 10 > SAP CHAR(3) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -961,7 +961,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 15 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -985,7 +985,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(16) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -1009,7 +1009,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFA1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -1033,7 +1033,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(4) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFB1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFB1.yaml"
     },
     {
       "cdk_entity_id": "vendor-master",
@@ -1057,7 +1057,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/LFB1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/LFB1.yaml"
     },
     {
       "cdk_entity_id": "gl-account-master",
@@ -1081,7 +1081,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/SKA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKA1.yaml"
     },
     {
       "cdk_entity_id": "gl-account-master",
@@ -1153,7 +1153,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/SKA1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKA1.yaml"
     },
     {
       "cdk_entity_id": "gl-account-master",
@@ -1177,7 +1177,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/SKB1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml"
     },
     {
       "cdk_entity_id": "gl-account-master",
@@ -1201,7 +1201,7 @@
       "status": "FIELD_MISSING",
       "type_verdict": "N_A",
       "type_detail": null,
-      "resolution_detail": "SKB1 is defined at ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/SKB1.yaml but has no field named XMITKZ."
+      "resolution_detail": "SKB1 is defined at ../ds/schema/sap-modules/fi/tables/SKB1.yaml but has no field named XMITKZ."
     },
     {
       "cdk_entity_id": "accounting-schedule",
@@ -1225,7 +1225,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/SKB1.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/SKB1.yaml"
     },
     {
       "cdk_entity_id": "accounting-schedule",
@@ -1273,7 +1273,7 @@
       "status": "FIELD_MISSING",
       "type_verdict": "N_A",
       "type_detail": null,
-      "resolution_detail": "BSEG is defined at ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BSEG.yaml but has no field named BUDAT."
+      "resolution_detail": "BSEG is defined at ../ds/schema/sap-modules/fi/tables/BSEG.yaml but has no field named BUDAT."
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1297,7 +1297,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BKPF.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1321,7 +1321,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(10) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BKPF.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1345,7 +1345,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BKPF.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1369,7 +1369,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BSEG.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1393,7 +1393,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BKPF.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BKPF.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1417,7 +1417,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BSEG.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml"
     },
     {
       "cdk_entity_id": "gl-journal-posting",
@@ -1441,7 +1441,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/fi/tables/BSEG.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/fi/tables/BSEG.yaml"
     },
     {
       "cdk_entity_id": "repair-order",
@@ -1456,16 +1456,16 @@
       "sap_table": "AUFK",
       "sap_field": "AUFNR",
       "sap_annotation": "(order number analogue)",
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
-      "sap_module": "CO,PM,PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
-      "type_detail": null,
-      "resolution_detail": "AUFK is named in TABLES.yaml (CO,PM,PP) but has no field-level tables/<TABLE>.yaml yet."
+      "sap_data_element": "AUFNR",
+      "sap_datatype": "CHAR",
+      "sap_length": 12,
+      "sap_decimals": 0,
+      "sap_is_key": true,
+      "sap_module": "CO",
+      "status": "RESOLVED",
+      "type_verdict": "TRUNCATION_RISK",
+      "type_detail": "CDK length 20 > SAP CHAR(12) \u2014 truncation risk",
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml"
     },
     {
       "cdk_entity_id": "repair-order",
@@ -1480,16 +1480,16 @@
       "sap_table": "AUFK",
       "sap_field": "AUART",
       "sap_annotation": "(order type analogue)",
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
-      "sap_module": "CO,PM,PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "sap_data_element": "AUFART",
+      "sap_datatype": "CHAR",
+      "sap_length": 4,
+      "sap_decimals": 0,
+      "sap_is_key": false,
+      "sap_module": "CO",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AUFK is named in TABLES.yaml (CO,PM,PP) but has no field-level tables/<TABLE>.yaml yet."
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml"
     },
     {
       "cdk_entity_id": "ro-labour-line",
@@ -1504,16 +1504,16 @@
       "sap_table": "AUFK",
       "sap_field": "AUFNR",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
-      "sap_module": "CO,PM,PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "sap_data_element": "AUFNR",
+      "sap_datatype": "CHAR",
+      "sap_length": 12,
+      "sap_decimals": 0,
+      "sap_is_key": true,
+      "sap_module": "CO",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AUFK is named in TABLES.yaml (CO,PM,PP) but has no field-level tables/<TABLE>.yaml yet."
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml"
     },
     {
       "cdk_entity_id": "ro-labour-line",
@@ -1537,7 +1537,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/pp/tables/AFVC.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/pp/tables/AFVC.yaml"
     },
     {
       "cdk_entity_id": "ro-part-line",
@@ -1552,16 +1552,16 @@
       "sap_table": "AUFK",
       "sap_field": "AUFNR",
       "sap_annotation": null,
-      "sap_data_element": null,
-      "sap_datatype": null,
-      "sap_length": null,
-      "sap_decimals": null,
-      "sap_is_key": null,
-      "sap_module": "CO,PM,PP",
-      "status": "TABLE_INVENTORIED_NOT_DEFINED",
-      "type_verdict": "N_A",
+      "sap_data_element": "AUFNR",
+      "sap_datatype": "CHAR",
+      "sap_length": 12,
+      "sap_decimals": 0,
+      "sap_is_key": true,
+      "sap_module": "CO",
+      "status": "RESOLVED",
+      "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "AUFK is named in TABLES.yaml (CO,PM,PP) but has no field-level tables/<TABLE>.yaml yet."
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/co/tables/AUFK.yaml"
     },
     {
       "cdk_entity_id": "ro-part-line",
@@ -1585,7 +1585,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARA.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml"
     },
     {
       "cdk_entity_id": "ro-part-line",
@@ -1657,7 +1657,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 10 > SAP CHAR(4) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARA.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml"
     },
     {
       "cdk_entity_id": "ro-part-line",
@@ -1681,7 +1681,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MBEW.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MBEW.yaml"
     },
     {
       "cdk_entity_id": "ro-part-line",
@@ -1729,7 +1729,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARA.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml"
     },
     {
       "cdk_entity_id": "parts-master-inventory",
@@ -1753,7 +1753,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 20 > SAP CHAR(18) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARA.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARA.yaml"
     },
     {
       "cdk_entity_id": "parts-master-inventory",
@@ -1849,7 +1849,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MBEW.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MBEW.yaml"
     },
     {
       "cdk_entity_id": "parts-master-inventory",
@@ -1873,7 +1873,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARC.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARC.yaml"
     },
     {
       "cdk_entity_id": "parts-master-inventory",
@@ -1897,7 +1897,7 @@
       "status": "RESOLVED",
       "type_verdict": "OK",
       "type_detail": null,
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MARC.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MARC.yaml"
     },
     {
       "cdk_entity_id": "technician-time-punch",
@@ -2017,7 +2017,7 @@
       "status": "RESOLVED",
       "type_verdict": "TRUNCATION_RISK",
       "type_detail": "CDK length 4 > SAP CHAR(3) \u2014 truncation risk",
-      "resolution_detail": "resolved against ../eve-datasphere-sovereign/schema/sap-modules/mm/tables/MSEG.yaml"
+      "resolution_detail": "resolved against ../ds/schema/sap-modules/mm/tables/MSEG.yaml"
     }
   ]
 }
