@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEglyphDesign — The PACCAR Feedback Standard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream-2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.62;-webkit-text-size-adjust:100%}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+header.hero{border-bottom:1px solid var(--line);padding:60px 0 44px}
+.kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+header.hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.12;max-width:860px}
+header.hero p.lede{margin-top:18px;max-width:680px;font-size:18px;color:var(--mute)}
+.status-pill{display:inline-block;margin-top:22px;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:100px;background:var(--cream-2);color:var(--mute)}
+.cta{display:inline-block;background:var(--accent);color:var(--cream);text-decoration:none;font-weight:600;padding:11px 22px;border-radius:5px;margin-top:22px}
+main{padding:48px 0 24px}
+main h1{display:none}
+main h2{font-size:27px;margin:52px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
+main h3{font-size:19px;margin:30px 0 4px}
+main p{margin:12px 0;max-width:860px}
+main ul,main ol{margin:12px 0 12px 26px;max-width:860px}
+main li{margin:6px 0}
+main a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(232,119,34,.4);text-underline-offset:2px}
+main blockquote{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:16px 0;color:var(--mute)}
+main hr{border:none;border-top:1px solid var(--line);margin:38px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--cream-2);padding:1px 5px;border-radius:3px}
+.tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--cream)}
+th{background:var(--cream-2);text-align:left;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);font-weight:600;padding:11px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:48px;font-size:13px;color:var(--mute)}
+footer .mark{font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink);font-size:15px}
+@media(max-width:720px){main h2{font-size:23px}table{font-size:13px}}
+</style></head><body>
+<header class="hero"><div class="wrap">
+<div class="kicker">EVEglyphDesign · EgD-HAW-CDK-PLUG-001 r1</div>
+<h1>The PACCAR feedback standard, and a design specification for the CDK plug-in</h1>
+<p class="lede">What Karmak Fusion and Procede Excede actually send back to PACCAR — a fourteen-interface register reconstructed from public vendor and OEM documentation, the seven-flow feedback leg isolated, CDK's published floor measured against it, and the six-lane sidecar that closes the gap.</p>
+<a class="cta" href="EVEglyphDesign_PACCAR_Feedback_Standard.pdf">Open the specification (PDF, 8 pages)</a>
+<div><span class="status-pill">Reconstruction from public sources · every claim tagged DOCUMENTED or UNVERIFIED · no confidential material used</span></div>
+</div></header>
+<main><div class="wrap"><h1>The PACCAR Feedback Standard</h1>
+<h2>Design specification for a CDK Drive dealer-feedback plug-in</h2>
+<p><strong>Document</strong> EgD-HAW-CDK-PLUG-001 · r1
+<strong>Client context</strong> Peterbilt Atlantic (9 rooftops, Atlantic Canada) — CDK Drive Heavy Truck incumbent
+<strong>Prepared by</strong> EVEglyph Design
+<strong>Status</strong> Design specification. Reverse-specified from public incumbent documentation. Not a PACCAR-endorsed document.</p>
+<hr />
+<h2>1. Why this document exists</h2>
+<p>The prior CDK research lane established what CDK Drive holds and how to get it out. It did not
+establish what a PACCAR dealer's management system is <em>expected to send back to the manufacturer</em> —
+and that is the thing that determines whether a dealer's system is considered whole by the OEM.</p>
+<p>There is no published PACCAR interface specification. There is, however, a functioning de-facto
+standard, and it is legible: two vendors — <strong>Karmak Fusion</strong> and <strong>Procede Excede</strong> — hold the
+majority of Kenworth and Peterbilt rooftops between them, and both publish enough about their PACCAR
+integrations that the required surface can be reconstructed from their marketing, their release notes,
+their versioned product posts, and PACCAR's own Decisiv-hosted dealer support portal.</p>
+<p>This document reconstructs that surface, names the gap between it and what CDK publishes, and turns
+the gap into a build specification.</p>
+<p><strong>Framing note.</strong> Everything below is derived from public sources. Nothing here asserts a data-rights
+position, an ownership thesis, or a migration intent. It is an integration-parity specification and
+should be handed to any third party in exactly that form.</p>
+<hr />
+<h2>2. The incumbent field</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Product</th>
+<th>PACCAR posture in public materials</th>
+<th>Named PACCAR interfaces published</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Karmak, Inc.</strong> (Carlinville, IL; 100% employee-owned ESOP)</td>
+<td><strong>Fusion</strong> (on-prem Windows), <strong>Blaze</strong> (acquired with DSI Solutions, effective 2025-09-30)</td>
+<td>Publishes a dedicated PACCAR integration page as a sales instrument; openly references a PACCAR "OEM integration scorecard"</td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Procede Software</strong> (Solana Beach, CA)</td>
+<td><strong>Excede</strong> (SQL Server, on-prem + browser)</td>
+<td>Publishes versioned point-products (v1.1 / v1.2 / v1.3) via product-update posts; open, Swagger-documented <strong>Excede API</strong> and a Certified Partner Program</td>
+<td><strong>3 named + 3 corroborated</strong></td>
+</tr>
+<tr>
+<td><strong>CDK Global</strong> (Brookfield-owned)</td>
+<td><strong>CDK Drive Heavy Truck</strong></td>
+<td>Markets "80+ Heavy Truck OEM-specific integrations" as a headline with no itemised public list</td>
+<td><strong>4</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Karmak states its own scope plainly: <em>"Karmak's PACCAR OEM integrations support critical parts,
+service, inventory, financial, and warranty workflows through seamless data exchange between PACCAR
+systems and Fusion."</em> (<a href="https://www.karmak.com/integrations/paccar">Karmak — PACCAR integration</a>)</p>
+<p>Note the five words in that sentence: <strong>parts, service, inventory, financial, warranty</strong>. That is the
+shape of the standard. CDK's public record covers parts and warranty. It does not cover inventory
+replenishment or financial reporting at all.</p>
+<hr />
+<h2>3. The register — what a PACCAR dealer system is expected to exchange</h2>
+<p>Fourteen interfaces. Direction is stated from the dealer's point of view. <strong>↑</strong> = dealer to PACCAR
+(the feedback leg). <strong>↓</strong> = PACCAR to dealer. <strong>⇅</strong> = both.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>PACCAR system</th>
+<th style="text-align: center;">Dir</th>
+<th>Business object</th>
+<th>Mechanism (where published)</th>
+<th style="text-align: center;">Karmak</th>
+<th style="text-align: center;">Procede</th>
+<th style="text-align: center;">CDK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>MDI</strong> — Managed Dealer Inventory</td>
+<td style="text-align: center;">⇅</td>
+<td>Parts sales + demand/inventory position up; calculated Stock / MKT / COF replenishment orders down</td>
+<td>Daily electronic file. Karmak's own release notes name a <strong>VMI daily inventory file</strong> built by <code>CreateSendPaccarMDIDailyInventoryFile</code> in class <code>MgrPaccarMDI</code>, and a returned <strong>COF file</strong></td>
+<td style="text-align: center;"><strong>Yes</strong> — all order types</td>
+<td style="text-align: center;"><strong>Yes</strong> — testimonial</td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>OPC</strong> — Online Parts Counter</td>
+<td style="text-align: center;">⇅</td>
+<td>Fleet/major-account parts orders at dealer pricing; availability and supersession lookups</td>
+<td>Procede: "a Windows application, web service, and Excede API"; CDK: "required by PACCAR and available on Fortellis"</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong> v1.1/1.2</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>PRWS</strong> — Registration &amp; Warranty System</td>
+<td style="text-align: center;">⇅</td>
+<td>Warranty claim drafted from the repair order; SIR sheets, campaigns and recalls returned</td>
+<td>Claim draft from RO, real-time response, resubmission; on Fortellis for CDK</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong> v1.2</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Financial Reporting</strong></td>
+<td style="text-align: center;">↑</td>
+<td><strong>Dealer month-end financial statements uploaded to PACCAR</strong></td>
+<td>Karmak generates the statement in-system (<code>GLM96520 OEM Financial – PACCAR</code>) and transfers to the PACCAR site</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>FOCUS</strong> — PACCAR Parts CRM</td>
+<td style="text-align: center;">↑</td>
+<td>Customer and parts sales data for purchasing-pattern analysis</td>
+<td>Automated send</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Service Gate</strong> — PACCAR Parts Fleet Services</td>
+<td style="text-align: center;">⇅</td>
+<td>Pre-authorisation on estimates, authorisation on completed work, final invoices + PDF copies up, remittance down</td>
+<td>Secure electronic transmission</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong> — testimonial</td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Decisiv</strong> — PACCAR Solutions / TruckTech+ / SmartLINQ</td>
+<td style="text-align: center;">⇅</td>
+<td>Service case ⇄ repair order: estimate in, parts pricing/availability query, line-level corrections, invoice number/date, auto-close on invoicing</td>
+<td>System-to-system case integration. PACCAR's own support portal publishes a per-vendor feature list</td>
+<td style="text-align: center;"><strong>Yes</strong> — deep</td>
+<td style="text-align: center;"><strong>Yes</strong> — deep</td>
+<td style="text-align: center;"><em>Thin</em> — 1 para</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Electronic Parts Invoices</strong></td>
+<td style="text-align: center;">↓</td>
+<td>PACCAR Parts invoices matched to PO and receipt, posted to AP</td>
+<td><strong>ANSI X12 EDI 810 inbound invoice</strong> — the only wire-format either vendor names</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><em>Partial</em> — "coming soon"</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>ePacking Slip / ASN</strong></td>
+<td style="text-align: center;">↓</td>
+<td>Advance ship notice; receive against split or multi-order shipments</td>
+<td>Electronic packing slip</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><em>Partial</em></td>
+<td style="text-align: center;"><em>Partial</em></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Parts Orders</strong> (Stock / Emergency)</td>
+<td style="text-align: center;">↑</td>
+<td>Dealer-generated purchase orders outside the MDI-managed flow</td>
+<td>Export/upload</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Truck Order Data</strong> — "PACCAR's B2B infrastructure"</td>
+<td style="text-align: center;">↓</td>
+<td>Chassis build data and specifications mapped into vehicle master at delivery</td>
+<td>Retrieval from B2B infrastructure; no named platform</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>PacLease RPS</strong> — Rental Performance System</td>
+<td style="text-align: center;">↓</td>
+<td>Rental customers, units and contracts created/updated in the DMS</td>
+<td>Event-driven</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Customer Loyalty Card</strong></td>
+<td style="text-align: center;">⇅</td>
+<td>Loyalty eligibility, coupon application and redemption at counter and through OPC</td>
+<td>Price file / query form; Procede tracks redemption in a temp table with an <code>Expired</code> column</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong> v1.3</td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>eInvoicing to PACCAR</strong> (D/C memo automation)</td>
+<td style="text-align: center;">↑</td>
+<td>Debit/credit memos created and balanced against posted POs</td>
+<td>EDI 810 + Excede API</td>
+<td style="text-align: center;"><em>Partial</em></td>
+<td style="text-align: center;"><strong>Yes</strong> v1.2</td>
+<td style="text-align: center;"><strong>No</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Source basis: <a href="https://www.karmak.com/integrations/paccar">Karmak's PACCAR integration page</a>,
+<a href="https://webhelp.karmak.com/ReleaseNotes/Fusion/3.59_cumulative.pdf">Karmak Fusion 3.59 cumulative release notes</a>,
+<a href="https://www.procedesoftware.com/integrations/">Procede's integrations catalogue</a>,
+<a href="https://www.linkedin.com/posts/procede-software_procedesoftware-excededms-productupdate-activity-7402395748069548032-qWoj">Procede's PRWS v1.2 product update</a>,
+<a href="https://www.paccarparts.com/technology/">PACCAR Parts' technology page</a>,
+<a href="https://support.paccar.decisiv.net/hc/en-us/articles/360033879154-Feature-List-for-Karmak-Fusion">PACCAR Solutions' feature list for Karmak Fusion</a>,
+<a href="https://www2.cdkglobal.com/ht-oem">CDK's Heavy Truck OEM newsletter</a> and
+<a href="https://fortellis.io/blog/meeting-unique-needs-heavy-truck-dealers">Fortellis' heavy-truck launch post</a>.</p>
+<hr />
+<h2>4. The feedback leg, isolated</h2>
+<p>Strip out everything PACCAR pushes down and what remains is the actual "feedback standard" — the
+seven flows that run <strong>up</strong> from the dealer's system to the manufacturer:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Flow</th>
+<th>Cadence</th>
+<th>Grain</th>
+<th>Financial materiality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parts sales + demand → <strong>MDI</strong></td>
+<td>Daily</td>
+<td>Line, by rooftop</td>
+<td>Sets replenishment; drives obsolescence and turn</td>
+</tr>
+<tr>
+<td>Month-end statements → <strong>Financial Reporting</strong></td>
+<td>Monthly</td>
+<td>NADA-style departmental P&amp;L and balance sheet</td>
+<td>Determines OEM standing, floor-plan and 20-Group position</td>
+</tr>
+<tr>
+<td>Customer + parts sales → <strong>FOCUS</strong></td>
+<td>Continuous</td>
+<td>Customer × SKU</td>
+<td>Feeds OEM-side marketing back at the dealer's own customers</td>
+</tr>
+<tr>
+<td>Warranty claims → <strong>PRWS</strong></td>
+<td>Per RO</td>
+<td>Claim, coded</td>
+<td>Direct receivable</td>
+</tr>
+<tr>
+<td>Final invoices → <strong>Service Gate</strong></td>
+<td>Per invoice</td>
+<td>Invoice + PDF</td>
+<td>Direct receivable, national accounts</td>
+</tr>
+<tr>
+<td>RO line corrections, invoice, close → <strong>Decisiv</strong></td>
+<td>Real time</td>
+<td>RO line</td>
+<td>Case truth for fleet customers</td>
+</tr>
+<tr>
+<td>Stock/Emergency POs → <strong>Parts Orders</strong></td>
+<td>As raised</td>
+<td>PO</td>
+<td>Working capital</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The observation that matters for the build.</strong> Six of these seven are transactional and already have
+a defined counterpart. The odd one out is <strong>Financial Reporting</strong> — it is periodic, it is the only flow
+carrying the dealership's whole financial position rather than a transaction, it is the one Karmak
+singles out on its own page, and it is the one CDK has never mentioned in public. It is also the one
+that maps directly onto work already built in this repository: the ledger model, the accounting-schedule
+objects, and the June 2026 tie-out. If a plug-in is going to be built, that is where it starts.</p>
+<hr />
+<h2>5. What CDK actually publishes, and where the floor sits</h2>
+<p>Across every public CDK Heavy Truck property, the complete set of named PACCAR systems is four:
+<strong>OPC</strong>, <strong>PRWS</strong>, <strong>electronic shippers</strong> (marked "coming soon"), and <strong>Decisiv</strong>. The dedicated
+OEM integrations page carries a "Paccar" heading and then degrades to <em>"The PACCAR integration helps
+dealers keep key workflows connected across systems"</em> — naming nothing
+(<a href="https://www.cdkglobalheavytruck.com/oem-integrations">CDK Heavy Truck OEM &amp; ISV integrations</a>).</p>
+<p>The most specific CDK writing found anywhere is a 2022 Fortellis post that is four years old and framed
+prospectively: <em>"We're hoping to launch at least five integrations this summer with two major OEMs —
+PACCAR and DTNA"</em> (<a href="https://fortellis.io/blog/meeting-unique-needs-heavy-truck-dealers">Fortellis</a>).</p>
+<p>Three honest readings of that silence, none of which the public record can settle:</p>
+<ol>
+<li>CDK genuinely does not have MDI, Financial Reporting, FOCUS, Service Gate, RPS or Loyalty.</li>
+<li>CDK has them and does not publish at Karmak's level of detail, because Karmak uses its integration
+   page as a sales weapon and CDK does not.</li>
+<li>The material exists behind CDK's dealer and partner login walls.</li>
+</ol>
+<p><strong>This is the single highest-value question to put to CDK, and it is a completely neutral one to ask.</strong>
+A dealer asking "which of these fourteen do we already have entitlement to?" is asking a support
+question, not making an argument.</p>
+<hr />
+<h2>6. The acceptance test already exists: the PACCAR scorecard</h2>
+<p>Karmak's own FAQ confirms the grading instrument: <em>"PACCAR scorecard performance reflects how well a
+business system aligns with OEM requirements, data standards, and operational workflows. Strong
+scorecard results help dealers avoid integration gaps, reduce operational friction, and stay aligned
+as PACCAR programs and expectations change."</em> (<a href="https://www.karmak.com/integrations/paccar">Karmak</a>)</p>
+<p>PACCAR does not publish the scorecard's criteria. But its existence changes the design brief: the
+plug-in is not being built against a spec document, it is being built against an <strong>evaluation</strong> — and
+the register in §3 is the best available reconstruction of what that evaluation covers. Design to
+the register, and the scorecard follows.</p>
+<p><strong>Verification target.</strong> Ask PACCAR, through the dealer's own OEM contact, for the scorecard's
+dimensions and Peterbilt Atlantic's current result. This is a dealer's own performance record. It
+costs nothing to request and it converts a reconstruction into a specification.</p>
+<hr />
+<h2>7. The standards layer — what the plug-in can actually speak</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Standard</th>
+<th>Status for this build</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parts invoice</td>
+<td><strong>ANSI X12 EDI 810</strong></td>
+<td>Real and named by both incumbents. The only confirmed wire format in the whole register. Build to it.</td>
+</tr>
+<tr>
+<td>Service vocabulary</td>
+<td><strong>VMRS</strong> (ATA Technology &amp; Maintenance Council)</td>
+<td>Live heavy-truck vocabulary. Karmak licensed it from TMC in March 2025 to standardise service intelligence shared with "dealers, fleets and OEMs." Adopt VMRS coding on the twin's labour and part lines.</td>
+</tr>
+<tr>
+<td>Warranty coding</td>
+<td>PACCAR's own claim schema</td>
+<td>Campaign Code, Campaign Type, Claim Category, Repair Type, Customer Concern Code, Causal Code, Corrective Action Code, Responsibility Code, Failure Location, Causal Part, Supplier Code, SRT. Mandated by PACCAR, evidenced in its own technical bulletins. Not negotiable, and not a standard — a format.</td>
+</tr>
+<tr>
+<td>Dealer↔OEM messaging</td>
+<td><strong>STAR</strong> — Standards for Technology in Automotive Retail</td>
+<td>STAR6 XML v6.2.4 (2024) and the January 2026 Automotive Retail Domain Model, which finalised a <strong>Parts, AP, Accounting, Payroll and HR</strong> domain set. STAR names "Medium &amp; Heavy-duty Trucks" as a covered segment, but <strong>no truck-specific BOD variants were found</strong> and no public evidence names PACCAR as a member. Use STAR as the vocabulary of the design, not as a claim of compliance.</td>
+</tr>
+<tr>
+<td>Inventory replenishment</td>
+<td><strong>DIF / SOF</strong> pattern</td>
+<td>Documented for DAF/Europe: dealer DMS generates a nightly <strong>Dealer Inventory File</strong>, PACCAR returns a <strong>Suggested Order File</strong>, dealer accepts or overrides. Consistent with — but terminologically distinct from — Karmak's North American <strong>VMI file</strong> and Stock/MKT/COF order types. Treat DIF/SOF as the pattern, VMI/COF as the North American names.</td>
+</tr>
+<tr>
+<td>Financial statement</td>
+<td><strong>No public standard found</strong></td>
+<td>STAR has a Financial Statement BOD scoped to balance sheet and P&amp;L, and NADA contributes standardised <em>ratio definitions</em> — but no universal cross-OEM dealer-statement transmission format exists. Karmak's "automatically download to PACCAR" therefore rests on a <strong>proprietary PACCAR mechanism</strong>, and that mechanism is the specification gap at the centre of this build.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>8. Design specification — the CDK plug-in</h2>
+<h3>8.1 Shape</h3>
+<p>A <strong>sidecar</strong>, not a modification. It reads CDK Drive through entitled dealer-authorised routes
+already established in this repository — the CDK Data Export Tool over SFTP/PGP, Dealer Data Exchange,
+and Fortellis where an API exists — lands in the dealer's own Azure Postgres, and emits PACCAR-shaped
+artefacts. It writes nothing back into CDK. It asks CDK for no new privilege beyond the dealer's
+existing entitlement.</p>
+<h3>8.2 Lanes, in build order</h3>
+<p><strong>Lane F — Financial Reporting (first).</strong> Highest value, largest published gap, and the only lane whose
+input already exists in this repository. Generate the PACCAR month-end statement from the twin's own
+ledger extract, tie it to the June 2026 tie-out month, and reconcile it against whatever Peterbilt
+Atlantic files today. Deliverable: a statement the controller can compare line for line against the
+manual one. If it matches, the twin has proven it holds the dealership's financial truth.</p>
+<p><strong>Lane I — Inventory / MDI.</strong> Reconstruct the daily outbound demand-and-position file and the inbound
+order-recommendation handling, carrying the order-type distinction (Stock / MKT / COF) as a header
+field on the parts-order record. Note the twin does not need to <em>transmit</em> to prove value: it needs
+to show whether the recommendations the dealer accepts are the right ones. <strong>The read-only version of
+this lane is a variance report, and a variance report requires no PACCAR permission at all.</strong></p>
+<p><strong>Lane W — Warranty / PRWS.</strong> Already partly reachable through Fortellis. Model the full claim schema
+as a first-class object so claim quality, rejection rates and days-to-payment become measurable.</p>
+<p><strong>Lane S — Service case / Decisiv.</strong> Mirror the case↔RO shape. CDK's published behaviour is one
+paragraph; Karmak's and PACCAR's own portal documentation is the better specification of what the
+integration is <em>supposed</em> to do, and is a fair benchmark to hold CDK's to.</p>
+<p><strong>Lane R — Receivables / Service Gate + eInvoicing.</strong> EDI 810 in, invoice and PDF out, remittance
+matched. Straight cash-cycle value, and the easiest lane to quantify.</p>
+<p><strong>Lane C — Customer / FOCUS + Loyalty.</strong> Lowest priority and the one to think hardest about, because
+this is the lane where the dealer's own customer and sales data flows outward to the manufacturer.
+Model it; do not rush to widen it.</p>
+<h3>8.3 Per-lane contract</h3>
+<p>Every lane ships with the same six artefacts, no exceptions:</p>
+<ol>
+<li><strong>Object model</strong> — the records and fields, source-native widths preserved, every widening logged.</li>
+<li><strong>Provenance</strong> — for each field, the CDK object it came from and the extraction route used.</li>
+<li><strong>Confidence tag</strong> — DOCUMENTED or INFERRED, carried through to the surface.</li>
+<li><strong>Reconciliation</strong> — a tie-out against the dealer's existing reported figure.</li>
+<li><strong>Variance record</strong> — disagreements held and shown, never averaged away.</li>
+<li><strong>Access gate</strong> — the named entitlement, credential and approval each lane depends on, stated before build.</li>
+</ol>
+<h3>8.4 What is explicitly out of scope</h3>
+<p>Raw telematics ingestion. Write-back to CDK. Any route that requires a per-data-type third-party
+access fee while a dealer-entitled export route exists. Anything that asks Peterbilt Atlantic staff
+to change how they work before the value is demonstrated.</p>
+<hr />
+<h2>9. Engagement question set</h2>
+<p>To be put to CDK — and, where noted, to PACCAR through the dealer's own channel. Every question is
+one a dealer is entitled to ask about its own systems. None of them reveals a design intent, a
+data-rights position, or a comparison being run. Ask them as an existing customer improving its
+own operation.</p>
+<p><strong>To CDK, on entitlement (neutral, answerable, high yield):</strong></p>
+<ol>
+<li>Which PACCAR integrations are included in Peterbilt Atlantic's current subscription across all
+   eight billed accounts, and which are separately licensed?</li>
+<li>Does CDK Drive Heavy Truck support PACCAR Managed Dealer Inventory — the daily inventory and demand
+   file and the Stock / MKT / COF order types? If so, is it active on our rooftops?</li>
+<li>Does CDK Drive generate the PACCAR month-end financial statement, and does it transmit it to PACCAR
+   automatically or does our controller still upload it manually?</li>
+<li>Does CDK support PACCAR Parts Fleet Services (Service Gate) invoice transmission and remittance
+   retrieval, and the FOCUS customer/parts sales feed?</li>
+<li>Which of the "80+ Heavy Truck OEM-specific integrations" are PACCAR-specific? Is there a current
+   list we can be given for our own planning?</li>
+<li>Is the PACCAR electronic shipper integration, described as "coming soon," now generally available?</li>
+<li>Which PACCAR-related APIs are available to us on Fortellis today, and under which subscription?</li>
+</ol>
+<p><strong>To CDK, on mechanics (still neutral — these read as an integration-hygiene review):</strong></p>
+<ol start="8">
+<li>For each active PACCAR interface: what is the transport, what is the schedule, and where do failures
+   surface for our staff to see?</li>
+<li>Where can our accounting team see a transmission log and a failure/retry history for OEM interfaces?</li>
+<li>Which PACCAR interfaces run on EDI, which on file exchange, and which on API?</li>
+<li>What is the documented behaviour when a PACCAR interface fails mid-month — is there a replay?</li>
+</ol>
+<p><strong>To PACCAR, through the dealer's own OEM contact:</strong></p>
+<ol start="12">
+<li>What are the dimensions of the PACCAR OEM integration scorecard, and what is Peterbilt Atlantic's
+    current standing?</li>
+<li>Which PACCAR programs are we eligible for that our current DMS configuration does not enable?</li>
+<li>Is there a PACCAR-published interface specification available to dealers, as distinct from one
+    available only to DMS vendors?</li>
+</ol>
+<p><strong>Posture.</strong> Additive and curious throughout. Every answer improves the dealership's operation whether
+or not anything else is ever built, and that is a true statement — which is what makes the posture
+sustainable rather than a tactic. If CDK's answers are strong, the register in §3 becomes a validated
+inventory. If they are thin, the register becomes the gap analysis. Both outcomes are useful, and
+neither requires a card to be shown.</p>
+<hr />
+<h2>10. Open questions and verification targets</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>How to close it</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Does CDK Drive have MDI and Financial Reporting at all?</td>
+<td>CDK question 2 and 3</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>2</td>
+<td>What are the PACCAR scorecard dimensions?</td>
+<td>PACCAR question 12, through the dealer</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the PACCAR financial-statement file format?</td>
+<td>Ask PACCAR; failing that, inspect what the controller uploads today</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Is the VMI daily file layout obtainable?</td>
+<td>Karmak release notes name the routine but not the layout; ask PACCAR</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Are PRWS and OPC discoverable Fortellis catalogue entries or bundled into CDK's general Drive products?</td>
+<td>Authenticated Fortellis directory check</td>
+<td>Cheap</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Post-acquisition, do Karmak Blaze rooftops carry the same 13 interfaces as Fusion?</td>
+<td>Karmak publishes nothing yet</td>
+<td>Cheap</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Is PACCAR a STAR member?</td>
+<td>No public evidence found</td>
+<td>Cheap</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Which of the eight CDK billed accounts carry which integration entitlements?</td>
+<td>Requires the CDK Billing Center itemisation absent from the summary invoice</td>
+<td>Free, but gated on access</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>11. Provenance</h2>
+<p>Reconstructed from public vendor and OEM documentation on 2026-08-08. Full source-cited working papers
+are held in this repository at <code>research/karmak_paccar.md</code>, <code>research/procede_paccar.md</code> and
+<code>research/cdk_and_standards.md</code>. Every claim in this specification is traceable to a quoted primary
+source in those files, and each is tagged there as DOCUMENTED or UNVERIFIED. Where a vendor's claim
+could not be confirmed against a primary source, it is not asserted here.</p>
+<p>No confidential Peterbilt Atlantic, CDK, Karmak, Procede or PACCAR material was used in its preparation.</p></div></main>
+<footer><div class="wrap">
+<div>EVEglyphDesign · Key ID EgD-KEY-2026-07 · issued 2026-08-08T13:30:22Z · <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/research">the research working papers behind it</a> · <a href="../">back to the CDK twin</a></div>
+<div style="margin-top:10px">© 2026 EVEglyphDesign. All rights reserved. Controlled copy. <span class="mark">Pour le bien-être du peuple.</span></div>
+</div></footer></body></html>
