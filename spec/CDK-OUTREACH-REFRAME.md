@@ -99,7 +99,7 @@ arrives before any relationship has been built on the truck side.
 >
 > Luke Weatherbie at Peterbilt Atlantic, writing with Tim Hawkins's authority — Tim is copied.
 >
-> We're doing a review of how our nine rooftops sit against PACCAR's dealer programs, and CDK Drive is
+> We're doing a review of how our eight rooftops sit against PACCAR's dealer programs, and CDK Drive is
 > the system in the middle of most of it. Before I take anything to our PACCAR contacts I want to be
 > sure I'm describing our own environment accurately, and you'll know it better than we do.
 >
@@ -238,9 +238,9 @@ by CDK's legal team. It holds up under all three readings.
 
 - The rep's first name.
 - **Surname spelling.** The record holds both "Weatherbie" and "Weatherby." Confirm which he signs.
-- Rooftop count. The group is described as nine rooftops; invoice 10002236 covers eight accounts and
-  seven rooftops. v6 says "nine rooftops" in the opening and "eight accounts" in item 1 — confirm
-  both are correct as written, or reconcile before sending.
+- Rooftop count: settled at **eight locations in five provinces**, per the dealership's own published
+  record, against eight CDK accounts on invoice 10002236. The mapping between them is not one-to-one —
+  see the reconciliation note.
 - Whether v5 has already gone. If it has, v6 is not a replacement — it is the second contact, sent to
   the Heavy Truck desk rather than the account rep, and the opening line becomes *"separately from
   the account paperwork I asked [rep] for, I'm working on something on the PACCAR side."*

@@ -40,7 +40,7 @@ Email F — the paperwork request — goes Wednesday, deliberately, and is cover
 >
 > Luke Weatherbie at Peterbilt Atlantic, writing with Tim Hawkins's authority — Tim is copied.
 >
-> We're reviewing how our nine rooftops sit against PACCAR's dealer programs, and CDK Drive is the
+> We're reviewing how our eight rooftops sit against PACCAR's dealer programs, and CDK Drive is the
 > system in the middle of most of it. Before I take anything to our PACCAR contacts I want to be sure
 > I'm describing our own environment accurately, and you'll know it better than we do.
 >
@@ -182,7 +182,7 @@ The general account team sells CDK Drive. The Heavy Truck desk knows what the PA
 actually do, which ones exist, and which ones CDK has never built. They will tell you, cheerfully,
 because to them it is product knowledge rather than a disclosure.
 
-**Open.** *"Hi — Luke Weatherbie, Peterbilt Atlantic, nine rooftops in Atlantic Canada, we're on CDK
+**Open.** *"Hi — Luke Weatherbie, Peterbilt Atlantic, eight rooftops in Atlantic Canada, we're on CDK
 Drive. I'm trying to work out where we stand on the PACCAR integrations and I don't think our account
 rep is the right person. Is this the right desk?"*
 
@@ -259,7 +259,7 @@ against, and it costs nothing to ask.
 > [Name],
 >
 > Luke Weatherbie at Peterbilt Atlantic. We're taking a proper look at how well our systems are
-> feeding PACCAR from our nine rooftops, and I'd rather measure ourselves against your yardstick than
+> feeding PACCAR from our eight rooftops, and I'd rather measure ourselves against your yardstick than
 > invent one.
 >
 > Three questions:
@@ -427,3 +427,9 @@ The export route is documented in `docs/export-route.md` in this repository.
 
 Two blanks remain and both are inside the dealership: the account rep's first name, and confirmation
 of whether Luke signs Weatherbie or Weatherby.
+
+The rooftop count used throughout is **eight locations in five provinces**, sourced from
+[the dealership's own locations page](https://www.peterbiltatlantic.com/location-and-hours). An
+earlier revision of this document said nine; that was an internal assumption and it was wrong. The
+account-to-location mapping, and the two anomalies worth raising with CDK, are set out in the
+reconciliation note EgD-HAW-CDK-REC-004.
