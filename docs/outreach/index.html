@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEglyphDesign — The CDK Outreach, Reframed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream-2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.62;-webkit-text-size-adjust:100%}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+header.hero{border-bottom:1px solid var(--line);padding:60px 0 44px}
+.kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+header.hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.12;max-width:860px}
+header.hero p.lede{margin-top:18px;max-width:680px;font-size:18px;color:var(--mute)}
+.status-pill{display:inline-block;margin-top:22px;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:100px;background:var(--cream-2);color:var(--mute)}
+.cta{display:inline-block;background:var(--accent);color:var(--cream);text-decoration:none;font-weight:600;padding:11px 22px;border-radius:5px;margin-top:22px}
+main{padding:48px 0 24px}
+main h1{display:none}
+main h2{font-size:27px;margin:52px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
+main h3{font-size:19px;margin:30px 0 4px}
+main p{margin:12px 0;max-width:860px}
+main ul,main ol{margin:12px 0 12px 26px;max-width:860px}
+main li{margin:6px 0}
+main a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(232,119,34,.4);text-underline-offset:2px}
+main blockquote{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:16px 0;color:var(--mute)}
+main hr{border:none;border-top:1px solid var(--line);margin:38px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--cream-2);padding:1px 5px;border-radius:3px}
+.tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--cream)}
+th{background:var(--cream-2);text-align:left;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);font-weight:600;padding:11px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+footer{border-top:1px solid var(--line);padding:34px 0 60px;margin-top:48px;font-size:13px;color:var(--mute)}
+footer .mark{font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink);font-size:15px}
+@media(max-width:720px){main h2{font-size:23px}table{font-size:13px}}
+</style></head><body>
+<header class="hero"><div class="wrap">
+<div class="kicker">EVEglyphDesign · EgD-HAW-CDK-OUT-002 r1 · draft, not sent</div>
+<h1>The CDK outreach, reframed</h1>
+<p class="lede">Version 6 set beside version 5, with the reasoning for every change. What moved once the fourteen-interface PACCAR register was known: the audit items out, seven interface questions in, the one sentence that showed a card removed entirely, and the twenty-four-hour posture left exactly as it was.</p>
+<a class="cta" href="EVEglyphDesign_CDK_Outreach_Reframe.pdf">Open the comparison (PDF, 6 pages)</a>
+<div><span class="status-pill">Companion to <a href="../spec/" style="color:inherit">the PACCAR Feedback Standard</a> · no confidential material used</span></div>
+</div></header>
+<main><div class="wrap"><h1>The CDK Outreach, Reframed</h1>
+<hr />
+<h2>1. Why it needed reframing</h2>
+<p>The version on the record — v5, seven numbered items, sent under Luke Weatherbie's name with Tim
+Hawkins and the CFO copied — is a good email. It is specific, it is entitled, it is enforceable,
+and it correctly separates the three free items from the four that require CDK to produce paperwork.
+Nothing in it is wrong.</p>
+<p>What has changed is not the email. It is what is now known behind it.</p>
+<p>At the time v5 was written, the dealership's PACCAR integration surface was an unknown. It is no
+longer. The register in
+<a href="https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/spec/">the PACCAR Feedback Standard</a>
+reconstructs fourteen PACCAR interfaces from Karmak's and Procede's own public documentation, isolates
+the seven that carry dealer data <em>back up</em> to the OEM, and measures CDK's published record against
+them. CDK names four PACCAR items across all of its public properties. Karmak names thirteen.
+Missing from CDK's public record entirely: Managed Dealer Inventory, financial statement transmission,
+FOCUS, Service Gate, PacLease RPS, and the loyalty card feed.</p>
+<p>That changes the strongest available posture from <strong>"send me my paperwork"</strong> to <strong>"help us understand
+where we stand with PACCAR."</strong> The second one is warmer, harder to refuse, routes to a different and
+more useful part of CDK, and — this is the part that matters — obtains the same information as the
+first, because the answers to fourteen integration questions <em>are</em> an entitlement statement.</p>
+<h3>The structural fault in v5</h3>
+<p>v5 does two jobs with opposite emotional registers in a single email.</p>
+<ul>
+<li><strong>Items 4, 5, 6</strong> are operational and warm. A dealer asking to switch on a free entitlement.</li>
+<li><strong>Items 1, 2, 3, 7</strong> are procurement and cold. A dealer asking for its Master Agreement, an
+  itemised twelve-month billing export, and a fee schedule.</li>
+</ul>
+<p>A rep reading items 1–3 hears an audit. An audit gets routed to the account team and to legal, it
+gets a considered rather than a helpful reply, and it makes the CFO the natural owner of the thread —
+which is the one outcome the cc structure was designed to avoid. The warm items then wait behind the
+cold ones.</p>
+<p><strong>The reframe separates them.</strong> The integration conversation goes to the truck side of CDK and stays
+technical and enthusiastic. The paperwork request goes separately, later, and boring.</p>
+<hr />
+<h2>2. v5 — as sent, for comparison</h2>
+<blockquote>
+<p><strong>To:</strong> [rep first name]
+<strong>Cc:</strong> Tim Hawkins, Peter [CFO]
+<strong>From:</strong> Luke Weatherbie, Peterbilt Atlantic
+<strong>Subject:</strong> Data access and documentation request — Peterbilt Atlantic group (A173552 and related accounts)</p>
+<p>[First name],</p>
+<p>I'm writing on behalf of Peterbilt Atlantic, with Tim Hawkins's authority, regarding our CDK Drive
+environment across the group's rooftops. Tim is copied here.</p>
+<p>We're improving how our service and parts teams see a customer across all of our locations, which
+means combining our CDK business data with our other operating systems. The goal is that a customer
+gets an answer the first time they ask, whichever rooftop they call. Today that information is
+fragmented and our people are working around it.</p>
+<p>Seven items. I've kept them separate deliberately so nothing gets missed.</p>
+<ol>
+<li>Our current Master Agreement with CDK, including all schedules and amendments, for each of the
+   accounts billed under invoice 10002236 — A173552, A192555, A193706, A240448, A299578, A173553,
+   A173554 and A258188.</li>
+<li>A written statement of the data-access entitlements currently active on each of those accounts —
+   any extract feeds, writeback packages or API subscriptions.</li>
+<li>An itemised billing export from the CDK Billing Center covering the last twelve months, per account.</li>
+<li>The Data Export Tool added to our Master Service Agreement.</li>
+<li>Dealer Data Exchange switched on for the same accounts.</li>
+<li>The file layout and field documentation that comes with the export data sets.</li>
+<li>Your current fee schedule for extract and writeback access, and your documented process for
+   authorising a dealer-designated integration partner.</li>
+</ol>
+<p>[closing — call this afternoon, items 4/5/6 moving today or Monday, owner name and date against
+each documentation item by close of business Monday 10 August]</p>
+</blockquote>
+<p><strong>What it gets right:</strong> Luke's authority in the first line. Real account numbers. Free items sitting
+among paid ones so the rep can look responsive immediately. A close that asks only for a name and a
+date, which is nearly impossible to refuse.</p>
+<p><strong>What it costs:</strong> item 7 names "extract," "writeback," and "integration partner" in one sentence.
+That is the closest thing in the email to a card. A competent rep reads item 7 and understands that
+Peterbilt Atlantic is scoping a third party against the CDK data layer, and that understanding
+arrives before any relationship has been built on the truck side.</p>
+<hr />
+<h2>3. v6 — the reframe</h2>
+<blockquote>
+<p><strong>To:</strong> [rep first name]
+<strong>Cc:</strong> Tim Hawkins
+<strong>From:</strong> Luke Weatherbie, Peterbilt Atlantic
+<strong>Subject:</strong> PACCAR integration review — our CDK Drive environment (A173552 and related accounts)</p>
+<p>[First name],</p>
+<p>Luke Weatherbie at Peterbilt Atlantic, writing with Tim Hawkins's authority — Tim is copied.</p>
+<p>We're doing a review of how our nine rooftops sit against PACCAR's dealer programs, and CDK Drive is
+the system in the middle of most of it. Before I take anything to our PACCAR contacts I want to be
+sure I'm describing our own environment accurately, and you'll know it better than we do.</p>
+<p>What I'm trying to establish is straightforward: which PACCAR interfaces we're actually running
+today, which ones are available to us and switched off, and where the gaps are that our people are
+currently covering by hand.</p>
+<p>Specifically:</p>
+<ol>
+<li>Which PACCAR integrations are included in our current subscription across the eight accounts
+   billed under invoice 10002236 — A173552, A192555, A193706, A240448, A299578, A173553, A173554
+   and A258188 — and which are separately licensed? A list per account would be ideal; a list for
+   the group is a fine start.</li>
+<li>Do we have Managed Dealer Inventory running — the daily inventory and demand file, and the
+   Stock / MKT / COF order types coming back? If it's available and we're not on it, I'd like to
+   understand what turning it on involves.</li>
+<li>Does CDK Drive produce the PACCAR month-end financial statement, and does it transmit to PACCAR
+   automatically, or is our controller still assembling and uploading that by hand? I'd like to stop
+   that being a manual job if it doesn't have to be.</li>
+<li>Where do we stand on Parts Fleet Services — Service Gate invoice transmission and remittance
+   retrieval — and on the FOCUS customer and parts sales feed?</li>
+<li>The electronic shipper integration was described as coming soon. Is it generally available now?</li>
+<li>CDK publishes 80+ Heavy Truck OEM-specific integrations. Could I get the PACCAR subset of that
+   list? Not marketing material — the actual list, so I can plan against it.</li>
+<li>For the interfaces we do have running: what's the transport, what's the schedule, and where does
+   a failure surface so our staff can see it? Is there a transmission log and a retry history our
+   accounting team can look at directly?</li>
+</ol>
+<p>Two housekeeping items alongside it, both of which I believe are dealer entitlements at no licence
+fee, so they shouldn't need anything beyond your side:</p>
+<p><strong>8.</strong> The Data Export Tool added to our Master Service Agreement across all of the accounts above
+   rather than a single store. We'll generate the PGP key pair here — tell me where to send the
+   public key.</p>
+<p><strong>9.</strong> Dealer Data Exchange switched on for the same accounts, with the file layout and field
+   documentation that comes with the data sets.</p>
+<p>I'll call you this afternoon to walk through it. On 8 and 9 I'd like those moving today or Monday
+morning. On 1 through 7, I don't need the answers by Monday — I need a name and a date against each
+one by close of business Monday 10 August, so I know it's owned.</p>
+<p>If any of this sits with the Heavy Truck team rather than with you, tell me who and I'll go to them
+directly rather than have it queue behind you.</p>
+<p>Thanks,
+Luke Weatherbie
+Peterbilt Atlantic</p>
+</blockquote>
+<hr />
+<h2>4. What moved, and why</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Change</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Subject line: "Data access and documentation request" → "PACCAR integration review"</td>
+<td>The first is a demand notice; the second is a customer doing diligence on its own operation. The second gets opened by someone who wants to help.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The CFO comes off the cc</td>
+<td>v5 copied Peter so the Master Agreement request would be visible internally. v6 does not ask for the Master Agreement, so there is no reason to hand him the thread. Tim's cc alone still carries the authority.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Master Agreement, billing export, entitlement statement — all removed</td>
+<td>These are the audit-register items. They go in a separate, later, deliberately dull email. Keeping them here poisons the tone of everything above them.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Item 7 of v5 — fee schedule and integration-partner process — <strong>removed entirely</strong></td>
+<td>This was the only sentence in v5 that showed a card. It asks CDK to price third-party access to its data layer, which tells a competent rep exactly what is being scoped. It is also not needed yet: nothing can be priced until the register in §1–7 is known.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Seven new questions, all about PACCAR interfaces</td>
+<td>Sourced from the register. Each names a specific interface Karmak publishes and CDK does not, so a thin answer is self-evidently thin without any accusation being made.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>The free entitlements demoted to items 8 and 9, under "housekeeping"</td>
+<td>In v5 they were the operational core. In v6 they are a footnote to a bigger conversation — which lowers their salience, makes them trivially easy to approve, and removes the impression that the export tool is the point of the email.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>"Combining our CDK business data with our other operating systems" — removed</td>
+<td>True, but it is the sentence that plants <em>integration project</em> in the reader's mind. v6 gives a reason that is equally true and entirely internal: getting our own environment described accurately before we talk to PACCAR.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Closing adds an explicit route to the Heavy Truck team</td>
+<td>v5 invited redirection generally. v6 names the destination, because the truck side is where the useful answers live and where the relationship is worth building.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>The 24-hour posture is preserved intact</td>
+<td>Call the same afternoon. Free items today or Monday morning. Name and date per item by Monday close. Unchanged from v5, because it was right.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>5. Where the removed items go</h2>
+<p>Nothing is abandoned. It is sequenced.</p>
+<p><strong>Email B — the dull one.</strong> Sent separately, on its own thread, ideally a day or two later, copied to
+Tim and to the CFO. Master Agreement with all schedules and amendments per account. Written statement
+of active data-access entitlements. Itemised twelve-month billing export from the Billing Center.
+Framed as annual file-hygiene: <em>"I need our own paperwork on file properly."</em> No urgency, no
+deadline drama, extra days offered as a courtesy. It reads as a GM tidying a filing cabinet — which
+is exactly how the Lightspeed equivalent was already framed, and for the same reason.</p>
+<p><strong>The fee schedule and the partner-authorisation process — later, and possibly never from CDK.</strong>
+Ask this only once the register is known. If CDK's answers to v6 items 1–7 come back strong, the
+register becomes a validated inventory and the pricing question has a real shape. If they come back
+thin, the register becomes the gap analysis and the question is better put to PACCAR through the
+dealer's own OEM contact, where it costs nothing and reveals nothing.</p>
+<p><strong>Three questions belong to PACCAR, not CDK.</strong> The scorecard dimensions and Peterbilt Atlantic's
+current standing; which PACCAR programs the dealership is eligible for that its DMS configuration
+does not enable; and whether a dealer-facing interface specification exists as distinct from a
+vendor-facing one. Karmak's own FAQ confirms a PACCAR OEM integration scorecard exists. That
+scorecard is the acceptance test for everything downstream, and it is obtainable from PACCAR by a
+dealer simply asking about its own score.</p>
+<hr />
+<h2>6. The 24-hour sequence</h2>
+<p>The email is one of four routes opened the same afternoon, none of which depends on the others.</p>
+<ol>
+<li><strong>The rep.</strong> v6 goes out, Luke calls within the hour. Get a case number, an owner name and a date
+   per item. Same-day one-paragraph email back recording what was agreed. That written record is what
+   makes Monday enforceable.</li>
+<li><strong>eStore, directly.</strong> The Data Export Tool is contracted through eStore as an addendum to the
+   dealership's own Master Service Agreement. Luke opens it himself the same afternoon. If it
+   self-serves, the rep's queue is irrelevant to the ingestion date. If it blocks, whatever blocks it
+   names the gate.</li>
+<li><strong>CDK Heavy Truck inside sales — 847-230-5715.</strong> The number
+   <a href="https://support.paccar.decisiv.net/hc/en-us/articles/360034411713-What-is-Integration-and-How-Can-It-Make-My-Job-Easier">PACCAR Solutions' own integration guidance</a>
+   tells dealers to call. A Peterbilt dealer calling the truck-specific desk about PACCAR integration
+   is the most ordinary call in the industry, and it reaches people who can actually answer items 2,
+   3 and 4.</li>
+<li><strong>PACCAR, through the dealership's own OEM contact.</strong> The three scorecard questions. Independent
+   of CDK entirely, and it produces the acceptance criteria CDK will eventually be measured against.</li>
+</ol>
+<p>By Monday morning: a case number, an eStore answer, a truck-side contact, and a PACCAR scorecard
+enquiry in flight — instead of one email sitting in one queue.</p>
+<hr />
+<h2>7. What is deliberately absent from v6</h2>
+<p>No mention of sovereignty, data rights, ownership, portability, or the litigation history. No mention
+of a third party, an integration partner, a platform, a warehouse, or Azure. No comparison to Karmak
+or Procede, and no indication that a comparison has been run. No suggestion that CDK might be
+replaced, supplemented, or bypassed. No pricing question. No fee schedule.</p>
+<p>Every question in v6 is one a Peterbilt dealer would ask if it had never heard of any of that, and
+every answer improves the dealership's operation whether or not anything else is ever built. That is
+a true statement, and it is what makes this posture sustainable rather than a tactic — it survives
+being forwarded, quoted, or read aloud in a meeting Luke is not in.</p>
+<p>Written on the assumption that every word is read by the CFO, by the rep's manager, and eventually
+by CDK's legal team. It holds up under all three readings.</p>
+<hr />
+<h2>8. Open blanks before sending</h2>
+<ul>
+<li>The rep's first name.</li>
+<li><strong>Surname spelling.</strong> The record holds both "Weatherbie" and "Weatherby." Confirm which he signs.</li>
+<li>Rooftop count. The group is described as nine rooftops; invoice 10002236 covers eight accounts and
+  seven rooftops. v6 says "nine rooftops" in the opening and "eight accounts" in item 1 — confirm
+  both are correct as written, or reconcile before sending.</li>
+<li>Whether v5 has already gone. If it has, v6 is not a replacement — it is the second contact, sent to
+  the Heavy Truck desk rather than the account rep, and the opening line becomes <em>"separately from
+  the account paperwork I asked [rep] for, I'm working on something on the PACCAR side."</em></li>
+</ul>
+<hr />
+<h2>9. Provenance</h2>
+<p>Reframed against
+<a href="https://eveglyphdesign.github.io/eve-hawkins-cdk-twin/spec/">the PACCAR Feedback Standard, EgD-HAW-CDK-PLUG-001</a>,
+whose §3 register and §9 question set supply items 1 through 7. v5 is reproduced from the drafting
+session of 2026-08-07. CDK's published PACCAR record was read from
+<a href="https://www.cdkglobalheavytruck.com/oem-integrations">the CDK Heavy Truck OEM integrations page</a>
+and <a href="https://www2.cdkglobal.com/ht-oem">the Heavy Truck OEM newsletter</a>. The incumbent register
+derives from <a href="https://www.karmak.com/integrations/paccar">Karmak's PACCAR integrations page</a> and
+<a href="https://webhelp.karmak.com/ReleaseNotes/Fusion/3.59_cumulative.pdf">the Fusion 3.59 cumulative release notes</a>.</p>
+<p>No confidential CDK material was used in constructing v6. Every question in it is answerable from
+CDK's own account records and asks about the dealership's own environment.</p></div></main>
+<footer><div class="wrap">
+<div>EVEglyphDesign · Key ID EgD-KEY-2026-07 · issued 2026-08-08T18:16:52Z · <a href="../spec/">the PACCAR Feedback Standard</a> · <a href="../">back to the CDK twin</a></div>
+<div style="margin-top:10px">© 2026 EVEglyphDesign. All rights reserved. Controlled copy. <span class="mark">Pour le bien-être du peuple.</span></div>
+</div></footer></body></html>
