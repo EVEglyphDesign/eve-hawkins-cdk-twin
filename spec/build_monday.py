@@ -20,7 +20,7 @@ body_md = raw.split("---\n", 1)[1] if raw.startswith("# ") else raw
 body_md = re.sub(r"^# The CDK Monday Runbook.*?\n---\n", "", raw, flags=re.S)
 
 html_body = markdown.markdown(
-    body_md, extensions=["tables", "attr_list", "sane_lists", "md_in_html"]
+    body_md, extensions=["tables", "attr_list", "sane_lists", "md_in_html", "fenced_code"]
 )
 
 CSS_TEXT = """
@@ -117,6 +117,12 @@ td {
 tr { page-break-inside:avoid; }
 table a { word-break:break-word; }
 
+pre {
+  background:#f7f2e7; border:1px solid #e7e1d3; border-left:3px solid #e87722;
+  padding:12px 14px; font-family:"DejaVu Sans Mono",monospace; font-size:9.5pt;
+  line-height:1.55; white-space:pre-wrap; overflow-wrap:break-word; margin:14px 0;
+}
+pre code { background:none; border:0; padding:0; font-size:inherit; }
 blockquote {
   margin:3mm 0; padding:2mm 0 2mm 4mm; border-left:2.5px solid var(--accent);
   color:var(--mute); font-style:italic;

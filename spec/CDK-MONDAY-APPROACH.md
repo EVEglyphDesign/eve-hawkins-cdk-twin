@@ -17,15 +17,59 @@ A173554, A258188.
 
 | Time | Do this |
 |------|---------|
+| 07:30 | **Generate the PGP key pair.** Nothing else can start until this exists |
+| 07:45 | **eStore** — start the Data Export Tool addendum and Dealer Data Exchange yourself |
 | 08:05 | Send **Email A** to [REP], cc Tim |
 | 08:10 | Send **Email B** to Tim |
 | 09:30 | **Call 1** — [REP] |
-| 10:00 | **eStore** — start the Data Export Tool addendum yourself |
 | 11:00 | **Call 2** — CDK Heavy Truck inside sales, **847-230-5715** |
 | 11:30 | Send **Email C** to whoever Call 2 named |
 | 14:00 | Send **Email D** to [PACCAR] |
 | 16:30 | Send **Email E** to [REP], cc Tim |
 | Wednesday | Send **Email F** to [REP], cc Tim and the CFO |
+
+---
+
+## 07:30 — the key
+
+The extract cannot be switched on without a public key to send. Generate it before anything else so
+nothing waits on it later in the day.
+
+```
+gpg --batch --gen-key <<EOF
+Key-Type: RSA
+Key-Length: 4096
+Name-Real: Peterbilt Atlantic
+Name-Email: [Luke's work address]
+Expire-Date: 0
+%no-protection
+EOF
+gpg --armor --export "Peterbilt Atlantic" > peterbilt-atlantic-public.asc
+```
+
+Export the private key and put it somewhere the dealership controls and Luke is not the only holder
+of — not a laptop, not a chat window. Attach `peterbilt-atlantic-public.asc` to Email A.
+
+---
+
+## 07:45 — eStore. Start the extract first.
+
+The Data Export Tool and Dealer Data Exchange are dealer entitlements at no licence fee. They do not
+depend on the PACCAR questions, on [REP], or on anything said in any call. Starting them at 07:45
+means the clock on the only item that actually moves data begins before CDK knows the day has
+started, and it never enters the rep's queue.
+
+Open eStore and start the Data Export Tool addendum against the Master Service Agreement — for **all
+eight accounts**, not a single store. Then Dealer Data Exchange for the same accounts.
+
+- **Self-serves** → sign it, done. Note the timestamp. Item 8 is closed before the first email goes.
+- **Needs counter-signature** → sign same day, and Email A asks who counter-signs and when.
+- **Blocked or missing for these accounts** → screenshot it, write down the exact message. That
+  message becomes item 8 in Email A, worded as a permissions question rather than a request:
+  *"eStore doesn't show the Data Export Tool addendum against our accounts. Is that a permissions
+  thing on our side, or does it need to be added centrally?"*
+
+Everything after this is paperwork behind a clock that is already running.
 
 ---
 
@@ -63,17 +107,20 @@ switched off, and where the gaps are that our people are covering by hand.
    failure surface so our staff can see it? Is there a transmission log and retry history our
    accounting team can look at directly?
 
-Two housekeeping items alongside it, both dealer entitlements at no licence fee:
+Two housekeeping items I've already started this morning, both dealer entitlements at no licence fee:
 
-**8.** The Data Export Tool added to our Master Service Agreement across all of the accounts above
-rather than a single store. We'll generate the PGP key pair here — tell me where to send the public
-key.
+**8.** I started the Data Export Tool addendum against our Master Service Agreement in eStore first
+thing — across all of the accounts above rather than a single store. Our public key is attached. Tell
+me where it goes, who counter-signs, and whether anything on the addendum needs to change to cover
+all eight accounts. *[If eStore blocked it: "eStore doesn't show the Data Export Tool addendum against
+our accounts — is that a permissions thing on our side, or does it need to be added centrally?"]*
 
-**9.** Dealer Data Exchange switched on for the same accounts, with the file layout and field
-documentation that comes with the data sets.
+**9.** Dealer Data Exchange for the same accounts. I'd like the file layout and field documentation
+that comes with the data sets sent over alongside it.
 
-I'll call you this morning to walk through it. On 8 and 9 I'd like those moving today. On 1 through 7
-I don't need answers today — I need a name and a date against each one by close of business.
+I'll call you this morning to walk through it. On 8 and 9 I've done my side — I need yours today. On
+1 through 7 I don't need answers today, I need a name and a date against each one by close of
+business.
 
 If any of this sits with the Heavy Truck team rather than with you, tell me who and I'll go to them
 directly rather than have it queue behind you.
@@ -101,7 +148,8 @@ Luke
 
 ## Call 1 — 09:30, [REP]. Fifteen minutes.
 
-**Get three things: a case number, items 8 and 9 started on the call, and a name and date against 1–7.**
+**Get three things: a case number, item 9 switched on while you're on the phone, and a name and date
+against 1–7.** Item 8 is already started — you're confirming his side of it, not asking for it.
 
 > "[REP] — Luke at Peterbilt Atlantic. I sent you something at eight this morning about our PACCAR
 > setup. Have you had a chance to look? No rush if not, I can walk you through it."
@@ -115,10 +163,11 @@ Get the case number:
 
 > "Can you raise this as a case so it has a number I can refer back to?"
 
-Get 8 and 9 started now, not queued:
+Close out 8 and 9 now, not queued:
 
-> "Those two are free to us and I don't think they need anyone above you. Can you start those while
-> we're on the phone?"
+> "I started the export addendum in eStore this morning and sent you our public key. Both of those
+> are free to us and I don't think they need anyone above you. Can you finish them off while we're on
+> the phone?"
 
 Get owners:
 
@@ -141,18 +190,6 @@ migration · alternative · benchmark · Karmak · Procede · portability · own
 
 ---
 
-## eStore — 10:00
-
-Open eStore and start the Data Export Tool addendum against the Master Service Agreement yourself.
-Do not wait for [REP].
-
-- **Self-serves** → sign it, done, the rep's queue no longer controls the date.
-- **Needs counter-signature** → sign same day, note the turnaround.
-- **Blocked or missing for these accounts** → write down the exact message. It goes into Email F as:
-  *"eStore doesn't show the Data Export Tool addendum for our accounts. Is that a permissions thing
-  on our side?"*
-
----
 
 ## Call 2 — 11:00, CDK Heavy Truck inside sales, **847-230-5715**
 
