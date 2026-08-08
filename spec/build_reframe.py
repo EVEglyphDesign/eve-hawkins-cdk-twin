@@ -133,7 +133,7 @@ def build(pages_token):
   <h2>Version 6 against version 5 &mdash; what changed<br>once the PACCAR register was known</h2>
   <dl>
     <dt>Document</dt><dd>EgD-HAW-CDK-OUT-002 · revision 1</dd>
-    <dt>Client context</dt><dd>Peterbilt Atlantic — nine rooftops, Atlantic Canada — CDK Drive Heavy Truck incumbent</dd>
+    <dt>Client context</dt><dd>Peterbilt Atlantic — eight locations, five provinces — eight CDK accounts on invoice 10002236</dd>
     <dt>Companion to</dt><dd>EgD-HAW-CDK-PLUG-001 — The PACCAR Feedback Standard</dd>
     <dt>Prepared by</dt><dd>EVEglyph Design</dd>
     <dt>Status</dt><dd>Draft for the operator's review. Side-by-side comparison. Not sent.</dd>

@@ -133,7 +133,7 @@ def build(pages_token):
   <h2>Design specification for a CDK Drive<br>dealer-feedback plug-in</h2>
   <dl>
     <dt>Document</dt><dd>EgD-HAW-CDK-PLUG-001 · revision 1</dd>
-    <dt>Client context</dt><dd>Peterbilt Atlantic — nine rooftops, Atlantic Canada — CDK Drive Heavy Truck incumbent</dd>
+    <dt>Client context</dt><dd>Peterbilt Atlantic — eight locations, five provinces — eight CDK accounts on invoice 10002236</dd>
     <dt>Prepared by</dt><dd>EVEglyph Design</dd>
     <dt>Status</dt><dd>Design specification. Reverse-specified from public incumbent documentation. Not a PACCAR-endorsed document.</dd>
   </dl>

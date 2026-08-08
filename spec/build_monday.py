@@ -17,7 +17,7 @@ ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 # strip the leading title block; we render it as a cover
 body_md = raw.split("---\n", 1)[1] if raw.startswith("# ") else raw
-body_md = re.sub(r"^# The CDK Monday Approach.*?\n---\n", "", raw, flags=re.S)
+body_md = re.sub(r"^# The CDK Monday Runbook.*?\n---\n", "", raw, flags=re.S)
 
 html_body = markdown.markdown(
     body_md, extensions=["tables", "attr_list", "sane_lists", "md_in_html"]
@@ -37,7 +37,7 @@ CSS_TEXT = """
   size: A4; margin: 20mm 16mm 20mm 16mm;
   background: var(--cream);
   @bottom-left {
-    content: "EVEglyphDesign · EgD-HAW-CDK-OUT-003 r1";
+    content: "EVEglyphDesign · EgD-HAW-CDK-OUT-003 r2";
     font-family:'Inter'; font-size:7pt; color:#6b665c;
   }
   @bottom-right {
@@ -129,14 +129,14 @@ def build(pages_token):
     doc = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head><body>
 <section class="cover">
   <div class="rule"></div>
-  <h1>The CDK<br>Monday Approach</h1>
-  <h2>Five messages, two calls, one working day<br>&mdash; the sequenced engagement</h2>
+  <h1>The CDK<br>Monday Runbook</h1>
+  <h2>Six emails, two calls, one day.<br>Fill three blanks and run it.</h2>
   <dl>
-    <dt>Document</dt><dd>EgD-HAW-CDK-OUT-003 · revision 1</dd>
-    <dt>Client context</dt><dd>Peterbilt Atlantic — nine rooftops, Atlantic Canada — eight CDK accounts on invoice 10002236</dd>
+    <dt>Document</dt><dd>EgD-HAW-CDK-OUT-003 · revision 2</dd>
+    <dt>Client context</dt><dd>Peterbilt Atlantic — eight locations, five provinces — eight CDK accounts on invoice 10002236</dd>
     <dt>Companion to</dt><dd>EgD-HAW-CDK-PLUG-001 — The PACCAR Feedback Standard<br>EgD-HAW-CDK-OUT-002 — The CDK Outreach, Reframed</dd>
     <dt>Prepared by</dt><dd>EVEglyph Design</dd>
-    <dt>Status</dt><dd>Operating plan for Monday 10 August 2026. Drafts ready to send; two blanks to fill.</dd>
+    <dt>Status</dt><dd>Working runbook for Monday 10 August 2026. Send-ready copy.</dd>
   </dl>
   <div class="foot">
     Key ID EgD-KEY-2026-07 · {ts}<br>

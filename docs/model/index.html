@@ -143,7 +143,7 @@ footer .wrap{padding:22px 24px}
 
 <script>
 const SPINE=[["Who","customer-master","The customer of record","Customer"],["What","vehicle-master","The unit — VIN or stock number","Vehicle / Unit"],["The job","repair-order","The RO","Repair Order"],["Hours","ro-labour-operation","Labour and technician time","Labour Line"],["Parts","ro-part-line","Parts on the ticket","Part Line"],["Money owed","accounting-schedule","The schedule it reconciles on","Schedule"],["The books","gl-journal-posting","The general ledger","GL Posting"]];
-const GROUPS=[["org","How the nine rooftops are partitioned"],["master","Master records — the things that persist"],["transaction","Transactions — the things that happen"],["inventory","Parts and inventory"],["ledger","The ledger and the money"],["access","Getting the data out"]];
+const GROUPS=[["org","How the eight locations are partitioned"],["master","Master records — the things that persist"],["transaction","Transactions — the things that happen"],["inventory","Parts and inventory"],["ledger","The ledger and the money"],["access","Getting the data out"]];
 let M=null,cur=null,tier='ALL',scrollOnOpen=false;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
