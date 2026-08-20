@@ -130,7 +130,7 @@ Luke: *I'm not 100% sure on the Peterbilt side how warranty flows and works yet.
 
 > Like — that's big-money-off-the-table stuff. That's what we go with — the information that's the easiest to consolidate.
 
-The RO that was a three-hour job becomes a six-hour job because the warranty coverage was checked before the tech opened the drain plug. **The revenue that this surfaces is revenue the dealership was already entitled to but was not going to bill.** That is precisely the profile of every other signal in the Instructions doc — leakage, not new work.
+— Luke Weatherbie, closing the recap, 2026-08-19.
 
 ---
 
