@@ -160,13 +160,29 @@ Recorded here so v2 has a start point and v1 stays honest about what it does not
 
 ---
 
+## Status log — 2026-08-20 (Luke, WhatsApp)
+
+Three signals from Luke this morning, added to the record so the ask register reads honestly.
+
+- **10:01 — 3rd-party warranty usage on the Peterbilt side.** *"Let me ask around not sure on peterbilt side how much 3rd party warranty they use."* Luke is opening the question himself. This is the missing input for narrowing [Warranty-Bot Recap §5](https://eveglyphdesign.github.io/hawkins-twin-platform/customer-sphere/Luke-08-19-26-Warranty-Bot-Recap/#5-the-peterbilt-caveat-quoted-honestly) — the Peterbilt caveat quoted honestly. Owner: Luke. Action: awaiting.
+- **10:16 — CDK silent, Lightspeed contacted.** *"crickets from CDK. only lightspeed contact is sales rep. Have sent to him."* The CDK API/DDX conversation is stalled on CDK's side. Lightspeed has a channel: the sales rep, whom Luke has already reached out to. Owner: Luke on Lightspeed. CDK escalation path is open — who inside Hawkins has an account-relationship lever with CDK?
+- **14:10 — PACCAR is a live door, not a deferred one.** *"What about Paccar? Should we begin knocking on their door? looks like more than I thought may be housed in there."* Luke sees more warranty depth inside PACCAR than initially assumed. Decision: **open the PACCAR conversation now**, routed through Luke and Craig Allen rather than a direct approach from the twin. This changes the extraction plan — PACCAR moves from a §5 caveat to a first-class ask.
+
+These three shift the [Warranty-Bot Recap](https://eveglyphdesign.github.io/hawkins-twin-platform/customer-sphere/Luke-08-19-26-Warranty-Bot-Recap/) from *aftermarket-first, OEM-later* to *aftermarket-first, PACCAR-parallel*.
+
+---
+
 ## Ask register — one page, ready to send
 
-The three asks the dashboard genuinely needs before the industry-benchmark column stops being partial. Anything else on this page is either already held or is a v2 concern.
+The asks the dashboard genuinely needs before the industry-benchmark column stops being partial, and — as of 2026-08-20 — the two new warranty-lane asks Luke opened this morning. Anything else on this page is either already held or is a v2 concern.
 
-1. **Peterbilt dealer portal walkthrough** — Craig Allen + one operator, one call. Purpose: inventory the source screens behind MX / TX-8 / TX-18 / MDI / RPM / TRP / training / Platinum. Deliverable: a screen-by-screen list matched against the retrieval column above.
-2. **The eighth rooftop's 2026 scorecard** — Craig confirms the missing DCODE and forwards its PDF.
-3. **ATD 20-Group current-period composite** — Tim confirms whether it may enter the twin and by what channel.
+1. **Peterbilt dealer portal walkthrough** — Craig Allen + one operator, one call. Purpose: inventory the source screens behind MX / TX-8 / TX-18 / MDI / RPM / TRP / training / Platinum. Deliverable: a screen-by-screen list matched against the retrieval column above. Owner: Luke to route through Craig.
+2. **The eighth rooftop's 2026 scorecard** — Craig confirms the missing DCODE and forwards its PDF. Owner: Luke to route through Craig.
+3. **ATD 20-Group current-period composite** — Tim confirms whether it may enter the twin and by what channel. Owner: Tim.
+4. **PACCAR warranty data lane** *(added 2026-08-20)* — is there a partner / API / per-VIN portal path into PACCAR for base + extended warranty coverage on Peterbilt units? Framing: dealership-side lens first (which coverages a unit holds, which checks are worth running at this visit), claim submission stays where it is today. Owner: Luke to knock; the twin does not approach PACCAR directly.
+5. **3rd-party warranty usage on the Peterbilt side** *(added 2026-08-20)* — what share of the Peterbilt warranty flow at the Hawkins rooftops is third-partied out versus handled inside PACCAR? This is a Luke-internal ask; the answer defines whether the aftermarket lane covers most of Peterbilt or only a slice. Owner: Luke.
+6. **CDK escalation path** *(added 2026-08-20)* — no response as of 2026-08-20 on the API / DDX conversation. Who inside Hawkins has an account-relationship lever with CDK to unlock a reply? Owner: to be assigned — candidate is Tim or Tobias, not Luke.
+7. **Lightspeed sales rep response** *(added 2026-08-20)* — Luke has already reached out; awaiting reply. Owner: Luke.
 
 The RL Polk / S&P Global Mobility question is worth surfacing at the same time but explicitly as a **v2 decision**, not a v1 blocker — the v1 dashboard can show market-share tiles as *Peterbilt-supplied, unaudited* and still be useful.
 

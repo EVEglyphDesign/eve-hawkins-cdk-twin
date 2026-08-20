@@ -126,6 +126,8 @@ Luke: *I'm not 100% sure on the Peterbilt side how warranty flows and works yet.
 - Submitting the claim to Peterbilt / PACCAR stays where it is today — in the manufacturer's system — until the walkthrough with Craig Allen and the operator lands (that ask is already open in [`EXTERNAL-REFERENCES.md`](https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/blob/main/dashboard/EXTERNAL-REFERENCES.md)).
 - Aftermarket / powersport is where the twin can be end-to-end first, because as Luke put it, that side "would be really vulnerable to this."
 
+**Update — 2026-08-20.** Luke, WhatsApp, 14:10: *"What about Paccar? Should we begin knocking on their door? looks like more than I thought may be housed in there."* The PACCAR lane is now a live door, not a deferred one. The framing above stands — dealership-side lens first, claim submission stays with PACCAR — but the PACCAR partner conversation opens in parallel with the aftermarket build, not after it. Routed through Luke and Craig Allen; the twin does not approach PACCAR directly. Ask logged in the [external reference register](https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/blob/main/dashboard/EXTERNAL-REFERENCES.md#status-log--2026-08-20-luke-whatsapp).
+
 ## 6. Why this is on Tim's list, in Luke's own words
 
 > Like — that's big-money-off-the-table stuff. That's what we go with — the information that's the easiest to consolidate.
