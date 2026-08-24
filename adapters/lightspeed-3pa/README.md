@@ -2,13 +2,20 @@
 
 **Lightspeed DMS ingestion lane — Peterbilt Atlantic self-serve read of its own records.**
 
-Status: **wireframe, waiting on 3PA developer guide and dealer credentials from Kade Humpherys**.
+Status: **collector spec, waiting on service-account HTTP Basic credentials from the
+Lightspeed Data Services team via Kade Humpherys.**
 
 Sibling to [`adapters/cdk-fortellis`](../cdk-fortellis/) and [`adapters/paccar`](../paccar/).
 Same design law: one adapter per external system, SAP-shape schema on the way out, and no
 invented field names. The customer twin ends as one profile per company built from the
 superset of CDK Drive and Lightspeed DMS, joined on the customer identity CDK carries and
 Lightspeed carries (invoice-anchored — see [Section 4 of the v0.1 finding memo][v01]).
+
+This README supersedes the OData-v2 assumptions in commit `75d5f3c` — the correct wire
+format is documented directly in the
+[Lightspeed DMS — Data Warehouse Web Service Developer Guide, August 2024][ls-guide]
+(committed under [`docs/lightspeed-3pa/developer-guide.pdf`][guide-local]). Where this
+README and the guide disagree, the guide wins.
 
 ## Why this is a first-party lane, not a third-party integration
 
@@ -18,171 +25,194 @@ and mail — all inside dealer-controlled Azure Postgres. There is no downstream
 consuming the data. Under Lightspeed's own product taxonomy this is the internal 3PA
 (Third Party Access) surface a dealer opens for its own extension work; it is not the
 paid Partner Program integration that Lightspeed uses to broker access between a dealer
-and an external ISV. The distinction was confirmed on the [Lightspeed DMS partners page][ls-partners]
-and by [Ryker Crismon's 24 Aug 2026 email][ryker], which points the dealer at the in-app
-3PA path without invoking Partner Program terms.
+and an external ISV. The distinction was confirmed on the
+[Lightspeed DMS partners page][ls-partners] and by
+[Ryker Crismon's 24 Aug 2026 email][ryker], which points the dealer at the in-app 3PA
+path without invoking Partner Program terms.
 
-This matches the CDK-lane precedent recorded on
-[projects/peterbilt-atlantic-digital-twin][twin-canon]:
-> Dealer-controlled CDK export — the preferred extraction route is CDK Data Export Tool
-> over SFTP/PGP plus Dealer Data Exchange, avoiding the per-data-type third-party-access
-> path when dealer entitlement permits it.
+## Wire format — verbatim from the Lightspeed developer guide
 
-Lightspeed's shape here is analogous: dealer-entitled reads first; Partner Program /
-Managed Data Services only if Peterbilt Atlantic ever chooses to publish this data
-outward.
+The API is **not standards-OData**. It reuses a subset of OData v2 query semantics but
+disables the projection and count features. Every fact below is quoted from the
+[developer guide][guide-local], sections *Service Description* (pp. 6–9) and the per-endpoint
+field tables.
 
-## The channel, in the order Peterbilt Atlantic will walk it
+- **Base URL:** `https://int.lightspeeddataservices.com/lsapi`
+- **URL shape:** `/{BaseURL}/{DataType}/{CMF}` — the customer master file number (CMF) is
+  a **URL segment**, not a query parameter. Example:
+  `https://int.lightspeeddataservices.com/lsapi/Customer/76156733`.
+- **Authentication:** HTTP Basic. Username and password are issued by the Lightspeed Data
+  Services team; contact Kade Humpherys for testing credentials. There is **no** OAuth,
+  no API key header, no client-id / client-secret pair — the earlier assumption of
+  `LIGHTSPEED_3PA_CLIENT_ID` / `LIGHTSPEED_3PA_CLIENT_SECRET` is retracted.
+- **Content:** JSON by default. `Accept: text/xml` returns XML instead. Gzip supported via
+  the non-standard header `X-Accept-Encoding: gzip` (the guide is explicit that this is
+  `X-Accept-Encoding`, not `Accept-Encoding`).
+- **Date literals on the URL:** ODBC `yyyy-mm-dd` for `date` types; datetime literal
+  `datetime'2014-01-01'` (single-quoted) inside `$filter`. Response bodies return
+  `yyyy-mm-ddThh:mm:ss.nn` — dealer-server timezone for every field **except**
+  `DateGathered`, which is Lightspeed's Gateway-server timezone.
+- **Big integer filter values need the `L` suffix** in `$filter`, e.g.
+  `RowKey eq 735775383867171434L`. The suffix is not required on the newest AWS
+  deployment, but including it is safe on every version.
+- **Query options SUPPORTED:** `$filter`, `$top` (server cap **500** rows per page),
+  `$skip`, `$orderby`, and logical operators (`and`, `or`, `not`, `eq`, `ne`, `lt`, `le`,
+  `gt`, `ge`).
+- **Query options NOT SUPPORTED:** `$select`, `$expand`, `$inlinecount` (in any form),
+  `$format` as a query parameter, arithmetic operators, and string functions
+  (`startswith`, `substringof`, `substring`, etc.). **Do not build a client that emits
+  those** — the server ignores or errors on them and the earlier draft of this adapter
+  was wrong to include them.
+- **HTTP status codes:** `200` success (including empty result), `401` authentication
+  failure, `403` authorization failure, `404` no matching endpoint / CMF, `500` other.
+  Errors return a plain-string body; there is no `WWW-Authenticate` challenge.
+- **Null semantics:** every non-string field is nullable — treat every numeric or date
+  field as `Optional`.
 
-1. **In-app entitlement inventory (dealer-operated, free).**
-   Path given verbatim by Lightspeed:
-   `System > Lists > Stores > your store > Third Party Access (3PA)`.
-   This screen enumerates every dataset Peterbilt Atlantic is entitled to expose to itself
-   under 3PA, per rooftop. That inventory becomes `docs/lightspeed-3pa-entitlements.md` —
-   one table per rooftop, one row per dataset, with `entitled` / `not entitled` / `paid`
-   marked from the screen.
+### Consequences for the collector
 
-2. **Developer guide.** The 3PA page renders a link to the Lightspeed developer guide once
-   entitlement is confirmed. That guide names the base URL, the auth model (dealer-scoped
-   API key or OAuth), the object catalogue, and the paging rules. It supersedes anything
-   inferred here. **Do not build a client before reading it.**
+Because `$select` is not available, every response returns the **full field set** for the
+requested endpoint. The collector stores the payload as-is; column selection happens in
+the projection into `lightspeed_raw.*` (SAP-shape mapping) downstream, not on the wire.
 
-3. **Contact of record.** Kade Humpherys (<Kade.Humpherys@lightspeeddms.com>) handles all
-   3PA at Lightspeed per [Ryker Crismon, 24 Aug 2026][ryker]. Ryker (Account Manager) stays
-   copied as the commercial owner. All correspondence lands in the
-   `lweatherbie@peterbiltatlantic.com` mailbox so a Peterbilt-owned audit trail exists
-   from turn one (same custody principle as the TELUS service-identity rule on
-   [projects/peterbilt-atlantic-digital-twin][twin-canon]).
+Because `$inlinecount` is not available, there is no server-declared total to reconcile
+against on the first page. Reconciliation happens by paging until a partial page
+(`rowcount < $top`) is returned, then comparing the collector's own row count against the
+Lightspeed in-app UI count for the same rooftop and date range.
 
-4. **Fallback: dealer-operated report writer + CSV.** If 3PA API entitlement is delayed
-   or gated behind a fee we are not ready to authorize, Phase 1 stays on the report
-   writer / CSV path Dany already blessed in the canon
-   ([Lightspeed Phase 1 stays dealer-operated][twin-canon]). Same landing zone, slower cadence,
-   no external dependency.
+Because `$expand` is not available, related objects (e.g. `ServiceDet.Unit.Job.Parts`) are
+returned as **embedded arrays inside the primary endpoint's payload** — the guide
+documents these as sub-tables of the response, not as separate endpoints. `ServiceDet`
+alone returns nested `Unit`, `Unit.Job`, `Unit.Job.Parts`, and `Unit.Job.Labor` levels.
+The collector persists the payload whole; splitting into relational tables is a
+downstream concern.
 
-## Object scope for the customer twin (superset with CDK)
+## Endpoint list and incremental key, Phase 1
 
-The v0.1 finding memo [What the Data Already Says][v01] states the join problem plainly:
+Column names below are quoted verbatim from the developer guide. Phase 1 is the minimum
+that closes the invoice-anchored phone-to-email join called out in
+[Section 4 of the v0.1 finding memo][v01].
 
-> An email record knows an address. A phone record knows a number. Nothing in either
-> says they are the same company. An invoice knows both.
+| Endpoint | Contract # | Incremental key | Scoping filter (rooftop) | Guide page |
+|---|---|---|---|---|
+| `Customer` | 4994580 | `DateGathered` (`datetime`) | `storename eq '<store>'` | 66–67 |
+| `CustomerUnit` | 4994580 | *(snapshot — no timestamp; whole-set pull)* | *(scoped by parent Customer's CMF)* | 68 |
+| `CustomerLastTransaction` | 4994580 | *(snapshot — no timestamp; whole-set pull)* | *(scoped by CMF only)* | 133 |
+| `ServiceSum` | 4994582 | `CashieredDate` (`datetime`) or `ROHeaderId` (`bigint`, needs `L` suffix) | *(scoped by CMF only; join to Customer downstream)* | 68–69 |
+| `ServiceDet` | 4994583 | `datein` (`datetime`) | *(scoped by CMF only)* | 70–75 |
+| `InvoiceSum` | 4994586 | `InvoiceDate` (`date`) or `InvoiceId` (`int`) | *(scoped by CMF only)* | 96–97 |
+| `InvoiceDet` | 4994587 | `InvoiceDate` (`date`) or `invoiceId` (`int`) | *(scoped by CMF only)* | 97–99 |
+| `Deal` | 4994584 | `FinanceDate` (`datetime`) | *(scoped by CMF only)* | ~41–65 |
+| `DealDetail` | 4994585 | *(TBD — read the guide field table when we get to it)* | *(scoped by CMF only)* | ~50–65 |
 
-So the Lightspeed lane pulls the fields that carry the invoice identity across email
-and phone, and stops there for Phase 1. Everything else can wait for the wider spec.
+Notes:
 
-| Object | Why we need it in Phase 1 | Maps to (SAP-shape) |
+- **The `Customer` endpoint returns every customer in the Lightspeed instance the CMF
+  belongs to** — not only the ones tagged to a specific rooftop. Scoping to a single
+  Peterbilt Atlantic rooftop is done client-side by `$filter=storename eq '<store>'`.
+  The other endpoints scope by CMF alone; the rooftop identity attaches downstream
+  through the customer join. (Guide, p. 67, `storename` field.)
+- **CCPA suppressed rows** — if `optoutsharedata eq true` or
+  `removepersonalinformation eq true`, only `CustomerId` comes back; every other field is
+  blank/null. The collector persists these rows unchanged; the projection layer decides
+  what to do with them. (Guide, p. 67, `optoutsharedata` / `removepersonalinformation`.)
+- **InvoiceSum / InvoiceDet** have no last-modified column; the guide's own note is
+  "Use InvoiceID or InvoiceDate to determine changes" (guide, pp. 97, 99). The collector
+  uses `InvoiceDate` because it is an indexable date and matches the guide's example
+  URLs. `InvoiceId` is the fallback if `InvoiceDate` proves too coarse in production.
+- **`CustomerLastTransaction` and `CustomerUnit` are snapshot endpoints** — no timestamp
+  column to filter on. The collector reads the whole set every run; storage cost is
+  bounded because they are small compared to `ServiceDet` / `InvoiceDet`.
+- Endpoint discovery on the guide page numbers marked `~` (Deal, DealDetail) still needs
+  a targeted field-table read on first collector run against a live tenant — recorded as
+  the Phase-1 exit criterion.
+
+## Object → SAP-shape mapping (customer sphere projection)
+
+Unchanged from the previous draft; the wire format was wrong, the target shape is right.
+Column selection happens **after** the raw JSON lands.
+
+| Lightspeed endpoint | Why we need it in Phase 1 | Maps to (SAP-shape) |
 |---|---|---|
-| Customer / Company account | The identity spine — one row per business, with name, mailing address, primary phone, primary email, tax id, status | `KNA1` — general customer master |
-| Customer contact / person | Named contacts under each company, with email and direct phone | `KNVK` — customer contact person |
-| Store / rooftop | Which Peterbilt Atlantic location owns the relationship | `T001W` — plant/store |
-| Invoice header | Date, rooftop, customer, total, status — the row that resolves phone-to-email | `VBRK` — billing document header |
-| Invoice line | Part/service/description, qty, net, tax — for spend attribution | `VBRP` — billing document item |
-| Repair order header (if under 3PA) | Ties service work to the same customer identity | `VBAK` / dealer analogue |
-| Parts sale line (if under 3PA) | Parts-vocabulary lens from the v0.1 memo Section 3 | `MSEG` / dealer analogue |
+| `Customer` (`Cmf`, `CustomerId`, `LastName`, `FirstName`, `storename`, addresses, emails, phones, `DateGathered`) | The identity spine — one row per business/individual | `KNA1` — general customer master |
+| `CustomerUnit` (customer → unit/VIN links) | Named units under each customer | `KNVK` / dealer analogue |
+| `InvoiceSum` (`Cmf`, `InvoiceId`, `InvoiceNo`, `InvoiceDate`, `custid`, `Sales`, `SalesType`) | Invoice header — the row that resolves phone-to-email | `VBRK` — billing document header |
+| `InvoiceDet` (`invoiceId`, `Invoicelineno`, `partno`, `qty`, `price`, `cost`, ...) | Invoice lines — spend attribution and parts identity | `VBRP` — billing document item |
+| `ServiceSum` (`ROHeaderID`, `rono`, `custid`, `CashieredDate`, `CommonInvoiceId`) | RO header — joins service work to customer + invoice | `VBAK` / dealer analogue |
+| `ServiceDet` (nested `Unit` → `Job` → `Parts`, `Labor`) | RO detail — parts and labor vocabulary from the v0.1 memo §3 | `MSEG` / dealer analogue |
+| `Deal` / `DealDetail` (major-unit sales) | Unit-sale row that anchors the customer's ownership history | `VBAK` / `VBAP` for major-unit sales |
 
-The `Customer` and `Invoice*` objects are the non-negotiable minimum. Everything else
-loads only when it is already inside a page returned by those queries. Zero speculative
-fan-out.
+The `Customer` + `InvoiceSum` + `InvoiceDet` triplet is the non-negotiable minimum for
+Phase 1. Everything else loads only after those three are reconciled.
 
-## Wire format — likely OData v2, treat as such until the guide says otherwise
+## Sequence for connectivity (this week, Shrish executing)
 
-Lightspeed DMS's public developer surface historically uses OData v2 semantics (paging,
-projection, and filtering all done in the query string). Until the 3PA developer guide
-confirms otherwise, the client assumes OData v2 as specified by
-[OData v2 URI Conventions § 4 Query String Options][odata].
+Ordered cheapest-first — [EgD-BOOT-001 §1][boot].
 
-Read-only client contract:
+1. **Provisioning email from Luke** (5 minutes, one email, from
+   `lweatherbie@peterbiltatlantic.com`). Cc Ryker Crismon. Ask Kade Humpherys for:
+   (a) written confirmation that dealer-operated read of `Customer`, `InvoiceSum`,
+   `InvoiceDet`, `ServiceSum`, `ServiceDet`, `Deal`, `DealDetail` under 3PA carries no
+   per-object fee for Peterbilt Atlantic; (b) the credential provisioning form for
+   **one** read-only service account, all rooftops, scoped to those endpoints;
+   (c) the CMF (Customer Master File) number(s) for Peterbilt Atlantic's rooftops.
+   The credential is HTTP Basic `username:password`, not OAuth — see the guide.
 
-- `$filter` for incremental pulls — always by a last-modified timestamp column on the
-  server side, never by client-side date maths. Example against a `Customers` collection:
-  `$filter=ModifiedOn gt datetime'2026-08-01T00:00:00'`.
-- `$select` on every request — never `SELECT *`. Column list is stored in
-  `config/lightspeed-3pa.yml` and versioned with the code.
-- `$orderby` on the same timestamp column that `$filter` uses. This is what makes
-  paging repeatable — the OData spec explicitly warns that `$skip` / `$top` without
-  `$orderby` may not be consistent across requests.
-- `$top` fixed at the guide's page size (assume 500 until told otherwise); `$skip`
-  advances by exactly `$top`.
-- `$inlinecount=allpages` on the first page of every extract so the extract log records
-  the total count the server said existed **before** we started paging.
-- `$format=json` and `Accept: application/json`. No XML/Atom parsing.
+2. **Store the credential in both custody stores in the same action** —
+   [EgD-BOOT-003][boot] durability rule. GitHub environment secret
+   `LIGHTSPEED_3PA_BASIC_AUTH` (value: `username:password`, exactly as base64 will encode)
+   **and** Peterbilt Azure Key Vault same name, written in the same action. The service
+   account is a role identity, not Luke's personal login.
 
-Every request, its response headers, its row count, and its SHA-256 of the returned
-payload land in `extract/out/lightspeed/<rooftop>/<YYYY-MM-DD>/` — same custody shape as
-the CDK export collector on [projects/peterbilt-atlantic-digital-twin][twin-canon].
+3. **Configure `adapters/lightspeed-3pa/config.yml`** — rooftop list (`storename` values
+   as they appear in Lightspeed's own store list), CMF per rooftop, endpoint list, and
+   per-endpoint incremental key. Everything else is derived.
 
-## Sequence for connectivity (this week, with Shrish executing)
+4. **First reconciled test pull, one rooftop, one endpoint.** Moncton, `Customer` only,
+   `$top=500`, `$orderby=DateGathered`, `$filter=storename eq '<Moncton store>'`. Compare
+   the collector's row count to Lightspeed's own in-app Moncton customer count. Do not
+   proceed to a second endpoint until the counts agree.
 
-Ordered by cheapest-first — [EgD-BOOT-001 §1][boot].
+5. **Widen to `Customer` + `InvoiceSum` + `InvoiceDet` across all rooftops.** Same
+   collector, one rooftop at a time, same reconciliation, per-endpoint incremental
+   watermark stored under `extract/out/lightspeed/<rooftop>/watermark.json`.
 
-1. **Read entitlement, 15 minutes, no external call.** Luke or a Peterbilt Atlantic
-   Lightspeed admin opens `System > Lists > Stores > <rooftop> > Third Party Access (3PA)`
-   for one representative rooftop (Moncton is the default anchor unless Luke says
-   otherwise). Screenshot the entitlement list, drop the screenshot in
-   `docs/lightspeed-3pa-entitlements/moncton.png` and the transcription in the sibling
-   `.md`. This costs nothing and answers "can we even see Customer and Invoice from
-   here?" before anyone writes code.
+6. **Land in the customer sphere.** Rows arrive in dealer Azure Postgres under
+   `lightspeed_raw.<endpoint>`, then project into the SAP-shape customer sphere
+   alongside the CDK projection. The join key is the invoice-anchored identity from
+   [Section 4 of the v0.1 finding memo][v01]. Origin and confidence are preserved per
+   vector, per the [Customer Sphere design][twin-canon] — nothing averages; conflicts
+   stay visible.
 
-2. **Read the developer guide, 1 hour, no external call.** From the same 3PA screen,
-   follow the link to the developer guide. Extract: base URL, auth model, object list,
-   paging rules, rate limits, timestamp field name. Land as
-   `docs/lightspeed-3pa-developer-guide-notes.md` — a summary in this repository, not a
-   copy of Lightspeed's document.
+## Collector — where the code lives
 
-3. **First correspondence to Kade Humpherys, one email, no follow-up loop.** Luke
-   (from `lweatherbie@peterbiltatlantic.com`) sends the request. Cc Ryker Crismon. Ask:
-   (a) confirm that under Peterbilt Atlantic's current agreement, dealer-operated read
-   of Customer, Contact, Invoice, and (if entitled) Repair Order via 3PA has no
-   per-object fee; (b) request the credential provisioning form for one service account
-   scoped to those objects, read-only, all rooftops. **One email. Do not restate the
-   entire architecture; the audit trail belongs in this repository, not in his inbox.**
-
-4. **Provision one Peterbilt-owned service account, not a personal one.** Same custody
-   rule as `entities` on the TELUS lane: the credential holder is a role mailbox, not
-   Luke's personal account, so it survives him leaving. Store the client id in this
-   repository; store the client secret in the GitHub environment under
-   `LIGHTSPEED_3PA_CLIENT_SECRET` and in Peterbilt's Azure Key Vault under the same
-   name. **Write the secret to both stores in the same action that provisions it** —
-   [EgD-BOOT-003][boot] durability rule.
-
-5. **First reconciled test pull, single rooftop, single object.** Moncton, `Customers`
-   only, `$top=500`, `$inlinecount=allpages`. Compare row count against Lightspeed's own
-   customer count on the in-app screen for Moncton. Do not proceed to a second object
-   until the counts agree to within the reason we can explain.
-
-6. **Widen to Customer + Contact + Invoice across all rooftops.** Same collector, one
-   rooftop at a time, same reconciliation.
-
-7. **Land in the customer sphere.** The rows arrive in dealer Azure Postgres under
-   `lightspeed_raw.*`, then are projected into the SAP-shape customer sphere alongside
-   the CDK projection. The join key is the invoice-anchored identity discussed on
-   [projects/peterbilt-atlantic-digital-twin][twin-canon]. **Origin and confidence are
-   preserved per vector** — [Customer Sphere makes disagreement visible][twin-canon].
-   Nothing averages; conflicts stay visible for human resolution.
-
-Steps 1 and 2 are free and can start today.
-Step 3 is one email, cheap.
-Steps 4–7 are the connectivity work Shrish will execute against this repository once
-the developer guide is on file.
+- **Collector entrypoint:** [`extract/lightspeed/collect.py`](../../extract/lightspeed/collect.py)
+- **Configuration:** [`config.yml`](./config.yml)
+- **Extract layout:** `extract/out/lightspeed/<rooftop>/<UTC-date>/<endpoint>-<page>.json`
+  + `manifest.json` (request URL, request timestamp UTC, response status, row count,
+  SHA-256 of the payload) + `watermark.json` (last successful timestamp per endpoint,
+  per rooftop). **The collector never overwrites an existing extract file**; a re-run
+  writes to a new UTC-dated directory.
 
 ## Handoff to Shrish
 
 The Shrish-facing runbook is [`docs/handoff/shrish-lightspeed-3pa.md`](../../docs/handoff/shrish-lightspeed-3pa.md).
-It contains only what he needs to execute steps 1, 2, and 5; the commercial and
-architectural context stays here.
+It contains only what he needs to execute the automated collector against a
+Peterbilt-provided credential; the commercial and architectural context stays here.
 
 ## References
 
+- [Lightspeed DMS — Data Warehouse Web Service Developer Guide, August 2024 (repo copy)][guide-local] — the canonical wire spec
 - [EVEglyphDesign Executive Boot Contract — EgD-BOOT-001][boot]
 - [Peterbilt Atlantic Digital Twin — canonical project page][twin-canon]
-- [What the Data Already Says v0.1 — 24 Aug 2026 finding memo][v01] *(local to this working set; not yet committed)*
-- [OData v2 URI Conventions — Query String Options][odata]
+- [What the Data Already Says v0.1 — 24 Aug 2026 finding memo][v01]
 - [Lightspeed DMS Partners page][ls-partners]
 - Ryker Crismon (Lightspeed) to Luke Weatherbie, 24 Aug 2026, `Re: Data export tool options` — 3PA path and Kade Humpherys as 3PA owner
 
 [boot]: https://eveglyphdesign.github.io/eve-glyph-boot-contract/
 [twin-canon]: https://github.com/EVEglyphDesign/hawkins-twin-platform
 [v01]: ../../docs/finding-memos/what-the-data-already-says-v0.1.md
-[odata]: https://www.odata.org/documentation/odata-version-2-0/uri-conventions/
+[ls-guide]: ../../docs/lightspeed-3pa/developer-guide.pdf
+[guide-local]: ../../docs/lightspeed-3pa/developer-guide.pdf
 [ls-partners]: https://www.lightspeeddms.com/partners/
 [ryker]: mailto:Ryker.Crismon@lightspeeddms.com

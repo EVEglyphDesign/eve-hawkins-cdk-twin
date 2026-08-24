@@ -1,0 +1,133 @@
+# adapters/lightspeed-3pa/config.yml
+#
+# Runtime config for the Lightspeed DMS 3PA collector.
+# Wire format is authoritative in ../../docs/lightspeed-3pa/developer-guide.pdf
+# (Service Description, pp. 6-9). Field names are copied verbatim from that guide.
+#
+# The credential is HTTP Basic. It is read from the environment variable
+# LIGHTSPEED_3PA_BASIC_AUTH (value: "username:password"), not from this file.
+# GitHub Actions maps a repo/environment secret of the same name into the run.
+
+api:
+  # Base URL, verbatim from developer guide p. 6.
+  base_url: "https://int.lightspeeddataservices.com/lsapi"
+  # Server cap on $top per developer guide p. 8. Do not raise.
+  page_size: 500
+  # Non-standard header, verbatim from developer guide p. 7.
+  gzip_header_name: "X-Accept-Encoding"
+  # Timeouts in seconds (client-side, not from the guide).
+  connect_timeout_s: 15
+  read_timeout_s: 120
+  # Retry on 500 only; do not retry 401/403/404.
+  retry_on_status: [500]
+  max_retries: 3
+  backoff_seconds: [2, 5, 15]
+
+# One entry per Peterbilt Atlantic rooftop.
+# CMF is a URL segment on every request — /lsapi/{DataType}/{CMF}.
+# `storename` is the value used to filter the Customer endpoint client-side
+# via $filter=storename eq '<storename>'. See developer guide p. 67.
+#
+# TODO: Luke supplies the real CMF and storename values with the provisioning email.
+rooftops:
+  - name: "moncton"
+    cmf: "TBD-MONCTON-CMF"
+    storename: "TBD-MONCTON-STORENAME"
+  - name: "dieppe"
+    cmf: "TBD-DIEPPE-CMF"
+    storename: "TBD-DIEPPE-STORENAME"
+  - name: "saint-john"
+    cmf: "TBD-SAINT-JOHN-CMF"
+    storename: "TBD-SAINT-JOHN-STORENAME"
+  - name: "halifax"
+    cmf: "TBD-HALIFAX-CMF"
+    storename: "TBD-HALIFAX-STORENAME"
+  - name: "truro"
+    cmf: "TBD-TRURO-CMF"
+    storename: "TBD-TRURO-STORENAME"
+
+# Endpoints to pull, in the order the collector should run them.
+#
+# incremental_key: column used for $filter and $orderby on incremental pulls.
+#   type is one of: datetime | date | bigint | none (snapshot)
+#   For bigint, the collector appends the L suffix in the URL per guide p. 9.
+#   For "none", the collector does a whole-set pull every run (no filter, no orderby).
+#
+# scope_filter: extra $filter fragment applied on every request.
+#   Only used by Customer (storename), since the Customer endpoint returns every
+#   customer in the Lightspeed instance regardless of rooftop. See guide p. 67.
+#
+# The Phase-1 minimum is Customer + InvoiceSum + InvoiceDet.
+# ServiceSum, ServiceDet, Deal, DealDetail are Phase 1.5.
+endpoints:
+  - name: "Customer"
+    incremental_key: "DateGathered"
+    incremental_type: "datetime"
+    scope_filter_template: "storename eq '{storename}'"
+    guide_pages: "66-67"
+    phase: 1
+
+  - name: "InvoiceSum"
+    incremental_key: "InvoiceDate"
+    incremental_type: "date"
+    scope_filter_template: null
+    guide_pages: "96-97"
+    phase: 1
+
+  - name: "InvoiceDet"
+    incremental_key: "InvoiceDate"
+    incremental_type: "date"
+    scope_filter_template: null
+    guide_pages: "97-99"
+    phase: 1
+
+  - name: "ServiceSum"
+    incremental_key: "CashieredDate"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "68-69"
+    phase: 1.5
+
+  - name: "ServiceDet"
+    incremental_key: "datein"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "70-75"
+    phase: 1.5
+
+  - name: "Deal"
+    incremental_key: "FinanceDate"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "41-65"
+    phase: 1.5
+
+  - name: "DealDetail"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "41-65"
+    phase: 1.5
+    notes: "Incremental key not yet confirmed against the field table; first run reads whole set and the field table is transcribed into README."
+
+  - name: "CustomerUnit"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "68"
+    phase: 2
+
+  - name: "Customerlasttransaction"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "133"
+    phase: 2
+    notes: "URL segment spelling is lowercase-after-cap per developer guide p. 133."
+
+# Where the collector writes.
+# Layout: extract/out/lightspeed/<rooftop>/<UTC-date>/<endpoint>-<page>.json
+# Plus manifest.json and watermark.json at the rooftop level.
+output:
+  root: "extract/out/lightspeed"
+  never_overwrite: true
