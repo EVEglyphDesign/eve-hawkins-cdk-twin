@@ -28,6 +28,15 @@ of this pull.
 
 ## Step 1 — Read the entitlement screen, one rooftop (15 minutes)
 
+> **SUPERSEDED, 24 Aug 2026.** This step is being rewritten as an
+> **automated extraction** driven by the Lightspeed 3PA developer guide, not a
+> manual click-through. Do not execute the sub-steps below. Dany is supplying
+> the guide; when it lands, this section will be replaced by the collector
+> spec and Shrish will run the collector, not the browser.
+>
+> The read-only, no-buttons-clicked posture and the Customer / Contact /
+> Invoice minimum both carry over unchanged into the collector.
+
 ### 1.0  Who does what
 
 This step needs a Lightspeed **admin** login. Shrish does not have one and should not
