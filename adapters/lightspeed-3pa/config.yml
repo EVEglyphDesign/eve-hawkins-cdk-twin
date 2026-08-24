@@ -1,15 +1,20 @@
 # adapters/lightspeed-3pa/config.yml
 #
-# Runtime config for the Lightspeed DMS 3PA collector.
-# Wire format is authoritative in ../../docs/lightspeed-3pa/developer-guide.pdf
-# (Service Description, pp. 6-9). Field names are copied verbatim from that guide.
+# Runtime config for the Lightspeed DMS Data Warehouse Web Service collector.
+# Wire format is authoritative in ../../docs/lightspeed-3pa/developer-guide.pdf.
+# Field names are copied verbatim from that guide.
 #
 # The credential is HTTP Basic. It is read from the environment variable
 # LIGHTSPEED_3PA_BASIC_AUTH (value: "username:password"), not from this file.
 # GitHub Actions maps a repo/environment secret of the same name into the run.
+#
+# Endpoint scope reflects Peterbilt Atlantic's ask: the full customer sphere —
+# the customer, every unit they own, every service and sales transaction on
+# those units, and the warranty tie. Warranty is not a separate endpoint in
+# the developer guide; it lives inside ServiceDet.Unit.Job fields.
 
 api:
-  # Base URL, verbatim from developer guide p. 6.
+  # Base URL, verbatim from developer guide p. 6. Confirm production host with Kade.
   base_url: "https://int.lightspeeddataservices.com/lsapi"
   # Server cap on $top per developer guide p. 8. Do not raise.
   page_size: 500
@@ -23,50 +28,129 @@ api:
   max_retries: 3
   backoff_seconds: [2, 5, 15]
 
-# One entry per Peterbilt Atlantic rooftop.
+# One entry per Peterbilt Atlantic rooftop covered by the credential.
 # CMF is a URL segment on every request — /lsapi/{DataType}/{CMF}.
 # `storename` is the value used to filter the Customer endpoint client-side
 # via $filter=storename eq '<storename>'. See developer guide p. 67.
 #
-# TODO: Luke supplies the real CMF and storename values with the provisioning email.
+# CMFs confirmed by Luke Weatherbie via the provisioning email to
+# dataservices@lightspeeddms.com (24 Aug 2026 draft).
+# storename values TBD — Kade returns them with the credential.
 rooftops:
+  - name: "fredericton"
+    cmf: "76085764"
+    storename: "TBD-FREDERICTON-STORENAME"
+  - name: "woodstock"
+    cmf: "76171134"
+    storename: "TBD-WOODSTOCK-STORENAME"
   - name: "moncton"
-    cmf: "TBD-MONCTON-CMF"
+    cmf: "76171381"
     storename: "TBD-MONCTON-STORENAME"
-  - name: "dieppe"
-    cmf: "TBD-DIEPPE-CMF"
-    storename: "TBD-DIEPPE-STORENAME"
-  - name: "saint-john"
-    cmf: "TBD-SAINT-JOHN-CMF"
-    storename: "TBD-SAINT-JOHN-STORENAME"
-  - name: "halifax"
-    cmf: "TBD-HALIFAX-CMF"
-    storename: "TBD-HALIFAX-STORENAME"
-  - name: "truro"
-    cmf: "TBD-TRURO-CMF"
-    storename: "TBD-TRURO-STORENAME"
 
 # Endpoints to pull, in the order the collector should run them.
 #
 # incremental_key: column used for $filter and $orderby on incremental pulls.
 #   type is one of: datetime | date | bigint | none (snapshot)
 #   For bigint, the collector appends the L suffix in the URL per guide p. 9.
-#   For "none", the collector does a whole-set pull every run (no filter, no orderby).
+#   For "none", the collector does a whole-set pull every run.
 #
-# scope_filter: extra $filter fragment applied on every request.
+# scope_filter_template: extra $filter fragment applied on every request.
 #   Only used by Customer (storename), since the Customer endpoint returns every
 #   customer in the Lightspeed instance regardless of rooftop. See guide p. 67.
-#
-# The Phase-1 minimum is Customer + InvoiceSum + InvoiceDet.
-# ServiceSum, ServiceDet, Deal, DealDetail are Phase 1.5.
 endpoints:
+  # ── Customer identity ──────────────────────────────────────────────────────
   - name: "Customer"
     incremental_key: "DateGathered"
     incremental_type: "datetime"
     scope_filter_template: "storename eq '{storename}'"
     guide_pages: "66-67"
     phase: 1
+    notes: "Identity spine. Returns every customer in the instance — must scope by storename."
 
+  - name: "Customerlasttransaction"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "133"
+    phase: 1
+    notes: "Snapshot of LastParts / LastService / LastSales dates per customer. URL segment is lowercase-after-cap per guide p. 133."
+
+  # ── Every unit the customer owns ───────────────────────────────────────────
+  - name: "Unit"
+    incremental_key: "lastupdatedate"
+    incremental_type: "date"
+    scope_filter_template: null
+    guide_pages: "21-35"
+    phase: 1
+    notes: "Currently-available major units. VIN, make/model/year, odometer, valuations."
+
+  - name: "SoldUnit"
+    incremental_key: "lastupdatedate"
+    incremental_type: "date"
+    scope_filter_template: null
+    guide_pages: "21-35"
+    phase: 1
+    notes: "Previously-sold units — same schema as Unit."
+
+  - name: "CustomerUnit"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "36-40"
+    phase: 1
+    notes: "Customer ↔ unit ownership binding table."
+
+  # ── Sales history ─────────────────────────────────────────────────────────
+  - name: "Deal"
+    incremental_key: "FinanceDate"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "41-42"
+    phase: 1
+    notes: "Deal summary — one row per unit-sale transaction."
+
+  - name: "DealDetail"
+    incremental_key: "FinanceDate"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "43-65"
+    phase: 1
+    notes: "Full deal detail with nested Unit, Trade, DealExtraLines, DealProspect."
+
+  - name: "OpenDealDetail"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "103-118"
+    phase: 1
+    notes: "Deals in progress — snapshot each run."
+
+  # ── Service history (warranty rides inside these) ─────────────────────────
+  - name: "ServiceSum"
+    incremental_key: "CashieredDate"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "68-69"
+    phase: 1
+    notes: "RO summary. Composite key ROHeaderID + ROUnitID + ROJobID; external ref rono."
+
+  - name: "ServiceDet"
+    incremental_key: "datein"
+    incremental_type: "datetime"
+    scope_filter_template: null
+    guide_pages: "70-83"
+    phase: 1
+    notes: "Full RO with nested Unit → Job → Parts + Labor. Warranty fields WarrantyJob, Warrantyclaimnumber, Warrantystatus, Claimtype, Claimamount*, Auth1-8 all live inside Unit.Job (guide pp. 72-74)."
+
+  - name: "OpenServiceDet"
+    incremental_key: null
+    incremental_type: "none"
+    scope_filter_template: null
+    guide_pages: "84-95"
+    phase: 1
+    notes: "Open ROs — snapshot each run; incremental keys of ServiceDet do not apply."
+
+  # ── Invoicing spine ───────────────────────────────────────────────────────
   - name: "InvoiceSum"
     incremental_key: "InvoiceDate"
     incremental_type: "date"
@@ -78,52 +162,33 @@ endpoints:
     incremental_key: "InvoiceDate"
     incremental_type: "date"
     scope_filter_template: null
-    guide_pages: "97-99"
+    guide_pages: "97-102"
     phase: 1
 
-  - name: "ServiceSum"
-    incremental_key: "CashieredDate"
+  # ── Supporting reference ──────────────────────────────────────────────────
+  - name: "Part"
+    incremental_key: "LastReceivedDate"
     incremental_type: "datetime"
     scope_filter_template: null
-    guide_pages: "68-69"
+    guide_pages: "18-20"
     phase: 1.5
+    notes: "Parts inventory — resolves part numbers on RO and invoice lines. Not customer-scoped."
 
-  - name: "ServiceDet"
-    incremental_key: "datein"
-    incremental_type: "datetime"
-    scope_filter_template: null
-    guide_pages: "70-75"
-    phase: 1.5
-
-  - name: "Deal"
-    incremental_key: "FinanceDate"
-    incremental_type: "datetime"
-    scope_filter_template: null
-    guide_pages: "41-65"
-    phase: 1.5
-
-  - name: "DealDetail"
+  - name: "Dealer"
     incremental_key: null
     incremental_type: "none"
     scope_filter_template: null
-    guide_pages: "41-65"
+    guide_pages: "14-15"
     phase: 1.5
-    notes: "Incremental key not yet confirmed against the field table; first run reads whole set and the field table is transcribed into README."
+    notes: "Dealer info — pulled once to bind CMF ↔ dealer identity."
 
-  - name: "CustomerUnit"
+  - name: "EvoStoreInfo"
     incremental_key: null
     incremental_type: "none"
     scope_filter_template: null
-    guide_pages: "68"
-    phase: 2
-
-  - name: "Customerlasttransaction"
-    incremental_key: null
-    incremental_type: "none"
-    scope_filter_template: null
-    guide_pages: "133"
-    phase: 2
-    notes: "URL segment spelling is lowercase-after-cap per developer guide p. 133."
+    guide_pages: "15-16"
+    phase: 1.5
+    notes: "Store / rooftop info — pulled once to enumerate storename values under a CMF."
 
 # Where the collector writes.
 # Layout: extract/out/lightspeed/<rooftop>/<UTC-date>/<endpoint>-<page>.json
