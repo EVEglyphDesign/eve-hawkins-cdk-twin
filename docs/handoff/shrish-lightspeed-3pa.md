@@ -28,22 +28,166 @@ of this pull.
 
 ## Step 1 — Read the entitlement screen, one rooftop (15 minutes)
 
-1. Log in to Lightspeed DMS as a Peterbilt Atlantic admin.
-2. Navigate: `System` → `Lists` → `Stores` → *pick Moncton* → `Third Party Access (3PA)`.
-3. Screenshot the full page — the list of datasets Peterbilt Atlantic is entitled to
-   expose to itself under 3PA. Save as
-   `docs/lightspeed-3pa-entitlements/moncton.png`.
-4. Transcribe the same list into `docs/lightspeed-3pa-entitlements/moncton.md` with
-   this table, one row per dataset:
+### 1.0  Who does what
 
-   | Dataset name (as shown) | Entitled? | Fee? | Notes |
-   |---|---|---|---|
-   | *e.g. Customers* | yes | none shown | — |
+This step needs a Lightspeed **admin** login. Shrish does not have one and should not
+be issued one. Two working shapes:
 
-5. Commit with message: `lightspeed 3pa: moncton entitlement, as-of <date>`.
+- **Shape A — screenshare (preferred).** Luke Weatherbie opens the screen on his own
+  machine. Shrish joins on Teams / Meet and drives the transcription; Luke drives the
+  mouse and clicks. Luke owns the credential; Shrish owns the write-up.
+- **Shape B — Luke solo.** Luke does the whole thing and pastes the screenshot into
+  the ticket. Shrish picks it up from the ticket. Use this if the screenshare cannot
+  be scheduled today.
 
-**Do not** click "enable", "provision", or "add integration" on that screen. This step
-is inventory-only.
+Either way, **only Luke clicks inside Lightspeed**. Shrish never touches the
+Lightspeed session.
+
+### 1.1  Get to the Stores list
+
+1. Open Lightspeed DMS in a browser and sign in as a Peterbilt Atlantic admin.
+2. On the top menu bar, click **System**. A dropdown opens.
+3. In that dropdown, click **Lists**. A submenu opens.
+4. In the submenu, click **Stores**. The Stores list opens, showing one row per
+   Peterbilt Atlantic rooftop.
+
+If **System → Lists → Stores** does not exist under exactly those labels on this
+tenant, do not guess. Stop and read §1.6 ("If the menu is different") before doing
+anything else.
+
+### 1.2  Open Moncton
+
+5. On the Stores list, find the Moncton row. If there is more than one row that
+   mentions Moncton, pick the one whose CMF / store number matches the Moncton CMF on
+   Peterbilt Atlantic's current DealerSuite screen. Ask Luke — do not choose by feel.
+6. Click the Moncton row to open the store detail page.
+
+### 1.3  Open the 3PA panel
+
+7. On the Moncton store detail page, find the tab, button, or side link labelled
+   **Third Party Access**. It may render as `Third Party Access`, `Third Party Access (3PA)`,
+   or `3PA` — Ryker's email uses the last form, but the label in the product may be
+   any of the three.
+8. Click it. A panel opens listing the datasets this store is entitled to expose
+   under 3PA.
+
+**Do not click any button labelled `Enable`, `Provision`, `Add`, `Add integration`,
+`Grant access`, `Invite partner`, or anything similar on this screen.** This step is
+**read-only inventory**. Clicking those would send a request to Lightspeed we are
+not ready to send.
+
+### 1.4  Screenshot everything visible on that panel
+
+9. Take a screenshot of the entire 3PA panel, including any counts, fees, status
+   badges, and dates shown next to each dataset. If the panel scrolls, take one
+   screenshot per screenful and number them `moncton-01.png`, `moncton-02.png`, …
+   so no row is left out.
+10. If any dataset row expands into more detail on hover or click, screenshot the
+    expanded state too — same numbering, add `-detail` (e.g. `moncton-01-detail.png`).
+11. If the panel shows a link labelled `Developer guide`, `API documentation`,
+    `Integration guide`, or similar, **do not click it in this step.** Just note that
+    it exists; Step 2 will follow it.
+
+### 1.5  Save the screenshots and the transcription into the repo
+
+On Shrish's machine, in a local clone of
+`EVEglyphDesign/eve-hawkins-cdk-twin`, on a branch (never straight to `main`):
+
+```bash
+git checkout -b lightspeed-3pa/moncton-entitlement
+mkdir -p docs/lightspeed-3pa-entitlements
+```
+
+12. Save every screenshot from §1.4 into `docs/lightspeed-3pa-entitlements/` with
+    the filenames from §1.4 (`moncton-01.png`, `moncton-02.png`, `moncton-01-detail.png`,
+    …). Nothing about the filenames is decorative — the collector in Step 5 reads
+    this directory to know what it is allowed to pull.
+13. Create `docs/lightspeed-3pa-entitlements/moncton.md` with exactly this frontmatter
+    plus one row of the table per dataset shown on the panel. Copy Lightspeed's
+    labels **verbatim**. If a column is not shown on screen, leave the cell blank —
+    do not infer.
+
+```markdown
+---
+rooftop: Moncton
+tenant: Peterbilt Atlantic
+cmf: <the CMF number from §1.2, exactly as shown>
+captured_by: <Luke or the admin who ran the screen>
+captured_at_utc: <YYYY-MM-DDTHH:MM:SSZ, when the screenshot was taken>
+source_screen: System > Lists > Stores > Moncton > Third Party Access (3PA)
+screenshots:
+  - moncton-01.png
+  # (list every png saved in §1.4, one per line)
+---
+
+# Moncton — Lightspeed 3PA entitlement, as-of <date>
+
+| Dataset name (verbatim) | Status shown | Fee shown | Partner named | Notes |
+|---|---|---|---|---|
+| <e.g. Customers> | <e.g. Available> | <e.g. Included> | <e.g. — > | <e.g. no fee visible, no action buttons other than "View"> |
+```
+
+**Rules for the transcription table:**
+
+- One row per line item on the panel, in the order shown.
+- Copy every column label from the panel; the four above are the minimum. Add more
+  columns to the right if the panel shows more.
+- If the panel shows a partner name next to a dataset (e.g. `Alliance RV`,
+  `Service Manager Pro`), put it in the `Partner named` column. That marks it as a
+  Partner Program integration, **not** a first-party 3PA read for our purposes.
+- If a dataset has no partner named and no `Enable` action visible against it,
+  the notes should say "first-party, ready to authorize".
+- If a dataset says something like `Fee applies` / `Additional charge` / a dollar
+  amount, that goes in the `Fee shown` column verbatim. Do not translate it.
+- If you can't tell what a column means, write down what you see and add a
+  `- open question:` line under the table. Do not guess.
+
+### 1.6  If the menu is different
+
+Product UIs drift. If any of `System`, `Lists`, `Stores`, or `Third Party Access`
+does not appear under exactly those names:
+
+1. Do **not** hunt around clicking things trying to find it.
+2. Screenshot whatever menu you *do* see, save as
+   `docs/lightspeed-3pa-entitlements/moncton-menu-actual.png`.
+3. Add a short section to `moncton.md` under a heading `## Menu mismatch` describing
+   what the menu actually shows.
+4. Commit that as-is (§1.7) and stop. Do not proceed to Step 2. Ping Luke via the
+   PR — he will re-derive the path with the Lightspeed side and we will update this
+   runbook in the same PR.
+
+### 1.7  Commit and open a PR
+
+```bash
+git add docs/lightspeed-3pa-entitlements/
+git commit -m "lightspeed 3pa: moncton entitlement, as-of <YYYY-MM-DD>"
+git push -u origin lightspeed-3pa/moncton-entitlement
+gh pr create \
+  --base main \
+  --title "Lightspeed 3PA: Moncton entitlement inventory" \
+  --body "Screenshots and verbatim transcription of the Third Party Access panel
+          for Moncton, per Step 1 of docs/handoff/shrish-lightspeed-3pa.md.
+          Read-only inventory. No buttons clicked on the Lightspeed side."
+```
+
+Ask Luke to review the PR. Merge only after Luke confirms the screenshot matches
+what he sees on his own screen — that is the check that this transcription actually
+corresponds to Peterbilt Atlantic's Moncton entitlement and not to some other
+rooftop's screen we captured by mistake.
+
+### 1.8  What "done" looks like for Step 1
+
+All three must be true before Step 2 starts:
+
+- `docs/lightspeed-3pa-entitlements/moncton.md` on `main`, with at minimum a
+  `Customer` (or `Customers`) row, a `Contact` (or equivalent) row, and an
+  `Invoice` (or `Sales` / `Billing`) row. If any of those three is missing from
+  the panel entirely, that itself is the finding — record it as "not visible on
+  panel" and raise it in the PR body. Luke needs to know before he emails Kade.
+- At least one screenshot of the panel committed alongside the `.md`.
+- No `Enable` / `Provision` / `Add integration` button was clicked on the
+  Lightspeed side. Confirm this in the PR body verbatim: `no state-changing
+  actions taken on Lightspeed`.
 
 ## Step 2 — Read the developer guide (1 hour)
 
