@@ -2,12 +2,14 @@
 
 **To:** Minitha Anand Kadimi, Implementation Support Rep, Professional Services, CDK Global
 **From:** Dany Thériault, EVEglyphDesign — Hawkins Twin Platform
-**Attachments:**
-- [`evidence/2026-08-28-luke-sftp-probe-attempt-1-vpn-off.txt`](evidence/2026-08-28-luke-sftp-probe-attempt-1-vpn-off.txt) — first attempt, dealership VPN not connected
-- [`evidence/2026-08-28-luke-sftp-probe-attempt-2-vpn-on.txt`](evidence/2026-08-28-luke-sftp-probe-attempt-2-vpn-on.txt) — second attempt, dealership VPN connected
+**Attachment to send:** [`evidence/2026-08-28-luke-sftp-probe-attempt-3-vpn-on-complete.txt`](evidence/2026-08-28-luke-sftp-probe-attempt-3-vpn-on-complete.txt) — canonical probe log (VPN engaged, all four commands captured end-to-end including the full `sftp` error).
+
+**Kept in repo for our own record only:**
+- [`evidence/2026-08-28-luke-sftp-probe-attempt-1-vpn-off.txt`](evidence/2026-08-28-luke-sftp-probe-attempt-1-vpn-off.txt) — first attempt, VPN off (identical result)
+- [`evidence/2026-08-28-luke-sftp-probe-attempt-2-vpn-on.txt`](evidence/2026-08-28-luke-sftp-probe-attempt-2-vpn-on.txt) — second attempt, VPN on but terminal capture cut off mid-`sftp`
 
 **Date drafted:** 2026-08-28
-**Status:** two probe runs complete (VPN off + VPN on). Both terminate at the same CDK-upstream hop (`ae9.lr5-nyc6.ip4.gtt.net`, `89.149.142.105`). SFTP to 22/tcp times out in both states. Awaiting Luke's `curl -4 ifconfig.me` result to confirm which public egress IP CDK should allowlist, then ready to send once phone and email are filled in.
+**Status:** three probe runs complete. All three terminate at the same CDK-upstream hop (`ae9.lr5-nyc6.ip4.gtt.net`, `89.149.142.105`) and produce `Connection timed out` on 22/tcp. Diagnosis is definitive: block sits at CDK's SFTP edge, not at Peterbilt's outbound firewall, and the VPN state does not change it. Send attempt 3 to Minitha. Awaiting Luke's phone and email to fill in the admin block.
 
 ---
 
@@ -15,27 +17,24 @@
 
 > Hi Minitha,
 >
-> Attached are the probe screenshots you requested, run from Luke Weatherbie's
-> CDK Drive workstation on the Peterbilt Atlantic network
-> (`lweatherbie.PETERBILT`). We ran the four commands twice — once with the
-> dealership VPN disconnected, once with it connected — so you can see the
-> same behaviour in both states.
+> Attached is the probe log you requested, captured from Luke Weatherbie's CDK
+> Drive workstation on the Peterbilt Atlantic network (`lweatherbie.PETERBILT`,
+> Windows 10.0.26200.9106).
 >
-> **Result summary (identical in both runs):**
+> **Result summary:**
 >
-> - `ping dataexportsftp.cdk.com` — 100% packet loss
-> - `ping 192.224.101.40` — 100% packet loss
-> - `tracert 192.224.101.40` — path completes 9 hops through GTT's New York core
->   (`ae9.lr5-nyc6.ip4.gtt.net`, `89.149.142.105`), then times out at every
->   subsequent hop through hop 30
-> - `sftp 192.224.101.40:22` — `Connection timed out`
+> - `ping dataexportsftp.cdk.com` — 4/4 packets lost (100%)
+> - `ping 192.224.101.40` — 4/4 packets lost (100%)
+> - `tracert 192.224.101.40` — completes 9 hops through GTT's New York core
+>   (`ae9.lr5-nyc6.ip4.gtt.net`, `89.149.142.105`), then every hop from 10
+>   through 30 returns `Request timed out`
+> - `sftp 192.224.101.40:22` — `ssh: connect to host 192.224.101.40 port 22:
+>   Connection timed out` / `Connection closed`
 >
-> The trace confirms our traffic reaches CDK's upstream provider (GTT NY)
-> cleanly in both VPN states; the block sits at CDK's SFTP edge. **Please add
-> Peterbilt Atlantic's public egress IP `143.105.101.188` to the Data Export
-> SFTP allowlist so we can proceed.** If a different egress applies once the
-> dealership VPN is engaged, I will supply that address separately — please
-> confirm whether your side needs both.
+> The trace shows our traffic reaches your upstream provider (GTT NY) cleanly;
+> the block sits at your SFTP edge. **Please add Peterbilt Atlantic's public
+> egress IP `143.105.101.188` to the Data Export SFTP allowlist so we can
+> proceed.**
 >
 > On the other two items:
 >
