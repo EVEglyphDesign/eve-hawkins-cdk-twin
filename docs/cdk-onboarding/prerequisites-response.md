@@ -3,7 +3,10 @@
 **Correspondence:** Minitha Anand Kadimi, Implementation Support Rep, Professional Services, CDK Global
 **Received:** August 2026, WarrantyGENE / Peterbilt Atlantic lane
 **Owner:** Luke Weatherbie (Data Export Admin, designated)
-**Status:** in progress — three items tracked below
+**Status:** probes complete 2026-08-28 — CDK-side firewall block confirmed; awaiting CDK allowlist of `143.105.101.188`. Reply drafted at [`reply-to-minitha.md`](reply-to-minitha.md).
+
+**Peterbilt Atlantic public egress IP:** `143.105.101.188`
+**Evidence:** [`evidence/2026-08-28-luke-sftp-probe.txt`](evidence/2026-08-28-luke-sftp-probe.txt) — probe run from `lweatherbie.PETERBILT` at 2026-08-28. `sftp 192.224.101.40:22` returned `Connection timed out`; tracert path clean through GTT NY to hop 9, blocked hop 10+.
 
 ---
 
@@ -48,6 +51,7 @@ and be the point of contact for CDK Customer Care.
 | Role | Data Export Admin, Peterbilt Atlantic / Extreme Torque Motorsports |
 | Phone | `PENDING` — to be filled from Luke before reply is sent |
 | Email | `PENDING` — to be filled from Luke before reply is sent |
+| Public egress IP (for CDK allowlist) | `143.105.101.188` |
 
 **Owner action:** Populate phone and email in this file, then send the reply.
 
