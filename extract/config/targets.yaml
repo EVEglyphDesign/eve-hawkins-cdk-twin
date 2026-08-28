@@ -301,3 +301,39 @@ targets:
     api_reach: none
     api_reach_note: "No public spec names vendor-invoice or purchase-order matching; only a General Ledger Inquiry API supporting search/view of GL transaction history is confirmed, plus indirect competitor evidence (Karmak) that PO receipts 'can be automatically posted into Accounts Payable.'"
 
+# ---------------------------------------------------------------------------
+# Landing zone --- where 40_ingest_exports.py writes the decrypted CDK output.
+#
+# Provisioned in the atopos.io Azure directory by Tobias (setup instructions
+# in session ca55aff9-a13c-4453-9239-bb167f29bc37, 2026-08-11). Resource group
+# is dany-sandbox; the Postgres server is dany-sandbox-db with PostgreSQL 18,
+# pgvector, and pg_stat_statements already enabled. Access is IP-allowlisted
+# per client --- do NOT introduce a broad 'allow all Azure services' rule.
+#
+# Password is held out of source control. Ingest scripts source it from the
+# PGPASSWORD environment variable at runtime; leaving it null here is by design.
+# ---------------------------------------------------------------------------
+
+landing_zone:
+  provider: azure
+  directory: atopos.io
+  resource_group: dany-sandbox
+  postgres:
+    host: dany-sandbox-db.postgres.database.azure.com
+    port: 5432
+    database: sandbox
+    user: pgadmin
+    password_env: PGPASSWORD
+    sslmode: verify-full
+    engine: "PostgreSQL 18"
+    extensions:
+      - pgvector
+      - pg_stat_statements
+  network:
+    ip_allowlist_only: true
+    broad_azure_services_rule: forbidden
+  budget:
+    monthly_cap_eur: 150
+    alert_recipient: tobias
+    auto_shutdown: "TODO --- current budget only emails; no automatic stop"
+
