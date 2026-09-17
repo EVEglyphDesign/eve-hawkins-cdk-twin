@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warranty GENE Warehouse Wireframe — EVEglyphDesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fdfaf4;--cream2:#f7f2e7;--ink:#1a1a1a;--line:#e7e1d3;--mute:#6b665c;--accent:#e87722}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:underline;text-decoration-color:rgba(232,119,34,.35);text-underline-offset:2px;word-break:break-word}
+a:hover{text-decoration-color:var(--accent)}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;margin:0;letter-spacing:-.01em}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+header{border-bottom:1px solid var(--line);background:var(--cream2)}
+header .wrap{padding:34px 24px 30px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:10px}
+h1{font-size:clamp(26px,3.8vw,40px);line-height:1.14;margin-bottom:10px}
+header p.lede{margin:0;color:var(--mute);max-width:66ch;font-size:15.5px}
+.crumbs{margin-top:16px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.crumbs a{text-decoration:none;border-bottom:1px solid rgba(232,119,34,.35)}
+.counts{display:flex;flex-wrap:wrap;gap:24px 34px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.counts div{min-width:96px}
+.counts b{display:block;font-family:'Fraunces',serif;font-size:27px;line-height:1.1;font-weight:600}
+.counts span{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:600}
+
+section{padding:38px 0 4px}
+section h2{font-size:23px;margin-bottom:5px}
+section .sub{color:var(--mute);font-size:14px;margin:0 0 20px;max-width:74ch}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px 24px;margin-bottom:14px}
+.callout{background:var(--cream2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:15px 18px;font-size:14.5px;margin:0 0 16px}
+.callout b{font-weight:600}
+
+.spine{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-bottom:8px}
+.node{flex:1 1 190px;min-width:170px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 15px}
+.node.key{border-color:var(--accent);box-shadow:0 4px 14px rgba(232,119,34,.08)}
+.node .n-l{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:5px}
+.node .n-t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;line-height:1.25}
+.node .n-s{font-size:12.5px;color:var(--mute);margin-top:6px;line-height:1.45}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:0 12px 8px 0}
+td{border-bottom:1px solid var(--line);padding:9px 12px 9px 0;vertical-align:top}
+td:last-child,th:last-child{padding-right:0}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th.n{text-align:right}
+td.f{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.tag.dim{background:#eef2f6;color:#41566b}
+.tag.fact{background:#fdf3e5;color:#9a6017}
+.tag.agg{background:#f2eff7;color:#5c4d78}
+.tag.dq{background:#faeded;color:#8f4141}
+.tag.mart{background:#eef6ee;color:#3d6b3d}
+.sev{font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px}
+.sev.warn{background:#fdf3e5;color:#9a6017}
+.sev.info{background:#eef2f6;color:#41566b}
+
+.reach{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.reach div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.reach .big{font-family:'Fraunces',serif;font-size:32px;line-height:1;font-weight:600}
+.reach .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-top:8px}
+.reach .note{font-size:12.5px;color:var(--mute);margin-top:7px;line-height:1.45}
+.reach div.hot{border-color:var(--accent)}
+
+ul.tight{margin:0;padding-left:20px}
+ul.tight li{margin-bottom:9px}
+
+footer{border-top:1px solid var(--line);margin-top:48px;background:var(--cream2)}
+footer .wrap{padding:26px 24px 34px;font-size:12.5px;color:var(--mute)}
+footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);margin-top:8px;display:block}
+@media (max-width:640px){
+  .counts{gap:18px 24px}.counts b{font-size:23px}
+  table{font-size:13px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">EVEglyphDesign · Hawkins Twin Platform · CDK Twin</div>
+    <h1>Warranty GENE Warehouse Wireframe</h1>
+    <p class="lede">A grain-declared star schema over the 2026-09-17 CDK Drive and PACCAR
+    warranty extract set. One join spine, one set of marts, one quarantine table — so every
+    worklist, dashboard and alert reads the same shape and no other.</p>
+    <div class="crumbs">
+      <a href="../">CDK Twin conceptual map</a>
+      <a href="../model/">Data model explorer</a>
+      <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/warehouse">Schema and loader on GitHub</a>
+      <a href="EVEglyphDesign_Warranty_GENE_Warehouse_Wireframe.pdf">Controlled PDF</a>
+    </div>
+    <div class="counts">
+      <div><b>2,991</b><span>Units</span></div>
+      <div><b>3,258</b><span>Coverages</span></div>
+      <div><b>7,794</b><span>Repair orders</span></div>
+      <div><b>16,022</b><span>Customers</span></div>
+      <div><b>773</b><span>Live-coverage units</span></div>
+      <div><b>1,451</b><span>Quarantined rows</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>The join spine is VIN8</h2>
+  <p class="sub">The single most consequential finding in this extract set. CDK's
+  <span class="mono">Vehicle ID</span> on the repair order carries the 8-character VIN
+  suffix, and every PACCAR warranty-registration row is keyed on
+  <span class="mono">VIN8</span>. The manufacturer record and the dealer record meet
+  on a real key, not a fuzzy name match.</p>
+  <div class="spine">
+    <div class="node"><div class="n-l">Manufacturer truth</div><div class="n-t">Warranty registration</div><div class="n-s">P026 · P032 · P046 · P048 — four disjoint partitions, 1,060 units, 3,258 coverages</div></div>
+    <div class="node key"><div class="n-l">Join spine</div><div class="n-t">dim_unit · VIN8</div><div class="n-s">2,991 units. 1,060 registered · 2,267 serviced · 336 reconciled on both sides</div></div>
+    <div class="node"><div class="n-l">Dealer truth</div><div class="n-t">Repair order history</div><div class="n-s">7,534 closed and 260 open ROs, 2024-10-01 to 2026-09-16, three rooftops</div></div>
+    <div class="node"><div class="n-l">Contract lane</div><div class="n-t">Service contracts</div><div class="n-s">224 BRP and Canada General contracts, VIN17-keyed, VIN8 derived</div></div>
+  </div>
+  <div class="callout">Registered-owner name is <b>not</b> a join key — only 65 of 534
+  manufacturer-side owner names match a CDK repair-order customer name exactly. The
+  secondary spine is the customer number, recovered from CDK's legacy Pick
+  <span class="mono">NAME-FILE</span> key, which resolves 818 of the 821 repair-order
+  customers back to the customer master.</div>
+</section>
+
+<section>
+  <h2>What the wireframe already shows</h2>
+  <p class="sub">Every figure below is produced by a view in the committed schema, run
+  against the real extract set. No estimates.</p>
+  <div class="reach">
+    <div class="hot"><div class="big">60</div><div class="lbl">On site now</div>
+      <div class="note">Units with live manufacturer coverage sitting on an open repair
+      order today. Fourteen expire within 180 days; one is a single day from time expiry.
+      This is the pre-RO decision window.</div></div>
+    <div><div class="big">205</div><div class="lbl">Known customers</div>
+      <div class="note">Live coverage and a service history at one of the rooftops.
+      Reachable by name, phone and past advisor.</div></div>
+    <div><div class="big">508</div><div class="lbl">Registered, never serviced</div>
+      <div class="note">48% of the manufacturer-registered population has never appeared
+      in the bays. Addressable by city — the registration record carries it.</div></div>
+    <div><div class="big">170</div><div class="lbl">Mileage-expired</div>
+      <div class="note">Of 650 time-active coverages with an odometer reading, 170 are
+      already past their mileage ceiling. A time-only filter would present all 170 as live.</div></div>
+  </div>
+  <div class="callout" style="margin-top:16px">Warranty work is <b>14.7% of service sales</b>
+  in the extract window, against $30.0M of customer-pay. The wireframe's purpose is to move
+  that share deliberately rather than by accident — and to do it before the repair order
+  exists. PACCAR's PRWS stays authoritative on claim filing; nothing here submits,
+  adjudicates or authorises a claim.</div>
+</section>
+
+<section>
+  <h2>Tables</h2>
+  <p class="sub">Six dimensions, three facts, two reconciliation aggregates, one quarantine
+  table. Grain is declared on every fact, because a fact without a declared grain will be
+  double-counted by someone eventually.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>Table</th><th>Kind</th><th>Grain</th><th class="n">Rows</th></tr></thead>
+    <tbody>
+      <tr><td class="f">dim_unit</td><td><span class="tag dim">DIM</span></td><td>one VIN8</td><td class="n">2,991</td></tr>
+      <tr><td class="f">dim_customer</td><td><span class="tag dim">DIM</span></td><td>one customer number per accounting account</td><td class="n">16,022</td></tr>
+      <tr><td class="f">dim_warranty_option</td><td><span class="tag dim">DIM</span></td><td>one PACCAR warranty option code</td><td class="n">364</td></tr>
+      <tr><td class="f">dim_service_advisor</td><td><span class="tag dim">DIM</span></td><td>one advisor per rooftop</td><td class="n">42</td></tr>
+      <tr><td class="f">dim_rooftop</td><td><span class="tag dim">DIM</span></td><td>one service account</td><td class="n">3</td></tr>
+      <tr><td class="f">dim_date</td><td><span class="tag dim">DIM</span></td><td>one calendar day</td><td class="n">5,222</td></tr>
+      <tr><td class="f">fact_warranty_registration</td><td><span class="tag fact">FACT</span></td><td>one VIN8 × warranty option</td><td class="n">3,258</td></tr>
+      <tr><td class="f">fact_repair_order</td><td><span class="tag fact">FACT</span></td><td>one repair order, open and closed unioned</td><td class="n">7,794</td></tr>
+      <tr><td class="f">fact_service_contract</td><td><span class="tag fact">FACT</span></td><td>one contract</td><td class="n">224</td></tr>
+      <tr><td class="f">agg_customer_service_period</td><td><span class="tag agg">AGG</span></td><td>one customer × extract period, service lane</td><td class="n">2,693</td></tr>
+      <tr><td class="f">agg_customer_total_sales</td><td><span class="tag agg">AGG</span></td><td>one customer × extract period, all lanes</td><td class="n">100</td></tr>
+      <tr><td class="f">dq_exception</td><td><span class="tag dq">DQ</span></td><td>one rejected or flagged source row</td><td class="n">1,451</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout">The two <span class="mono">agg_</span> tables are tie-out instruments
+  only and are barred from scoring. A customer-period total cannot be attributed to a VIN,
+  and a model that lets it look as though it can will eventually book a claim against the
+  wrong truck.</div>
+</section>
+
+<section>
+  <h2>Marts</h2>
+  <p class="sub">The only shapes GENE may read. Each one is a view in
+  <span class="mono">ddl/wireframe.sql</span>, so there is no second definition to drift.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>View</th><th>Grain</th><th>Purpose</th><th class="n">Rows</th></tr></thead>
+    <tbody>
+      <tr><td class="f">v_unit_coverage_state</td><td>VIN8 × option</td><td>coverage window state against a run date, both axes exposed separately</td><td class="n">3,258</td></tr>
+      <tr><td class="f">v_unit_service_profile</td><td>VIN8</td><td>RO count, first and last visit, max odometer, lifetime sales and gross profit</td><td class="n">2,267</td></tr>
+      <tr><td class="f">v_rich_target</td><td>VIN8</td><td>live coverage plus a reachability class</td><td class="n">773</td></tr>
+      <tr><td class="f">v_whitespace_registered_never_serviced</td><td>VIN8</td><td>registered in territory, never in the bays</td><td class="n">508</td></tr>
+      <tr><td class="f">v_coverage_expiring_180d</td><td>VIN8</td><td>expiry pressure inside two quarters</td><td class="n">117</td></tr>
+      <tr><td class="f">v_serviced_unregistered</td><td>VIN8</td><td>serviced here, no manufacturer registration on file</td><td class="n">1,931</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Active coverage inventory</h2>
+  <p class="sub">1,802 coverages are live across 773 units. Engine and aftertreatment
+  dominate, which is where the heavy-truck claim dollars sit.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>Sub-type</th><th>Description</th><th class="n">Active coverages</th><th class="n">Units</th><th class="n">Nearest expiry</th></tr></thead>
+    <tbody>
+      <tr><td class="f">ENG</td><td>Engine — MX-11, MX-13, X15 performance and productivity plans</td><td class="n">1,236</td><td class="n">766</td><td class="n">6 days</td></tr>
+      <tr><td class="f">A/T</td><td>Aftertreatment</td><td class="n">273</td><td class="n">273</td><td class="n">6 days</td></tr>
+      <tr><td class="f">VEH</td><td>Basic vehicle, Class 8</td><td class="n">257</td><td class="n">239</td><td class="n">1 day</td></tr>
+      <tr><td class="f">EMC</td><td>Emissions</td><td class="n">13</td><td class="n">13</td><td class="n">590 days</td></tr>
+      <tr><td class="f">ELEC</td><td>Electrical</td><td class="n">8</td><td class="n">8</td><td class="n">278 days</td></tr>
+      <tr><td class="f">CLTH</td><td>Cab clothing / trim</td><td class="n">8</td><td class="n">8</td><td class="n">976 days</td></tr>
+      <tr><td class="f">TOW</td><td>Towing</td><td class="n">7</td><td class="n">7</td><td class="n">205 days</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Data quality — nothing is silently dropped</h2>
+  <p class="sub">Every rejection lands in <span class="mono">dq_exception</span> with a rule
+  code and a severity. The counts are reproducible by rerunning the loader.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>Rule</th><th>Severity</th><th class="n">Rows</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="f">VIN8_LENGTH</td><td><span class="sev warn">WARN</span></td><td class="n">1,223</td><td>RO rows whose vehicle ID is neither 8 nor 17 characters, so they cannot reach a warranty registration</td></tr>
+      <tr><td class="f">DATE_PARSE</td><td><span class="sev warn">WARN</span></td><td class="n">213</td><td>registration rows with no usable in-service date, so coverage end cannot be computed</td></tr>
+      <tr><td class="f">RO_DUPLICATE</td><td><span class="sev warn">WARN</span></td><td class="n">12</td><td>RO number present in both the open and closed extract; the closed row wins</td></tr>
+      <tr><td class="f">CUST_UNKNOWN</td><td><span class="sev info">INFO</span></td><td class="n">3</td><td>customer on an RO absent from the customer master; a stub dimension row is created</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout">245 of the 2,436 distinct CDK vehicle IDs are six characters long.
+  They cannot be lengthened by inference and must never be fuzzy-matched to a VIN8 — a
+  wrong match would attach one fleet's coverage to another fleet's truck. They are
+  quarantined and counted, which is why the mart population is smaller than the repair-order
+  population.</div>
+</section>
+
+<section>
+  <h2>Gaps in the extract set</h2>
+  <p class="sub">Named plainly, because the next extract request should be shaped by them.</p>
+  <div class="card">
+    <ul class="tight">
+      <li><b>No repair-order line detail.</b> These are RO headers only. Labour operation
+      codes, SRT hours, part numbers and the 3-C complaint text are absent, so per-job
+      margin estimate and 3-C compliance cannot yet be scored. This is the single
+      highest-value addition to the next request.</li>
+      <li><b>No claim-side data on the Peterbilt lane.</b> PRWS claim history is not in
+      this set, so booked-versus-eligible cannot be closed on the truck side yet.</li>
+      <li><b>No SmartLINQ or PACCAR Solutions fault-code feed</b>, so the event-driven
+      telemetry rung is absent from the model.</li>
+      <li><b>Odometer arrives only via repair orders.</b> Units never serviced here have no
+      mileage reading, so their mileage axis is reported as null — never as zero.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    Custody: no dealer rows are committed to the repository. The schema, the loader, the
+    field lineage and aggregate row counts are published; the payload stays in
+    dealer-owned storage. Extract set 2026-09-17 · Wireframe v0.1 ·
+    <a href="https://github.com/EVEglyphDesign/eve-hawkins-cdk-twin/tree/main/warehouse">warehouse/ on GitHub</a><br>
+    © 2026 EVEglyphDesign. All rights reserved. Controlled copy. Key ID EgD-KEY-2026-07.
+    <span class="mark">Pour le bien-être du peuple.</span>
+  </div>
+</footer>
+</body>
+</html>

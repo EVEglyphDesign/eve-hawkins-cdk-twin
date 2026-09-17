@@ -1,0 +1,40 @@
+{
+  "generated_utc": "2026-09-17T15:20:56+00:00",
+  "tables": {
+    "dim_rooftop": 3,
+    "dim_customer": 16022,
+    "dim_unit": 2991,
+    "dim_warranty_option": 364,
+    "dim_service_advisor": 42,
+    "dim_date": 5222,
+    "fact_warranty_registration": 3258,
+    "fact_repair_order": 7794,
+    "fact_service_contract": 224,
+    "agg_customer_service_period": 2693,
+    "agg_customer_total_sales": 100,
+    "dq_exception": 1451
+  },
+  "marts": {
+    "v_rich_target": 773,
+    "v_whitespace_registered_never_serviced": 508,
+    "v_coverage_expiring_180d": 117,
+    "v_serviced_unregistered": 1931,
+    "v_unit_service_profile": 2267,
+    "v_rich_target_by_reach_class": {
+      "KNOWN_CUSTOMER": 205,
+      "ON_SITE_NOW": 60,
+      "REGISTERED_NEVER_SERVICED": 508
+    }
+  },
+  "dq": {
+    "CUST_UNKNOWN/INFO": 3,
+    "DATE_PARSE/WARN": 213,
+    "RO_DUPLICATE/WARN": 12,
+    "VIN8_LENGTH/WARN": 1223
+  },
+  "ro_financials": {
+    "closed_ro_count": 7534,
+    "total_sales": 12105138.15,
+    "total_gross_profit": 5900008.52
+  }
+}

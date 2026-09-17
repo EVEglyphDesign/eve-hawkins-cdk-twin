@@ -1,0 +1,8 @@
+# Dealer-owned payload never enters this repository.
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+!mapping/*.csv
+extracts/
+out/

@@ -1,0 +1,41 @@
+source_file,source_column,target_table,target_column,transform,notes
+P026/P032/P046/P048.csv,VIN8,dim_unit,vin8,upper+trim,confirmed cross-source join key
+P026/P032/P046/P048.csv,VIN8,fact_warranty_registration,vin8,upper+trim,8 chars enforced; else DQ VIN8_LENGTH/BLOCK
+P026/P032/P046/P048.csv,IN_SERVICE_DT,fact_warranty_registration,coverage_start_dt,m/d/Y -> ISO,213 rows null in source
+P026/P032/P046/P048.csv,WARRANTY_MAX_MONTHS_NUM,dim_warranty_option,max_months,int,coverage_end_dt = in_service_dt + max_months
+P026/P032/P046/P048.csv,WARRANTY_MAX_MILES_NUM,dim_warranty_option,max_miles,int,second expiry axis; must gate with time axis
+P026/P032/P046/P048.csv,WARRANTY_OPTION_CD,dim_warranty_option,warranty_option_cd,trim,364 distinct option codes observed
+P026/P032/P046/P048.csv,WARRANTY_TYPE_CD,dim_warranty_option,warranty_type_cd,trim,BASE | EXT
+P026/P032/P046/P048.csv,WARRANTY_SUB_TYPE_CD,dim_warranty_option,warranty_sub_type_cd,trim,VEH ENG A/T EMC ELEC TOW CLTH HVAC
+P026/P032/P046/P048.csv,MODEL_DESC,dim_unit,model_desc,trim,Peterbilt model number
+P026/P032/P046/P048.csv,CUSTOMER_NAME_WARR_REG,dim_unit,reg_owner_name,trim,manufacturer-side owner; only 65 exact-match to CDK RO names
+P026/P032/P046/P048.csv,CUSTOMER_WARR_REG_CITY_NAME,dim_unit,reg_owner_city,trim; 'N/A'->null,territory signal for whitespace outreach
+Closed ROs.csv,RO Number,fact_repair_order,ro_number,trim,business key within rooftop
+Closed ROs.csv,Vehicle     ID,fact_repair_order,vehicle_id_raw,upper+trim,retained verbatim before normalisation
+Closed ROs.csv,Vehicle     ID,fact_repair_order,vin8,len 8 keep / len 17 right(8) / else null,1223 RO rows not VIN8-joinable
+Closed ROs.csv,Customer Number,dim_customer,customer_number,trim,joins to NAME-FILE suffix on 818 of 821
+Closed ROs.csv,Open Date,fact_repair_order,open_dt,m/d/Y -> ISO,
+Closed ROs.csv,Closed Date,fact_repair_order,closed_dt,m/d/Y -> ISO,null on OPEN rows
+Closed ROs.csv,Mileage,fact_repair_order,odometer,numeric,feeds dim_unit.max_odometer and the mileage expiry axis
+Closed ROs.csv,Total Sales,fact_repair_order,total_sales,strip $ and commas,
+Closed ROs.csv,Total Gross Profit,fact_repair_order,total_gross_profit,strip $ and commas,
+Closed ROs.csv,Labor/Parts/Misc/Sublet Sales,fact_repair_order,*_sales,strip $ and commas,four revenue lanes preserved separately
+Closed ROs.csv,Actual Hours / Sold Hours,fact_repair_order,actual_hours / sold_hours,numeric,'.00' literal treated as zero
+Closed ROs.csv,Service Account,dim_rooftop,service_account,trim,PBNS-S PBDT-S PNBDL-S
+Closed ROs.csv,Accounting Account,dim_rooftop,accounting_account,trim,PNB-A only value observed
+Closed ROs.csv,SA ID / SA Name,dim_service_advisor,sa_id / sa_name,trim,42 advisors
+Open ROs.csv,*,fact_repair_order,*,same as Closed with ro_status=OPEN,open work in process
+Customers.csv,NAME-FILE,dim_customer,name_file,trim,CDK Pick key '<store>*<customer_number>'
+Customers.csv,NAME / COMPANYNAME,dim_customer,customer_name / company_name,trim,
+Customers.csv,EMAIL,dim_customer,email_raw,verbatim,multi-valued with WORK/HOME qualifiers; parse downstream
+Customers.csv,ENTRY,dim_customer,entry_dt,m/d/Y -> ISO,
+Customers.csv,YTD-PURCH,dim_customer,ytd_purchases,numeric,
+service customer sales.csv,Warranty Sales / Warranty Gross Profit,agg_customer_service_period,warranty_sales / warranty_gross_profit,strip $ and commas,tie-out only; never a scoring input
+service customer sales.csv,Customer Pay / Internal,agg_customer_service_period,cp_* / internal_*,strip $ and commas,
+Customer total sales.csv,*,agg_customer_total_sales,*,strip $ and commas,top-100 ranked extract; not a complete population
+Advantage plus customers.csv,VIN,fact_service_contract,vin17 / vin8,upper; vin8=right(vin17,8),BRP lane; 170 of 187 are full 17-char VINs
+Advantage plus customers.csv,Component Code / Term,fact_service_contract,component_code / term_desc,trim,'60m/0km' parsed to term_months
+Advantage plus customers.csv,Delivery Date,fact_service_contract,delivery_dt,'Weekday, Month D, YYYY' -> ISO,long-form date in source
+Canada General contracts.csv,Contract Number,fact_service_contract,contract_number,trim,PS-###### powersports contracts
+Canada General contracts.csv,VIN #,fact_service_contract,vin17 / vin8,upper; vin8=right(vin17,8),some hull/serial IDs are 12 chars
+Canada General contracts.csv,Product(s),fact_service_contract,product_codes,trim,
