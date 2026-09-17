@@ -7,7 +7,6 @@ Grain is declared on every fact. VIN8 is the cross-source spine; the customer nu
 erDiagram
     dim_unit ||--o{ fact_warranty_registration : "VIN8"
     dim_unit ||--o{ fact_repair_order          : "VIN8"
-    dim_unit ||--o{ fact_service_contract      : "VIN8 (derived)"
     dim_warranty_option ||--o{ fact_warranty_registration : "warranty_option_cd"
     dim_customer ||--o{ fact_repair_order              : "customer_key"
     dim_customer ||--o{ agg_customer_service_period    : "customer_key"
@@ -76,16 +75,6 @@ erDiagram
         NUM  labor_sales
         NUM  parts_sales
         NUM  sold_hours
-    }
-    fact_service_contract {
-        TEXT contract_key PK "grain: one contract"
-        TEXT contract_source "BRP_ADVANTAGE_PLUS | CANADA_GENERAL"
-        TEXT vin17
-        TEXT vin8 "right(vin17,8)"
-        TEXT product_codes
-        INT  term_months
-        DATE start_dt
-        TEXT status
     }
     agg_customer_service_period {
         TEXT customer_key FK

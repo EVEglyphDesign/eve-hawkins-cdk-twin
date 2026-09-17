@@ -19,10 +19,20 @@ FILES = {
     "customers":    "Customers.csv",
     "svc_cust":     "service customer sales.csv",
     "tot_cust":     "Customer total sales.csv",
-    "brp_adv":      "Advantage plus customers.csv",
-    "brp_can":      "Canada General contracts.csv",
 }
 PACCAR_REPORTS = ["P026", "P032", "P046", "P048"]
+
+# Truck business only. The powersports lane is a separate domain on a separate VIN
+# space and is excluded here by design, not by omission. Each excluded file is
+# logged so the exclusion is visible in dq_exception rather than silent.
+OUT_OF_SCOPE = {
+    "Advantage plus customers.csv":  "BRP Advantage Plus service contracts — powersports lane",
+    "Canada General contracts.csv":  "Canada General powersports service contracts",
+    "All ~ Warranty On Demand.pdf":  "BRP Warranty on Demand claim records — powersports lane",
+    "Warranty Guide EN_REV6 2021 (1).pdf": "BRP powersports warranty policy guide",
+    "Moncton Retention_1787839708703.pdf": "Torque Motorsports Moncton retention report",
+    "Retention_1787836691996.pdf":   "Torque Motorsports Woodstock retention report",
+}
 
 def rows(path):
     with open(path, encoding="utf-8-sig", newline="") as fh:
@@ -216,37 +226,12 @@ def main():
     cur.executemany(f"INSERT INTO dim_unit VALUES ({','.join('?'*12)})", unit_rows)
     cur.executemany(f"INSERT INTO fact_warranty_registration VALUES ({','.join('?'*9)})", list(wreg.values()))
 
-    # ---- service contracts (BRP lane) ------------------------------------
-    contracts = []
-    p = src(FILES["brp_adv"])
-    if os.path.exists(p):
-        for rid, r in rows(p):
-            vin = (r.get("VIN") or "").strip().upper()
-            term = (r.get("Term") or "").strip()
-            tm = int(term.split("m")[0]) if term[:1].isdigit() and "m" in term else None
-            contracts.append((f"ADV:{r.get('Invoice Number') or rid}", "BRP_ADVANTAGE_PLUS",
-                              (r.get("Invoice Number") or "").strip(), vin or None, vin[-8:] if len(vin) >= 8 else None,
-                              (r.get("Client Name") or "").strip(), (r.get("Dealer") or "").strip(),
-                              (r.get("Sales Rep") or "").strip(), (r.get("Vehicle") or "").strip(), None,
-                              (r.get("Component Code") or "").strip(), None, term, tm,
-                              d(r.get("Start Date")), long_date(r.get("Delivery Date")),
-                              (r.get("Status") or "").strip(), (r.get("Payment Status") or "").strip(), RUN_TS))
-    p = src(FILES["brp_can"])
-    if os.path.exists(p):
-        for rid, r in rows(p):
-            vin = (r.get("VIN #") or "").strip().upper()
-            my = (r.get("Year") or "").strip()
-            contracts.append((f"CAN:{(r.get('Contract Number') or rid)}", "CANADA_GENERAL",
-                              (r.get("Contract Number") or "").strip(), vin or None,
-                              vin[-8:] if len(vin) >= 8 else None,
-                              f"{(r.get('First Name') or '').strip()} {(r.get('Last Name') or '').strip()}".strip(),
-                              None, (r.get("Salesperson") or "").strip(),
-                              " ".join(x for x in [(r.get("Make") or "").strip(), (r.get("Model") or "").strip()] if x),
-                              int(my) if my.isdigit() else None, None,
-                              (r.get("Product(s)") or "").strip(), None, None,
-                              d(r.get("Created")), d(r.get("Completed")),
-                              (r.get("Status") or "").strip(), None, RUN_TS))
-    cur.executemany(f"INSERT INTO fact_service_contract VALUES ({','.join('?'*19)})", contracts)
+    # ---- out-of-scope sources, logged not loaded -------------------------
+    for fname, why in OUT_OF_SCOPE.items():
+        if os.path.exists(src(fname)):
+            dq.add(fname, None, "SCOPE_EXCLUDED", "INFO",
+                   "present in the extract set and deliberately not loaded: "
+                   "this wireframe is the truck business only — " + why, fname)
 
     # ---- reconciliation aggregates --------------------------------------
     p = src(FILES["svc_cust"]); agg1 = []
@@ -296,7 +281,7 @@ def main():
     # ---- aggregate-only profile (safe to publish) ------------------------
     prof = {"generated_utc": RUN_TS, "tables": {}, "marts": {}, "dq": {}}
     for t in ["dim_rooftop","dim_customer","dim_unit","dim_warranty_option","dim_service_advisor",
-              "dim_date","fact_warranty_registration","fact_repair_order","fact_service_contract",
+              "dim_date","fact_warranty_registration","fact_repair_order",
               "agg_customer_service_period","agg_customer_total_sales","dq_exception"]:
         prof["tables"][t] = cur.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
     for v in ["v_rich_target","v_whitespace_registered_never_serviced","v_coverage_expiring_180d",

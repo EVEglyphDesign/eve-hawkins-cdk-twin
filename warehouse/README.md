@@ -9,6 +9,25 @@ that every downstream worklist, dashboard and alert reads one shape and no other
 
 It is a **wireframe**: schema, grain, keys, transforms, marts and data-quality rules.
 
+## Scope — the truck business, and only the truck business
+
+This model covers **Peterbilt Atlantic's truck lane**: the eight CDK service accounts
+under accounting account `PNB-A`, the PACCAR warranty registrations behind those units,
+and the customer and advisor masters that serve them. Every unit in it is a Class 8 or
+medium-duty Peterbilt carrying PACCAR coverage — MX-11 and MX-13 engine, aftertreatment,
+PACCAR TX-12 transmission and clutch, harness, tow, and base vehicle.
+
+`TRPDT-S` belongs here. It is **TRP Dartmouth** — PACCAR's all-makes truck parts and
+service brand — and its customers are fuel haulers and transport fleets, not powersports.
+
+The **BRP / powersports lane is deliberately out of scope**: the Advantage Plus and
+Canada General service contracts, the Warranty on Demand claim records, the BRP warranty
+policy guide, and the Torque Motorsports retention reports. They are present in the
+extract directory, and the loader logs each one as a `SCOPE_EXCLUDED` row in
+`dq_exception` so the exclusion is auditable rather than silent. That lane is a different
+VIN space with a different policy owner and belongs in its own model. Joining it onto a
+truck VIN8 spine is how one machine's coverage gets attached to another's.
+
 ## Custody
 
 **No dealer rows are committed to this repository.** This repo holds the index, the
@@ -45,14 +64,13 @@ name exactly, which is exactly why the model joins on VIN8 and treats names as a
 
 ## Model
 
-Six dimensions, three facts, two reconciliation aggregates, one quarantine table, eleven marts.
+Six dimensions, two facts, two reconciliation aggregates, one quarantine table, eleven marts.
 
 **Dimensions** — `dim_unit` (VIN8), `dim_customer`, `dim_rooftop`, `dim_warranty_option`,
 `dim_service_advisor`, `dim_date`.
 
 **Facts** — `fact_warranty_registration` (grain: VIN8 × warranty option, manufacturer truth),
-`fact_repair_order` (grain: one RO, open and closed unioned under `ro_status`, dealer truth),
-`fact_service_contract` (grain: one contract, BRP/Torque lane, VIN17-keyed with VIN8 derived).
+`fact_repair_order` (grain: one RO, open and closed unioned under `ro_status`, dealer truth).
 
 **Aggregates** — `agg_customer_service_period`, `agg_customer_total_sales`. These are
 tie-out instruments only. They are never a scoring input; a pre-aggregated total cannot
@@ -127,7 +145,7 @@ them — the codes are not decoded by guesswork.
 | `PNBDL-S` | 1,863 | 27 | $63,236.60  | yes |
 | `PNBM-S`  | 0 | 60 | $277,334.33 | **no** |
 | `PNBF-S`  | 0 | 41 | $153,227.33 | **no** |
-| `TRPDT-S` | 0 | 30 | $68,495.06  | **no** |
+| `TRPDT-S` (TRP Dartmouth) | 0 | 30 | $68,495.06  | **no** |
 | `PQSP-S`  | 0 | 20 | $133,463.93 | **no** |
 | `PQC-S`   | 0 | 18 | $23,549.02  | **no** |
 
@@ -188,7 +206,17 @@ what the diagnosis is likely to be worth.
 
 `bin/build_outreach_workbook.py` renders bands P1–P4 to an Excel workbook, one sheet per
 band, every ranking signal as a column alongside the contact details held for the
-customer on the unit's most recent RO, plus a coverage-detail sheet and a method sheet.
+customer on the unit's most recent RO, plus a coverage-detail sheet, a **CDK vs PACCAR**
+sheet and a method sheet.
+
+The `CDK vs PACCAR` sheet is the two-sided reconciliation: one row for every one of the
+2,991 units in the model, the manufacturer extract's account of the unit set beside the
+dealer system's account of it, and for any unit outside P1–P4 the reason it is outside.
+`match_status` splits into **BOTH SIDES 336** (registered with PACCAR and serviced at a
+rooftop whose history was extracted), **PACCAR ONLY 724** (registered in the territory,
+no service history here) and **CDK ONLY 1,931** (serviced here, no PACCAR registration in
+this extract set). The last figure is the size of the all-makes and out-of-territory book
+and is the reason `v_rich_target` is smaller than the RO population.
 **The workbook is dealer payload and is never committed here** — the script is committed,
 the output is not.
 
@@ -216,9 +244,10 @@ python bin/build_wireframe_db.py \
 The loader is idempotent, rebuilds from scratch each run, and prints an
 aggregate-only profile. It expects `P026.csv`, `P032.csv`, `P046.csv`, `P048.csv`,
 `Closed ROs.csv`, `Open ROs.csv`, `Customers.csv`, `service customer sales.csv`,
-`Customer total sales.csv`, `Advantage plus customers.csv` and
-`Canada General contracts.csv`. Missing files are recorded as `SOURCE_MISSING`
-warnings rather than failing the run, because the extract set arrives in pieces.
+`Customer total sales.csv`. Missing files are recorded as `SOURCE_MISSING` warnings
+rather than failing the run, because the extract set arrives in pieces. Powersports
+files sitting in the same directory are matched against `OUT_OF_SCOPE` and logged as
+`SCOPE_EXCLUDED`, never loaded.
 
 SQLite is the wireframe target because it is inspectable with no server. The DDL is
 deliberately portable to the Azure PostgreSQL landing zone that the CDK Twin ingestion

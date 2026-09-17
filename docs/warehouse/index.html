@@ -87,7 +87,9 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
     <h1>Warranty GENE Warehouse Wireframe</h1>
     <p class="lede">A grain-declared star schema over the 2026-09-17 CDK Drive and PACCAR
     warranty extract set. One join spine, one set of marts, one quarantine table — so every
-    worklist, dashboard and alert reads the same shape and no other.</p>
+    worklist, dashboard and alert reads the same shape and no other. <b>Truck business
+    only:</b> Peterbilt units on PACCAR coverage across the group's eight CDK service
+    accounts. The BRP powersports lane is excluded by design and logged, not dropped.</p>
     <div class="crumbs">
       <a href="../">CDK Twin conceptual map</a>
       <a href="../model/">Data model explorer</a>
@@ -117,8 +119,8 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
   <div class="spine">
     <div class="node"><div class="n-l">Manufacturer truth</div><div class="n-t">Warranty registration</div><div class="n-s">P026 · P032 · P046 · P048 — four disjoint partitions, 1,060 units, 3,258 coverages</div></div>
     <div class="node key"><div class="n-l">Join spine</div><div class="n-t">dim_unit · VIN8</div><div class="n-s">2,991 units. 1,060 registered · 2,267 serviced · 336 reconciled on both sides</div></div>
-    <div class="node"><div class="n-l">Dealer truth</div><div class="n-t">Repair order history</div><div class="n-s">7,534 closed and 260 open ROs, 2024-10-01 to 2026-09-16, three rooftops</div></div>
-    <div class="node"><div class="n-l">Contract lane</div><div class="n-t">Service contracts</div><div class="n-s">224 BRP and Canada General contracts, VIN17-keyed, VIN8 derived</div></div>
+    <div class="node"><div class="n-l">Dealer truth</div><div class="n-t">Repair order history</div><div class="n-s">7,534 closed and 260 open ROs, 2024-10-01 to 2026-09-16 — eight service accounts appear, three carry closed history</div></div>
+    <div class="node"><div class="n-l">Out of scope</div><div class="n-t">Powersports lane</div><div class="n-s">BRP contracts, Warranty on Demand claims and Torque retention reports — a separate VIN space, logged as SCOPE_EXCLUDED and never loaded</div></div>
   </div>
   <div class="callout">Registered-owner name is <b>not</b> a join key — only 65 of 534
   manufacturer-side owner names match a CDK repair-order customer name exactly. The
@@ -155,7 +157,7 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
 
 <section>
   <h2>Tables</h2>
-  <p class="sub">Six dimensions, three facts, two reconciliation aggregates, one quarantine
+  <p class="sub">Six dimensions, two facts, two reconciliation aggregates, one quarantine
   table. Grain is declared on every fact, because a fact without a declared grain will be
   double-counted by someone eventually.</p>
   <div class="card">
@@ -166,14 +168,13 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
       <tr><td class="f">dim_customer</td><td><span class="tag dim">DIM</span></td><td>one customer number per accounting account</td><td class="n">16,022</td></tr>
       <tr><td class="f">dim_warranty_option</td><td><span class="tag dim">DIM</span></td><td>one PACCAR warranty option code</td><td class="n">364</td></tr>
       <tr><td class="f">dim_service_advisor</td><td><span class="tag dim">DIM</span></td><td>one advisor per rooftop</td><td class="n">42</td></tr>
-      <tr><td class="f">dim_rooftop</td><td><span class="tag dim">DIM</span></td><td>one service account</td><td class="n">3</td></tr>
+      <tr><td class="f">dim_rooftop</td><td><span class="tag dim">DIM</span></td><td>one service account</td><td class="n">8</td></tr>
       <tr><td class="f">dim_date</td><td><span class="tag dim">DIM</span></td><td>one calendar day</td><td class="n">5,222</td></tr>
       <tr><td class="f">fact_warranty_registration</td><td><span class="tag fact">FACT</span></td><td>one VIN8 × warranty option</td><td class="n">3,258</td></tr>
       <tr><td class="f">fact_repair_order</td><td><span class="tag fact">FACT</span></td><td>one repair order, open and closed unioned</td><td class="n">7,794</td></tr>
-      <tr><td class="f">fact_service_contract</td><td><span class="tag fact">FACT</span></td><td>one contract</td><td class="n">224</td></tr>
       <tr><td class="f">agg_customer_service_period</td><td><span class="tag agg">AGG</span></td><td>one customer × extract period, service lane</td><td class="n">2,693</td></tr>
       <tr><td class="f">agg_customer_total_sales</td><td><span class="tag agg">AGG</span></td><td>one customer × extract period, all lanes</td><td class="n">100</td></tr>
-      <tr><td class="f">dq_exception</td><td><span class="tag dq">DQ</span></td><td>one rejected or flagged source row</td><td class="n">1,451</td></tr>
+      <tr><td class="f">dq_exception</td><td><span class="tag dq">DQ</span></td><td>one rejected or flagged source row</td><td class="n">1,462</td></tr>
     </tbody>
   </table>
   </div>
@@ -197,9 +198,71 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
       <tr><td class="f">v_whitespace_registered_never_serviced</td><td>VIN8</td><td>registered in territory, never in the bays</td><td class="n">508</td></tr>
       <tr><td class="f">v_coverage_expiring_180d</td><td>VIN8</td><td>expiry pressure inside two quarters</td><td class="n">117</td></tr>
       <tr><td class="f">v_serviced_unregistered</td><td>VIN8</td><td>serviced here, no manufacturer registration on file</td><td class="n">1,931</td></tr>
+      <tr><td class="f">v_rooftop_extract_coverage</td><td>service account</td><td>which of the eight rooftops actually have closed history</td><td class="n">8</td></tr>
+      <tr><td class="f">v_unit_mileage_rate</td><td>VIN8</td><td>measured miles/day from the unit's own odometer readings</td><td class="n">760</td></tr>
+      <tr><td class="f">v_system_weight</td><td>system code</td><td>diagnostic exposure weight per covered system, held as policy</td><td class="n">7</td></tr>
+      <tr><td class="f">v_pre_ro_priority</td><td>VIN8</td><td>perishability on the binding axis, exposure, cost of contact</td><td class="n">703</td></tr>
+      <tr><td class="f">v_diagnosis_queue</td><td>VIN8</td><td>the banded pre-RO work queue, P1 to P6</td><td class="n">703</td></tr>
     </tbody>
   </table>
   </div>
+</section>
+
+<section>
+  <h2>Extract coverage — eight rooftops, three histories</h2>
+  <p class="sub"><span class="mono">dim_rooftop</span> is derived from the union of the
+  open and closed repair-order extracts, because the two extracts do not cover the same
+  dealership. Labels are held <span class="mono">UNVERIFIED</span> until the dealership
+  confirms them; the codes are not decoded by guesswork.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>Service account</th><th class="n">Closed ROs</th><th class="n">Open ROs</th><th class="n">Open WIP sales</th><th>Closed history</th></tr></thead>
+    <tbody>
+      <tr><td class="f">PBNS-S</td><td class="n">3,036</td><td class="n">33</td><td class="n">$48,089.69</td><td>yes</td></tr>
+      <tr><td class="f">PBDT-S</td><td class="n">2,647</td><td class="n">31</td><td class="n">$64,914.32</td><td>yes</td></tr>
+      <tr><td class="f">PNBDL-S</td><td class="n">1,863</td><td class="n">27</td><td class="n">$63,236.60</td><td>yes</td></tr>
+      <tr><td class="f">PNBM-S</td><td class="n">0</td><td class="n">60</td><td class="n">$277,334.33</td><td><b>no</b></td></tr>
+      <tr><td class="f">PNBF-S</td><td class="n">0</td><td class="n">41</td><td class="n">$153,227.33</td><td><b>no</b></td></tr>
+      <tr><td class="f">TRPDT-S</td><td class="n">0</td><td class="n">30</td><td class="n">$68,495.06</td><td><b>no</b></td></tr>
+      <tr><td class="f">PQSP-S</td><td class="n">0</td><td class="n">20</td><td class="n">$133,463.93</td><td><b>no</b></td></tr>
+      <tr><td class="f">PQC-S</td><td class="n">0</td><td class="n">18</td><td class="n">$23,549.02</td><td><b>no</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout">The five accounts without closed history hold <b>169 of 260 open
+  repair orders</b> and <b>$656,069.67 of $832,310.28</b> in open work in progress. The
+  rooftops missing from history are the busiest ones in the present, which is why
+  <span class="mono">v_whitespace_registered_never_serviced</span> is published as an upper
+  bound and not as a campaign list. <span class="mono">TRPDT-S</span> is TRP Dartmouth —
+  PACCAR's all-makes truck parts and service brand, serving fuel haulers and transport
+  fleets. It is truck business and belongs in this model.</div>
+</section>
+
+<section>
+  <h2>Pre-RO diagnosis queue</h2>
+  <p class="sub"><span class="mono">v_diagnosis_queue</span> ranks the 703 units whose
+  coverage is alive on <b>both</b> axes — months remaining and miles remaining. 70 units
+  with live months but a spent mileage ceiling are excluded on purpose. Bands are
+  instructions to a service writer; the score only orders work inside a band.</p>
+  <div class="card">
+  <table>
+    <thead><tr><th>Band</th><th class="n">Units</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="f">P1 IN THE BAY, CLOSING</td><td class="n">5</td><td>on an open RO now, 30 days or less on the binding axis</td></tr>
+      <tr><td class="f">P2 IN THE BAY</td><td class="n">42</td><td>on an open RO now, coverage live</td></tr>
+      <tr><td class="f">P3 CALL NOW, CLOSING</td><td class="n">28</td><td>service history here, 90 days or less</td></tr>
+      <tr><td class="f">P4 CALL, SCHEDULE</td><td class="n">120</td><td>service history here, coverage live</td></tr>
+      <tr><td class="f">P5 COLD, CLOSING</td><td class="n">38</td><td>registered only, 90 days or less</td></tr>
+      <tr><td class="f">P6 COLD, CAMPAIGN</td><td class="n">470</td><td>registered only, coverage live</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>17 units read as safe on months and sit inside 90 days on
+  miles</b> — eleven of them showing more than six months left on the calendar, one
+  showing 2,741 days. A months-only expiry report ranks the most urgent trucks in the file
+  as low priority. <span class="mono">v_unit_mileage_rate</span> measures miles per day
+  from each unit's own odometer readings, so the mileage clock is the unit's own and not a
+  fleet average.</div>
 </section>
 
 <section>
@@ -233,6 +296,8 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
       <tr><td class="f">VIN8_LENGTH</td><td><span class="sev warn">WARN</span></td><td class="n">1,223</td><td>RO rows whose vehicle ID is neither 8 nor 17 characters, so they cannot reach a warranty registration</td></tr>
       <tr><td class="f">DATE_PARSE</td><td><span class="sev warn">WARN</span></td><td class="n">213</td><td>registration rows with no usable in-service date, so coverage end cannot be computed</td></tr>
       <tr><td class="f">RO_DUPLICATE</td><td><span class="sev warn">WARN</span></td><td class="n">12</td><td>RO number present in both the open and closed extract; the closed row wins</td></tr>
+      <tr><td class="f">ROOFTOP_CLOSED_HISTORY_MISSING</td><td><span class="sev warn">WARN</span></td><td class="n">5</td><td>a service account present in the open-RO extract with no closed history extracted, so its sales and mileage history are absent</td></tr>
+      <tr><td class="f">SCOPE_EXCLUDED</td><td><span class="sev info">INFO</span></td><td class="n">6</td><td>a file in the extract directory belonging to the BRP powersports lane, deliberately not loaded</td></tr>
       <tr><td class="f">CUST_UNKNOWN</td><td><span class="sev info">INFO</span></td><td class="n">3</td><td>customer on an RO absent from the customer master; a stub dimension row is created</td></tr>
     </tbody>
   </table>
@@ -254,7 +319,14 @@ footer .mark{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);mar
       margin estimate and 3-C compliance cannot yet be scored. This is the single
       highest-value addition to the next request.</li>
       <li><b>No claim-side data on the Peterbilt lane.</b> PRWS claim history is not in
-      this set, so booked-versus-eligible cannot be closed on the truck side yet.</li>
+      this set, so booked-versus-eligible cannot be closed on the truck side yet. The 205
+      Warranty on Demand claim records in the extract directory are BRP powersports claims
+      and do not fill this gap.</li>
+      <li><b>Closed repair-order history covers three of eight service accounts.</b> The
+      five without history hold 169 of 260 open repair orders and $656,069.67 of
+      $832,310.28 in open work in progress, so the $12.11M closed-sales figure is a floor
+      for the group rather than the group. Closed ROs for all eight accounts over the same
+      window is ask one of the next extract request.</li>
       <li><b>No SmartLINQ or PACCAR Solutions fault-code feed</b>, so the event-driven
       telemetry rung is absent from the model.</li>
       <li><b>Odometer arrives only via repair orders.</b> Units never serviced here have no

@@ -23,7 +23,8 @@
 -- rooftop_label is left NULL where the plain-language rooftop name has not been
 -- confirmed by the dealership. Codes are not decoded by guesswork.
 CREATE TABLE dim_rooftop (
-  service_account     TEXT PRIMARY KEY,   -- e.g. PBNS-S, PNBM-S, PQC-S, TRPDT-S
+  service_account     TEXT PRIMARY KEY,   -- e.g. PBNS-S, PNBM-S, PQC-S, TRPDT-S (TRP
+                                          -- Dartmouth, all-makes truck parts and service)
   accounting_account  TEXT NOT NULL,      -- PNB-A (single accounting account observed)
   rooftop_label       TEXT,               -- NULL until confirmed by the dealership
   province            TEXT,               -- NULL until confirmed by the dealership
@@ -144,29 +145,14 @@ CREATE INDEX ix_ro_vin8     ON fact_repair_order(vin8);
 CREATE INDEX ix_ro_customer ON fact_repair_order(customer_key);
 CREATE INDEX ix_ro_closed   ON fact_repair_order(closed_dt);
 
--- Third-party / OEM service contracts. Grain: one row per contract.
--- BRP / Torque Motorsports lane; VIN17-keyed, VIN8 derived for cross-lane joins.
-CREATE TABLE fact_service_contract (
-  contract_key      TEXT PRIMARY KEY,
-  contract_source   TEXT NOT NULL,        -- BRP_ADVANTAGE_PLUS | CANADA_GENERAL
-  contract_number   TEXT,
-  vin17             TEXT,
-  vin8              TEXT,                 -- right(vin17,8)
-  customer_name     TEXT,
-  dealer            TEXT,
-  sales_rep         TEXT,
-  vehicle_desc      TEXT,
-  model_year        INTEGER,
-  component_code    TEXT,
-  product_codes     TEXT,
-  term_desc         TEXT,                 -- '60m/0km'
-  term_months       INTEGER,
-  start_dt          DATE,
-  delivery_dt       DATE,
-  status            TEXT,
-  payment_status    TEXT,
-  loaded_at         TIMESTAMP
-);
+-- SCOPE. This wireframe is the TRUCK business only: Peterbilt Atlantic's eight
+-- CDK service accounts and the PACCAR warranty registrations behind them. The
+-- BRP / powersports lane (Advantage Plus and Canada General service contracts,
+-- Warranty on Demand claims, the Torque Motorsports retention reports) is a
+-- separate domain on a separate VIN space and is deliberately NOT modelled here.
+-- It is excluded at load and logged as SCOPE_EXCLUDED in dq_exception. Do not
+-- add it to this schema: mixing a powersports contract VIN space into a Class 8
+-- VIN8 spine is how a fleet's coverage gets attached to the wrong machine.
 
 -- ----------------------------------------------------------------------------
 -- 3. RECONCILIATION AGGREGATES (tie-out only — never a scoring input)

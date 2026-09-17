@@ -33,9 +33,5 @@ Customers.csv,YTD-PURCH,dim_customer,ytd_purchases,numeric,
 service customer sales.csv,Warranty Sales / Warranty Gross Profit,agg_customer_service_period,warranty_sales / warranty_gross_profit,strip $ and commas,tie-out only; never a scoring input
 service customer sales.csv,Customer Pay / Internal,agg_customer_service_period,cp_* / internal_*,strip $ and commas,
 Customer total sales.csv,*,agg_customer_total_sales,*,strip $ and commas,top-100 ranked extract; not a complete population
-Advantage plus customers.csv,VIN,fact_service_contract,vin17 / vin8,upper; vin8=right(vin17,8),BRP lane; 170 of 187 are full 17-char VINs
-Advantage plus customers.csv,Component Code / Term,fact_service_contract,component_code / term_desc,trim,'60m/0km' parsed to term_months
-Advantage plus customers.csv,Delivery Date,fact_service_contract,delivery_dt,'Weekday, Month D, YYYY' -> ISO,long-form date in source
-Canada General contracts.csv,Contract Number,fact_service_contract,contract_number,trim,PS-###### powersports contracts
-Canada General contracts.csv,VIN #,fact_service_contract,vin17 / vin8,upper; vin8=right(vin17,8),some hull/serial IDs are 12 chars
-Canada General contracts.csv,Product(s),fact_service_contract,product_codes,trim,
+Advantage plus customers.csv,(all columns),OUT OF SCOPE,-,not loaded,BRP powersports lane; logged SCOPE_EXCLUDED
+Canada General contracts.csv,(all columns),OUT OF SCOPE,-,not loaded,BRP powersports lane; logged SCOPE_EXCLUDED

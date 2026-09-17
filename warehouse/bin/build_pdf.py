@@ -7,7 +7,7 @@ from weasyprint import HTML, CSS
 BASE = pathlib.Path("/home/user/workspace/twin/warehouse")
 FONTS = pathlib.Path("/home/user/workspace/fonts")
 OUT = pathlib.Path("/home/user/workspace/twin/docs/warehouse/EVEglyphDesign_Warranty_GENE_Warehouse_Wireframe.pdf")
-DOC_ID = "EgD-HAW-CDK-WH-001 r2"
+DOC_ID = "EgD-HAW-CDK-WH-001 r3"
 
 parts = []
 for name in ["README.md", "DATA-QUALITY.md"]:
@@ -81,7 +81,7 @@ COVER = f"""<div class="cover">
 <dl>
 <dt>Programme</dt><dd>Hawkins Twin Platform · CDK Twin · Peterbilt Atlantic</dd>
 <dt>Document</dt><dd>{DOC_ID}</dd>
-<dt>Extract set</dt><dd>2026-09-17 — 11 source files, 2,991 units, 7,794 repair orders</dd>
+<dt>Extract set</dt><dd>2026-09-17 — nine loaded source files, six logged out of scope, 2,991 units, 7,794 repair orders</dd>
 <dt>Join spine</dt><dd>VIN8 — manufacturer registration to dealer repair order</dd>
 <dt>Repository</dt><dd>EVEglyphDesign/eve-hawkins-cdk-twin · warehouse/</dd>
 <dt>Public surface</dt><dd>eveglyphdesign.github.io/eve-hawkins-cdk-twin/warehouse/</dd>
