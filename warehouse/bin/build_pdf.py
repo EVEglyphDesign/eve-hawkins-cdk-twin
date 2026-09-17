@@ -7,7 +7,7 @@ from weasyprint import HTML, CSS
 BASE = pathlib.Path("/home/user/workspace/twin/warehouse")
 FONTS = pathlib.Path("/home/user/workspace/fonts")
 OUT = pathlib.Path("/home/user/workspace/twin/docs/warehouse/EVEglyphDesign_Warranty_GENE_Warehouse_Wireframe.pdf")
-DOC_ID = "EgD-HAW-CDK-WH-001 r1"
+DOC_ID = "EgD-HAW-CDK-WH-001 r2"
 
 parts = []
 for name in ["README.md", "DATA-QUALITY.md"]:
@@ -23,7 +23,9 @@ body_md = re.sub(r"^# Warranty GENE Warehouse Wireframe — v0\.1\n", "", raw)
 body_md = body_md.replace(
     "**Lane:** Hawkins Twin Platform / CDK Twin · **Extract set:** 2026-09-17 · **Status:** wireframe, proven against real extracts",
     "<p class=\"meta-line\"><b>Lane</b> Hawkins Twin Platform / CDK Twin &nbsp;·&nbsp; <b>Extract set</b> 2026-09-17 &nbsp;·&nbsp; <b>Status</b> wireframe, proven against real extracts</p>")
-body_md = body_md.replace("# Data Quality — 2026-09-17 extract set", "# Data Quality — 2026-09-17 extract set {: .pagebreak }")
+# Keep the two source documents in one flow. A forced break here produced a
+# blank page whenever the preceding section ended near a page boundary.
+body_md = body_md.replace("# Data Quality — 2026-09-17 extract set", "# Data Quality — 2026-09-17 extract set")
 html_body = markdown.markdown(body_md, extensions=["tables", "attr_list", "sane_lists", "md_in_html", "fenced_code"])
 # strip local repo links that cannot be clicked from a PDF, keep the text
 html_body = re.sub(r'<a href="(?!https?:)([^"]*)">([^<]*)</a>',
@@ -60,7 +62,7 @@ li{padding-left:1.6mm}
 li{margin-bottom:1.4mm}
 code,.mono{font-family:'DejaVu Sans Mono',monospace;font-size:7.9pt;background:#f7f2e7;padding:.3mm 1mm;border-radius:1.4mm}
 pre{background:#f7f2e7;border-left:2.4px solid #e87722;padding:3mm 3.5mm;margin:0 0 3.5mm;font-size:6.6pt;line-height:1.5;white-space:pre;overflow:hidden}
-h1.pagebreak{page-break-before:always}
+h1.pagebreak{page-break-before:always;margin-top:0}
 pre code{background:none;padding:0}
 table{width:100%;border-collapse:collapse;font-size:7.9pt;margin:0 0 4mm;page-break-inside:avoid}
 th{text-align:left;font-size:6.6pt;letter-spacing:.09em;text-transform:uppercase;color:#6b665c;font-weight:600;border-bottom:1px solid #e7e1d3;padding:0 2.5mm 1.6mm 0}

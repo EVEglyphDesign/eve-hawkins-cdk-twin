@@ -12,11 +12,25 @@
 
 -- Rooftop / accounting partition. CDK exports carry both a Service Account
 -- (rooftop-scoped) and an Accounting Account (group-scoped).
+--
+-- SCOPE WARNING. The group operates EIGHT service accounts, all under the single
+-- accounting account PNB-A. Only the Open ROs extract spans all eight; the
+-- Closed ROs extract was pulled against three of them. This table is therefore
+-- seeded from the UNION of both RO extracts, never from closed history alone,
+-- and every row carries in_closed_history so that any query touching service
+-- history can see whether that rooftop's past is actually present.
+--
+-- rooftop_label is left NULL where the plain-language rooftop name has not been
+-- confirmed by the dealership. Codes are not decoded by guesswork.
 CREATE TABLE dim_rooftop (
-  service_account     TEXT PRIMARY KEY,   -- PBNS-S | PBDT-S | PNBDL-S
+  service_account     TEXT PRIMARY KEY,   -- e.g. PBNS-S, PNBM-S, PQC-S, TRPDT-S
   accounting_account  TEXT NOT NULL,      -- PNB-A (single accounting account observed)
-  rooftop_label       TEXT,
-  province            TEXT
+  rooftop_label       TEXT,               -- NULL until confirmed by the dealership
+  province            TEXT,               -- NULL until confirmed by the dealership
+  label_status        TEXT,               -- CONFIRMED | UNVERIFIED
+  in_closed_history   INTEGER NOT NULL,   -- 1 = closed-RO extract covers this rooftop
+  closed_ro_count     INTEGER DEFAULT 0,
+  open_ro_count       INTEGER DEFAULT 0
 );
 
 -- Customer. Business key is the CDK customer number, unique within the
@@ -251,9 +265,25 @@ LEFT JOIN v_unit_service_profile s ON s.vin8 = c.vin8
 WHERE c.is_time_active = 1
 GROUP BY c.vin8;
 
--- Whitespace: warranty-registered in the territory, never seen in the bays.
+-- Whitespace: warranty-registered in the territory, with no service history in
+-- the extract set.
+--
+-- SCOPE WARNING. 'Never serviced' means never serviced at a rooftop whose
+-- history is present. Closed history covers three of eight service accounts, so
+-- this view is an UPPER BOUND: a unit serviced only at PNBM-S, PNBF-S, PQSP-S,
+-- PQC-S or TRPDT-S looks like whitespace here and is not. Do not campaign off
+-- this view until closed ROs arrive for all eight service accounts.
 CREATE VIEW v_whitespace_registered_never_serviced AS
 SELECT * FROM v_rich_target WHERE reach_class = 'REGISTERED_NEVER_SERVICED';
+
+-- Extract coverage, queryable. One row per service account with whether its
+-- closed history is present.
+CREATE VIEW v_rooftop_extract_coverage AS
+SELECT service_account, accounting_account, rooftop_label, label_status,
+       in_closed_history, closed_ro_count, open_ro_count,
+       CASE WHEN in_closed_history = 1 THEN 'HISTORY_PRESENT'
+            ELSE 'OPEN_ONLY — closed history not extracted' END AS coverage_state
+FROM dim_rooftop;
 
 -- Expiry pressure: active coverage closing inside 180 days.
 CREATE VIEW v_coverage_expiring_180d AS
@@ -266,3 +296,97 @@ SELECT s.vin8, s.ro_count, s.last_ro_dt, s.lifetime_sales
 FROM v_unit_service_profile s
 LEFT JOIN fact_warranty_registration r ON r.vin8 = s.vin8
 WHERE r.vin8 IS NULL;
+-- ---------------------------------------------------------------------------
+-- Opportunistic-diagnosis priority. One row per unit that still has coverage
+-- alive on BOTH axes. Ordering is explicit and auditable: perishability on the
+-- binding axis, then diagnostic exposure, then cost of contact.
+-- ---------------------------------------------------------------------------
+
+-- Measured mileage accrual, from consecutive odometer readings on this unit's
+-- own ROs. Without it the mileage axis has no clock and expiry cannot be dated.
+CREATE VIEW v_unit_mileage_rate AS
+WITH r AS (
+  SELECT vin8, odometer, COALESCE(closed_dt, open_dt) AS dt
+  FROM fact_repair_order
+  WHERE vin8 IS NOT NULL AND odometer > 0 AND COALESCE(closed_dt, open_dt) IS NOT NULL
+), s AS (
+  SELECT vin8, COUNT(*) AS reading_count,
+         MAX(odometer) - MIN(odometer) AS span_miles,
+         julianday(MAX(dt)) - julianday(MIN(dt)) AS span_days
+  FROM r GROUP BY vin8
+)
+SELECT vin8, reading_count, span_miles, span_days,
+       ROUND(span_miles / span_days, 1) AS miles_per_day,
+       CASE WHEN span_miles / span_days > 1200 THEN 'SUSPECT_ODOMETER'
+            ELSE 'MEASURED' END AS rate_status
+FROM s
+WHERE reading_count >= 2 AND span_days >= 60 AND span_miles > 0;
+
+-- Diagnostic exposure by covered system. Engine, aftertreatment and emissions
+-- carry the labour and parts weight; trim and towing lines do not. Weights are
+-- policy, stated here so they can be argued with rather than inferred.
+CREATE VIEW v_system_weight AS
+SELECT 'ENG' AS sub_type, 4 AS weight UNION ALL SELECT 'EMC', 4 UNION ALL
+SELECT 'A/T', 3 UNION ALL SELECT 'VEH', 2 UNION ALL SELECT 'ELEC', 2 UNION ALL
+SELECT 'TOW', 1 UNION ALL SELECT 'CLTH', 1;
+
+CREATE VIEW v_pre_ro_priority AS
+WITH live AS (
+  SELECT c.vin8, c.warranty_sub_type_cd AS sub_type, c.days_to_expiry,
+         c.miles_remaining_est, COALESCE(w.weight, 1) AS weight
+  FROM v_unit_coverage_state c
+  LEFT JOIN v_system_weight w ON w.sub_type = c.warranty_sub_type_cd
+  WHERE c.is_time_active = 1
+    AND (c.miles_remaining_est IS NULL OR c.miles_remaining_est > 0)
+), unit AS (
+  SELECT l.vin8,
+         COUNT(*)                        AS live_coverages,
+         SUM(l.weight)                   AS exposure_weight,
+         GROUP_CONCAT(DISTINCT l.sub_type) AS live_systems,
+         MIN(l.days_to_expiry)           AS days_to_time_expiry,
+         MIN(l.miles_remaining_est)      AS miles_remaining
+  FROM live l GROUP BY l.vin8
+)
+SELECT u.vin8,
+       t.reach_class,
+       u.live_coverages, u.live_systems, u.exposure_weight,
+       u.days_to_time_expiry,
+       u.miles_remaining,
+       m.miles_per_day, COALESCE(m.rate_status, 'NO_RATE') AS rate_status,
+       CASE WHEN m.miles_per_day IS NOT NULL AND m.rate_status = 'MEASURED'
+                 AND u.miles_remaining IS NOT NULL
+            THEN CAST(u.miles_remaining / m.miles_per_day AS INTEGER) END AS days_to_mileage_ceiling,
+       MIN(u.days_to_time_expiry,
+           COALESCE(CASE WHEN m.rate_status = 'MEASURED' AND u.miles_remaining IS NOT NULL
+                         THEN CAST(u.miles_remaining / m.miles_per_day AS INTEGER) END,
+                    u.days_to_time_expiry)) AS effective_days_remaining,
+       CASE WHEN m.rate_status = 'MEASURED' AND u.miles_remaining IS NOT NULL
+                 AND u.miles_remaining / m.miles_per_day < u.days_to_time_expiry
+            THEN 'MILES' ELSE 'MONTHS' END AS binding_axis,
+       t.ro_count, t.open_ro_count, t.last_ro_dt, t.max_odometer,
+       -- Priority score, 0-100. Perishability 60, exposure 25, reachability 15.
+       CAST(ROUND(
+         60.0 * (365 - MIN(365, MAX(0, MIN(u.days_to_time_expiry,
+             COALESCE(CASE WHEN m.rate_status = 'MEASURED' AND u.miles_remaining IS NOT NULL
+                           THEN CAST(u.miles_remaining / m.miles_per_day AS INTEGER) END,
+                      u.days_to_time_expiry))))) / 365.0
+       + 25.0 * MIN(1.0, u.exposure_weight / 12.0)
+       + CASE t.reach_class WHEN 'ON_SITE_NOW' THEN 15.0
+                            WHEN 'KNOWN_CUSTOMER' THEN 9.0 ELSE 3.0 END
+       ) AS INTEGER) AS priority_score
+FROM unit u
+JOIN v_rich_target t ON t.vin8 = u.vin8
+LEFT JOIN v_unit_mileage_rate m ON m.vin8 = u.vin8;
+
+-- The banded work queue. A band is an instruction to a service writer; the
+-- score only orders work inside a band.
+CREATE VIEW v_diagnosis_queue AS
+SELECT CASE
+    WHEN reach_class = 'ON_SITE_NOW' AND effective_days_remaining <= 30  THEN 'P1 IN THE BAY, CLOSING'
+    WHEN reach_class = 'ON_SITE_NOW'                                     THEN 'P2 IN THE BAY'
+    WHEN reach_class = 'KNOWN_CUSTOMER' AND effective_days_remaining <= 90 THEN 'P3 CALL NOW, CLOSING'
+    WHEN reach_class = 'KNOWN_CUSTOMER'                                  THEN 'P4 CALL, SCHEDULE'
+    WHEN effective_days_remaining <= 90                                  THEN 'P5 COLD, CLOSING'
+    ELSE 'P6 COLD, CAMPAIGN'
+  END AS band, *
+FROM v_pre_ro_priority;

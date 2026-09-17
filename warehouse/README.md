@@ -45,7 +45,7 @@ name exactly, which is exactly why the model joins on VIN8 and treats names as a
 
 ## Model
 
-Six dimensions, three facts, two reconciliation aggregates, one quarantine table, six marts.
+Six dimensions, three facts, two reconciliation aggregates, one quarantine table, eleven marts.
 
 **Dimensions** — `dim_unit` (VIN8), `dim_customer`, `dim_rooftop`, `dim_warranty_option`,
 `dim_service_advisor`, `dim_date`.
@@ -75,6 +75,11 @@ Full ERD in [the entity-relationship diagram](ERD.md). DDL in
 | `v_whitespace_registered_never_serviced` | VIN8 | registered in territory, never in the bays |
 | `v_coverage_expiring_180d` | VIN8 | expiry pressure inside two quarters |
 | `v_serviced_unregistered` | VIN8 | serviced here, no manufacturer registration on file |
+| `v_rooftop_extract_coverage` | service account | which of the eight rooftops actually have history |
+| `v_unit_mileage_rate` | VIN8 | measured miles/day from the unit's own odometer readings |
+| `v_system_weight` | system code | diagnostic exposure weight per covered system (policy) |
+| `v_pre_ro_priority` | VIN8 | perishability on the binding axis, exposure, cost of contact |
+| `v_diagnosis_queue` | VIN8 | the banded pre-RO work queue, P1 to P6 |
 
 `v_rich_target` classes every unit with live coverage by how the dealership can actually
 reach it:
@@ -92,9 +97,11 @@ reach it:
   and cab-clothing lines.
 - **60 units with active coverage are on an open repair order right now.** One is
   1 day from time expiry. This is the pre-RO decision window GENE exists to serve.
-- **508 registered units have never been serviced at any of the three rooftops.**
-  That is 48% of the manufacturer-registered population, addressable by city because
-  the registration record carries the owner's city.
+- **508 registered units have no service history in the extract set — an upper bound,
+  not a count.** Closed history covers three of the group's **eight** service accounts,
+  so a unit serviced only at `PNBM-S`, `PNBF-S`, `PQSP-S`, `PQC-S` or `TRPDT-S` appears
+  here as whitespace and is not. Treat this view as a re-extract requirement, not a
+  campaign list. See [Extract coverage](#extract-coverage-eight-rooftops-three-histories).
 - **170 of 650 time-active coverages are already past their mileage ceiling.** Coverage
   is a two-axis test — months *and* miles — and a time-only filter would mis-flag every
   one of them. `v_unit_coverage_state` therefore exposes `is_time_active` and
@@ -102,8 +109,93 @@ reach it:
 - Warranty work is **14.7% of service sales** in the extract window, against $30.0M
   customer-pay. The wireframe's job is to move that share deliberately rather than by accident.
 - Dealer-side history in scope: 7,534 closed repair orders, $12.11M total sales,
-  $5.90M gross profit, 2024-10-01 through 2026-09-16, across three service accounts
-  (`PBNS-S`, `PBDT-S`, `PNBDL-S`) under one accounting account (`PNB-A`).
+  $5.90M gross profit, 2024-10-01 through 2026-09-16 — but drawn from only **three of
+  eight** service accounts, all under one accounting account (`PNB-A`). Those figures
+  are a floor for the group, not the group.
+
+## Extract coverage — eight rooftops, three histories
+
+`dim_rooftop` is seeded from the **union** of the open and closed RO extracts, because
+the two extracts do not cover the same dealership. Eight service accounts appear; only
+three carry closed history. Labels are left `UNVERIFIED` until the dealership confirms
+them — the codes are not decoded by guesswork.
+
+| Service account | Closed ROs | Open ROs | Open WIP sales | Closed history present |
+|---|---:|---:|---:|---|
+| `PBNS-S`  | 3,036 | 33 | $48,089.69  | yes |
+| `PBDT-S`  | 2,647 | 31 | $64,914.32  | yes |
+| `PNBDL-S` | 1,863 | 27 | $63,236.60  | yes |
+| `PNBM-S`  | 0 | 60 | $277,334.33 | **no** |
+| `PNBF-S`  | 0 | 41 | $153,227.33 | **no** |
+| `TRPDT-S` | 0 | 30 | $68,495.06  | **no** |
+| `PQSP-S`  | 0 | 20 | $133,463.93 | **no** |
+| `PQC-S`   | 0 | 18 | $23,549.02  | **no** |
+
+The five uncovered accounts hold **169 of 260 open repair orders — 65% of current work
+in progress, and $656,069.67 of $832,310.28 in open sales.** The rooftops missing from
+history are the busiest ones in the present. 125 distinct units are on an open RO at an
+uncovered rooftop; 46 of them are warranty-registered and 31 already qualify for
+`v_rich_target`.
+
+Every uncovered account is recorded as a `ROOFTOP_CLOSED_HISTORY_MISSING` row in
+`dq_exception` and is queryable through `v_rooftop_extract_coverage`. **Ask 1 of the
+next extract request is closed ROs for all eight service accounts over the same window.**
+
+
+## Opportunistic-diagnosis priority — the pre-RO queue
+
+`v_diagnosis_queue` ranks the 703 units whose coverage is alive on **both** axes. 70
+units with live months but a spent mileage ceiling are excluded on purpose. Bands are
+instructions to a service writer; the score only orders work inside a band.
+
+| Band | Units | Meaning |
+|---|---:|---|
+| `P1 IN THE BAY, CLOSING` | 5 | on an open RO now, 30 days or less on the binding axis |
+| `P2 IN THE BAY` | 42 | on an open RO now, coverage live |
+| `P3 CALL NOW, CLOSING` | 28 | RO history here, 90 days or less |
+| `P4 CALL, SCHEDULE` | 120 | RO history here, coverage live |
+| `P5 COLD, CLOSING` | 38 | registered only, 90 days or less |
+| `P6 COLD, CAMPAIGN` | 470 | registered only, coverage live |
+
+**Score** — 0-100. Perishability on the binding axis 60, diagnostic exposure by covered
+system 25, cost of contact 15. System weights (`v_system_weight`) are `ENG` 4, `EMC` 4,
+`A/T` 3, `VEH` 2, `ELEC` 2, `TOW` 1, `CLTH` 1. They are policy, held in a view so they
+can be argued with rather than buried in a formula.
+
+**The mileage clock.** `v_unit_mileage_rate` derives miles per day from each unit's own
+odometer readings — two or more readings, 60 days or more apart, positive gain. Rates
+above 1,200 miles/day are flagged `SUSPECT_ODOMETER` and never used to date an expiry.
+**17 units read as safe on months and sit inside 90 days on miles; eleven of those show
+more than six months left on the calendar, one shows 2,741 days.** A months-only expiry
+report ranks the most urgent trucks in the file as low priority.
+
+Where no rate can be measured the queue falls back to the months axis and says so via
+`rate_status = 'NO_RATE'`. That is the whole cold lane — and 12 of the 13 covered units
+on an open RO at `PNBM-S` right now, because Moncton's closed history was never
+extracted. Their priority is understated for an extract reason, not a business one.
+
+**Contact reach** — 188 of the 195 warm units (P1–P4) have a phone number on file, 167
+have an email. The 508 cold units have no phone at all: registered owner name and city
+only, resolving to 313 distinct owners across 241 cities, which makes that lane a
+territory-rep list rather than a call list. Eleven owners hold four or more covered
+units each.
+
+**No claim-value estimate per row.** Without RO line detail there are no labour operation
+codes or SRT hours, so the queue says which trucks are worth diagnosing and cannot say
+what the diagnosis is likely to be worth.
+
+### Outreach workbook
+
+`bin/build_outreach_workbook.py` renders bands P1–P4 to an Excel workbook, one sheet per
+band, every ranking signal as a column alongside the contact details held for the
+customer on the unit's most recent RO, plus a coverage-detail sheet and a method sheet.
+**The workbook is dealer payload and is never committed here** — the script is committed,
+the output is not.
+
+```
+python bin/build_outreach_workbook.py --db /path/to/cdk_wireframe.db \
+       --out EVEglyphDesign_WarrantyGENE_Outreach_P1-P4_<date>.xlsx
+```
 
 ## Boundary
 

@@ -6,3 +6,7 @@
 !mapping/*.csv
 extracts/
 out/
+
+# Outreach workbooks carry customer contact details.
+*.xlsx
+*.xls

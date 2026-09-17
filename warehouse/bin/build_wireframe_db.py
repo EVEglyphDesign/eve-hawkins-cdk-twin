@@ -81,10 +81,35 @@ def main():
     src = lambda n: os.path.join(a.src, n)
 
     # ---- dim_rooftop -------------------------------------------------------
-    ROOFTOPS = [("PBNS-S","PNB-A","Peterbilt Nova Scotia (service)","NS"),
-                ("PBDT-S","PNB-A","Peterbilt Dartmouth/Truro (service)","NS"),
-                ("PNBDL-S","PNB-A","Peterbilt New Brunswick Dealer (service)","NB")]
-    cur.executemany("INSERT INTO dim_rooftop VALUES (?,?,?,?)", ROOFTOPS)
+    # Derived, never hardcoded. Seeded from the UNION of the closed and open RO
+    # extracts: the closed extract was pulled against a subset of the group's
+    # service accounts, so seeding from it alone silently shrinks the dealership.
+    # Labels stay NULL until the dealership confirms them; codes are not decoded
+    # by guesswork.
+    roof = {}
+    for fname, ctr in (("Closed ROs.csv", "closed"), ("Open ROs.csv", "open")):
+        p = src(fname)
+        if not os.path.exists(p):
+            dq.add(fname, "", "SOURCE_MISSING", "WARN", "RO extract not present", ""); continue
+        for _rid, r in rows(p):
+            sa = (r.get("Service Account") or "").strip()
+            aa = (r.get("Accounting Account") or "").strip()
+            if not sa:
+                continue
+            rd = roof.setdefault(sa, {"aa": aa, "closed": 0, "open": 0})
+            rd[ctr] += 1
+    for sa in sorted(roof):
+        rd = roof[sa]
+        cur.execute("INSERT INTO dim_rooftop VALUES (?,?,?,?,?,?,?,?)",
+                    (sa, rd["aa"], None, None, "UNVERIFIED",
+                     1 if rd["closed"] else 0, rd["closed"], rd["open"]))
+        if not rd["closed"]:
+            dq.add("Open ROs.csv", sa, "ROOFTOP_CLOSED_HISTORY_MISSING", "WARN",
+                   "service account appears in open ROs but has no closed-RO history "
+                   "in this extract set; service-history and whitespace measures "
+                   "understate activity at this rooftop", sa)
+    print(f"dim_rooftop: {len(roof)} service accounts "
+          f"({sum(1 for v in roof.values() if v['closed'])} with closed history)")
 
     # ---- PACCAR warranty registrations -> dim_unit, dim_warranty_option, fact
     opts, units, wreg = {}, {}, {}

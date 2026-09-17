@@ -61,7 +61,10 @@ from scoring, because a customer-period total cannot be attributed to a VIN.
   and 3-C compliance cannot yet be scored per job. This is the single highest-value
   addition to the next extract request.
 - No claim-side data on the Peterbilt lane. PRWS claim history is not in this set,
-  so booked-versus-eligible cannot be closed on the truck side yet.
+  so booked-versus-eligible cannot be closed on the truck side yet. The extract set does
+  carry 205 BRP Warranty on Demand claim records and the PACCAR Warranty Procedure Manual
+  v2026.7; neither is loaded into this wireframe. The manual is policy rather than data,
+  and the claim records belong to the powersports lane, not the truck lane.
 - No SmartLINQ / PACCAR Solutions fault-code feed, so the event-driven rung is absent.
 - Odometer arrives only via ROs, so units never serviced here have no mileage reading
   and their mileage axis is unknown — reported as `NULL`, never as zero.
