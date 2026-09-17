@@ -55,7 +55,8 @@ h2{font-family:'Fraunces',serif;font-weight:600;font-size:13.5pt;margin:8mm 0 2.
 h3{font-family:'Fraunces',serif;font-weight:600;font-size:10.5pt;margin:6mm 0 2mm;page-break-after:avoid}
 p{margin:0 0 2.6mm}
 strong{font-weight:600}
-ul,ol{margin:0 0 3mm;padding-left:5.2mm}
+ul,ol{margin:0 0 3mm;padding-left:8mm}
+li{padding-left:1.6mm}
 li{margin-bottom:1.4mm}
 code,.mono{font-family:'DejaVu Sans Mono',monospace;font-size:7.9pt;background:#f7f2e7;padding:.3mm 1mm;border-radius:1.4mm}
 pre{background:#f7f2e7;border-left:2.4px solid #e87722;padding:3mm 3.5mm;margin:0 0 3.5mm;font-size:6.6pt;line-height:1.5;white-space:pre;overflow:hidden}
